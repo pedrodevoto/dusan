@@ -61,7 +61,7 @@
 				array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
 				array('maxwidth' => 130, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].(is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso']).(is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'])),
 				array('maxwidth' => 82, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']),
-				array('maxwidth' => 130, 'text' => "Teléfonos: ".$row_Recordset1['cliente_telefono1']." / ".$row_Recordset1['cliente_telefono2']),
+				array('maxwidth' => 130, 'text' => "Teléfonos: ".$row_Recordset1['contacto_telefono1']." / ".$row_Recordset1['contacto_telefono2']),
 				array('maxwidth' => 82, 'text' => "Categoría de IVA: ".$row_Recordset1['cliente_cf']),
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
@@ -128,7 +128,7 @@
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
-			$txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -245,9 +245,9 @@
 					$pdf->SetXY(12.5, 205);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
 					$pdf->SetXY(70, 205);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
 					$pdf->SetXY(102, 205);
-					printText($txt_pago_c3, $pdf, 40, 3.8);					
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);					
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -462,9 +462,9 @@
 					$pdf->SetXY(12.5, 250);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
 					$pdf->SetXY(70, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
 					$pdf->SetXY(102, 250);
-					printText($txt_pago_c3, $pdf, 40, 3.8);	
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								

@@ -11,8 +11,8 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " cliente.cliente_id, cliente_nombre, cliente_nro_doc, cliente_email, cliente_telefono1, cliente_telefono2";
-	$query_Recordset1_tables = " FROM cliente";
+	$query_Recordset1_fields = " cliente.cliente_id, cliente_nombre, cliente_nro_doc, cliente_email, contacto_telefono1, contacto_telefono2";
+	$query_Recordset1_tables = " FROM cliente LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
 	$query_Recordset1_where = " WHERE 1";
 		
 ?>
@@ -34,7 +34,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('cliente_id', 'cliente_nombre', 'cliente_nro_doc', 'cliente_email', 'cliente_telefono1', 'cliente_telefono2', ' ');
+			$aColumns = array('cliente_id', 'cliente_nombre', 'cliente_nro_doc', 'cliente_email', 'contacto_telefono1', 'contacto_telefono2', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "cliente.cliente_id";		

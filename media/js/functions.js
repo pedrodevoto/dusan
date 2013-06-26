@@ -979,7 +979,7 @@ $(document).ready(function() {
 					result += '<table class="tblBox">';			
 					result += '<tr>';							
 					// Table Data
-					result += '<td><strong>Nombre:</strong> ' + j.cliente_nombre + '</td>';
+					result += '<td><strong>Nombre:</strong> <a title="Ir a Cliente" href="#" onclick="openBoxModCliente(\''+j.cliente_id+'\')">' + j.cliente_nombre + '</a></td>';
 					result += '<td><strong>Tipo Doc:</strong> ' + j.cliente_tipo_doc + '</td>';
 					result += '<td><strong>Nº Doc:</strong> ' + j.cliente_nro_doc + '</td>';
 					// Close Row and Table

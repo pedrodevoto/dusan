@@ -38,6 +38,7 @@
 					"sPaginationType": "full_numbers",	
 					"bServerSide": true,				
 					"sAjaxSource": sourceURL+'?action=view',
+					"iDisplayLength": 25,
 					"aoColumns": [	
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},																																																																

@@ -28,7 +28,11 @@
             <p>
                 <label for="box-cliente_cf">Condición Fiscal *</label>
                 <select name="box-cliente_cf" id="box-cliente_cf" class="ui-widget-content" style="width:180px"></select>
-            </p>               
+            </p>                                         
+            <p>
+                <label for="box-cliente_cuit">CUIT</label>
+                <input type="text" name="box-cliente_cuit" id="box-cliente_cuit" maxlength="15" class="ui-widget-content" style="width:220px" />
+            </p>           
             <p>
                 <label for="box-cliente_tipo_doc">Tipo Doc. *</label>
                 <select name="box-cliente_tipo_doc" id="box-cliente_tipo_doc" class="ui-widget-content" style="width:100px"></select>
@@ -36,7 +40,11 @@
             <p>
                 <label for="box-cliente_nro_doc">Nro de Doc. *</label>
                 <input type="text" name="box-cliente_nro_doc" id="box-cliente_nro_doc" maxlength="15" class="ui-widget-content" style="width:220px" />
-            </p>
+            </p>                                 
+            <p>
+                <label for="box-cliente_reg_tipo">Tipo de Registro</label>
+                <select name="box-cliente_reg_tipo" id="box-cliente_reg_tipo" class="ui-widget-content" style="width:100px"></select>
+            </p>  
             <p>
                 <label for="box-cliente_registro">Registro de Cond.</label>
                 <input type="text" name="box-cliente_registro" id="box-cliente_registro" maxlength="15" class="ui-widget-content" style="width:220px" />
@@ -44,22 +52,6 @@
             <p>
                 <label for="box-cliente_reg_vencimiento">Vencimiento</label>
                 <input type="text" name="box-cliente_reg_vencimiento" id="box-cliente_reg_vencimiento" maxlength="10" class="ui-widget-content box-date" style="width:220px" />
-            </p>                                    
-            <p>
-                <label for="box-cliente_reg_tipo">Tipo de Registro</label>
-                <select name="box-cliente_reg_tipo" id="box-cliente_reg_tipo" class="ui-widget-content" style="width:100px"></select>
-            </p>                                    
-            <p>
-                <label for="box-cliente_cuit">CUIT</label>
-                <input type="text" name="box-cliente_cuit" id="box-cliente_cuit" maxlength="15" class="ui-widget-content" style="width:220px" />
-            </p>                                    
-            <p>
-                <label for="box-cliente_telefono1">Telefono 1</label>
-                <input type="text" name="box-cliente_telefono1" id="box-cliente_telefono1" maxlength="25" class="ui-widget-content" style="width:220px" />
-            </p>                                    
-            <p>
-                <label for="box-cliente_telefono2">Telefono 2</label>
-                <input type="text" name="box-cliente_telefono2" id="box-cliente_telefono2" maxlength="25" class="ui-widget-content" style="width:220px" />
             </p>                                    
             <p>
                 <label for="box-cliente_email">E-mail</label>

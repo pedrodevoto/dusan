@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-productor_id"])) && ($_POST["box-productor_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE productor SET productor_nombre=TRIM(%s), productor_iva=%s, productor_cuit=TRIM(%s), productor_matricula=TRIM(%s), productor_email=TRIM(%s), productor_telefono=TRIM(%s) WHERE productor.productor_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE productor SET productor_nombre=UPPER(TRIM(%s)), productor_iva=%s, productor_cuit=TRIM(%s), productor_matricula=TRIM(%s), productor_email=TRIM(%s), productor_telefono=TRIM(%s) WHERE productor.productor_id=%s LIMIT 1",
 						GetSQLValueString($_POST['box-productor_nombre'], "text"),
 						GetSQLValueString($_POST['box-productor_iva'], "text"),
 						GetSQLValueString($_POST['box-productor_cuit'], "text"),

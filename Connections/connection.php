@@ -1,8 +1,8 @@
 <?php
 	// Custom die function
 	function mysql_die() {
-		echo "Database error.";
-		//echo "Error: ".mysql_error();
+		// echo "Database error.";
+		echo "Error: ".mysql_error();
 	}
 
 	# FileName="Connection_php_mysql.htm"
@@ -10,6 +10,7 @@
 	# HTTP="true"
 	
 	$hostname_connection = "internal-db.s162167.gridserver.com";
+	$hostname_connection = "localhost";
 	$database_connection = "db162167_dusan";
 	$username_connection = "db162167";
 	$password_connection = "Gqv7Q8Kx19Vz";

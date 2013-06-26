@@ -11,9 +11,9 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, subtipo_poliza_nombre, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, subtipo_poliza_tabla, poliza_estado, IF(poliza_anulada=0,'No','Si') AS poliza_anulada";
-	$query_Recordset1_tables = " FROM poliza JOIN (productor_seguro, seguro, productor, subtipo_poliza, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id)";
-	$query_Recordset1_where = " WHERE 1";
+	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, patente, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, IF(automotor.poliza_id IS NULL, 'No', 'Sí') as detalle, poliza_estado, IF(poliza_anulada=0,'No','Si') AS poliza_anulada";
+	$query_Recordset1_tables = " FROM poliza LEFT JOIN (productor_seguro, seguro, productor, automotor, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.poliza_id=automotor.poliza_id AND poliza.cliente_id=cliente.cliente_id)";
+	$query_Recordset1_where = " WHERE subtipo_poliza_id = 6";
 		
 ?>
 <?php
@@ -34,7 +34,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('poliza_id', 'poliza_numero', 'subtipo_poliza_nombre', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'subtipo_poliza_tabla', 'poliza_estado', 'poliza_anulada', ' ');
+			$aColumns = array('poliza_id', 'poliza_numero', 'patente', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'detalle', 'poliza_estado', 'poliza_anulada', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "poliza.poliza_id";		
@@ -115,18 +115,7 @@
 							$row[] = ' ';						
 							break;
 						default:
-							/* Custom: Transform results */
-							if ($aColumns[$i] === 'subtipo_poliza_tabla') {
-								$query_Recordset2 = sprintf("SELECT IF(COUNT(*)>0,'Si','No') AS total FROM %s WHERE poliza_id=%s",
-														$aRow[$i],
-														$aRow[0]);
-								$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
-								$row_Recordset2 = mysql_fetch_assoc($Recordset2);
-								mysql_free_result($Recordset2);
-								$row[] = $row_Recordset2['total'];
-							} else {
-								$row[] = strip_tags($aRow[ $aColumns[$i] ]);						
-							}		
+							$row[] = strip_tags($aRow[ $aColumns[$i] ]);	
 							break;
 					}
 				}

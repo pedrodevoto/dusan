@@ -2,7 +2,7 @@
 
 SET NAMES utf8;
 SET foreign_key_checks = 0;
-SET time_zone = '-07:00';
+SET time_zone = '-03:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `automotor`;
@@ -92,13 +92,11 @@ CREATE TABLE `cliente` (
   `cliente_tipo_doc` enum('Pasaporte','LC','LE','DNI') COLLATE utf8_unicode_ci NOT NULL,
   `cliente_nro_doc` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `cliente_nacionalidad` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_cf` enum('Consumidor Final','Responsable Inscripto','Monotribustista') COLLATE utf8_unicode_ci NOT NULL,
+  `cliente_cf` enum('Consumidor Final','Responsable Inscripto','Monotribustista','Excento') COLLATE utf8_unicode_ci NOT NULL,
   `cliente_registro` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_reg_vencimiento` date DEFAULT NULL,
   `cliente_reg_tipo` enum('Profesional','Particular','Motos','Carga','B1') COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cliente_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cliente_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`cliente_id`),
   KEY `cliente_nombre` (`cliente_nombre`),
@@ -263,4 +261,4 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-06-26 07:54:36
+-- 2013-06-26 11:57:45

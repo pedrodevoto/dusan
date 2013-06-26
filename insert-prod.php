@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO productor (productor_nombre, productor_iva, productor_cuit, productor_matricula, productor_email, productor_telefono) VALUES (TRIM(%s), %s, TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s))",
+		$insertSQL = sprintf("INSERT INTO productor (productor_nombre, productor_iva, productor_cuit, productor_matricula, productor_email, productor_telefono) VALUES (UPPER(TRIM(%s)), %s, TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s))",
 						GetSQLValueString($_POST['box-productor_nombre'], "text"),
 						GetSQLValueString($_POST['box-productor_iva'], "text"),
 						GetSQLValueString($_POST['box-productor_cuit'], "text"),
