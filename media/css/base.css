@@ -1,0 +1,501 @@
+/* CSS Document */
+
+/* Elements and IDs */
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 62.5%;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
+
+fieldset {
+	padding:10px;
+}
+
+legend {
+	margin-bottom:3px;
+}
+
+input, select {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+}
+
+textarea {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	resize:none;
+}
+
+#divLogo {
+	text-align:center;
+	margin:20px;
+}
+
+#divHeader {
+	width: 100%;
+}
+
+#divHeaderLogo {
+	display: inline-block;
+}
+
+#divHeaderTitle {
+	display: inline-block;
+	font-size: 1.1em;
+	color: #333;	
+	vertical-align: bottom;
+}
+
+#divContainer {
+	width: 960px;
+	margin: 4px auto;
+	padding: 0;
+}
+
+#divMain {
+	padding-top: 40px;
+	width: 100%;
+	text-align: center;	
+}
+
+#divFilter {
+	margin-top: 4px;
+	margin-bottom: 4px;
+	background-color:#F5F5F5;
+	padding:2px;
+	border:1px solid #AAAAAA;
+}
+
+#frmFiltro {
+	margin: 0;
+	padding: 0;
+}
+#frmFiltro select {
+	width: 90%;
+}
+#frmFiltro input[type="text"] {
+	width: 90%;
+}
+#frmFiltro input[type="checkbox"] {
+	vertical-align:middle;
+}
+#frmFiltro input[type="radio"] {
+	vertical-align:bottom;
+}
+
+/* Classes: Widget Specific */
+
+#dtDivHeaderIcons {
+	float: left;
+	width: 20%;
+}
+#dtDivHeaderIcons ul {
+    margin: 0;
+    padding: 0;
+}
+#dtDivHeaderIcons ul li {
+    cursor: pointer;
+    float: left;
+    list-style: none;
+    margin: 0 1px;
+    padding: 0;
+}
+#dtDivHeaderIcons ul span.ui-icon {
+    margin: 0 3px;
+}
+
+.dataTables_filter input {
+	font-size: 1em;
+}
+
+.dtFormDate input {
+	width: 90%;
+	color: #333;
+}
+
+.dtFormText input {
+	width: 90% !important;
+	height: auto !important;
+	color: #333;
+}
+
+.dtFormSelect select {
+	width: 100%;
+	color: #333;
+}
+
+.dtInlineIconList {
+    margin: 0;
+    padding: 0;
+}
+.dtInlineIconList li {
+    cursor: pointer;
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.dtInlineIconList span.ui-icon {
+    margin: 0;
+	padding: 0;
+}
+
+.dtLink {
+	color: #0e558b;	
+	text-decoration: none;
+}
+.dtLink:hover {
+	color: #1968a5;	
+}
+
+.date_range_filter {
+	width:60px;
+}
+.number_range_filter {
+	width:45px;
+}
+
+table.display tfoot th {
+    padding: 3px 12px 3px 6px;
+}
+
+/* Classes: General */
+
+.divBoxContainer {	
+	padding:10px;	
+}
+
+.divBoxMessage {
+	display: none;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0 .7em;
+}
+
+.divChangeForm {
+	margin-top: 30px;
+	width: 100%;
+	background-color:#0e558b;		
+}
+
+.divDashMessage {
+	display: none;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0 .7em;
+}
+
+.divLoginForm {
+	width: 100%;
+	text-align: center;
+	background-color:#0396d0;		
+}
+
+.divLoginText {
+	padding-top: 10px;
+	width: 100%;
+	text-align: center;	
+}
+
+.frmChangePass {
+	margin: 0;
+	padding: 15px;
+}
+.frmChangePass label {
+	font-size: 1.2em;	
+	color: #FFF;
+}
+.frmChangePass input {
+	font-size: 1.2em;
+}
+.frmChangePass label.error {
+	font-size: 1em;		
+	font-weight: bold;
+	margin-left: 10px;	
+	width: auto;		
+	display: inline;	
+	color: #EAEAEA;
+}
+
+.frmLogin {
+	margin: 0;
+	padding: 15px;
+}
+.frmLogin label {
+	font-size: 1.2em;
+	color: #FFF;		
+}
+.frmLogin input {
+	font-size: 1.2em;
+}
+.frmLogin input[type="text"] {
+	height: 15px;	
+	padding: 0;	
+	margin-top: 2px;	
+	margin-bottom: 10px;
+}
+.frmLogin input[type="password"] {
+	height: 15px;	
+	padding: 0;	
+	margin-top: 2px;		
+	margin-bottom: 10px;
+}
+
+.frmBoxHead legend {
+	padding: 5px;
+}
+.frmBoxHead label {
+	display: inline-block;
+}
+.frmBoxHead input[type=text] {
+	margin-left: 5px;
+	margin-right: 20px;
+}
+.frmBoxHead input[type=button] {
+	margin-left: 15px;
+}
+
+.frmBoxMain legend {
+	padding: 5px;
+}
+.frmBoxMain p {
+	margin: 0;
+	padding: 2px;
+}
+.frmBoxMain p label {
+	display: inline-block;
+	width: 120px;	
+	vertical-align: top;	
+}
+.frmBoxMain p label.secondary {
+	display: inline;
+	width: auto;	
+	vertical-align: middle;	
+}
+.frmBoxMain input[type=text]:disabled{
+	color:#333;
+}
+.frmBoxMain select:disabled{
+	color:#333;
+}
+.frmBoxMain input[type=radio] {
+	vertical-align: middle;	
+}
+.frmBoxMain input[type=checkbox] {
+	vertical-align: middle;	
+}
+.frmBoxMain label.error {
+	margin-left: 10px;	
+	width: auto;		
+	display: inline;	
+	color: red;
+	vertical-align: top;
+}
+
+.frmBoxAd legend {
+	padding: 5px;
+}
+.frmBoxAd p {
+	margin: 0;
+	padding: 2px;
+}
+.frmBoxAd textarea:disabled{
+	color:#333;
+}
+.frmBoxAd label.error {
+	margin-left: 10px;	
+	width: auto;		
+	display: inline;	
+	color: red;
+	vertical-align: middle;
+}
+
+.frmDash p {
+	margin: 0;
+	padding: 3px;
+}
+.frmDash p label {
+	display: inline-block;
+	width: 85px;
+}
+.frmDash input[type="checkbox"] {
+	vertical-align:middle;
+}
+.frmDash label.error {
+	margin-left: 5px;	
+	width: auto;		
+	display: inline;	
+	color: red;
+	vertical-align: middle;
+}
+
+.tblBox {
+	width:100%;
+}
+.tblBox th {
+	padding: 3px;
+	text-align:left;
+	font-weight:bold;
+}
+.tblBox td {
+	padding: 3px;	
+	vertical-align:top;
+	color: #333;
+	text-align: left;
+}
+.tblBox td a {
+	color: #0e558b;	
+	text-decoration: none;
+}
+.tblBox td a:hover {
+	color: #1968a5;	
+}
+
+.tblBox2 {
+	border: 1px #CCC solid;
+	width: 100%;
+	background-color:#b0dfaa;
+}
+.tblBox2 td {
+	padding: 3px;
+	vertical-align:top;
+	color: #333;
+	text-align: left;
+}
+.tblBox2 td a {
+	font-weight:bold;
+	color: #0e558b;	
+	text-decoration: none;
+}
+.tblBox2 td a:hover {
+	color: #1968a5;	
+}
+
+.tblDash {
+	width: 95%;
+	border-width: 1px;
+	border-spacing: 0px;
+	border-style: solid;
+	border-color: #666;
+	border-collapse: collapse;	
+}
+.tblDash td {
+	border-width: 1px;
+	padding: 3px;
+	border-style: solid;
+	border-color: #666;
+	background-color: white;	
+	vertical-align:top;
+	color: #333;
+	text-align: left;
+}
+.tblDash .tdTitle {
+	color: #FFF;
+	background-color: #999;
+}
+
+.tblLogin {
+	margin-left: auto;
+	margin-right: auto;
+}
+.tblLogin td {
+	padding: 5px;	
+	height: 40px;
+}
+
+.spnBoxMessage {
+	float: left;
+	margin-right: .3em;
+}
+
+.spnDashMessage {
+	float: left;
+	margin-right: .3em;
+}
+
+.titLogin {
+	font-size: 1.4em;
+}
+
+.txtBox {
+	font-size: 1.1em;
+}
+
+.txtLogin {
+	font-size: 1.2em;
+}
+
+.txtLoginError {
+	font-size: 1.2em;
+	color:#900;
+}
+
+.txtMain {
+	font-size: 1.2em;
+}
+
+.listInlineIcons {
+    margin: 0;
+    padding: 0;
+}
+.listInlineIcons li {
+    cursor: pointer;
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.listInlineIcons span.ui-icon {
+    margin: 0;
+	padding: 0;
+}
+
+.lnkLogin {
+	color: #0e558b;	
+	text-decoration: none;
+}
+.lnkLogin:hover {
+	color: #1968a5;	
+}
+
+.lnkBox {
+	color: #0e558b !important;	
+	text-decoration: none;
+}
+.lnkBox:hover {
+	color: #1968a5 !important;	
+}
+
+.lnkDash {
+	color: #0e558b !important;	
+	text-decoration: none;
+}
+.lnkDash:hover {
+	color: #1968a5 !important;	
+}
+
+.progMenu {
+	padding: 3px;
+}
+.progMenu ul {
+	margin: 0;
+	padding: 0;
+}
+.progMenu ul li {	
+	float: left;
+	list-style: none;		
+	font-size: 1.1em;
+	display: block;
+	background: #666;
+	padding: 5px 12px;
+	border-right: 1px solid white;
+	width: auto;
+	color: #ffffff;
+	white-space: nowrap;
+}
+.progMenu ul li.selected {	
+	background: #333 !important;
+}
