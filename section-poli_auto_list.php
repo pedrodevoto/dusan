@@ -49,15 +49,8 @@
 						{"sWidth": "12%"},
 						{"sWidth": "11%"},
 						{"sWidth": "7%", "bSearchable": false},
-						// date
-						{"sWidth": "7%", "bSearchable": false, "fnRender": function (oObj) {
-								return new Date(oObj.aData[7]).toString("dd/MM/yy");
-							}
-						},
-						// date
-						{"sWidth": "7%", "bSearchable": false, "fnRender": function (oObj) {
-								return new Date(oObj.aData[8]).toString("dd/MM/yy");
-							}},
+						{"sWidth": "7%", "bSearchable": false},
+						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false, "bSortable": false},
 						{"sWidth": "8%"},
 						{"sWidth": "6%",  "bSearchable": false},
@@ -106,7 +99,7 @@
 						null,
 						null,
 						null,
-						{type: "select", values: ['Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
+						{type: "select", values: ['M/C', 'Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
 						null,
 						null
 					]

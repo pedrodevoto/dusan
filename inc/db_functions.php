@@ -39,7 +39,7 @@ class Encryption
     const MODE   = MCRYPT_MODE_CBC;
     const KEY    = '332!w_RHEHRJsdfsdaiqw7mcy7w67';
 
-    public function encrypt($plaintext)
+    public static function encrypt($plaintext)
     {
         $td = mcrypt_module_open(self::CYPHER, '', self::MODE, '');
         $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
@@ -49,7 +49,7 @@ class Encryption
         return base64_encode($iv.$crypttext);
     }
 
-    public function decrypt($crypttext)
+    public static function decrypt($crypttext)
     {
         $crypttext = base64_decode($crypttext);
         $plaintext = '';

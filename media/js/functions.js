@@ -1168,7 +1168,8 @@ $(document).ready(function() {
 						result += '</td>';
 						result += '<td>';						
 						if (object.cuota_estado === '2 - Pagado') {
-							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;" class="ui-icon ui-icon-print" title="Imprimir"></span>';
+							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
+							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Digital"></span>';
 						} else {
 							result += '&nbsp;';
 						}
@@ -2489,12 +2490,16 @@ $(document).ready(function() {
 			onComplete: function() {			
 			
 				// Initialize buttons
-				$("#btnCC").button();
+				$("#btnCCp").button();
+				$("#btnCCd").button();
 				$("#btnPE").button();
 				$("#btnPEMC").button();
 				
 				// Button action	
-				$("#btnCC").click(function() {
+				$("#btnCCp").click(function() {
+					window.open('print-poliza.php?type=cc&id='+id+'&print');
+				});
+				$("#btnCCd").click(function() {
 					window.open('print-poliza.php?type=cc&id='+id);
 				});
 				$("#btnPE").click(function() {

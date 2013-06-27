@@ -50,16 +50,16 @@
                 </select>
             </p>
             <p>
-                <label for="box-poliza_validez_desde">Vigencia Desde ^</label>
-                <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content" style="width:80px" readonly="readonly">
+                <label for="box-poliza_validez_desde">Vigencia Desde *</label>
+                <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content box-date" style="width:80px" >
             </p>            
             <p>
                 <label for="box-poliza_vigencia">Vigencia ^</label>
                 <input type="text" name="box-poliza_vigencia" id="box-poliza_vigencia" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
             </p> 
             <p>
-                <label for="box-poliza_validez_hasta">Vigencia Hasta ^</label>
-                <input type="text" name="box-poliza_validez_hasta" id="box-poliza_validez_hasta" maxlength="10" class="ui-widget-content" style="width:80px" readonly="readonly">
+                <label for="box-poliza_validez_hasta">Vigencia Hasta *</label>
+                <input type="text" name="box-poliza_validez_hasta" id="box-poliza_validez_hasta" maxlength="10" class="ui-widget-content box-date" style="width:80px">
             </p> 
             <p>
                 <label for="box-poliza_cuotas">Cuotas ^</label>

@@ -13,7 +13,12 @@
             
             	<?php if($_SESSION['ADM_UserGroup']=="administrativo") { ?>
             	<!-- Administrativo -->
-                <li><a href="section-poli_list.php">Pólizas</a></li>
+                <li><a href="#">Pólizas</a>
+					<ul>
+                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_otros_list.php">Otras</a></li>                        
+                    </ul>
+				</li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
                     <ul>
@@ -25,7 +30,12 @@
                 
             	<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
             	<!-- Master -->
-                <li><a href="section-poli_list.php">Pólizas</a></li>
+                <li><a href="#">Pólizas</a>
+					<ul>
+                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_otros_list.php">Otras</a></li>                  
+                    </ul>
+				</li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
                     <ul>

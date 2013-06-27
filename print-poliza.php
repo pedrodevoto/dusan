@@ -147,9 +147,17 @@
 					*****************************************/
 				
 					// NEW DOCUMENT
-					$pdf = new FPDI('P','mm',array(215.9,279.4));
-					$pdf->AddPage();
-					$pdf->setSourceFile('pdf/cc.pdf');
+					
+					if (isset($_GET['print'])) {
+						$pdf = new FPDI('P','mm',array(215.9,279.4));
+						$pdf->AddPage();
+						$pdf->setSourceFile('pdf/cc.pdf');
+					}
+					else {
+						$pdf = new FPDI('P');
+						$pdf->AddPage();
+						$pdf->setSourceFile('pdf/cc_digital.pdf');
+					}
 					$tplIdx = $pdf->importPage(1);
 					$pdf->useTemplate($tplIdx);
 					// Fecha y hora

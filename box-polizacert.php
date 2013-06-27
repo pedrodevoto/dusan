@@ -11,7 +11,8 @@
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Certificados</legend>            
-			<input type="button" name="btnCC" id="btnCC" value="Constancia de Cobertura" />
+			<input type="button" name="btnCCd" id="btnCCd" value="Enviar C.C. por email" />
+			<input type="button" name="btnCCp" id="btnCCp" value="Imprimir C.C." />
             <input type="button" name="btnPE" id="btnPE" value="Pedido de Emisión" />
             <input type="button" name="btnPEMC" id="btnPEMC" value="Pedido de Emisión MC" />            
 	    </fieldset>

@@ -59,11 +59,20 @@
 			// General variables
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
-			
+			$offset = 0;
 			// New document
-			$pdf = new FPDI('L','mm',array(297,210));
-			$pdf->AddPage();
-			$pdf->setSourceFile('pdf/cuota.pdf');
+			if (isset($_GET['print'])) {
+				$pdf = new FPDI('L','mm',array(297,210));
+				$pdf->AddPage();
+				$pdf->setSourceFile('pdf/cuota.pdf');
+			}
+			else {
+				$pdf = new FPDI('L','mm',array(350,210));
+				$pdf->AddPage();
+				$pdf->setSourceFile('pdf/cuota_digital.pdf');
+				$offset = 5;
+			}
+			
 			$tplIdx = $pdf->importPage(1);
 			$pdf->useTemplate($tplIdx);
 			$pdf->SetFont('Arial', '', 8);
@@ -72,30 +81,26 @@
 			$txthead = date("d/m/Y")."\n".
 					   $row_Recordset1['cuota_recibo'];
 			$txthead = iconv('UTF-8', 'windows-1252', $txthead);
-			$pdf->SetXY(160, 53);
+			$pdf->SetXY(160 + $offset, 53);
 			$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
-			$pdf->SetXY(276, 53);
-			$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
+
 			// Text 1
 			$contacto_piso = is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso'];
 			$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
-			$cliente_telefono1 = is_null($row_Recordset1['cliente_telefono1']) ? "-" : $row_Recordset1['cliente_telefono1'];			
+			$contacto_telefono1 = is_null($row_Recordset1['contacto_telefono1']) ? "-" : $row_Recordset1['contacto_telefono1'];			
 			$txt1 = array(
 						array('maxwidth' => 47, 'text' => "Sección: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),
 						array('maxwidth' => 96, 'text' => "Señor: ".strtoupper($row_Recordset1['cliente_nombre'])),
 						array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc']),
 						array('maxwidth' => 47, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].$contacto_piso.$contacto_dpto),
 						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']." - ".$row_Recordset1['contacto_cp']),
-						array('maxwidth' => 47, 'text' => "Teléfono: ".$cliente_telefono1)
+						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
 					);
 			$pdf->SetXY(92.5, 87.5);
 			foreach ($txt1 as $array) {
 				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
 			}
-			$pdf->SetXY(194, 87.5);			
-			foreach ($txt1 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+
 			// Text 2
 			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
 			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
@@ -112,10 +117,7 @@
 			foreach ($txt2 as $array) {
 				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
 			}
-			$pdf->SetXY(241.5, 87.5);
-			foreach ($txt2 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+			
 			// Text 3
 			$cuota_ssn = $row_Recordset1['cuota_monto'] - ($row_Recordset1['cuota_monto'] * $percent_serv);
 			$cuota_servicios = $row_Recordset1['cuota_monto'] * $percent_serv;
@@ -129,10 +131,7 @@
 			foreach ($txt3 as $array) {
 				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
 			}
-			$pdf->SetXY(194, 116.5);
-			foreach ($txt3 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+			
 			// Text 4
 			$txt4 = array(
 						array('maxwidth' => 0, 'text' => ""),
@@ -144,9 +143,28 @@
 			foreach ($txt4 as $array) {
 				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
 			}
-			$pdf->SetXY(241.5, 116.5);
-			foreach ($txt4 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+			
+			
+			if (isset($_GET['print'])) {
+				$pdf->SetXY(276, 53);
+				$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
+				
+				$pdf->SetXY(194, 87.5);			
+				foreach ($txt1 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(241.5, 87.5);
+				foreach ($txt2 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(194, 116.5);
+				foreach ($txt3 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(241.5, 116.5);
+				foreach ($txt4 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
 			}
 			// Output
 			$pdf->Output();								

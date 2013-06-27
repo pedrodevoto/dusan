@@ -19,10 +19,12 @@
 		}		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_anulada=%s, poliza_numero=TRIM(%s), productor_seguro_id=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_ajuste=%s WHERE poliza.poliza_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE poliza SET poliza_anulada=%s, poliza_numero=TRIM(%s), productor_seguro_id=%s, poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_ajuste=%s WHERE poliza.poliza_id=%s LIMIT 1",
 						GetSQLValueString(isset($_POST['box-poliza_anulada']) ? 'true' : '', 'defined','1','0'),
 						GetSQLValueString($_POST['box-poliza_numero'], "text"),						
-						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),						
+						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),	
+						GetSQLValueString($_POST['box-poliza_validez_desde'], "date"),						
+						GetSQLValueString($_POST['box-poliza_validez_hasta'], "date"),
 						GetSQLValueString($_POST['box-poliza_fecha_solicitud'], "date"),
 						GetSQLValueString($_POST['box-poliza_fecha_emision'], "date"),						
 						GetSQLValueString($_POST['box-poliza_fecha_recepcion'], "date"),						
