@@ -750,6 +750,30 @@ $(document).ready(function() {
 		});	
 		return dfd.promise();				
 	}
+	
+	populateFormBoxSuc = function(id){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-fich_suc.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');				
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");																
+					// Resolve
+					dfd.resolve();														
+				}
+			}
+		});	
+		return dfd.promise();				
+	}
+	
 	populateFormBoxCliente = function(id){
 		var dfd = new $.Deferred();		
 		$.ajax({
@@ -1299,6 +1323,28 @@ $(document).ready(function() {
 			}
 		});
 	}
+	insertFormSuc = function(){													
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post				
+		$.post("insert-suc.php", $("#frmBox").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}				
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function(){
+					// Clear form
+					$('#frmBox').each(function(){
+						this.reset();
+					});
+				});
+			}
+		});		
+	}
 	insertFormCliente = function(){													
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
@@ -1431,6 +1477,26 @@ $(document).ready(function() {
 				showBoxConf(data, false, 'always', 3000, function(){					
 					// Repopulate form
 					populateFormBoxProd($('#box-productor_id').val());					
+				});
+			}
+		});									
+	}
+	updateFormSuc = function(){
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);		
+		// Post				
+		$.post("update-suc.php", $("#frmBox").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function(){					
+					// Repopulate form
+					populateFormBoxSuc($('#box-sucursal_id').val());					
 				});
 			}
 		});									
@@ -1923,6 +1989,89 @@ $(document).ready(function() {
 			}
 		});	
 	}
+	
+	openBoxAltaSuc = function () {
+		$.colorbox({
+			title:'Registro',
+			href:'box-suc_alta.php',												
+			width:'700px',
+			height:'450px',
+			onComplete: function() {			
+			
+				// Initialize buttons
+				$("#btnBox").button();
+				
+				// Disable form
+				formDisable('frmBox','ui',true);				
+
+				// Validate form
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						"box-sucursal_nombre": {required: true},
+						"box-sucursal_email": {email: true}
+					}
+				});		
+						
+				// Button action	
+				$("#btnBox").click(function() {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							insertFormSuc();
+						}
+					};
+				});	
+				
+				// Enable form							
+				formDisable('frmBox','ui',false);					
+				
+			}
+		});		
+	}		
+
+	openBoxModSuc = function (id) {
+		$.colorbox({
+			title:'Registro',
+			href:'box-suc_mod.php',												
+			width:'700px',
+			height:'500px',
+			onComplete: function() {			
+			
+				// Initialize buttons
+				$("#btnBox").button();
+				
+				// Disable form
+				formDisable('frmBox','ui',true);				
+
+				// Populate form, then initialize
+				$.when(populateFormBoxSuc(id)).then(function(){	
+																						
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-sucursal_nombre": {required: true},
+							"box-sucursal_email": {email: true}
+						}
+					});		
+							
+					// Button action	
+					$("#btnBox").click(function() {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormSuc();
+							}
+						};
+					});
+					
+					// Enable form							
+					formDisable('frmBox','ui',false);						
+								
+				});		
+				
+			}
+		});		
+	}
+
+	
 	openBoxAltaCliente = function () {
 		$.colorbox({
 			title:'Registro',
