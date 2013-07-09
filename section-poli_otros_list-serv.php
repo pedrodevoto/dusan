@@ -15,6 +15,11 @@
 	$query_Recordset1_tables = " FROM poliza JOIN (productor_seguro, seguro, productor, subtipo_poliza, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id)";
 	$query_Recordset1_where = " WHERE  poliza.subtipo_poliza_id != 6";
 		
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id IN (SELECT sucursal_id FROM usuario_sucursal WHERE usuario_id = %s)",
+			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
+		
 ?>
 <?php
 
