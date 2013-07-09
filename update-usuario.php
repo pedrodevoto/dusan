@@ -24,7 +24,18 @@
 						GetSQLValueString($_POST['box-usuario_id'], "int"));			
 		$Result1 = mysql_query($updateSQL, $connection);
 		switch (mysql_errno()) {
-			case 0:									
+			case 0:
+				if ($_POST['box-usuario_acceso'] == "administrativo") {
+					$deleteSQL = sprintf("DELETE FROM usuario_sucursal WHERE usuario_id = %s",
+						GetSQLValueString($_POST['box-usuario_id'], "int"));
+					mysql_query($deleteSQL, $connection);
+					foreach ($_POST['box-usuario_sucursal'] as $sucursal_id) {
+						$updateSQL = sprintf("INSERT INTO usuario_sucursal (usuario_id, sucursal_id) VALUES (%s, %s)",
+							GetSQLValueString($_POST['box-usuario_id'], "int"),
+							GetSQLValueString($sucursal_id, "int"));
+						mysql_query($updateSQL, $connection);
+					}
+				}
 				echo "El registro ha sido actualizado.";							
 				break;								
 			case 1062:

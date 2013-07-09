@@ -21,7 +21,7 @@ if (isset($_POST['Usuario'])) {
 	$MM_redirecttoReferrer = false;
 
 	// Custom login query
-	$LoginRS__query=sprintf("SELECT usuario_acceso, (TO_DAYS(NOW())-TO_DAYS(usuario_cambioclave)) AS last_update, usuario_reseteado FROM usuario WHERE usuario_usuario=%s AND usuario_clave=md5(%s)",
+	$LoginRS__query=sprintf("SELECT usuario_id, usuario_acceso, (TO_DAYS(NOW())-TO_DAYS(usuario_cambioclave)) AS last_update, usuario_reseteado FROM usuario WHERE usuario_usuario=%s AND usuario_clave=md5(%s)",
 	GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
 
 	$LoginRS = mysql_query($LoginRS__query, $connection) or die(mysql_die());
@@ -29,7 +29,8 @@ if (isset($_POST['Usuario'])) {
 
 	// If user was found
 	if ($loginFoundUser) {		
-		$loginStrGroup = mysql_result($LoginRS,0,'usuario_acceso');		
+		$loginStrGroup = mysql_result($LoginRS,0,'usuario_acceso');
+		$LoginUserId = mysql_result($LoginRS,0,'usuario_id');
 		
 		// If user is not disabled
 		if ($loginStrGroup!="deshabilitado") {					
@@ -49,6 +50,7 @@ if (isset($_POST['Usuario'])) {
 				//declare two session variables and assign them
 				$_SESSION['ADM_Username'] = $loginUsername;
 				$_SESSION['ADM_UserGroup'] = $loginStrGroup;	 
+				$_SESSION['ADM_UserId'] = $LoginUserId;	 
 	
 				if (isset($_SESSION['ADM_PrevUrl']) && $MM_redirecttoReferrer===true) {
 					$MM_redirectLoginSuccess = $_SESSION['ADM_PrevUrl'];

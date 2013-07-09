@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT usuario.usuario_id, usuario_acceso, usuario_usuario, usuario_email, usuario_nombre, usuario_cambioclave, IF(usuario_reseteado=1,'SI','NO') AS usuario_reseteado FROM usuario WHERE usuario.usuario_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT usuario.usuario_id, usuario_acceso, usuario_usuario, usuario_email, usuario_nombre, usuario_cambioclave, IF(usuario_reseteado=1,'SI','NO') AS usuario_reseteado, GROUP_CONCAT(sucursal_id) as usuario_sucursal FROM usuario LEFT JOIN usuario_sucursal ON usuario.usuario_id = usuario_sucursal.usuario_id WHERE usuario.usuario_id=%s GROUP BY usuario.usuario_id", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Usuario
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());

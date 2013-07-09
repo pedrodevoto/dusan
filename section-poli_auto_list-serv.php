@@ -14,6 +14,10 @@
 	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, patente, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, DATE_FORMAT(poliza_validez_desde, '%d/%m/%y') as poliza_validez_desde, DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y') as poliza_validez_hasta, IF(automotor.poliza_id IS NULL, 'No', 'Sí') as detalle, poliza_estado, IF(poliza_anulada=0,'No','Si') AS poliza_anulada";
 	$query_Recordset1_tables = " FROM poliza LEFT JOIN (productor_seguro, seguro, productor, automotor, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.poliza_id=automotor.poliza_id AND poliza.cliente_id=cliente.cliente_id)";
 	$query_Recordset1_where = " WHERE subtipo_poliza_id = 6";
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id IN (SELECT sucursal_id FROM usuario_sucursal WHERE usuario_id = %s)",
+			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
 		
 ?>
 <?php

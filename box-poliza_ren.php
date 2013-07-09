@@ -13,6 +13,10 @@
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Poliza (General)</legend>  
             <p>
+                <label for="box-sucursal_nombre">Sucursal ^</label>
+                <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
+			</p>
+			<p>
                 <label for="box-cliente_nombre">Cliente ^</label>
                 <input type="text" name="box-cliente_nombre" id="box-cliente_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
 			</p>

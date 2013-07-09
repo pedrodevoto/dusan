@@ -21,6 +21,15 @@
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
 			case 0:
+				$usuario_id = mysql_insert_id($connection);
+				if ($_POST['box-usuario_acceso'] == "administrativo") {
+					foreach ($_POST['box-usuario_sucursal'] as $sucursal_id) {
+						$insertSQL = sprintf("INSERT INTO usuario_sucursal (usuario_id, sucursal_id) VALUES (%s, %s)",
+							GetSQLValueString($usuario_id, "int"),
+							GetSQLValueString($sucursal_id, "int"));
+						mysql_query($insertSQL, $connection);
+					}
+				}
 				echo "El registro ha sido insertado con éxito.";
 				break;
 			case 1062:

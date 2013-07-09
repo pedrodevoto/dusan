@@ -197,6 +197,35 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
+	populateListUsuario_Sucursal = function(field, context){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-suc.php",
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Sort options by index value
+					sortListValue(field);
+					// Append option: "all"
+					// appendListItem(field, '', 'Todos');
+					// Select first item
+					// selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+	}
 	populateListProductor_IVA = function(field, context){
 		var dfd = new $.Deferred();		
 		$.ajax({
@@ -226,6 +255,37 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
+	
+	populateListSuc = function(field, context){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-suc.php",
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Todos');
+					// Select first item
+					selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+	}
+	
 	populateListSeguro = function(field, context){
 		var dfd = new $.Deferred();		
 		$.ajax({
@@ -668,7 +728,7 @@ $(document).ready(function() {
 						}
 						break;
 					default:
-						$(element).val(value);
+						$(element).val($(element).prop("multiple")?value.split(','):value);
 						break;
 				}
 			}
@@ -689,7 +749,8 @@ $(document).ready(function() {
 				} else {
 					// Populate drop-downs, then form
 					$.when(
-						populateListUsuario_Acceso('box-usuario_acceso','box')
+						populateListUsuario_Acceso('box-usuario_acceso','box'),
+						populateListUsuario_Sucursal('box-usuario_sucursal','box')
 					).then(function(){						
 						// Populate Form
 						populateFormGeneric(j, "box");															
@@ -1688,7 +1749,8 @@ $(document).ready(function() {
 
 				// Populate selects, then initialize
 				$.when(
-					populateListUsuario_Acceso('box-usuario_acceso','box')
+					populateListUsuario_Acceso('box-usuario_acceso','box'),
+					populateListUsuario_Sucursal('box-usuario_sucursal','box')
 				).then(function(){	
 								
 					// Validate form
@@ -1699,7 +1761,8 @@ $(document).ready(function() {
 							"box-usuario_usuario": {required: true, minlength: 6},
 							"box-usuario_clave": {required: true, minlength: 8},
 							"box-usuario_clave2": {required: true, equalTo: "#box-usuario_clave"},														
-							"box-usuario_acceso": {required: true}
+							"box-usuario_acceso": {required: true},
+							"box-usuario_sucursal[]": {required: function() { return $("#box-usuario_acceso").val()=="administrativo"; } }
 						}
 					});		
 							
@@ -1745,7 +1808,8 @@ $(document).ready(function() {
 							"box-usuario_usuario": {required: true, minlength: 6},
 							"box-usuario_clave": {minlength: 8},
 							"box-usuario_clave2": {equalTo: "#box-usuario_clave"},														
-							"box-usuario_acceso": {required: true}
+							"box-usuario_acceso": {required: true},
+							"box-usuario_sucursal[]": {required: function() { return $("#box-usuario_acceso").val()=="administrativo"; } }
 						}
 					});	
 								
@@ -2284,6 +2348,7 @@ $(document).ready(function() {
 				// FORM INSERT POLIZA
 				// Populate drop-downs, then initialize
 				$.when(
+					populateListSuc('box-sucursal_id', 'box'),
 					populateListSeguro('box-seguro_id', 'box'),
 					populateListTipoPoliza('box-tipo_poliza_id', 'box'),
 					populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
@@ -2355,6 +2420,7 @@ $(document).ready(function() {
 					var validateForm = $("#frmBox").validate({
 						rules: {							
 							"box-tipo_poliza_id": {required: true},
+							"box-sucursal_id": {required: true},
 							"box-subtipo_poliza_id": {required: true},
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},

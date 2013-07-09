@@ -34,7 +34,13 @@
                 <select name="box-usuario_acceso" id="box-usuario_acceso" class="ui-widget-content" style="width:222px">
                 	<option value="">Cargando</option>                
                 </select>
-            </p>        
+            </p>
+			<p>
+                <label for="box-usuario_sucursal[]">Sucursales</label>
+                <select multiple="multiple" name="box-usuario_sucursal[]" id="box-usuario_sucursal" class="ui-widget-content" style="width:222px">
+                	<option value="">Cargando</option>                
+                </select>
+            </p>  			
             <p>
                 <label for="box-usuario_cambioclave">Ult. Cambio Clave ^</label>
                 <input type="text" name="box-usuario_cambioclave" id="box-usuario_cambioclave" maxlength="19" class="ui-widget-content" style="width:220px" readonly="readonly" />

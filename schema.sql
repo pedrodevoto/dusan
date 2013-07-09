@@ -147,6 +147,7 @@ CREATE TABLE `cuota` (
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sucursal_id` int(10) unsigned NOT NULL,
   `cliente_id` int(10) unsigned NOT NULL,
   `subtipo_poliza_id` int(10) unsigned NOT NULL,
   `productor_seguro_id` int(10) unsigned NOT NULL,
@@ -234,6 +235,17 @@ CREATE TABLE `subtipo_poliza` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `sucursal`;
+CREATE TABLE `sucursal` (
+  `sucursal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sucursal_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `sucursal_direccion` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sucursal_telefono` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sucursal_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`sucursal_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `tipo_poliza`;
 CREATE TABLE `tipo_poliza` (
   `tipo_poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -261,4 +273,17 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-06-27 18:19:16
+DROP TABLE IF EXISTS `usuario_sucursal`;
+CREATE TABLE `usuario_sucursal` (
+  `usuario_sucursal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(10) unsigned NOT NULL,
+  `sucursal_id` int(11) NOT NULL,
+  PRIMARY KEY (`usuario_sucursal_id`),
+  UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
+  KEY `usuario_id` (`usuario_id`),
+  CONSTRAINT `usuario_sucursal_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`),
+  CONSTRAINT `usuario_sucursal_ibfk_2` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- 2013-07-09 12:11:28
