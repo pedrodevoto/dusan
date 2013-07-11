@@ -1777,7 +1777,10 @@ $(document).ready(function() {
 					
 					// Enable form							
 					formDisable('frmBox','ui',false);	
-									
+					$("#box-usuario_sucursal").prop("disabled", true);
+					$("#box-usuario_acceso").change(function() { 
+						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
+					});				
 				});
 				
 			}
@@ -1824,7 +1827,10 @@ $(document).ready(function() {
 					
 					// Enable form							
 					formDisable('frmBox','ui',false);					
-								
+					$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
+					$("#box-usuario_acceso").change(function() { 
+						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
+					});				
 				});		
 				
 			}
