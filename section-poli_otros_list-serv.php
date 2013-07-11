@@ -98,7 +98,7 @@
 			$iFilteredTotal = $aResultFilterTotal[0];	
 			
 			/* Total data set length */
-			$query_Recordset1_final = "SELECT COUNT(".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where. $query_Recordset1_group;
+			$query_Recordset1_final = "SELECT COUNT(DISTINCT ".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where;
 			$rResultTotal = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());
 			$aResultTotal = mysql_fetch_array($rResultTotal);
 			mysql_free_result($rResultTotal);							
