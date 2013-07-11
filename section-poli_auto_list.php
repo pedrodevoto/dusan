@@ -43,22 +43,27 @@
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
+						{"sWidth": "7%"},
+						{"sWidth": "7%"},
 						{"sWidth": "8%"},
 						{"sWidth": "7%"},
-						{"sWidth": "12%"},
 						{"sWidth": "12%"},
 						{"sWidth": "11%"},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false, "bSortable": false},
-						{"sWidth": "8%"},
-						{"sWidth": "6%",  "bSearchable": false},
+						{"sWidth": "5%"},
+						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
+								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
+							}
+						},
+						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="openBoxPolizaDet('+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
-							if (oObj.aData[9] == 'Sí') {
+							if (oObj.aData[10] == 'Sí') {
 								returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Cuotas" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li><li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
 							}
 							returnval += '</ul>';
@@ -95,11 +100,13 @@
 						{type: "text"},
 						{type: "text"},
 						{type: "text"},
+						{type: "text"},
 						null,
 						null,
 						null,
 						null,
 						{type: "select", values: ['M/C', 'Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
+						null,
 						null,
 						null
 					]
@@ -121,9 +128,10 @@
                     <thead>
                         <tr>                        
                             <th>Poliza ID (Hide)</th>
-                            <th>Número</th>                            
+                            <th>Póliza N°</th>                            
                             <th>Patente</th> 
                             <th>Compañía</th>
+                            <th>Sucursal</th>
                             <th>Productor</th>
                             <th>Cliente</th>
                             <th>Vigencia</th>
@@ -131,7 +139,8 @@
                             <th>V. Hasta</th>
                             <th>Detalle</th> 
                             <th>Estado</th> 
-                            <th>Anul.</th>                                                                                    
+                            <th>Al día</th>                                                                                    
+                            <th>Al día detalle</th>                                                                                    
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -144,6 +153,7 @@
                             <th>Número</th>                            
                             <th>Patente</th> 
                             <th>Compañía</th>
+                            <th>Sucursal</th>
                             <th>Productor</th>
                             <th>Cliente</th>
                             <th></th>
@@ -151,6 +161,7 @@
                             <th></th>
                             <th></th>
                             <th>Estado</th> 
+                            <th></th>                                                         
                             <th></th>                                                         
                             <th></th>                                                        
                         </tr>

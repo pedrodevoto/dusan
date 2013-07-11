@@ -50,9 +50,12 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
-						{"sWidth": "5%", "bSearchable": false, "bSortable": false},
 						{"sWidth": "8%"},
-						{"sWidth": "6%",  "bSearchable": false},
+						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
+								return '<span title="'+oObj.aData[11]+'">'+oObj.aData[10]+'</span>';
+							}
+						},
+						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
@@ -97,8 +100,8 @@
 						null,
 						null,
 						null,
-						null,
 						{type: "select", values: ['Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
+						null,
 						null,
 						null
 					]
@@ -120,7 +123,7 @@
                     <thead>
                         <tr>                        
                             <th>Poliza ID (Hide)</th>
-                            <th>Número</th>                            
+                            <th>Póliza N°</th>                            
                             <th>Tipo</th> 
                             <th>Compañía</th>
                             <th>Productor</th>
@@ -128,9 +131,9 @@
                             <th>Vigencia</th>
                             <th>V. Desde</th>
                             <th>V. Hasta</th>
-                            <th>Detalle</th> 
                             <th>Estado</th> 
-                            <th>Anul.</th>                                                                                    
+                            <th>Al día</th>                                                                                    
+                            <th>Al día detalle</th>                                                                                    
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -148,8 +151,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th></th>
                             <th>Estado</th> 
+                            <th></th>                                                         
                             <th></th>                                                         
                             <th></th>                                                        
                         </tr>

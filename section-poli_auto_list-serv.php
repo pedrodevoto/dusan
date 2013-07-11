@@ -11,14 +11,14 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, patente, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, DATE_FORMAT(poliza_validez_desde, '%d/%m/%y') as poliza_validez_desde, DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y') as poliza_validez_hasta, IF(automotor.poliza_id IS NULL, 'No', 'Sí') as detalle, poliza_estado, IF(poliza_anulada=0,'No','Si') AS poliza_anulada";
-	$query_Recordset1_tables = " FROM poliza LEFT JOIN (productor_seguro, seguro, productor, automotor, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.poliza_id=automotor.poliza_id AND poliza.cliente_id=cliente.cliente_id)";
+	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, patente, seguro_nombre, sucursal_nombre, productor_nombre, cliente_nombre, poliza_vigencia, DATE_FORMAT(poliza_validez_desde, '%d/%m/%y') as poliza_validez_desde, DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y') as poliza_validez_hasta, IF(automotor.poliza_id IS NULL, 'No', 'Sí') as detalle, poliza_estado, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 'Sí', 'No'), IF(poliza_medio_pago='Cuponera', 'Cup', IF(poliza_medio_pago='Débito Bancario', 'DC', 'TC'))) AS poliza_al_dia, IF(poliza_medio_pago = 'Directo', GROUP_CONCAT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', CONCAT('Cuota número ', cuota_nro, ' (Período: ', DATE_FORMAT(cuota_periodo, '%m/%y'), ', venc: ', DATE_FORMAT(cuota_vencimiento, '%d/%m/%y'), ')'), NULL) SEPARATOR '\n'), '') AS poliza_al_dia_detalle";
+	$query_Recordset1_tables = " FROM poliza LEFT JOIN (productor_seguro, seguro, productor, automotor, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.poliza_id=automotor.poliza_id AND poliza.cliente_id=cliente.cliente_id) JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id LEFT JOIN cuota ON cuota.poliza_id = poliza.poliza_id";
 	$query_Recordset1_where = " WHERE subtipo_poliza_id = 6";
 	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
 		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id IN (SELECT sucursal_id FROM usuario_sucursal WHERE usuario_id = %s)",
 			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
 	}
-		
+	$query_Recordset1_group = " GROUP BY poliza.poliza_id";
 ?>
 <?php
 
@@ -38,7 +38,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('poliza_id', 'poliza_numero', 'patente', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'detalle', 'poliza_estado', 'poliza_anulada', ' ');
+			$aColumns = array('poliza_id', 'poliza_numero', 'patente', 'seguro_nombre', 'sucursal_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'detalle', 'poliza_estado', 'poliza_al_dia', 'poliza_al_dia_detalle', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "poliza.poliza_id";		
@@ -86,7 +86,7 @@
 			}			
 		
 			/* SQL queries: Get data to display */			
-			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $sOrder $sLimit";
+			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $query_Recordset1_group $sOrder $sLimit";
 			$Recordset1 = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());	
 		
 			/* Data set length after filtering */
@@ -97,7 +97,7 @@
 			$iFilteredTotal = $aResultFilterTotal[0];	
 			
 			/* Total data set length */
-			$query_Recordset1_final = "SELECT COUNT(".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where;
+			$query_Recordset1_final = "SELECT COUNT(".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where . $query_Recordset1_group;
 			$rResultTotal = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());
 			$aResultTotal = mysql_fetch_array($rResultTotal);
 			mysql_free_result($rResultTotal);							

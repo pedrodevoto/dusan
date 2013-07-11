@@ -286,4 +286,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-09 12:11:28
+-- 2013-07-11 11:08:53
