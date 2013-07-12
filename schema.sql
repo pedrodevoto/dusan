@@ -11,6 +11,7 @@ CREATE TABLE `automotor` (
   `poliza_id` int(10) unsigned NOT NULL,
   `marca` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `castigado` tinyint(1) NOT NULL DEFAULT '0',
   `patente` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `tipo` enum('Automotor','Pickup A','Pickup B','Moto','Acoplado','Batán') COLLATE utf8_unicode_ci NOT NULL,
   `uso` enum('Particular','Comercial','Comercial / Particular') COLLATE utf8_unicode_ci NOT NULL,
@@ -286,4 +287,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-11 11:08:53
+-- 2013-07-12 11:42:10
