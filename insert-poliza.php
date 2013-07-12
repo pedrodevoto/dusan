@@ -37,13 +37,12 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado, poliza_anulada, poliza_numero, productor_seguro_id, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado, poliza_numero, productor_seguro_id, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
 		 					  VALUES (%s, %s, %s, %s, %s, TRIM(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 								GetSQLValueString($_POST['box-sucursal_id'], "int"),
 								GetSQLValueString($_POST['box-cliente_id'], "int"),
 								GetSQLValueString($_POST['box-subtipo_poliza_id'], "int"),
 								GetSQLValueString($estado, "text"),
-								GetSQLValueString(isset($_POST['box-poliza_anulada']) ? 'true' : '', 'defined','1','0'),
 								GetSQLValueString($_POST['box-poliza_numero'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
 								GetSQLValueString($_POST['box-poliza_vigencia'], "text"),
