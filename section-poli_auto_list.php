@@ -52,8 +52,8 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
-						{"sWidth": "5%", "bSearchable": false, "bSortable": false},
-						{"sWidth": "5%"},
+						{"sWidth": "5%", "bSearchable": false},
+						{"sWidth": "4%"},
 						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
 								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
 							}
@@ -137,7 +137,7 @@
                             <th>Vigencia</th>
                             <th>V. Desde</th>
                             <th>V. Hasta</th>
-                            <th>Detalle</th> 
+                            <th>Estado Póliza</th> 
                             <th>Estado</th> 
                             <th>Al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    

@@ -50,6 +50,7 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
+						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "8%"},
 						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
 								return '<span title="'+oObj.aData[11]+'">'+oObj.aData[10]+'</span>';
@@ -100,6 +101,7 @@
 						null,
 						null,
 						null,
+						null,
 						{type: "select", values: ['Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
 						null,
 						null,
@@ -131,6 +133,7 @@
                             <th>Vigencia</th>
                             <th>V. Desde</th>
                             <th>V. Hasta</th>
+							<th>Estado Póliza</th>
                             <th>Estado</th> 
                             <th>Al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    
@@ -148,6 +151,7 @@
                             <th>Compañía</th>
                             <th>Productor</th>
                             <th>Cliente</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>

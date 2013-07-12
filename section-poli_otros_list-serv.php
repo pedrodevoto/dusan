@@ -11,7 +11,7 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, subtipo_poliza_nombre, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, subtipo_poliza_tabla, poliza_estado, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 'Sí', 'No'), IF(poliza_medio_pago='Cuponera', 'Cup', IF(poliza_medio_pago='Débito Bancario', 'DC', 'TC'))) AS poliza_al_dia, IF(poliza_medio_pago = 'Directo', GROUP_CONCAT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', CONCAT('Cuota número ', cuota_nro, ' (Período: ', DATE_FORMAT(cuota_periodo, '%m/%y'), ', venc: ', DATE_FORMAT(cuota_vencimiento, '%d/%m/%y'), ')'), NULL) SEPARATOR '\n'), '') AS poliza_al_dia_detalle";
+	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, subtipo_poliza_nombre, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, IF(poliza_entregada=1, 'Entregada', IF(poliza_correo=1, 'Enviada', IF(poliza_fecha_recepcion IS NOT NULL, 'Sí', 'No'))) as poliza_estado_entrega, subtipo_poliza_tabla, poliza_estado, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 'Sí', 'No'), IF(poliza_medio_pago='Cuponera', 'Cup', IF(poliza_medio_pago='Débito Bancario', 'DC', 'TC'))) AS poliza_al_dia, IF(poliza_medio_pago = 'Directo', GROUP_CONCAT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', CONCAT('Cuota número ', cuota_nro, ' (Período: ', DATE_FORMAT(cuota_periodo, '%m/%y'), ', venc: ', DATE_FORMAT(cuota_vencimiento, '%d/%m/%y'), ')'), NULL) SEPARATOR '\n'), '') AS poliza_al_dia_detalle";
 	$query_Recordset1_tables = " FROM poliza JOIN (productor_seguro, seguro, productor, subtipo_poliza, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id) LEFT JOIN cuota ON cuota.poliza_id = poliza.poliza_id";
 	$query_Recordset1_where = " WHERE  poliza.subtipo_poliza_id != 6";
 		
@@ -39,7 +39,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('poliza_id', 'poliza_numero', 'subtipo_poliza_nombre', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'subtipo_poliza_tabla', 'poliza_estado', 'poliza_anulada', ' ');
+			$aColumns = array('poliza_id', 'poliza_numero', 'subtipo_poliza_nombre', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'poliza_estado_entrega', 'subtipo_poliza_tabla', 'poliza_estado', 'poliza_anulada', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "poliza.poliza_id";		
