@@ -885,7 +885,8 @@ $(document).ready(function() {
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
 					).then(function(){	
 						// Populate Form
-						populateFormGeneric(j, "box");																
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');						
 						// Resolve
 						dfd.resolve();														
 					});
@@ -2505,7 +2506,7 @@ $(document).ready(function() {
 					
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
-					
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';	
 					$("#box-seguro_id").change(function(){
@@ -2518,10 +2519,10 @@ $(document).ready(function() {
 						rules: {							
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
-							"box-poliza_fecha_solicitud": {dateISO: true},
-							"box-poliza_fecha_emision": {dateISO: true},
-							"box-poliza_fecha_recepcion": {dateISO: true},
-							"box-poliza_fecha_entrega": {dateISO: true},
+							"box-poliza_fecha_solicitud": {date: true},
+							"box-poliza_fecha_emision": {date: true},
+							"box-poliza_fecha_recepcion": {date: true},
+							"box-poliza_fecha_entrega": {date: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
 							"box-poliza_recargo": {min:0, max:100}							
@@ -2533,9 +2534,13 @@ $(document).ready(function() {
 			
 					// Button action	
 					$("#btnBox").click(function() {
+						$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 						if (validateForm.form()) {
 							updateFormPoliza();
-						};
+						}
+						else {
+							$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						}
 					});	
 					
 					// Enable form							
