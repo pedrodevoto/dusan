@@ -1,9 +1,12 @@
+	<div id="divHeaderImage" style="background: url('media/images/banner_cabezal.jpg');background-repeat:no-repeat;height:51px">
+		
+	</div>
 	<div id="divHeader">
     	<!-- Logo -->
         <div style="float:left; margin-right: 20px;">
-        	<div id="divHeaderLogo">
+        	<!--<div id="divHeaderLogo">
 	        	<a href="main.php"><img style="vertical-align:middle" src="media/images/logo.png" width="113" height="25" alt="Logo" border="0" /></a>
-			</div>   
+			</div>-->
         	<div id="divHeaderTitle">
             </div>                         
         </div>

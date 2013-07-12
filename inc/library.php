@@ -1,5 +1,6 @@
 		<!-- JQuery -->
-        <link rel="stylesheet" href="jquery/themes/start/jquery.ui.all.css" />
+        <!--<link rel="stylesheet" href="jquery/themes/start/jquery.ui.all.css" />-->
+        <link rel="stylesheet" href="jquery/themes/dusan/jquery-ui-1.10.3.custom.css" />
         <script type="text/javascript" language="javascript" src="jquery/jquery-1.6.2.min.js"></script>        
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.core.min.js"></script>
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.widget.min.js"></script>

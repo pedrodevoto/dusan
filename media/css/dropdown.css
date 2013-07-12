@@ -12,7 +12,7 @@
 #jsddm li a	{
 	font-size: 1.1em;	
 	display: block;
-	background: #0c5389;
+	background: #1b398a;
 	padding: 5px 12px;
 	text-decoration: none;
 	border-right: 1px solid white;
@@ -22,7 +22,7 @@
 }
 
 #jsddm li a:hover {
-	background: #2274b2;
+	background: #626ba9;
 }
 		
 #jsddm li ul {
@@ -46,10 +46,10 @@
 }
 		
 #jsddm li ul li a:hover {
-	background: #2274b2;
+	background: #626ba9;
 }
 
 /* custom styles */
 .jsddm-lia-selected {
-	background: #2274b2 !important;
+	background: #626ba9 !important;
 }
