@@ -64,6 +64,9 @@
 							if (oObj.aData[9] == 'Si') {
 								returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Cuotas" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li><li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
 							}
+							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
+							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							<? } ?>
 							returnval += '</ul>';
 							return returnval;
 						}}
