@@ -65,6 +65,9 @@
         <label for="box-modelo">Modelo *</label>
         <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content required" style="width:220px" />
     </p>
+	<p>
+		<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
+	</p>
     <p>
         <label for="box-patente">Patente *</label>
         <input type="text" name="box-patente" id="box-patente" maxlength="20" class="ui-widget-content required" style="width:110px" />
