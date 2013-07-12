@@ -166,6 +166,13 @@
 					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
 				}
 			}
+			else {
+				// Date
+				$date = date("d/m/Y");
+				$pdf->SetXY(160, 142);
+				$pdf->SetFont('Arial', 'B', 12);
+				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
+			}
 			// Output
 			$pdf->Output();								
 			
