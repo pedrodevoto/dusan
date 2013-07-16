@@ -1214,6 +1214,47 @@ $(document).ready(function() {
 			}
 		});						
 	}
+	populateDiv_Poliza_Fotos = function(id){
+		$.getJSON("get-json-poliza_fotos.php?id="+id, {}, function(j){
+			if(j.error == 'expired'){
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// General variables
+					var result = '';			
+					result += "<table><tbody><tr>";		
+					// Table Data
+					$.each(j, function(i, object) {
+						
+						
+						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.poliza_foto_url+'" onclick="divShowFoto(\''+object.poliza_foto_url+'\', \''+object.poliza_foto_width+'\', \''+object.poliza_foto_height+'\');return false;"><img width="100" height="100" style="vertical-align:middle;" src="' + object.poliza_foto_thumb_url + '" /></a>';	
+						result += '<br />';
+						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.poliza_foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\'poliza_foto\', \''+object.poliza_foto_id+'\');$(\'#divShowFoto\').hide();populateDiv_Poliza_Fotos('+id+');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
+						result += '</td>';
+					});
+					// Close Table									
+					result += '</tr></tbody></table>';
+					// Populate DIV					
+					$('#divBoxFotos').html(result);
+				}
+			}
+		});							
+	}
+	divShowFoto = function(url, width, height) {
+		if ($("#divShowFoto").prop("showing") != url) {
+			$("#divShowFoto").prop("showing", url);
+			$("#divShowFoto").html('<img src="'+url+'" width="'+width+'" height="'+height+'" />');
+			$("#divShowFoto").css({"overflow": "auto", "height": height+"px"});
+			$("#divShowFoto").show({easing: "swing"});
+		}
+		else {
+			$("#divShowFoto").toggle({easing: "swing"});
+		}
+	}
 	populateDiv_Cliente_Results = function() {
 		$.getJSON("get-json-fich_poliza-cliente_search.php", $("#frmSelectClient").serialize(), function(j) {
 			if(j.error == 'expired') {
@@ -2771,6 +2812,25 @@ $(document).ready(function() {
 			
 				// Initialize buttons
 				$("#btnBox").button();
+				
+				// Populate DIVs
+				populateDiv_Poliza_Fotos(id);
+				
+				// AJAX file form
+				$("#fileForm").ajaxForm({
+					beforeSend: function() {
+				    	$("#fotosEstado").html("Subiendo...").show();
+					},
+					complete: function(xhr) {
+						if (xhr.responseText.indexOf('Error:')!=-1) {
+							alert(xhr.responseText);
+						}
+						else {
+							$("#fotosEstado").html("").hide();
+						}
+						populateDiv_Poliza_Fotos(id);
+					}
+				});
 				
 				// Disable form
 				formDisable('frmBox','ui',true);

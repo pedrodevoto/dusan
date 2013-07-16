@@ -38,6 +38,26 @@
             </div>
         </fieldset>
     </div>
+	<div style="margin-top:20px">
+	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
+	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
+			<form id="fileForm" action="upload-poliza_foto.php" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="poliza_id" value="<?=$poliza_id?>" />
+			    <p>
+			        <label for="box-poliza_foto">Subir</label>
+			        <input type="file" name="box-poliza_foto" id="box-poliza_foto" class="ui-widget-content" style="width:220px" />
+					<input type="submit" value="Subir foto">
+			    </p>
+			</form>
+			<div id="fotosEstado" style="display:none"></div>
+			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;">
+				Cargando fotos...
+			</div>
+			<div id="divShowFoto" style="width:600px;display:none" showing="">
+		
+			</div>
+		</fieldset>
+	</div>
 	<form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
 		<?php
             // Require form by type
