@@ -48,7 +48,7 @@
 						{"sWidth": "25%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
-						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModCliente('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Asignar Contactos" onclick="openBoxContacto('+oObj.aData[0]+');"><span class="ui-icon ui-icon-person"></span></li></ul>'; }}
+						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModCliente('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Asignar Contactos" onclick="openBoxContacto('+oObj.aData[0]+');"><span class="ui-icon ui-icon-person"></span></li></li><li title="Ver Pólizas" onclick="openBoxPolizas('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document"></span></li></ul>'; }}
 					],	
 					"aaSorting": [[1,'asc']],					
 					

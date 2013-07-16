@@ -1077,6 +1077,7 @@ $(document).ready(function() {
 			}
 		});						
 	}
+	
 	populateDiv_Contacto = function(id){		
 		$.getJSON("get-json-fich_contacto.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
@@ -1141,6 +1142,43 @@ $(document).ready(function() {
 				$('#divBoxList').html(result);								
 			}
 		});						
+	}
+	populateDiv_Polizas = function(id){		
+		$.getJSON("get-json-fich_cliepoli.php?id="+id, {}, function(j){
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				var result = '';			
+				// Check if empty
+				if (j.length>0) {
+					
+					// Open Table
+					result += '<table class="tblBox">';			
+					// Table Head
+					result += '<tr>';
+					result += '<th width="25%">Póliza N˚</th>';
+					result += '<th width="25%">Tipo</th>';
+					result += '<th width="25%">Al día</th>';	
+					result += '<th width="25%">Acciones</th>';									
+					result += '</tr>';					
+					// Data
+					$.each(j, function(i, object) {
+						result += '<tr>';
+						result += '<td>'+object.poliza_numero+'</td>';
+						result += '<td>'+object.subtipo_poliza_nombre+'</td>';	
+						result += '<td><span title="'+object.poliza_al_dia_detalle+'">'+object.poliza_al_dia+'</span></td>';														
+						result += '<td><span onClick="openBoxPolizaDet('+object.poliza_id+')" style="cursor: pointer;" class="ui-icon ui-icon-extlink" title="Ir a Póliza"></span></td>';
+						result += '</tr>';									
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'El cliente no posee Pólizas.';
+				}
+				// Populate DIV					
+				$('#divBoxList').html(result);					
+			}
+		});			
 	}
 	populateDiv_Poliza_Info = function(id){
 		$.getJSON("get-json-poliza_info.php?id="+id, {}, function(j){
@@ -2336,6 +2374,57 @@ $(document).ready(function() {
 																						
 			}
 		});	
+	}
+	openBoxPolizas = function (id) {
+		$.colorbox({
+			title:'Cliente/Pólizas',
+			href:'box-cliepoli.php',												
+			width:'700px',
+			height:'600px',
+			onComplete: function() {	
+			
+				// -------------------- GENERAL ---------------------				
+							
+				// Initialize buttons
+				$("#btnBox").button();		
+				
+				// Disable forms
+				formDisable('frmBox','ui',true);					
+				
+				// Populate DIVs
+				populateDiv_Cliente_Info(id);
+				populateDiv_Polizas(id);													
+					
+				// -------------------- FORM 1 ----------------------
+
+				// Populate drop-downs, then initialize form
+				$.when(
+					populateListSeguro('box-seguro_id', 'box')
+				).then(function(){							
+								
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {							
+							"box-seguro_id": {required: true},
+							"box-productor_seguro_codigo": {required: true}
+						}
+					});																	
+					
+					// Button action	
+					$("#btnBox").click(function() {
+						if (validateForm.form()) {
+							insertFormProdSeg(id);
+						};
+					});		
+										
+					// Enable form					
+					formDisable('frmBox','ui',false);
+					
+				});
+																						
+			}
+		});	
+		
 	}
 	openBoxAltaPoliza = function (id) {
 		$.colorbox({
