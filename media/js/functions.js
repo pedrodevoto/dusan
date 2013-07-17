@@ -2814,14 +2814,17 @@ $(document).ready(function() {
 				// AJAX file form
 				$("#fileForm").ajaxForm({
 					beforeSend: function() {
-				    	$("#fotosEstado").html("Subiendo...").show();
+				    	$("#fotosLoading").show();
+					},
+					uploadProgress: function(event, position, total, percentComplete) {
+					       
 					},
 					complete: function(xhr) {
 						if (xhr.responseText.indexOf('Error:')!=-1) {
 							alert(xhr.responseText);
 						}
 						else {
-							$("#fotosEstado").html("").hide();
+							$("#fotosLoading").hide();
 						}
 						populateDiv_Poliza_Fotos(id);
 					}

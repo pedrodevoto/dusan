@@ -46,10 +46,9 @@
 			    <p>
 			        <label for="box-poliza_foto">Subir</label>
 			        <input type="file" name="box-poliza_foto" id="box-poliza_foto" class="ui-widget-content" style="width:220px" />
-					<input type="submit" value="Subir foto">
+					<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 			    </p>
 			</form>
-			<div id="fotosEstado" style="display:none"></div>
 			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
 			</div>
 		</fieldset>
