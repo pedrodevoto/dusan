@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO cliente (cliente_nombre, cliente_nacimiento, cliente_sexo, cliente_tipo_doc, cliente_nro_doc, cliente_nacionalidad, cliente_cf, cliente_registro, cliente_reg_vencimiento, cliente_reg_tipo, cliente_cuit, cliente_telefono1, cliente_telefono2, cliente_email) VALUES (UPPER(TRIM(%s)), %s, %s, %s, TRIM(%s), TRIM(%s), %s, TRIM(%s), %s, %s, TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s))",
+		$insertSQL = sprintf("INSERT INTO cliente (cliente_nombre, cliente_nacimiento, cliente_sexo, cliente_tipo_doc, cliente_nro_doc, cliente_nacionalidad, cliente_cf, cliente_registro, cliente_reg_vencimiento, cliente_reg_tipo, cliente_cuit, cliente_email) VALUES (UPPER(TRIM(%s)), %s, %s, %s, TRIM(%s), TRIM(%s), %s, TRIM(%s), %s, %s, TRIM(%s), TRIM(%s))",
 						GetSQLValueString($_POST['box-cliente_nombre'], "text"),
 						GetSQLValueString($_POST['box-cliente_nacimiento'], "date"),
 						GetSQLValueString($_POST['box-cliente_sexo'], "text"),
@@ -24,8 +24,6 @@
 						GetSQLValueString($_POST['box-cliente_reg_vencimiento'], "date"),
 						GetSQLValueString($_POST['box-cliente_reg_tipo'], "text"),
 						GetSQLValueString($_POST['box-cliente_cuit'], "text"),
-						GetSQLValueString($_POST['box-cliente_telefono1'], "text"),
-						GetSQLValueString($_POST['box-cliente_telefono2'], "text"),
 						GetSQLValueString($_POST['box-cliente_email'], "text"));								
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
