@@ -1,4 +1,4 @@
--- Adminer 3.7.0 MySQL dump
+-- Adminer 3.7.1 MySQL dump
 
 SET NAMES utf8;
 SET foreign_key_checks = 0;
@@ -183,6 +183,19 @@ CREATE TABLE `poliza` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `poliza_foto`;
+CREATE TABLE `poliza_foto` (
+  `poliza_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `poliza_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_foto_width` int(11) NOT NULL,
+  `poliza_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`poliza_foto_id`),
+  KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `productor`;
 CREATE TABLE `productor` (
   `productor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -287,4 +300,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-12 11:42:10
+-- 2013-07-17 00:34:26
