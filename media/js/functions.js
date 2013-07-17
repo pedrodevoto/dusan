@@ -1231,7 +1231,7 @@ $(document).ready(function() {
 					$.each(j, function(i, object) {
 						
 						
-						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.poliza_foto_url+'" onclick="divShowFoto(\''+object.poliza_foto_url+'\', \''+object.poliza_foto_width+'\', \''+object.poliza_foto_height+'\');return false;"><img width="100" height="100" style="vertical-align:middle;" src="' + object.poliza_foto_thumb_url + '" /></a>';	
+						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.poliza_foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.poliza_foto_thumb_url + '" /></a>';	
 						result += '<br />';
 						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.poliza_foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\'poliza_foto\', \''+object.poliza_foto_id+'\');$(\'#divShowFoto\').hide();populateDiv_Poliza_Fotos('+id+');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
 						result += '</td>';
@@ -1240,20 +1240,15 @@ $(document).ready(function() {
 					result += '</tr></tbody></table>';
 					// Populate DIV					
 					$('#divBoxFotos').html(result);
+					if (j != '') {
+						$('#divBoxFotos').show();
+					}
+					else {
+						$('#divBoxFotos').hide();
+					}
 				}
 			}
 		});							
-	}
-	divShowFoto = function(url, width, height) {
-		if ($("#divShowFoto").prop("showing") != url) {
-			$("#divShowFoto").prop("showing", url);
-			$("#divShowFoto").html('<img src="'+url+'" width="'+width+'" height="'+height+'" />');
-			$("#divShowFoto").css({"overflow": "auto", "height": height+"px"});
-			$("#divShowFoto").show({easing: "swing"});
-		}
-		else {
-			$("#divShowFoto").toggle({easing: "swing"});
-		}
 	}
 	populateDiv_Cliente_Results = function() {
 		$.getJSON("get-json-fich_poliza-cliente_search.php", $("#frmSelectClient").serialize(), function(j) {

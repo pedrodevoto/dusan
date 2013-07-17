@@ -50,11 +50,7 @@
 			    </p>
 			</form>
 			<div id="fotosEstado" style="display:none"></div>
-			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;">
-				Cargando fotos...
-			</div>
-			<div id="divShowFoto" style="width:600px;display:none" showing="">
-		
+			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
 			</div>
 		</fieldset>
 	</div>
