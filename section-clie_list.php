@@ -48,7 +48,21 @@
 						{"sWidth": "25%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
-						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModCliente('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Asignar Contactos" onclick="openBoxContacto('+oObj.aData[0]+');"><span class="ui-icon ui-icon-person"></span></li></li><li title="Ver Pólizas" onclick="openBoxPolizas('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document"></span></li></ul>'; }}
+						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { 
+								var returnval = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+								
+								returnval += '<li title="Modificar" onclick="openBoxModCliente('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
+								returnval += '<li title="Asignar Contactos" onclick="openBoxContacto('+oObj.aData[0]+');"><span class="ui-icon ui-icon-person"></span></li>';
+								returnval += '<li title="Ver Pólizas" onclick="openBoxPolizas('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document"></span></li>';
+								
+								<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
+								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'cliente\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+								<? } ?>
+								
+								returnval += '</ul>'; 
+								return returnval;
+							}
+						}
 					],	
 					"aaSorting": [[1,'asc']],					
 					
