@@ -21,6 +21,34 @@
 			});
 		</script>                   
         
+		<!-- Filter initialization -->
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {	            
+							
+				// Filter: Assign listening functions to input-text for Submit
+				listenToTxtForSubmit();				
+
+				// Filter: Submit handler
+				$('#btnFiltro').click(function() {						
+					var filtersource = $('#frmFiltro').serialize();					
+					// Get table data
+					var newsource = sourceURL+'?action=view&' + filtersource;
+					oTable.fnSettings().sAjaxSource = newsource;
+					oTable.fnDraw();
+				});	
+				// Filter: Reset handler							
+				$('#btnReset').click(function() {								
+					$('#frmFiltro').each(function(){
+						this.reset();
+					});
+				});	
+				
+				// Filter: Get focus
+				$("#cliente_nombre").focus();				
+				
+			});	
+		</script>   
+		
         <!-- DataTables initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {		
@@ -108,6 +136,39 @@
         
             <!-- Include Header -->
             <?php include('inc/header.php'); ?>
+
+            <!-- Form Start -->
+            <div id="divFilter" class="ui-corner-all">                
+                <form id="frmFiltro" name="frmFiltro">
+                    <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                        <tr>                   
+                            <td width="33%">
+                                <label for="cliente_nombre">Nombre</label>                                
+                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
+                            </td>
+                            <td width="33%">
+                                <label for="cliente_nro_doc">Documento</label>                                
+                                <input type="text" name="cliente_nro_doc" id="cliente_nro_doc" maxlength="15" />
+                            </td>
+                            <td width="33%">
+                                <label for="cliente_email">E-mail</label>                                
+                                <input type="text" name="cliente_email" id="cliente_email" maxlength="255" />
+                            </td>          
+                        </tr>
+                        <tr>                                
+                            <td colspan="3" align="center">
+                            	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
+                            </td>  
+                        </tr>                                 
+                        <tr>                                
+                            <td colspan="3" align="center">
+                                <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
+                            </td>
+                        </tr>                                    
+                    </table>
+                </form>                 
+            </div>                
+            <!-- Form End -->             
 
             <!-- Table Start (custom padding No-Filter) -->                              	
             <div id="divTable" style="padding-top:15px">              

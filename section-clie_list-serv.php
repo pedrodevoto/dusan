@@ -15,6 +15,19 @@
 	$query_Recordset1_tables = " FROM cliente LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
 	$query_Recordset1_where = " WHERE 1";
 		
+	
+	// Filter by: cliente_nombre
+	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente_nombre LIKE %s",GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+	}	
+	// Filter by: cliente_nro_doc
+	if(isset($_GET['cliente_nro_doc']) && $_GET['cliente_nro_doc']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente_nro_doc LIKE %s",GetSQLValueString('%' . $_GET['cliente_nro_doc'] . '%', "text"));
+	}	
+	// Filter by: cliente_email
+	if(isset($_GET['cliente_email']) && $_GET['cliente_email']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente_email LIKE %s",GetSQLValueString('%' . $_GET['cliente_email'] . '%', "text"));
+	}	
 ?>
 <?php
 
