@@ -12,8 +12,25 @@
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 ini_set('memory_limit', -1);
+function return_bytes($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    switch($last) {
+        case 'g':
+            $val *= 1024 * 1024 * 1024;
+        case 'm':
+            $val *= 1024 * 1024;
+        case 'k':
+            $val *= 1024;
+    }
+
+    return $val;
+}
 if ($_FILES["box-poliza_foto"]["error"] == 0 and isset($_POST['poliza_id'])){
-	$extension = strrchr($_FILES["box-poliza_foto"]["name"], '.');
+	if ($_FILES["box-poliza_foto"]["size"] > return_bytes(ini_get('upload_max_filesize'))) {
+		die("Error: no se puede subir archivos de más de ".ini_get('upload_max_filesize')." de tamaño.");
+	}
+	$extension = strtolower(strrchr($_FILES["box-poliza_foto"]["name"], '.'));
 	if (!in_array($extension, array(".jpg", ".jpeg", ".png"))) {
 		die("Error: subir solamente fotos con extensión .jpg, .jpeg o .png");
 	}
