@@ -81,9 +81,10 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false},
+						{"sWidth": "5%", "bSearchable": false},
 						{"sWidth": "4%"},
-						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
-								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
+						{"sWidth": "4%",  "bSearchable": false, "fnRender": function(oObj) {
+								return '<span title="'+oObj.aData[14]+'">'+oObj.aData[13]+'</span>';
 							}
 						},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
@@ -137,6 +138,7 @@
 						null,
 						null,
 						{type: "select", values: ['M/C', 'Pendiente', 'VIGENTE', 'A Renovar', 'Renovada', 'Finalizada']},
+						null,
 						null,
 						null,
 						null
@@ -226,7 +228,8 @@
                             <th>V. Desde</th>
                             <th>V. Hasta</th>
                             <th>Estado Póliza</th> 
-                            <th>Estado</th> 
+							<th>Estado</th>
+                            <th>Fotos</th> 
                             <th>Al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    
                             <th>Acc.</th>                                                        
@@ -249,7 +252,8 @@
                             <th></th>
                             <th></th>
                             <th>Estado</th> 
-                            <th></th>                                                         
+                            <th></th>         
+							<th></th>                                                
                             <th></th>                                                         
                             <th></th>                                                        
                         </tr>
