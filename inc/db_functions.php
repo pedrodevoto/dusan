@@ -78,7 +78,7 @@ function determineState($startdiff, $enddiff) {
 			if ($enddiff >= -30) {
 				$estado = 'A Renovar';
 			} else {
-				$estado = 'En Vigencia';	
+				$estado = 'VIGENTE';	
 			}
 		}
 	}

@@ -136,7 +136,7 @@
 						null,
 						null,
 						null,
-						{type: "select", values: ['M/C', 'Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
+						{type: "select", values: ['M/C', 'Pendiente', 'VIGENTE', 'A Renovar', 'Renovada', 'Finalizada']},
 						null,
 						null,
 						null
@@ -188,7 +188,7 @@
 									<option value="">Todos</option>
 									<option value="M/C">M/C</option>
 									<option value="Pendiente">Pendiente</option>
-									<option value="En Vigencia">En Vigencia</option>
+									<option value="VIGENTE">VIGENTE</option>
 									<option value="A Renovar">A Renovar</option>
 									<option value="Renovada">Renovada</option>
 									<option value="Finalizada">Finalizada</option>

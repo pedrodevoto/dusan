@@ -105,7 +105,7 @@
 						null,
 						null,
 						null,
-						{type: "select", values: ['Pendiente', 'En Vigencia', 'A Renovar', 'Renovada', 'Finalizada']},
+						{type: "select", values: ['Pendiente', 'VIGENTE', 'A Renovar', 'Renovada', 'Finalizada']},
 						null,
 						null,
 						null
