@@ -19,6 +19,36 @@
 			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
 	}
 	$query_Recordset1_group = " GROUP BY poliza.poliza_id";
+	
+	// Filter by: poliza_numero
+	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
+	}
+	// Filter by: patente
+	if(isset($_GET['patente']) && $_GET['patente']!=""){	
+		$query_Recordset1_where .= sprintf(" AND patente LIKE %s",GetSQLValueString('%' . $_GET['patente'] . '%', "text"));
+	}
+	// Filter by: seguro_nombre
+	if(isset($_GET['seguro_nombre']) && $_GET['seguro_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
+	}
+	// Filter by: sucursal_nombre
+	if(isset($_GET['sucursal_nombre']) && $_GET['sucursal_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND sucursal_nombre LIKE %s",GetSQLValueString('%' . $_GET['sucursal_nombre'] . '%', "text"));
+	}
+	// Filter by: productor_nombre
+	if(isset($_GET['productor_nombre']) && $_GET['productor_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND productor_nombre LIKE %s",GetSQLValueString('%' . $_GET['productor_nombre'] . '%', "text"));
+	}
+	// Filter by: cliente_nombre
+	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente_nombre LIKE %s",GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+	}
+	// Filter by: poliza_estado
+	if(isset($_GET['poliza_estado']) && $_GET['poliza_estado']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza_estado = %s",GetSQLValueString($_GET['poliza_estado'], "text"));
+	}
+	
 ?>
 <?php
 

@@ -21,6 +21,34 @@
 			});
 		</script>                   
         
+		<!-- Filter initialization -->
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {	            
+							
+				// Filter: Assign listening functions to input-text for Submit
+				listenToTxtForSubmit();				
+
+				// Filter: Submit handler
+				$('#btnFiltro').click(function() {						
+					var filtersource = $('#frmFiltro').serialize();					
+					// Get table data
+					var newsource = sourceURL+'?action=view&' + filtersource;
+					oTable.fnSettings().sAjaxSource = newsource;
+					oTable.fnDraw();
+				});	
+				// Filter: Reset handler							
+				$('#btnReset').click(function() {								
+					$('#frmFiltro').each(function(){
+						this.reset();
+					});
+				});	
+				
+				// Filter: Get focus
+				$("#cliente_nombre").focus();				
+				
+			});	
+		</script>   
+		
         <!-- DataTables initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {		
@@ -124,6 +152,63 @@
         
             <!-- Include Header -->
             <?php include('inc/header.php'); ?>
+
+            <!-- Form Start -->
+            <div id="divFilter" class="ui-corner-all">                
+                <form id="frmFiltro" name="frmFiltro">
+                    <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                        <tr>                   
+                            <td width="14%">
+                                <label for="poliza_numero">Poliza N°</label>                                
+                                <input type="text" name="poliza_numero" id="poliza_numero" maxlength="20" />
+                            </td>
+                            <td width="14%">
+                                <label for="patente">Patente</label>                                
+                                <input type="text" name="patente" id="patente" maxlength="20" />
+                            </td>
+                            <td width="14%">
+                                <label for="seguro_nombre">Compañía</label>                                
+                                <input type="text" name="seguro_nombre" id="seguro_nombre" maxlength="255" />
+                            </td>
+                            <td width="14%">
+                                <label for="sucursal_nombre">Sucursal</label>                                
+                                <input type="text" name="sucursal_nombre" id="sucursal_nombre" maxlength="255" />
+                            </td>
+                            <td width="14%">
+                                <label for="productor_nombre">Productor</label>                                
+                                <input type="text" name="productor_nombre" id="productor_nombre" maxlength="255" />
+                            </td>
+                            <td width="14%">
+                                <label for="cliente_nombre">Cliente</label>                                
+                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
+                            </td>
+                            <td width="14%">
+                                <label for="poliza_estado">Estado</label>                                
+                                <select name="poliza_estado" id="poliza_estado">
+									<option value="">Todos</option>
+									<option value="M/C">M/C</option>
+									<option value="Pendiente">Pendiente</option>
+									<option value="En Vigencia">En Vigencia</option>
+									<option value="A Renovar">A Renovar</option>
+									<option value="Renovada">Renovada</option>
+									<option value="Finalizada">Finalizada</option>
+								</select>
+                            </td>
+                        </tr>
+                        <tr>                                
+                            <td colspan="7" align="center">
+                            	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
+                            </td>  
+                        </tr>                                 
+                        <tr>                                
+                            <td colspan="7" align="center">
+                                <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
+                            </td>
+                        </tr>                                    
+                    </table>
+                </form>                 
+            </div>                
+            <!-- Form End -->             
 
             <!-- Table Start (custom padding No-Filter) -->                              	
             <div id="divTable" style="padding-top:15px">              
