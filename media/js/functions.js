@@ -1214,8 +1214,8 @@ $(document).ready(function() {
 			}
 		});						
 	}
-	populateDiv_Poliza_Fotos = function(id){
-		$.getJSON("get-json-poliza_fotos.php?id="+id, {}, function(j){
+	populateDiv_Fotos = function(section, id){
+		$.getJSON("get-json-"+section+"_fotos.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				// Session expired
 				sessionExpire('box');
@@ -1231,9 +1231,9 @@ $(document).ready(function() {
 					$.each(j, function(i, object) {
 						
 						
-						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.poliza_foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.poliza_foto_thumb_url + '" /></a>';	
+						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.foto_thumb_url + '" /></a>';	
 						result += '<br />';
-						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.poliza_foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\'poliza_foto\', \''+object.poliza_foto_id+'\');$(\'#divShowFoto\').hide();populateDiv_Poliza_Fotos('+id+');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
+						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\''+section+'_foto\', \''+object.foto_id+'\');$(\'#divShowFoto\').hide();populateDiv_Fotos(\''+section+'\', '+id+');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
 						result += '</td>';
 					});
 					// Close Table									
@@ -2377,6 +2377,33 @@ $(document).ready(function() {
 				// Populate DIVs
 				populateDiv_Cliente_Info(id);			
 				populateDiv_Contacto(id);													
+				populateDiv_Fotos('cliente', id);
+				
+				// Append hidden input to AJAX file form
+				$('<input>').prop({
+				    type: 'hidden',
+				    id: 'cliente_id',
+				    name: 'cliente_id'
+				}).val(id).appendTo($('#fileForm'));
+				
+				// AJAX file form
+				$("#fileForm").ajaxForm({
+					beforeSend: function() {
+				    	$("#fotosLoading").show();
+					},
+					uploadProgress: function(event, position, total, percentComplete) {
+					       
+					},
+					complete: function(xhr) {
+						if (xhr.responseText.indexOf('Error:')!=-1) {
+							alert(xhr.responseText);
+						}
+						else {
+							$("#fotosLoading").hide();
+						}
+						populateDiv_Fotos('cliente', id);
+					}
+				});
 					
 				// -------------------- FORM 1 ----------------------
 
@@ -2809,7 +2836,7 @@ $(document).ready(function() {
 				$("#btnBox").button();
 				
 				// Populate DIVs
-				populateDiv_Poliza_Fotos(id);
+				populateDiv_Fotos('poliza', id);
 				
 				// AJAX file form
 				$("#fileForm").ajaxForm({
@@ -2826,7 +2853,7 @@ $(document).ready(function() {
 						else {
 							$("#fotosLoading").hide();
 						}
-						populateDiv_Poliza_Fotos(id);
+						populateDiv_Fotos('poliza', id);
 					}
 				});
 				

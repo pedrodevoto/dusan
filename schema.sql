@@ -105,6 +105,20 @@ CREATE TABLE `cliente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `cliente_foto`;
+CREATE TABLE `cliente_foto` (
+  `cliente_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` int(10) unsigned NOT NULL,
+  `cliente_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `cliente_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `cliente_foto_width` int(11) NOT NULL,
+  `cliente_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`cliente_foto_id`),
+  KEY `cliente_id` (`cliente_id`),
+  CONSTRAINT `cliente_foto_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `contacto`;
 CREATE TABLE `contacto` (
   `contacto_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -300,4 +314,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-18 14:00:29
+-- 2013-07-18 16:36:55

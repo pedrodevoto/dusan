@@ -13,7 +13,21 @@
             </div>
         </fieldset>
     </div>
-    
+	<div style="margin-top:20px">
+	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
+	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
+			<form id="fileForm" action="upload-cliente_foto.php" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="cliente_id" value="<?=$cliente_id?>" />
+			    <p>
+			        <label for="box-cliente_foto">Subir</label>
+			        <input type="file" name="box-cliente_foto" id="box-cliente_foto" class="ui-widget-content" style="width:220px" />
+					<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
+			    </p>
+			</form>
+			<div id="divBoxFotos" style="width:840px;height:135px;overflow:auto;white-space: nowrap;display:none">
+			</div>
+		</fieldset>
+	</div>
     <div>
         <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
