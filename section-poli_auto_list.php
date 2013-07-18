@@ -136,7 +136,7 @@
 						null,
 						null,
 						null,
-						{type: "select", values: ['M/C', 'Pendiente', 'VIGENTE', 'A Renovar', 'Renovada', 'Finalizada']},
+						{type: "select", values: ['M/C', 'PENDIENTE', 'VIGENTE', 'A RENOVAR', 'RENOVADA', 'FINALIZADA']},
 						null,
 						null,
 						null,
@@ -188,11 +188,11 @@
                                 <select name="poliza_estado" id="poliza_estado">
 									<option value="">Todos</option>
 									<option value="M/C">M/C</option>
-									<option value="Pendiente">Pendiente</option>
+									<option value="PENDIENTE">PENDIENTE</option>
 									<option value="VIGENTE">VIGENTE</option>
-									<option value="A Renovar">A Renovar</option>
-									<option value="Renovada">Renovada</option>
-									<option value="Finalizada">Finalizada</option>
+									<option value="A RENOVAR">A RENOVAR</option>
+									<option value="RENOVADA">RENOVADA</option>
+									<option value="FINALIZADA">FINALIZADA</option>
 								</select>
                             </td>
                         </tr>

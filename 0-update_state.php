@@ -22,7 +22,7 @@
 	$affected_rows = 0;
 		
 	// Recordset: Poliza
-	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_estado<>'Renovada'";
+	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_estado<>'RENOVADA'";
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	
 	// While rows in Recordset

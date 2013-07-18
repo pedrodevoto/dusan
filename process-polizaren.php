@@ -156,7 +156,7 @@
 		 ****************************************/
 		 
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_estado='Renovada' WHERE poliza.poliza_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE poliza SET poliza_estado='RENOVADA' WHERE poliza.poliza_id=%s LIMIT 1",
 						$poliza_id);			
 		$Result1 = mysql_query($updateSQL, $connection) or die(mysql_die()); 
 
