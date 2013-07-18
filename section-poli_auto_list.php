@@ -44,7 +44,7 @@
 				});	
 				
 				// Filter: Get focus
-				$("#cliente_nombre").focus();				
+				$("#patente").focus();				
 				
 			});	
 		</script>   
