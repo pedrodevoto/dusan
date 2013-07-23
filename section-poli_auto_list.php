@@ -81,8 +81,8 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false},
-						{"sWidth": "5%", "bSearchable": false},
-						{"sWidth": "4%"},
+						{"sWidth": "6%", "bSearchable": false},
+						{"sWidth": "5%"},
 						{"sWidth": "4%",  "bSearchable": false, "fnRender": function(oObj) {
 								return '<span title="'+oObj.aData[14]+'">'+oObj.aData[13]+'</span>';
 							}
@@ -123,26 +123,7 @@
 						});
 					}							
 												
-				}).columnFilter({			
-					aoColumns: [
-						null,
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						null,
-						null,
-						null,
-						null,
-						{type: "select", values: ['M/C', 'PENDIENTE', 'VIGENTE', 'A RENOVAR', 'RENOVADA', 'FINALIZADA']},
-						null,
-						null,
-						null,
-						null
-					]
-				}); // Enable column filtering			
+				});		
 
 			});	
 		</script>      
@@ -240,17 +221,17 @@
 	                <tfoot>
                         <tr>
                             <th></th>
-                            <th>Número</th>                            
-                            <th>Patente</th> 
-                            <th>Compañía</th>
-                            <th>Sucursal</th>
-                            <th>Productor</th>
-                            <th>Cliente</th>
+                            <th></th>                            
+                            <th></th> 
                             <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>Estado</th> 
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th> 
                             <th></th>         
 							<th></th>                                                
                             <th></th>                                                         
