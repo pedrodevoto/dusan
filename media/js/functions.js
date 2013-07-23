@@ -520,6 +520,7 @@ $(document).ready(function() {
 		var options = '<option value=\'\'>Todos</option>';
 		switch (tipo_poliza) {
 			case '3':
+			case 'Personas':
 				vigencia = ['Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual'];
 				break;
 			default:
@@ -2875,7 +2876,6 @@ $(document).ready(function() {
 					});	
 					$("#box-poliza_vigencia").change(function(){
 						var months;
-						'Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual'
 						switch ($(this).val()) {
 							case 'Anual':
 								months = 12;
@@ -3089,6 +3089,17 @@ $(document).ready(function() {
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
 					
+					// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
+					switch ($("#box-tipo_poliza_nombre").val()) {
+						case 'Personas':
+							$('#box-poliza_ajuste').prop('disabled', true);
+							break;
+						default:
+							$('#box-poliza_ajuste').prop('disabled', false);
+							break;
+					}
+					populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $("#box-tipo_poliza_nombre").val());
+					
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function(){
@@ -3104,10 +3115,20 @@ $(document).ready(function() {
 							case 'Semestral':
 								months = 6;							
 								break;
+							case 'Cuatrimestral':
+								months = 4;
+								break;
+							case 'Trimestral':
+								months = 3;
+								break;
 							case 'Bimestral':
 								months = 2;															
+								break;
+							case 'Mensual':
+								months = 1;
 								break;							
 						}
+						
 						if ($(this).val() !== '') {
 							if ($('#box-poliza_validez_desde').val() !== '') {
 								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
@@ -3133,9 +3154,18 @@ $(document).ready(function() {
 									case 'Semestral':
 										cuotas = 6;							
 										break;
+									case 'Cuatrimestral':
+										cuotas = 4;
+										break;
+									case 'Trimestral':
+										cuotas = 3;
+										break;
 									case 'Bimestral':
 										cuotas = 2;															
-										break;							
+										break;				
+									case 'Mensual':
+										cuotas = 1;
+										break;			
 								}
 								break;
 						}

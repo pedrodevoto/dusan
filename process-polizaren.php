@@ -59,8 +59,8 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (cliente_id, subtipo_poliza_id, poliza_estado, poliza_anulada, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
-		 					  (SELECT poliza.cliente_id, poliza.subtipo_poliza_id, %s, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado, poliza_anulada, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
+		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
 								GetSQLValueString($estado, "text"),
 								GetSQLValueString(isset($_POST['box-poliza_anulada']) ? 'true' : '', 'defined','1','0'),
 								GetSQLValueString($_POST['box-poliza_numero'], "text"),
@@ -144,6 +144,46 @@
 			
 				// Break
 				break;
+				
+			case 'accidentes':
+			
+			
+			// ---------------------------------- ACCIDENTES ---------------------------------- //
+			
+			// Recordset: Accidentes
+			$query_Recordset3 = sprintf("SELECT accidentes.accidentes_id FROM accidentes WHERE accidentes.poliza_id=%s",
+								$row_Recordset1['poliza_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$totalRows_Recordset3 = mysql_num_rows($Recordset3);
+			mysql_free_result($Recordset3);
+
+			// If Record exists, insert
+			if ($totalRows_Recordset3 === 1) {
+				
+				// Copiar Asegurados
+				$insertSQL = sprintf("INSERT INTO accidentes_asegurado (poliza_id, accidentes_asegurado_nombre, accidentes_asegurado_documento, accidentes_asegurado_nacimiento, accidentes_asegurado_domicilio, accidentes_asegurado_actividad, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, accidentes_asegurado_beneficiario, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento)
+					 (SELECT %s, accidentes_asegurado_nombre, accidentes_asegurado_documento, accidentes_asegurado_nacimiento, accidentes_asegurado_domicilio, accidentes_asegurado_actividad, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, accidentes_asegurado_beneficiario, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento FROM accidentes_asegurado WHERE poliza_id=%s)",
+										$new_id,
+										$row_Recordset1['poliza_id']);																		
+				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+				
+				// Copiar Clausulas de No Repeticion
+				$insertSQL = sprintf("INSERT INTO accidentes_clausula (poliza_id, accidentes_clausula_nombre, accidentes_clausula_cuit, accidentes_clausula_domicilio)
+					 (SELECT %s, accidentes_clausula_nombre, accidentes_clausula_cuit, accidentes_clausula_domicilio FROM accidentes_clausula WHERE poliza_id=%s)",
+										$new_id,
+										$row_Recordset1['poliza_id']);																		
+				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+				
+				// Insertar nuevo accidente
+				$insertSQL = sprintf("INSERT INTO accidentes (poliza_id) VALUES (%s)",
+										$new_id);																		
+				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+			}																						
+			
+			// Break
+			break;
+			
+			
 				
 			default:
 				// ---------------------------------- UNDEFINED ---------------------------------- //

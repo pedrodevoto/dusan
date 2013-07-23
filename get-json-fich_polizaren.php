@@ -14,8 +14,8 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT poliza.poliza_id, cliente_nombre, tipo_poliza_nombre, subtipo_poliza_nombre, poliza_anulada, poliza_numero AS poliza_renueva_num, productor_seguro.seguro_id, productor_seguro.productor_seguro_id, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_ajuste, poliza_recargo 
-									FROM poliza JOIN (cliente, tipo_poliza, subtipo_poliza, productor_seguro) ON (poliza.cliente_id=cliente.cliente_id AND tipo_poliza.tipo_poliza_id=subtipo_poliza.tipo_poliza_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id)
+	$query_Recordset1 = sprintf("SELECT poliza.poliza_id, sucursal_nombre, cliente_nombre, tipo_poliza_nombre, subtipo_poliza_nombre, poliza_anulada, poliza_numero AS poliza_renueva_num, productor_seguro.seguro_id, productor_seguro.productor_seguro_id, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_ajuste, poliza_recargo 
+									FROM poliza JOIN (cliente, tipo_poliza, subtipo_poliza, productor_seguro, sucursal) ON (poliza.cliente_id=cliente.cliente_id AND tipo_poliza.tipo_poliza_id=subtipo_poliza.tipo_poliza_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND poliza.sucursal_id = sucursal.sucursal_id)
 									WHERE poliza.poliza_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Main
