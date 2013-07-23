@@ -11,8 +11,8 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, subtipo_poliza_nombre, seguro_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, IF(poliza_entregada=1, 'Entregada', IF(poliza_correo=1, 'Enviada', IF(poliza_fecha_recepcion IS NOT NULL, 'Sí', 'No'))) as poliza_estado_entrega, subtipo_poliza_tabla, poliza_estado, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 'Sí', 'No'), IF(poliza_medio_pago='Cuponera', 'Cup', IF(poliza_medio_pago='Débito Bancario', 'DC', 'TC'))) AS poliza_al_dia, IF(poliza_medio_pago = 'Directo', GROUP_CONCAT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', CONCAT('Cuota número ', cuota_nro, ' (Período: ', DATE_FORMAT(cuota_periodo, '%m/%y'), ', venc: ', DATE_FORMAT(cuota_vencimiento, '%d/%m/%y'), ')'), NULL) SEPARATOR '\n'), '') AS poliza_al_dia_detalle";
-	$query_Recordset1_tables = " FROM poliza JOIN (productor_seguro, seguro, productor, subtipo_poliza, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id) LEFT JOIN cuota ON cuota.poliza_id = poliza.poliza_id";
+	$query_Recordset1_fields = " poliza.poliza_id, poliza_numero, subtipo_poliza_nombre, seguro_nombre, sucursal_nombre, productor_nombre, cliente_nombre, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, IF(poliza_entregada=1, 'Entregada', IF(poliza_correo=1, 'Enviada', IF(poliza_fecha_recepcion IS NOT NULL, 'Sí', 'No'))) as poliza_estado_entrega, poliza_estado, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 'Sí', 'No'), IF(poliza_medio_pago='Cuponera', 'Cup', IF(poliza_medio_pago='Débito Bancario', 'DC', 'TC'))) AS poliza_al_dia, IF(poliza_medio_pago = 'Directo', GROUP_CONCAT(IF(cuota_vencimiento <= DATE(NOW()) AND cuota_estado = '1 - No Pagado', CONCAT('Cuota número ', cuota_nro, ' (Período: ', DATE_FORMAT(cuota_periodo, '%m/%y'), ', venc: ', DATE_FORMAT(cuota_vencimiento, '%d/%m/%y'), ')'), NULL) SEPARATOR '\n'), '') AS poliza_al_dia_detalle";
+	$query_Recordset1_tables = " FROM poliza JOIN (productor_seguro, seguro, productor, subtipo_poliza, cliente) ON (poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id) JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id LEFT JOIN cuota ON cuota.poliza_id = poliza.poliza_id";
 	$query_Recordset1_where = " WHERE  poliza.subtipo_poliza_id != 6";
 		
 	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
@@ -20,6 +20,32 @@
 			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
 	}
 	$query_Recordset1_group = " GROUP BY poliza.poliza_id";
+	
+	// Filter by: poliza_numero
+	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
+	}
+	// Filter by: seguro_nombre
+	if(isset($_GET['seguro_nombre']) && $_GET['seguro_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
+	}
+	// Filter by: sucursal_nombre
+	if(isset($_GET['sucursal_nombre']) && $_GET['sucursal_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND sucursal_nombre LIKE %s",GetSQLValueString('%' . $_GET['sucursal_nombre'] . '%', "text"));
+	}
+	// Filter by: productor_nombre
+	if(isset($_GET['productor_nombre']) && $_GET['productor_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND productor_nombre LIKE %s",GetSQLValueString('%' . $_GET['productor_nombre'] . '%', "text"));
+	}
+	// Filter by: cliente_nombre
+	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente_nombre LIKE %s",GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+	}
+	// Filter by: poliza_estado
+	if(isset($_GET['poliza_estado']) && $_GET['poliza_estado']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza_estado = %s",GetSQLValueString($_GET['poliza_estado'], "text"));
+	}
+	
 ?>
 <?php
 
@@ -39,7 +65,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('poliza_id', 'poliza_numero', 'subtipo_poliza_nombre', 'seguro_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'poliza_estado_entrega', 'subtipo_poliza_tabla', 'poliza_estado', 'poliza_anulada', ' ');
+			$aColumns = array('poliza_id', 'poliza_numero', 'subtipo_poliza_nombre', 'seguro_nombre', 'sucursal_nombre', 'productor_nombre', 'cliente_nombre', 'poliza_vigencia', 'poliza_validez_desde', 'poliza_validez_hasta', 'poliza_estado_entrega', 'poliza_estado', 'poliza_al_dia', 'poliza_al_dia_detalle', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "poliza.poliza_id";		
@@ -121,17 +147,7 @@
 							break;
 						default:
 							/* Custom: Transform results */
-							if ($aColumns[$i] === 'subtipo_poliza_tabla') {
-								$query_Recordset2 = sprintf("SELECT IF(COUNT(*)>0,'Si','No') AS total FROM %s WHERE poliza_id=%s",
-														$aRow[$i],
-														$aRow[0]);
-								$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
-								$row_Recordset2 = mysql_fetch_assoc($Recordset2);
-								mysql_free_result($Recordset2);
-								$row[] = $row_Recordset2['total'];
-							} else {
-								$row[] = strip_tags($aRow[ $aColumns[$i] ]);						
-							}		
+							$row[] = strip_tags($aRow[ $aColumns[$i] ]);
 							break;
 					}
 				}

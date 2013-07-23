@@ -515,34 +515,21 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}	
-	populateListPoliza_Vigencia = function(field, context){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-poliza_vigencia.php",
-			dataType: 'json',
-			success: function (j) {
-				if(j.error == 'expired'){
-					sessionExpire(context);
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
-						options += '<option value="' + key + '">' + value + '</option>';
-					});		
-					$('#'+field).html(options);
-					// Sort options alphabetically
-					sortListAlpha(field);
-					// Append option: "all"
-					appendListItem(field, '', 'Todos');
-					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
-				}
-			}
-		});			
-		return dfd.promise();	
+	populateListPoliza_Vigencia = function(field, context, tipo_poliza){
+		var vigencia;
+		var options = '<option value=\'\'>Todos</option>';
+		switch (tipo_poliza) {
+			case '3':
+				vigencia = ['Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual'];
+				break;
+			default:
+				vigencia = ['Bimestral','Semestral','Anual'];
+				break;
+		}
+		for (var i = 0; i < vigencia.length; i++) {
+			options += '<option value="' + vigencia[i] + '">' + vigencia[i] + '</option>';
+		}
+		$('#'+field).html(options);
 	}
 	populateListPoliza_Cuotas = function(field, context){
 		var dfd = new $.Deferred();		
@@ -628,7 +615,32 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}												
-	
+	populateListAseguradoActividad = function(field, context){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-asegurado_actividad.php",
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else {				
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Todos');
+					// Select first item
+					selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+	}
 	<!-- Delete via Link functions -->	
 	deleteViaLink = function(section, id){	
 		var dfd = new $.Deferred();						
@@ -942,6 +954,7 @@ $(document).ready(function() {
 					if (typeof(polDetInit) == "function") {
 						polDetInit();
 					}
+					populatePolizaDet(j.subtipo_poliza, id);
 					// Resolve
 					dfd.resolve();														
 				}
@@ -950,6 +963,130 @@ $(document).ready(function() {
 		return dfd.promise();				
 	}
 	
+	populatePolizaDet = function(subtipo_poliza, id) {
+		switch (subtipo_poliza) {
+			case 'automotor':
+				// Populate DIVs
+				populateDiv_Fotos('poliza', id);
+			
+				// AJAX file form
+				$("#fileForm").ajaxForm({
+					beforeSend: function() {
+				    	$("#fotosLoading").show();
+					},
+					uploadProgress: function(event, position, total, percentComplete) {
+				       
+					},
+					complete: function(xhr) {
+						if (xhr.responseText.indexOf('Error:')!=-1) {
+							alert(xhr.responseText);
+						}
+						else {
+							$("#fotosLoading").hide();
+						}
+						populateDiv_Fotos('poliza', id);
+					}
+				});
+				break;
+			case 'accidentes':
+				// Agregar asegurado
+				$(".box-date").datepicker({
+						dateFormat: 'dd/mm/yy',
+						changeYear: true,									
+						yearRange: "-100:+0",
+						changeMonth: true										
+				});
+				
+				populateSectionAsegurado(id);
+				populateSectionClausula(id);
+				break;
+		}
+	}
+	populateSectionAsegurado = function(id) {
+		populateListAseguradoActividad('box-accidentes_asegurado_actividad');
+		populateDiv_Asegurado(id);
+		
+		$("#box-accidentes_asegurado_suma_asegurada, #box-accidentes_asegurado_gastos_medicos").change(function() {
+			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
+			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
+			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
+		});
+		$("#box-accidentes_asegurado_beneficiario").change(function() {
+			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento").prop('disabled', !($(this).prop('checked')));
+			$("#box-accidentes_asegurado_beneficiario_nombre").focus();
+		});
+		$("#btnBoxAsegurado, #btnBoxAseguradoReset").button();
+		var validateForm = $("#frmBoxAsegurado").validate({
+			rules: {							
+				"box-accidentes_asegurado_nombre": {required: true},
+				"box-accidentes_asegurado_documento": {required: true},
+				"box-accidentes_asegurado_nacimiento": {required: true, date: true},
+				"box-accidentes_asegurado_actividad": {required: true},
+				"box-accidentes_asegurado_suma_asegurada": {required: true, number: true},
+				"box-accidentes_asegurado_gastos_medicos": {required: true, number: true},
+				"box-accidentes_asegurado_beneficiario_nombre": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
+				"box-accidentes_asegurado_beneficiario_documento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
+				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}, date: true},
+				
+			}
+		});		
+		$("#btnBoxAsegurado").click(function() {
+			$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+			if (validateForm.form()) {
+				if ($("#box-action").val() == 'insert') {
+					insertFormAsegurado(id);
+				}
+				else {
+					updateFormAsegurado(id);
+				}
+			};
+			$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+		});	
+	}
+	populateSectionClausula = function(id) {
+		populateDiv_Clausula(id);
+		
+		$("#btnBoxClausula, #btnBoxClausulaReset").button();
+		var validateForm = $("#frmBoxClausula").validate({
+			rules: {							
+				"box-accidentes_clausula_nombre": {required: true},
+				"box-accidentes_clausula_cuit": {required: true},
+				"box-accidentes_clausula_domicilio": {required: true}
+			}
+		});		
+		$("#btnBoxClausula").click(function() {
+			if (validateForm.form()) {
+				if ($("#box-action").val() == 'insert') {
+					insertFormClausula(id);
+				}
+				else {
+					updateFormClausula(id);
+				}
+			};
+		});	
+	}
+	populateFormBoxAsegurado = function(id){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-fich_accidentes_asegurado.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');				
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");															
+					// Resolve
+					dfd.resolve();														
+				}
+			}
+		});	
+		return dfd.promise();				
+	}
 	<!-- Other form functions -->
 	assignClientToPoliza = function(id){
 		$.ajax({
@@ -1249,6 +1386,107 @@ $(document).ready(function() {
 				}
 			}
 		});							
+	}
+	populateDiv_Asegurado = function(id) {
+		$.getJSON("get-json-fich_accidentes_asegurados.php?id="+id, {}, function(j){
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				var result = '';			
+				// Check if empty
+				if (j.length>0) {
+					// Sort data
+					j.sort(function (a, b) {
+						return 1;
+					});					
+					var totalsuma = 0;
+					var totalmed = 0;
+					var count = 0;
+					// Open Table
+					result += '<table class="tblBox">';			
+					// Table Head
+					result += '<tr>';
+					result += '<th>Nombre</th>';
+					result += '<th>DNI</th>';
+					result += '<th>Actividad</th>';
+					result += '<th>Legal</th>';
+					result += '<th>Asegurado</th>';
+					result += '<th>Gastos Farm.</th>';
+					result += '<th>Acción</th>';																				
+					result += '</tr>';					
+					// Data
+					$.each(j, function(i, object) {
+						result += '<tr>';
+						result += '<td>'+object.accidentes_asegurado_nombre+'</td>';
+						result += '<td>'+object.accidentes_asegurado_documento+'</td>';
+						result += '<td>'+object.asegurado_actividad_nombre.substr(0, 15)+(object.asegurado_actividad_nombre.length>15?'...':'')+'</td>';
+						result += '<td>'+object.accidentes_asegurado_legal+'</td>';
+						result += '<td>'+object.accidentes_asegurado_suma_asegurada+'</td>';
+						result += '<td>'+object.accidentes_asegurado_gastos_medicos+'</td>';
+						result += '<td><ul class="listInlineIcons">';
+						result += '<li title="Editar Asegurado" onClick="javascript:editInBoxAsegurado('+object.accidentes_asegurado_id+');"><span class="ui-icon ui-icon-search"></span></li>';
+						result += '<li title="Eliminar Asegurado" onClick="javascript:deleteAccidentesAsegurado('+object.accidentes_asegurado_id+', '+id+');"><span class="ui-icon ui-icon-trash"></span></li>';
+						result += '</ul></td>';						
+						result += '</tr>';		
+						totalsuma += Number(object.accidentes_asegurado_suma_asegurada);	
+						totalmed += Number(object.accidentes_asegurado_gastos_medicos);	
+						count++;						
+					});
+					result += '<tr><td><strong>Total ('+count+')</strong></td><td></td><td></td><td></td><td><strong>'+Number(totalsuma).toFixed(2)+'</strong></td><td><strong>'+Number(totalmed).toFixed(2)+'</strong></td><td></td></tr>';
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no contiene datos de asegurados.';
+				}
+				// Populate DIV					
+				$('#divBoxListAsegurado').html(result);								
+			}
+		});				
+	}
+	populateDiv_Clausula = function(id) {
+		$.getJSON("get-json-fich_accidentes_clausulas.php?id="+id, {}, function(j){
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				var result = '';			
+				// Check if empty
+				if (j.length>0) {
+					// Sort data
+					j.sort(function (a, b) {
+						return 1;
+					});					
+					var count = 0;
+					// Open Table
+					result += '<table class="tblBox">';			
+					// Table Head
+					result += '<tr>';
+					result += '<th>Nombre</th>';
+					result += '<th>CUIT</th>';
+					result += '<th>Domicilio</th>';
+					result += '<th>Acción</th>';																				
+					result += '</tr>';					
+					// Data
+					$.each(j, function(i, object) {
+						result += '<tr>';
+						result += '<td>'+object.accidentes_clausula_nombre+'</td>';
+						result += '<td>'+object.accidentes_clausula_cuit+'</td>';
+						result += '<td>'+object.accidentes_clausula_domicilio+'</td>';
+						result += '<td><ul class="listInlineIcons">';
+						result += '<li title="Eliminar Asegurado" onClick="javascript:deleteAccidentesClausula('+object.accidentes_clausula_id+', '+id+');"><span class="ui-icon ui-icon-trash"></span></li>';
+						result += '</ul></td>';						
+						result += '</tr>';
+						count++;
+					});
+					result += '<tr><td><strong>Total: '+count+'</strong></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no contiene cláusulas de no repetición.';
+				}
+				// Populate DIV					
+				$('#divBoxListClausula').html(result);								
+			}
+		});				
 	}
 	populateDiv_Cliente_Results = function() {
 		$.getJSON("get-json-fich_poliza-cliente_search.php", $("#frmSelectClient").serialize(), function(j) {
@@ -1552,7 +1790,61 @@ $(document).ready(function() {
 			}
 		});
 	}							
-	
+	insertFormAsegurado = function(id){	
+		// Disable button
+		$('#btnBoxAsegurado').button("option", "disabled", true);
+		// Set form parameters
+		var param = $("#frmBoxAsegurado").serializeArray();	
+		param.push({ name: "box-poliza_id", value: id });		
+		// Post				
+		$.post("insert-accidentes_asegurado.php", param, function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));						
+				} else {
+					// Clear form
+					$('#frmBoxAsegurado').each(function(){
+						this.reset();
+					});					
+					$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
+					// Refresh DIVs
+					populateDiv_Asegurado(id);					
+				}
+				// Enable button
+				$('#btnBoxAsegurado').button("option", "disabled", false);				
+			}
+		});
+	}
+	insertFormClausula = function(id){	
+		// Disable button
+		$('#btnBoxClausula').button("option", "disabled", true);
+		// Set form parameters
+		var param = $("#frmBoxClausula").serializeArray();	
+		param.push({ name: "box-poliza_id", value: id });		
+		// Post				
+		$.post("insert-accidentes_clausula.php", param, function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));						
+				} else {
+					// Clear form
+					$('#frmBoxClausula').each(function(){
+						this.reset();
+					});					
+					// Refresh DIVs
+					populateDiv_Clausula(id);					
+				}
+				// Enable button
+				$('#btnBoxClausula').button("option", "disabled", false);				
+			}
+		});
+	}
 	<!-- Update via form functions -->	
 	updateFormUsuario = function(){
 		// Disable button
@@ -1677,7 +1969,38 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+	updateFormAsegurado = function(id){	
+		// Disable button
+		$('#btnBoxAsegurado').button("option", "disabled", true);
+		// Post				
+		$.post("update-accidentes_asegurado.php", $("#frmBoxAsegurado").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));						
+				} else {
+					// Clear form
+					$('#frmBoxAsegurado').each(function(){
+						this.reset();
+					});					
+					$("#box-accidentes_asegurado_id").remove();
+					$("#box-action").val('insert');
+					$("#btnBoxAseguradoReset").button('option', 'label', 'Borrar');
+					$("#btnBoxAsegurado").button('option', 'label', 'Agregar');
+					$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
+					// Refresh DIVs
+					populateDiv_Asegurado(id);					
+				}
+				// Enable button
+				$('#btnBoxAsegurado').button("option", "disabled", false);				
+			}
+		});
+	}
+	updateFormClausula = function(id){	
+		
+	}
 	<!-- Update via Link functions -->
 	updateLinkContacto_Default = function(id, cliente_id){	
 		if (confirm('Está seguro que desea establecer este contacto como primario?')) {
@@ -1806,6 +2129,20 @@ $(document).ready(function() {
 			populateDiv_Contacto(cliente_id);	
 		})
 	}			
+	deleteAccidentesAsegurado = function (id, poliza_id) {		
+		$.when(
+			deleteViaLink('accidentes_asegurado', id)
+		).then(function(){
+			populateDiv_Asegurado(poliza_id);	
+		})
+	}			
+	deleteAccidentesClausula = function (id, poliza_id) {		
+		$.when(
+			deleteViaLink('accidentes_clausula', id)
+		).then(function(){
+			populateDiv_Clausula(poliza_id);	
+		})
+	}		
 	
 	<!-- Box functions -->
 	openBoxAltaUsuario = function () {
@@ -2521,6 +2858,16 @@ $(document).ready(function() {
 					$("#box-tipo_poliza_id").change(function(){
 						$('#box-subtipo_poliza_id').html(loading);
 						populateListSubtipoPoliza($(this).val(), 'box-subtipo_poliza_id', 'box');
+						// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
+						switch ($(this).val()) {
+							case '3':
+								$('#box-poliza_ajuste').prop('disabled', true);
+								break;
+							default:
+								$('#box-poliza_ajuste').prop('disabled', false);
+								break;
+						}
+						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $(this).val());
 					});	
 					$("#box-seguro_id").change(function(){
 						$('#box-productor_seguro_id').html(loading);						
@@ -2528,6 +2875,7 @@ $(document).ready(function() {
 					});	
 					$("#box-poliza_vigencia").change(function(){
 						var months;
+						'Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual'
 						switch ($(this).val()) {
 							case 'Anual':
 								months = 12;
@@ -2535,8 +2883,17 @@ $(document).ready(function() {
 							case 'Semestral':
 								months = 6;							
 								break;
+							case 'Cuatrimestral':
+								months = 4;
+								break;
+							case 'Trimestral':
+								months = 3;
+								break;
 							case 'Bimestral':
 								months = 2;															
+								break;
+							case 'Mensual':
+								months = 1;
 								break;							
 						}
 						if ($(this).val() !== '') {
@@ -2564,9 +2921,18 @@ $(document).ready(function() {
 									case 'Semestral':
 										cuotas = 6;							
 										break;
+									case 'Cuatrimestral':
+										cuotas = 4;
+										break;
+									case 'Trimestral':
+										cuotas = 3;
+										break;
 									case 'Bimestral':
 										cuotas = 2;															
-										break;							
+										break;				
+									case 'Mensual':
+										cuotas = 1;
+										break;			
 								}
 								break;
 						}
@@ -2835,28 +3201,6 @@ $(document).ready(function() {
 				// Initialize buttons
 				$("#btnBox").button();
 				
-				// Populate DIVs
-				populateDiv_Fotos('poliza', id);
-				
-				// AJAX file form
-				$("#fileForm").ajaxForm({
-					beforeSend: function() {
-				    	$("#fotosLoading").show();
-					},
-					uploadProgress: function(event, position, total, percentComplete) {
-					       
-					},
-					complete: function(xhr) {
-						if (xhr.responseText.indexOf('Error:')!=-1) {
-							alert(xhr.responseText);
-						}
-						else {
-							$("#fotosLoading").hide();
-						}
-						populateDiv_Fotos('poliza', id);
-					}
-				});
-				
 				// Disable form
 				formDisable('frmBox','ui',true);
 								
@@ -2926,6 +3270,40 @@ $(document).ready(function() {
 								
 			}
 		});		
+	}
+	editInBoxAsegurado = function(id) {
+		// Disable form
+		formDisable('frmBoxAsegurado','ui',true);
+		$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');	
+		$.when(populateFormBoxAsegurado(id)).then(function() {
+			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento").prop('disabled', !($("#box-accidentes_asegurado_beneficiario").prop('checked')));
+			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
+			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
+			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
+			
+			// Append hidden input to form
+			$('<input>').prop({
+			    type: 'hidden',
+			    id: 'box-accidentes_asegurado_id',
+			    name: 'box-accidentes_asegurado_id'
+			}).val(id).appendTo($('#frmBoxAsegurado'));
+			$("#box-action").val('edit');
+			$("#btnBoxAseguradoReset").button('option', 'label', 'Cancelar').click(function() {
+				// Clear form
+				$('#frmBoxAsegurado').each(function(){
+					this.reset();
+				});					
+				$("#box-accidentes_asegurado_id").remove();
+				$("#box-action").val('insert');
+				$("#btnBoxAseguradoReset").button('option', 'label', 'Borrar');
+				$("#btnBoxAsegurado").button('option', 'label', 'Agregar');
+				$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
+			});
+			$("#btnBoxAsegurado").button('option', 'label', 'Guardar');
+			$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+			formDisable('frmBoxAsegurado','ui',false);
+			$("#box-accidentes_asegurado_nombre").focus();
+		});
 	}	
 
 });

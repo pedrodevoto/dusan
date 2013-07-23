@@ -38,6 +38,7 @@
             </div>
         </fieldset>
     </div>
+	<?php if ($row_Recordset1['subtipo_poliza_tabla']=='automotor'){?>
 	<div style="margin-top:20px">
 	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
 	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
@@ -53,9 +54,8 @@
 			</div>
 		</fieldset>
 	</div>
-	<form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
-		<?php
-            // Require form by type
+	<?php }
+	// Require form by type
             require_once('subtipo/'.$row_Recordset1['subtipo_poliza_tabla'].'.php');
         ?> 
         <!-- Acciones -->

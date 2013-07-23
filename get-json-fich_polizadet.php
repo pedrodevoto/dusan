@@ -38,12 +38,12 @@
 			// Set Basic Info
 			foreach ($row_Recordset2 as $key=>$value) {
 				$output[$key] = strip_tags($value);
-			}									
+			}								
 			
 		} else {
 			$output["empty"] = true;
 		}	
-		
+		$output['subtipo_poliza'] = $row_Recordset1['subtipo_poliza_tabla'];
 		// Close Recordset: Detail
 		mysql_free_result($Recordset2);	
 		

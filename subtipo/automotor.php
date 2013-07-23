@@ -54,7 +54,7 @@
 	});	
 //--> 
 </script>
-
+<form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
 <fieldset class="ui-widget ui-widget-content ui-corner-all">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Subpoliza (<?php echo($row_Recordset1['subtipo_poliza_nombre']); ?>)</legend>        
     <p>

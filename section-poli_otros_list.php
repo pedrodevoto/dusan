@@ -21,6 +21,34 @@
 			});
 		</script>                   
         
+		<!-- Filter initialization -->
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {	            
+							
+				// Filter: Assign listening functions to input-text for Submit
+				listenToTxtForSubmit();				
+
+				// Filter: Submit handler
+				$('#btnFiltro').click(function() {						
+					var filtersource = $('#frmFiltro').serialize();					
+					// Get table data
+					var newsource = sourceURL+'?action=view&' + filtersource;
+					oTable.fnSettings().sAjaxSource = newsource;
+					oTable.fnDraw();
+				});	
+				// Filter: Reset handler							
+				$('#btnReset').click(function() {								
+					$('#frmFiltro').each(function(){
+						this.reset();
+					});
+				});	
+				
+				// Filter: Get focus
+				$("#poliza_numero").focus();				
+				
+			});	
+		</script>   
+		
         <!-- DataTables initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {		
@@ -38,22 +66,24 @@
 					"sPaginationType": "full_numbers",	
 					"bServerSide": true,				
 					"sAjaxSource": sourceURL+'?action=view',
+					"iDisplayLength": 25,
 					"aoColumns": [
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
 						{"sWidth": "8%"},
 						{"sWidth": "7%"},
-						{"sWidth": "12%"},
-						{"sWidth": "12%"},
-						{"sWidth": "11%"},
+						{"sWidth": "8%"},
+						{"sWidth": "8%"},
+						{"sWidth": "8%"},
+						{"sWidth": "8%"},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
-						{"sWidth": "7%", "bSearchable": false},
+						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "8%"},
 						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
-								return '<span title="'+oObj.aData[11]+'">'+oObj.aData[10]+'</span>';
+								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
 							}
 						},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
@@ -61,9 +91,8 @@
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="openBoxPolizaDet('+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
-							if (oObj.aData[9] == 'Si') {
-								returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Cuotas" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li><li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
-							}
+							returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Cuotas" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li><li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
+							
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
 							<? } ?>
@@ -93,24 +122,7 @@
 						});
 					}							
 												
-				}).columnFilter({			
-					aoColumns: [
-						null,
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						{type: "text"},
-						null,
-						null,
-						null,
-						null,
-						{type: "select", values: ['PENDIENTE', 'VIGENTE', 'A RENOVAR', 'RENOVADA', 'FINALIZADA']},
-						null,
-						null,
-						null
-					]
-				}); // Enable column filtering			
+				});
 
 			});	
 		</script>      
@@ -122,6 +134,59 @@
             <!-- Include Header -->
             <?php include('inc/header.php'); ?>
 
+            <!-- Form Start -->
+            <div id="divFilter" class="ui-corner-all">                
+                <form id="frmFiltro" name="frmFiltro">
+                    <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                        <tr>                   
+                            <td width="16%">
+                                <label for="poliza_numero">Poliza N°</label>                                
+                                <input type="text" name="poliza_numero" id="poliza_numero" maxlength="20" />
+                            </td>
+                            <td width="16%">
+                                <label for="seguro_nombre">Compañía</label>                                
+                                <input type="text" name="seguro_nombre" id="seguro_nombre" maxlength="255" />
+                            </td>
+                            <td width="16%">
+                                <label for="sucursal_nombre">Sucursal</label>                                
+                                <input type="text" name="sucursal_nombre" id="sucursal_nombre" maxlength="255" />
+                            </td>
+                            <td width="16%">
+                                <label for="productor_nombre">Productor</label>                                
+                                <input type="text" name="productor_nombre" id="productor_nombre" maxlength="255" />
+                            </td>
+                            <td width="16%">
+                                <label for="cliente_nombre">Cliente</label>                                
+                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
+                            </td>
+                            <td width="16%">
+                                <label for="poliza_estado">Estado</label>                                
+                                <select name="poliza_estado" id="poliza_estado">
+									<option value="">Todos</option>
+									<option value="M/C">M/C</option>
+									<option value="PENDIENTE">PENDIENTE</option>
+									<option value="VIGENTE">VIGENTE</option>
+									<option value="A RENOVAR">A RENOVAR</option>
+									<option value="RENOVADA">RENOVADA</option>
+									<option value="FINALIZADA">FINALIZADA</option>
+								</select>
+                            </td>
+                        </tr>
+                        <tr>                                
+                            <td colspan="6" align="center">
+                            	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
+                            </td>  
+                        </tr>                                 
+                        <tr>                                
+                            <td colspan="6" align="center">
+                                <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
+                            </td>
+                        </tr>                                    
+                    </table>
+                </form>                 
+            </div>                
+            <!-- Form End -->       
+
             <!-- Table Start (custom padding No-Filter) -->                              	
             <div id="divTable" style="padding-top:15px">              
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="table1">                                
@@ -131,6 +196,7 @@
                             <th>Póliza N°</th>                            
                             <th>Tipo</th> 
                             <th>Compañía</th>
+                            <th>Sucursal</th>
                             <th>Productor</th>
                             <th>Cliente</th>
                             <th>Vigencia</th>
@@ -149,16 +215,17 @@
 	                <tfoot>
                         <tr>
                             <th></th>
-                            <th>Número</th>                            
-                            <th>Tipo</th> 
-                            <th>Compañía</th>
-                            <th>Productor</th>
-                            <th>Cliente</th>
+                            <th></th>                            
+                            <th></th> 
                             <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>Estado</th> 
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th> 
                             <th></th>                                                         
                             <th></th>                                                         
                             <th></th>                                                        

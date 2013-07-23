@@ -194,7 +194,27 @@
 		
 			// Break
 			break;
+		case 'accidentes':
+		// ---------------------------------- ACCIDENTES PERSONALES ---------------------------------- //
+		
+		// Recordset: Automotor
+		$query_Recordset2 = sprintf("SELECT accidentes.accidentes_id FROM accidentes WHERE accidentes.poliza_id=%s", $poliza_id);
+		$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
+		$row_Recordset2 = mysql_fetch_assoc($Recordset2);		
+		$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+		
+		// If record exists
+		if ($totalRows_Recordset2 === 0) {				
+			// Insert
+			$insertSQL = sprintf("INSERT INTO accidentes (poliza_id) VALUES (%s)", $poliza_id);
+			$Result1 = mysql_query($insertSQL, $connection);
+		}
+		else {
+			// Update
 			
+		}
+		
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
