@@ -5,6 +5,59 @@ SET foreign_key_checks = 0;
 SET time_zone = '-03:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `accidentes`;
+CREATE TABLE `accidentes` (
+  `accidentes_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`accidentes_id`),
+  KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `accidentes_asegurado`;
+CREATE TABLE `accidentes_asegurado` (
+  `accidentes_asegurado_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `accidentes_asegurado_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `accidentes_asegurado_documento` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `accidentes_asegurado_nacimiento` date NOT NULL,
+  `accidentes_asegurado_domicilio` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accidentes_asegurado_actividad` int(11) NOT NULL,
+  `accidentes_asegurado_suma_asegurada` decimal(10,2) NOT NULL,
+  `accidentes_asegurado_gastos_medicos` decimal(10,2) NOT NULL,
+  `accidentes_asegurado_beneficiario` tinyint(1) NOT NULL,
+  `accidentes_asegurado_beneficiario_nombre` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accidentes_asegurado_beneficiario_documento` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accidentes_asegurado_beneficiario_nacimiento` date DEFAULT NULL,
+  PRIMARY KEY (`accidentes_asegurado_id`),
+  KEY `accidentes_asegurado_actividad` (`accidentes_asegurado_actividad`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `accidentes_asegurado_ibfk_1` FOREIGN KEY (`accidentes_asegurado_actividad`) REFERENCES `asegurado_actividad` (`asegurado_actividad_id`),
+  CONSTRAINT `accidentes_asegurado_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `accidentes_clausula`;
+CREATE TABLE `accidentes_clausula` (
+  `accidentes_clausula_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `accidentes_clausula_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `accidentes_clausula_cuit` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `accidentes_clausula_domicilio` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`accidentes_clausula_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `accidentes_clausula_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `asegurado_actividad`;
+CREATE TABLE `asegurado_actividad` (
+  `asegurado_actividad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `asegurado_actividad_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`asegurado_actividad_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `automotor`;
 CREATE TABLE `automotor` (
   `automotor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -170,7 +223,7 @@ CREATE TABLE `poliza` (
   `poliza_anulada` tinyint(3) unsigned NOT NULL,
   `poliza_numero` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_renueva_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `poliza_vigencia` enum('Bimestral','Semestral','Anual') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual') COLLATE utf8_unicode_ci NOT NULL,
   `poliza_validez_desde` date NOT NULL,
   `poliza_validez_hasta` date NOT NULL,
   `poliza_cuotas` enum('Mensual','Total') COLLATE utf8_unicode_ci NOT NULL,
@@ -314,4 +367,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-18 16:36:55
+-- 2013-07-24 17:43:02
