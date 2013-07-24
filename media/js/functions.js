@@ -460,10 +460,10 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
-	populateListTipoPoliza = function(field, context){
+	populateListTipoPoliza = function(field, context, include){
 		var dfd = new $.Deferred();		
 		$.ajax({
-			url: "get-json-tipopoliza.php",
+			url: "get-json-tipopoliza.php?include="+include,
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
@@ -2827,7 +2827,7 @@ $(document).ready(function() {
 		});	
 		
 	}
-	openBoxAltaPoliza = function (id) {
+	openBoxAltaPoliza = function (tipo) {
 		$.colorbox({
 			title:'Registro',
 			href:'box-poliza_alta.php?section=1',												
@@ -2847,13 +2847,14 @@ $(document).ready(function() {
 				$.when(
 					populateListSuc('box-sucursal_id', 'box'),
 					populateListSeguro('box-seguro_id', 'box'),
-					populateListTipoPoliza('box-tipo_poliza_id', 'box'),
+					populateListTipoPoliza('box-tipo_poliza_id', 'box', tipo),
 					populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
 					populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),
 					populateListPoliza_MP('box-poliza_medio_pago', 'box')
 				).then(function(){					
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-tipo_poliza_id").change(function(){
@@ -2900,7 +2901,7 @@ $(document).ready(function() {
 							if ($('#box-poliza_validez_desde').val() !== '') {
 								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
 								if (parsedate !== null) {
-									$('#box-poliza_validez_hasta').val(parsedate.clearTime().add(months).months().toString("yyyy-MM-dd"));
+									$('#box-poliza_validez_hasta').val(parsedate.clearTime().add(months).months().toString("dd/MM/yy"));
 								}
 							}
 						} else {
@@ -2939,7 +2940,7 @@ $(document).ready(function() {
 						$('#box-poliza_cant_cuotas').val(cuotas);							
 					});																
 					// Set default values
-					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("yyyy-MM-dd"));
+					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_medio_pago').val('Directo');				
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -2969,10 +2970,14 @@ $(document).ready(function() {
 					});												
 					// Button action	
 					$("#btnBox").click(function() {
+						$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
-								insertFormPoliza(id);
+								insertFormPoliza();
 							}
+						}
+						else {
+							$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 						}
 					});
 				});

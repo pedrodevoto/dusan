@@ -8,7 +8,10 @@
 ?>
 <?php
 	// Recordset: Main
-	$query_Recordset1 = "SELECT tipo_poliza.tipo_poliza_id, tipo_poliza_nombre FROM tipo_poliza";			
+	$query_Recordset1 = "SELECT tipo_poliza.tipo_poliza_id, tipo_poliza_nombre FROM tipo_poliza";	
+	if (isset($_GET['include'])) {
+		$query_Recordset1 .= " WHERE tipo_poliza_nombre IN ('".implode('\',\'',explode(',',$_GET['include']))."')";
+	}		
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 
 	$output = array();
