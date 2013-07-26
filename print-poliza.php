@@ -581,6 +581,17 @@
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
+			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
+			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_imp_c1 = array(
+				array('maxwidth' => 95, 'text' => "Prima:"),
+				array('maxwidth' => 95, 'text' => "Premio:")
+			);
+			$txt_imp_c2 = array(
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_prima'])." "),
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_premio'])." ")
+			);						
 			
 			// Determine document type
 			switch($_GET['type']) {
@@ -814,6 +825,46 @@
 					$pdf->SetLineWidth(0.4);
 					$pdf->SetDrawColor(0,0,0);
 					$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
+					
+					// Forma de Pago					
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(12.5, 250);
+					printText($txt_pago_c1, $pdf, 55, 3.8);
+					$pdf->SetXY(70, 250);
+					$pdf->SetXY(102, 250);
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
+					// Importes
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(149, 250);
+					foreach ($txt_imp_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(149, 250);
+					foreach ($txt_imp_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+					}
+					// Misc
+					$txt_misc_c1 = array(
+						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+					);
+					$txt_misc_c2 = array(
+						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+					);											
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->SetXY(12, 263.7);
+					foreach ($txt_misc_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(110, 263.7);
+					foreach ($txt_misc_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}																		
 					
 					
 					break;
