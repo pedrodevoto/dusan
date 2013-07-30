@@ -539,21 +539,20 @@
 			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
 			$asegurados = array();
 			while($row = mysql_fetch_assoc($Recordset3)) {
-				$asegurados[] = $row;
-			}			// 
-			// for($i=0;$i<28;$i++) {
-			// 	$asegurados[] = array('accidentes_asegurado_nombre'=>'abab');
-			// }
+				// for($i=0;$i<80;$i++) {
+					$asegurados[] = $row;
+				// }
+				// break;
+			}
 			
 			$query_Recordset3 = sprintf("SELECT * FROM accidentes_clausula WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
 			$clausulas = array();
 			while($row = mysql_fetch_assoc($Recordset3)) {
-				$clausulas[] = $row;
-			}			// 
-			// for($i=0;$i<120;$i++) {
-			// 	$clausulas[] = array('accidentes_clausula_nombre'=>'abab');
-			// }
+				// for($i=0;$i<15;$i++) {
+					$clausulas[] = $row;
+				// }
+			}
 			
 			
 			// Compose Shared Texts
@@ -595,6 +594,260 @@
 			
 			// Determine document type
 			switch($_GET['type']) {
+				case 'cc':
+					/****************************************
+					* CONSTANCIA DE COBERTURA
+					*****************************************/
+			
+					function newPage($pdf, $first) {
+						$pdf->SetAutoPageBreak(false);
+						$pdf->AddPage();
+						if (isset($_GET['print'])) {
+							$pdf->setSourceFile('pdf/cc_accidentes'.(!$first?2:'').'.pdf');
+						}
+						else {
+							$pdf->setSourceFile('pdf/cc_digital_accidentes'.(!$first?2:'').'.pdf');
+						}	
+						$tplIdx = $pdf->importPage(1);
+						$pdf->useTemplate($tplIdx);
+						// Fecha y hora
+						$txt_date = "FECHA: ".date("d/m/Y")." HORA: ".date("h:i a");
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);										
+						$pdf->SetXY(0, 45);
+						printText($txt_date, $pdf, 196, 0, 'R');
+					}
+			
+					// NEW DOCUMENT
+					$pdf = new FPDI('P','mm',array(215.9,297));
+					newPage($pdf, true);
+
+					// Compañía
+					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
+					$pdf->SetFont('Arial', 'B', 10);
+					$pdf->SetTextColor(0,0,0);										
+					$pdf->SetXY(11, 51);
+					printText($txt_compania, $pdf, 190, 0);
+					// Datos del Titular
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(11, 61);
+					foreach ($txt_titular_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					$pdf->SetXY(95, 61);
+					foreach ($txt_titular_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					// Datos de la Póliza
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(147, 61);
+					foreach ($txt_poliza as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					
+					$x = 9.8;
+					$y = 90;
+					if (count($asegurados)){
+						$asegurados[] = array('total'=>true);
+						
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->SetXY(90, $y+0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'ASEGURADOS');
+						
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, (min(count($asegurados), 34) * 5) + 8, 1, '1234', 'D');
+						
+						$y += 9.5;
+						
+						// Imprimir asegurados
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', 'B', 8);
+						$pdf->Write(5, 'Nombre');
+						$pdf->SetX($x + 50);
+						$pdf->Write(5, 'DNI');
+						$pdf->SetX($x + 70);
+						$pdf->Write(5, 'Actividad');
+						$pdf->SetX($x + 125);
+						$pdf->Write(5, 'Legal');
+						$pdf->SetX($x + 145);
+						$pdf->Write(5, 'Asegurado');
+						$pdf->SetX($x + 170);
+						$pdf->Write(5, 'Gastos Farm.');
+						$y += 5;
+						
+						$count_asegurados = 0;
+						$count_asegurados_per_page = 0;
+						$max_asegurados = 34;
+						$total_suma_asegurada = 0;
+						$total_gastos_medicos = 0;
+						foreach ($asegurados as $asegurado){
+							if ($count_asegurados_per_page % $max_asegurados == 0 and $count_asegurados_per_page > 0) {
+								newPage($pdf, false);				
+								$y = 48;
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->SetXY(90, $y);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, 'ASEGURADOS (Cont)');
+								
+								$y += 7.5;
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect($x-0.5, $y, 196, (min(count($asegurados)-$count_asegurados, 43) * 5) + 4.5, 1, '1234', 'D');
+							
+								$y += 2;
+								$count_asegurados_per_page = 0;
+								$max_asegurados = 43;
+							}
+
+							if (!isset($asegurado['total'])){
+								$pdf->SetXY($x, $y);
+								$pdf->SetFont('Arial', '', 7);
+								$pdf->Write(5, trimText($asegurado['accidentes_asegurado_nombre'], $pdf, 48));
+								$pdf->SetX($x + 48);
+								$pdf->Write(5, $asegurado['accidentes_asegurado_documento']);
+								$pdf->SetX($x + 70);
+								$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
+								$pdf->SetX($x + 125);
+								$pdf->Write(5, $asegurado['accidentes_asegurado_legal']);
+								$pdf->SetX($x + 145);
+								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_suma_asegurada'], 2));
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_gastos_medicos'], 2));
+								
+								$total_suma_asegurada += $asegurado['accidentes_asegurado_suma_asegurada'];
+								$total_gastos_medicos += $asegurado['accidentes_asegurado_gastos_medicos'];
+								
+							}
+							else {
+								$pdf->SetXY($x, $y);
+								$pdf->SetFont('Arial', 'B', 8);
+								$pdf->Write(5, 'Total: '.$count_asegurados);
+								$pdf->SetX($x + 145);
+								$pdf->Write(5, '$'.number_format($total_suma_asegurada, 2));
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.number_format($total_gastos_medicos, 2));
+							}
+							$count_asegurados++;
+							$count_asegurados_per_page++;
+							$y += 5;
+						}
+						$y += 4;
+					}
+
+					if (count($clausulas)) {
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->SetXY(76, $y + 0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'CLAUSULAS DE NO REPETICION');
+						
+						// Imprimir clausulas
+						$y += 9;
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', 'B', 8);
+						$pdf->Write(5, 'Nombre');
+						$pdf->SetX($x + 70);
+						$pdf->Write(5, 'CUIT');
+						$pdf->SetX($x + 105);
+						$pdf->Write(5, 'Domicilio');
+						
+						$y += 5;
+						
+						$count_clausulas = 0;
+						$count_clausulas_per_page = 0;
+						$max_clausulas = count($asegurados)?$max_asegurados - $count_asegurados_per_page -1 :34;
+						// echo $max_clausulas;
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y-6, 196, (min(count($clausulas), $max_clausulas) * 5) + 6, 1, '1234', 'D');
+						
+						foreach ($clausulas as $clausula){
+							if ($count_clausulas_per_page % $max_clausulas == 0 and $count_clausulas_per_page > 0) {
+								newPage($pdf, false);				
+								$y = 48;
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->SetXY(78, $y);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, 'CLAUSULAS DE NO REPETICION (Cont)');
+							
+								$count_clausulas_per_page = 0;
+								$max_clausulas = 43;
+								
+								$y += 7.5;
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, (min(count($clausulas)-$count_clausulas, $max_clausulas) * 5) + 4.5, 1, '1234', 'D');
+								$y += 2;
+							}
+							$pdf->SetXY($x, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, trimText($clausula['accidentes_clausula_nombre'], $pdf, 70));
+							$pdf->SetX($x + 70);
+							$pdf->Write(5, $clausula['accidentes_clausula_cuit']);
+							$pdf->SetX($x + 105);
+							$pdf->Write(5, trimText($clausula['accidentes_clausula_domicilio'], $pdf, 85));
+							
+							$y += 5;
+							$count_clausulas++;
+							$count_clausulas_per_page++;
+						}
+						
+					}
+					// Footer
+					if ($y > 198.5) {
+						newPage($pdf, false);
+					}
+					$y = 200;
+					$pdf->SetFillColor(229,233,253);
+					$pdf->SetDrawColor(138,162,234);
+					$pdf->SetLineWidth(0.6);
+					$pdf->RoundedRect(10.5, $y, 135, 19, 1, '1234', 'DF');
+					$pdf->RoundedRect(146, $y, 60, 19, 1, '1234', 'DF');
+					$pdf->SetFont('Arial','B',10);
+					$pdf->SetXY(65,$y + 1);
+					$pdf->Write(5, 'Forma de Pago');
+					$pdf->SetXY(168,$y + 1);
+					$pdf->Write(5, 'Importes');
+					
+					$y += 9;
+					
+					// Forma de Pago					
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(12.5, $y);
+					printText($txt_pago_c1, $pdf, 55, 3.8);
+					$pdf->SetXY(70, $y);
+					$pdf->SetXY(102, $y);
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
+					// Importes
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+					}
+					
+					// Firma
+					if (isset($_GET['print'])) {
+						$pdf->Image('pdf/cc_accidentes_firma.png', 0, 0, 215.9, 279.4);
+					}
+					else {
+						$pdf->Image('pdf/cc_digital_accidentes_firma.png', 0, 0, 215.9, 297);
+					}
+					
+					break;
 				case 'pe':
 					/****************************************
 					* PEDIDO DE EMISIÓN
