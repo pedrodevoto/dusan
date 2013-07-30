@@ -2607,13 +2607,13 @@ $(document).ready(function() {
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-cliente_nombre": {required: true},
-							"box-cliente_nacimiento": {required: true, dateISO: true},
+							"box-cliente_nacimiento": {required: true, date: true},
 							"box-cliente_sexo": {required: true},
 							"box-cliente_nacionalidad": {required: true},
 							"box-cliente_cf": {required: true},
 							"box-cliente_tipo_doc": {required: true},
 							"box-cliente_nro_doc": {required: true},
-							"box-cliente_reg_vencimiento": {dateISO: true},
+							"box-cliente_reg_vencimiento": {date: true},
 							"box-cliente_email": {email: true}
 						}
 					});		
@@ -2670,13 +2670,13 @@ $(document).ready(function() {
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-cliente_nombre": {required: true},
-							"box-cliente_nacimiento": {required: true, dateISO: true},
+							"box-cliente_nacimiento": {required: true, date: true},
 							"box-cliente_sexo": {required: true},
 							"box-cliente_nacionalidad": {required: true},
 							"box-cliente_cf": {required: true},
 							"box-cliente_tipo_doc": {required: true},
 							"box-cliente_nro_doc": {required: true},
-							"box-cliente_reg_vencimiento": {dateISO: true},
+							"box-cliente_reg_vencimiento": {date: true},
 							"box-cliente_email": {email: true}
 						}
 					});
@@ -2951,14 +2951,14 @@ $(document).ready(function() {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_vigencia": {required: true},
-							"box-poliza_validez_desde": {required: true, dateISO: true},
-							"box-poliza_validez_hasta": {required: true, dateISO: true, enddate: "#box-poliza_validez_desde"},
+							"box-poliza_validez_desde": {required: true, date: true},
+							"box-poliza_validez_hasta": {required: true, date: true, enddate: "#box-poliza_validez_desde"},
 							"box-poliza_cuotas": {required: true},
 							"box-poliza_cant_cuotas": {required: true, digits: true, min:1, max:255},
-							"box-poliza_fecha_solicitud": {dateISO: true},
-							"box-poliza_fecha_emision": {dateISO: true},
-							"box-poliza_fecha_recepcion": {dateISO: true},
-							"box-poliza_fecha_entrega": {dateISO: true},
+							"box-poliza_fecha_solicitud": {date: true},
+							"box-poliza_fecha_emision": {date: true},
+							"box-poliza_fecha_recepcion": {date: true},
+							"box-poliza_fecha_entrega": {date: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_premio": {required: true, min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
@@ -3184,14 +3184,14 @@ $(document).ready(function() {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_vigencia": {required: true},
-							"box-poliza_validez_desde": {required: true, dateISO: true},
-							"box-poliza_validez_hasta": {required: true, dateISO: true, enddate: "#box-poliza_validez_desde"},
+							"box-poliza_validez_desde": {required: true, date: true},
+							"box-poliza_validez_hasta": {required: true, date: true, enddate: "#box-poliza_validez_desde"},
 							"box-poliza_cuotas": {required: true},
 							"box-poliza_cant_cuotas": {required: true, digits: true, min:1, max:255},
-							"box-poliza_fecha_solicitud": {dateISO: true},
-							"box-poliza_fecha_emision": {dateISO: true},
-							"box-poliza_fecha_recepcion": {dateISO: true},
-							"box-poliza_fecha_entrega": {dateISO: true},
+							"box-poliza_fecha_solicitud": {date: true},
+							"box-poliza_fecha_emision": {date: true},
+							"box-poliza_fecha_recepcion": {date: true},
+							"box-poliza_fecha_entrega": {date: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_premio": {required: true, min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
