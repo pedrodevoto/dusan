@@ -85,6 +85,9 @@
 									GetSQLValueString($i+1, "int"));
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 				}
+				
+				$insertSQL = "INSERT INTO accidentes (poliza_id) VALUES(".$poliza_id.")";
+				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 			
 				// Return ID
 				echo $poliza_id;
