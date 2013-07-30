@@ -182,6 +182,141 @@
 			// Break
 			break;
 			
+		case 'accidentes':
+			// ---------------------------------- ACCIDENTES ---------------------------------- //
+		
+			// Recordset: Automotor
+			$query_Recordset2 = sprintf("SELECT * FROM accidentes WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
+			$row_Recordset2 = mysql_fetch_assoc($Recordset2);					
+			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+			
+			// If no record found
+			if ($totalRows_Recordset2 === 0) {
+				die("Error: Poliza no encontrada.");
+			}
+		
+			$query_Recordset3 = sprintf("SELECT COUNT(accidentes_asegurado_id) as cantidad, SUM(accidentes_asegurado_suma_asegurada) as suma_asegurada, SUM(accidentes_asegurado_gastos_medicos) as gastos_medicos FROM accidentes_asegurado WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$asegurados = mysql_fetch_assoc($Recordset3);
+			
+			$query_Recordset3 = sprintf("SELECT COUNT(accidentes_clausula_id) as cantidad FROM accidentes_clausula WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$clausulas = mysql_fetch_assoc($Recordset3);
+		
+			// General variables
+			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
+			$percent_serv = 0.13045;			
+			$offset = 0;
+			// New document
+			if (isset($_GET['print'])) {
+				$pdf = new FPDI('L','mm',array(297,210));
+				$pdf->AddPage();
+				$pdf->setSourceFile('pdf/cuota.pdf');
+			}
+			else {
+				$pdf = new FPDI('L','mm',array(350,210));
+				$pdf->AddPage();
+				$pdf->setSourceFile('pdf/cuota_digital.pdf');
+				$offset = 5;
+			}
+		
+			$tplIdx = $pdf->importPage(1);
+			$pdf->useTemplate($tplIdx);
+			$pdf->SetFont('Arial', '', 8);
+			$pdf->SetTextColor(0,0,0);
+			// Header
+			$txthead = date("d/m/Y")."\n".
+					   $row_Recordset1['cuota_recibo'];
+			$txthead = iconv('UTF-8', 'windows-1252', $txthead);
+			$pdf->SetXY(160 + $offset, 53);
+			$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
+
+			// Text 1
+			$contacto_piso = is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso'];
+			$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
+			$contacto_telefono1 = is_null($row_Recordset1['contacto_telefono1']) ? "-" : $row_Recordset1['contacto_telefono1'];			
+			$txt1 = array(
+						array('maxwidth' => 47, 'text' => "Sección: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),
+						array('maxwidth' => 96, 'text' => "Señor: ".strtoupper($row_Recordset1['cliente_nombre'])),
+						array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc']),
+						array('maxwidth' => 47, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].$contacto_piso.$contacto_dpto),
+						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']." - ".$row_Recordset1['contacto_cp']),
+						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
+					);
+			$pdf->SetXY(92.5, 87.5);
+			foreach ($txt1 as $array) {
+				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+			}
+
+			// Text 2
+			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
+			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
+			$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
+			$txt2 = array(
+						array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
+						array('maxwidth' => 0, 'text' => ""),
+						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
+						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
+						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
+						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
+					);						
+			$pdf->SetXY(140.5, 87.5);
+			foreach ($txt2 as $array) {
+				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+			}
+		
+			// Text 3
+			$txt3 = array(
+						array('maxwidth' => 96, 'text' => "Asegurados: ".$asegurados['cantidad']),
+						array('maxwidth' => 47, 'text' => "Suma asegurada: $".number_format($asegurados['suma_asegurada'], 2)),
+						array('maxwidth' => 47, 'text' => "Gastos médicos: $".number_format($asegurados['gastos_medicos'], 2)),
+			);																			
+			$pdf->SetXY(92.5, 116.5);
+			foreach ($txt3 as $array) {
+				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+			}
+			
+			// Text 4
+			$txt4 = array(
+						array('maxwidth' => 47, 'text' => "Clausulas de No Repeticion: ".$clausulas['cantidad'])
+			);			
+			$pdf->SetXY(140.5, 116.5);
+			foreach ($txt4 as $array) {
+				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+			}
+			
+		
+			if (isset($_GET['print'])) {
+				$pdf->SetXY(276, 53);
+				$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
+				
+				$pdf->SetXY(194, 87.5);			
+				foreach ($txt1 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(241.5, 87.5);
+				foreach ($txt2 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(194, 116.5);
+				foreach ($txt3 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				$pdf->SetXY(241.5, 116.5);
+				foreach ($txt4 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+			}
+			else {
+				// Date
+				$date = date("d/m/Y");
+				$pdf->SetXY(160, 142);
+				$pdf->SetFont('Arial', 'B', 12);
+				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
+			}
+			$pdf->Output();
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
