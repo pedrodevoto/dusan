@@ -24,6 +24,11 @@ $(document).ready(function() {
 		}
 	}
 		
+	<!-- Custom date validation -->
+	$.validator.addMethod("dateAR", function(value, element) {
+		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
+	},'Por favor ingresar una fecha en formato dd/mm/aa.');
+	
 	<!-- List functions -->
 	sortListAlpha = function(field) {
 		$("select#"+field).html($("select#"+field+" option").sort(function (a, b) {
@@ -157,6 +162,7 @@ $(document).ready(function() {
         $("#"+form+" input[type='password']").attr("disabled", disabled);		
         $("#"+form+" input[type='radio']").attr("disabled", disabled);
         $("#"+form+" input[type='checkbox']").attr("disabled", disabled);	
+		$("#"+form+" input[type='number']").attr("disabled", disabled);
 		// Enable-disable buttons
 		if (type=='ui') {
 			$("#"+form+" input[type='button']").button("option", "disabled", disabled);	
@@ -521,7 +527,10 @@ $(document).ready(function() {
 		switch (tipo_poliza) {
 			case '3':
 			case 'Personas':
-				vigencia = ['Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual'];
+				vigencia = ['Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual','Otra'];
+				break;
+			case undefined:
+				vigencia = [];
 				break;
 			default:
 				vigencia = ['Bimestral','Semestral','Anual'];
@@ -1021,19 +1030,19 @@ $(document).ready(function() {
 			rules: {							
 				"box-accidentes_asegurado_nombre": {required: true},
 				"box-accidentes_asegurado_documento": {required: true},
-				"box-accidentes_asegurado_nacimiento": {required: true, date: true},
+				"box-accidentes_asegurado_nacimiento": {required: true, dateAR: true},
 				"box-accidentes_asegurado_actividad": {required: true},
 				"box-accidentes_asegurado_suma_asegurada": {required: true, number: true},
 				"box-accidentes_asegurado_gastos_medicos": {required: true, number: true},
 				"box-accidentes_asegurado_beneficiario_nombre": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
 				"box-accidentes_asegurado_beneficiario_documento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
-				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}, date: true},
+				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}, dateAR: true},
 				
 			}
 		});		
 		$("#btnBoxAsegurado").click(function() {
-			$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 			if (validateForm.form()) {
+				$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 				if ($("#box-action").val() == 'insert') {
 					insertFormAsegurado(id);
 				}
@@ -2607,13 +2616,13 @@ $(document).ready(function() {
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-cliente_nombre": {required: true},
-							"box-cliente_nacimiento": {required: true, date: true},
+							"box-cliente_nacimiento": {required: true, dateAR: true},
 							"box-cliente_sexo": {required: true},
 							"box-cliente_nacionalidad": {required: true},
 							"box-cliente_cf": {required: true},
 							"box-cliente_tipo_doc": {required: true},
 							"box-cliente_nro_doc": {required: true},
-							"box-cliente_reg_vencimiento": {date: true},
+							"box-cliente_reg_vencimiento": {dateAR: true},
 							"box-cliente_email": {email: true}
 						}
 					});		
@@ -2670,13 +2679,13 @@ $(document).ready(function() {
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-cliente_nombre": {required: true},
-							"box-cliente_nacimiento": {required: true, date: true},
+							"box-cliente_nacimiento": {required: true, dateAR: true},
 							"box-cliente_sexo": {required: true},
 							"box-cliente_nacionalidad": {required: true},
 							"box-cliente_cf": {required: true},
 							"box-cliente_tipo_doc": {required: true},
 							"box-cliente_nro_doc": {required: true},
-							"box-cliente_reg_vencimiento": {date: true},
+							"box-cliente_reg_vencimiento": {dateAR: true},
 							"box-cliente_email": {email: true}
 						}
 					});
@@ -2895,19 +2904,49 @@ $(document).ready(function() {
 								break;
 							case 'Mensual':
 								months = 1;
-								break;							
+								break;					
 						}
 						if ($(this).val() !== '') {
-							if ($('#box-poliza_validez_desde').val() !== '') {
-								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
-								if (parsedate !== null) {
-									$('#box-poliza_validez_hasta').val(parsedate.clearTime().add(months).months().toString("dd/MM/yy"));
+							if ($(this).val() == 'Otra') {
+								$("#box-poliza_vigencia_dias").attr('readonly', false);
+								$("#box-poliza_vigencia_dias").focus();
+							}
+							else {
+								$("#box-poliza_vigencia_dias").attr('readonly', true);
+								$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								if ($('#box-poliza_validez_desde').val() !== '') {
+									var parsedate = Date.parse($('#box-poliza_validez_desde').val());
+									if (parsedate !== null) {
+										var newdate = parsedate.addMonths(months).toString("yyyy-MM-dd");
+										$('#box-poliza_validez_hasta').val(newdate);
+									}
 								}
+								$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
+								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 							}
 						} else {
 							$('#box-poliza_validez_hasta').val('');							
 						}
 					});
+					$("#box-poliza_vigencia_dias").change(function() {
+						var days = $(this).val();
+						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'yy-mm-dd');
+						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'yy-mm-dd');
+						if ($(this).val() !== '') {
+							if ($('#box-poliza_validez_desde').val() !== '') {
+								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
+								if (parsedate !== null) {
+									var newdate = parsedate.addDays(days).toString("yyyy-MM-dd");
+									$('#box-poliza_validez_hasta').val(newdate);
+								}
+							}
+						} else {
+							$('#box-poliza_validez_hasta').val('');							
+						}
+						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
+						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
+					})
 					$("#box-poliza_cuotas").change(function(){
 						var cuotas = '';
 						switch ($('#box-poliza_cuotas').val()) {
@@ -2951,14 +2990,14 @@ $(document).ready(function() {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_vigencia": {required: true},
-							"box-poliza_validez_desde": {required: true, date: true},
-							"box-poliza_validez_hasta": {required: true, date: true, enddate: "#box-poliza_validez_desde"},
+							"box-poliza_validez_desde": {required: true, dateAR: true},
+							"box-poliza_validez_hasta": {required: true, dateAR: true, enddate: "#box-poliza_validez_desde"},
 							"box-poliza_cuotas": {required: true},
 							"box-poliza_cant_cuotas": {required: true, digits: true, min:1, max:255},
-							"box-poliza_fecha_solicitud": {date: true},
-							"box-poliza_fecha_emision": {date: true},
-							"box-poliza_fecha_recepcion": {date: true},
-							"box-poliza_fecha_entrega": {date: true},
+							"box-poliza_fecha_solicitud": {dateAR: true},
+							"box-poliza_fecha_emision": {dateAR: true},
+							"box-poliza_fecha_recepcion": {dateAR: true},
+							"box-poliza_fecha_entrega": {dateAR: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_premio": {required: true, min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
@@ -2970,14 +3009,11 @@ $(document).ready(function() {
 					});												
 					// Button action	
 					$("#btnBox").click(function() {
-						$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								insertFormPoliza();
 							}
-						}
-						else {
-							$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 						}
 					});
 				});
@@ -3042,10 +3078,10 @@ $(document).ready(function() {
 						rules: {							
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
-							"box-poliza_fecha_solicitud": {date: true},
-							"box-poliza_fecha_emision": {date: true},
-							"box-poliza_fecha_recepcion": {date: true},
-							"box-poliza_fecha_entrega": {date: true},
+							"box-poliza_fecha_solicitud": {dateAR: true},
+							"box-poliza_fecha_emision": {dateAR: true},
+							"box-poliza_fecha_recepcion": {dateAR: true},
+							"box-poliza_fecha_entrega": {dateAR: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
 							"box-poliza_recargo": {min:0, max:100}							
@@ -3057,12 +3093,9 @@ $(document).ready(function() {
 			
 					// Button action	
 					$("#btnBox").click(function() {
-						$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							updateFormPoliza();
-						}
-						else {
-							$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 						}
 					});	
 					
@@ -3093,6 +3126,7 @@ $(document).ready(function() {
 					
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					
 					// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
 					switch ($("#box-tipo_poliza_nombre").val()) {
@@ -3135,16 +3169,46 @@ $(document).ready(function() {
 						}
 						
 						if ($(this).val() !== '') {
-							if ($('#box-poliza_validez_desde').val() !== '') {
-								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
-								if (parsedate !== null) {
-									$('#box-poliza_validez_hasta').val(parsedate.clearTime().add(months).months().toString("yyyy-MM-dd"));
+							if ($(this).val() == 'Otra') {
+								$("#box-poliza_vigencia_dias").attr('readonly', false);
+								$("#box-poliza_vigencia_dias").focus();
+							}
+							else {
+								$("#box-poliza_vigencia_dias").attr('readonly', true);
+								$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								if ($('#box-poliza_validez_desde').val() !== '') {
+									var parsedate = Date.parse($('#box-poliza_validez_desde').val());
+									if (parsedate !== null) {
+										var newdate = parsedate.addMonths(months).toString("yyyy-MM-dd");
+										$('#box-poliza_validez_hasta').val(newdate);
+									}
 								}
+								$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
+								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 							}
 						} else {
 							$('#box-poliza_validez_hasta').val('');							
 						}
 					});
+					$("#box-poliza_vigencia_dias").change(function() {
+						var days = $(this).val();
+						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'yy-mm-dd');
+						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'yy-mm-dd');
+						if ($(this).val() !== '') {
+							if ($('#box-poliza_validez_desde').val() !== '') {
+								var parsedate = Date.parse($('#box-poliza_validez_desde').val());
+								if (parsedate !== null) {
+									var newdate = parsedate.addDays(days).toString("yyyy-MM-dd");
+									$('#box-poliza_validez_hasta').val(newdate);
+								}
+							}
+						} else {
+							$('#box-poliza_validez_hasta').val('');							
+						}
+						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
+						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
+					})
 					$("#box-poliza_cuotas").change(function(){
 						var cuotas = '';
 						switch ($('#box-poliza_cuotas').val()) {
@@ -3177,21 +3241,21 @@ $(document).ready(function() {
 						$('#box-poliza_cant_cuotas').val(cuotas);							
 					});																
 					// Set default values
-					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("yyyy-MM-dd"));				
+					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));				
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {							
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_vigencia": {required: true},
-							"box-poliza_validez_desde": {required: true, date: true},
-							"box-poliza_validez_hasta": {required: true, date: true, enddate: "#box-poliza_validez_desde"},
+							"box-poliza_validez_desde": {required: true, dateAR: true},
+							"box-poliza_validez_hasta": {required: true, dateAR: true, enddate: "#box-poliza_validez_desde"},
 							"box-poliza_cuotas": {required: true},
 							"box-poliza_cant_cuotas": {required: true, digits: true, min:1, max:255},
-							"box-poliza_fecha_solicitud": {date: true},
-							"box-poliza_fecha_emision": {date: true},
-							"box-poliza_fecha_recepcion": {date: true},
-							"box-poliza_fecha_entrega": {date: true},
+							"box-poliza_fecha_solicitud": {dateAR: true},
+							"box-poliza_fecha_emision": {dateAR: true},
+							"box-poliza_fecha_recepcion": {dateAR: true},
+							"box-poliza_fecha_entrega": {dateAR: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_premio": {required: true, min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
@@ -3205,6 +3269,7 @@ $(document).ready(function() {
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								processFormPolizaRen(id);
 							}
 						}

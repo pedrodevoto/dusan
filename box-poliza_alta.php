@@ -75,6 +75,7 @@
             <p>
                 <label for="box-poliza_vigencia">Vigencia *</label>
                 <select name="box-poliza_vigencia" id="box-poliza_vigencia" class="ui-widget-content" style="width:130px"></select>
+				<input type="number" name="box-poliza_vigencia_dias" id="box-poliza_vigencia_dias" class="ui-widget-content" style="width:40px" readonly />
             </p> 
             <p>
                 <label for="box-poliza_validez_hasta">Vigencia Hasta *</label>

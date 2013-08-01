@@ -59,13 +59,15 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado, poliza_anulada, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
-		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado, poliza_anulada, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
+		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
 								GetSQLValueString($estado, "text"),
 								GetSQLValueString(isset($_POST['box-poliza_anulada']) ? 'true' : '', 'defined','1','0'),
 								GetSQLValueString($_POST['box-poliza_numero'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
 								GetSQLValueString($_POST['box-poliza_vigencia'], "text"),
+								$_POST['box-poliza_vigencia']=='Otra'?
+									GetSQLValueString($_POST['box-poliza_vigencia_dias'], "int"):'NULL',
 								GetSQLValueString($poliza_validez_desde, "date"),
 								GetSQLValueString($poliza_validez_hasta, "date"),
 								GetSQLValueString($_POST['box-poliza_cuotas'], "text"),

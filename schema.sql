@@ -223,7 +223,8 @@ CREATE TABLE `poliza` (
   `poliza_anulada` tinyint(3) unsigned NOT NULL,
   `poliza_numero` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_renueva_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual','Otra') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_vigencia_dias` int(11) DEFAULT NULL,
   `poliza_validez_desde` date NOT NULL,
   `poliza_validez_hasta` date NOT NULL,
   `poliza_cuotas` enum('Mensual','Total') COLLATE utf8_unicode_ci NOT NULL,
@@ -368,4 +369,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-24 17:43:02
+-- 2013-08-01 12:40:25
