@@ -26,7 +26,7 @@
 	$poliza_id = intval($_GET['id']);
 	
 	// Recordset: Main
-	$query_Recordset1 = sprintf("SELECT * FROM poliza JOIN (subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN (contacto) ON (poliza.cliente_id=contacto.cliente_id AND contacto_default=1)
+	$query_Recordset1 = sprintf("SELECT * FROM poliza JOIN (subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN (contacto) ON (poliza.cliente_id=contacto.cliente_id AND contacto_default=1) JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id
 									WHERE poliza.poliza_id=%s",
 									$poliza_id);
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
@@ -169,8 +169,9 @@
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(0, 45);
 					printText($txt_date, $pdf, 196, 0, 'R');
-					// Compañía
+					// Compañía / Sucursal
 					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= "  -  Sucursal: ".strtoupper($row_Recordset1['sucursal_nombre']);
 					$pdf->SetFont('Arial', 'B', 10);
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(11, 51);
@@ -308,8 +309,9 @@
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(50, 11.5);
 					printText($txt_emitir, $pdf, 120, 0);						
-					// Compañía
+					// Compañía - Sucursal
 					$txt_compania = strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= ' (' . strtoupper($row_Recordset1['sucursal_nombre']) . ')';
 					$pdf->SetFont('Arial', 'B', 28);
 					$pdf->SetTextColor(255,0,0);										
 					$pdf->SetXY(50, 30);
@@ -622,8 +624,9 @@
 					$pdf = new FPDI('P','mm',array(215.9,297));
 					newPage($pdf, true);
 
-					// Compañía
+					// Compañía / Sucursal
 					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= "  -  Sucursal: ".strtoupper($row_Recordset1['sucursal_nombre']);
 					$pdf->SetFont('Arial', 'B', 10);
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(11, 51);
@@ -888,6 +891,7 @@
 					newPage($pdf, true);				
 					// Compañía
 					$txt_compania = strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= ' (' . strtoupper($row_Recordset1['sucursal_nombre']) . ')';
 					$pdf->SetFont('Arial', 'B', 28);
 					$pdf->SetTextColor(255,0,0);										
 					$pdf->SetXY(50, 30);
