@@ -86,9 +86,16 @@
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 				}
 				
-				$insertSQL = "INSERT INTO accidentes (poliza_id) VALUES(".$poliza_id.")";
-				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
-			
+				$query_Recordset1 = sprintf("SELECT subtipo_poliza_tabla, subtipo_poliza_polizadet_auto FROM subtipo_poliza WHERE subtipo_poliza_id=%s",
+										GetSQLValueString($_POST['box-subtipo_poliza_id'], "int"));	
+				$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
+				$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+				
+				if ($row_Recordset1['subtipo_poliza_polizadet_auto']==1){
+					$insertSQL = "INSERT INTO ".$row_Recordset1['subtipo_poliza_tabla']." (poliza_id) VALUES(".$poliza_id.")";
+					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+				}
+				
 				// Return ID
 				echo $poliza_id;
 				

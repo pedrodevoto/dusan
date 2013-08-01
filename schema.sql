@@ -309,6 +309,7 @@ CREATE TABLE `subtipo_poliza` (
   `tipo_poliza_id` int(10) unsigned NOT NULL,
   `subtipo_poliza_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subtipo_poliza_tabla` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `subtipo_poliza_polizadet_auto` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`subtipo_poliza_id`),
   UNIQUE KEY `subtipo_poliza_tabla` (`subtipo_poliza_tabla`),
   KEY `tipo_poliza_id` (`tipo_poliza_id`),
