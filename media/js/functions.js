@@ -2980,6 +2980,7 @@ $(document).ready(function() {
 					});																
 					// Set default values
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
+					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_medio_pago').val('Directo');				
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -3242,6 +3243,7 @@ $(document).ready(function() {
 					});																
 					// Set default values
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));				
+					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));				
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {							
