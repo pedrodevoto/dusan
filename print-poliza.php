@@ -719,9 +719,9 @@
 								$pdf->SetX($x + 125);
 								$pdf->Write(5, $asegurado['accidentes_asegurado_legal']);
 								$pdf->SetX($x + 145);
-								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_suma_asegurada'], 2));
+								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_gastos_medicos'], 2));
+								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_gastos_medicos'], 2));
 								
 								$total_suma_asegurada += $asegurado['accidentes_asegurado_suma_asegurada'];
 								$total_gastos_medicos += $asegurado['accidentes_asegurado_gastos_medicos'];
@@ -732,9 +732,9 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_asegurados);
 								$pdf->SetX($x + 145);
-								$pdf->Write(5, '$'.number_format($total_suma_asegurada, 2));
+								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
 								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.number_format($total_gastos_medicos, 2));
+								$pdf->Write(5, '$'.formatNumber($total_gastos_medicos, 2));
 							}
 							$count_asegurados++;
 							$count_asegurados_per_page++;
@@ -981,9 +981,9 @@
 								$pdf->SetX($x + 125);
 								$pdf->Write(5, $asegurado['accidentes_asegurado_legal']);
 								$pdf->SetX($x + 145);
-								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_suma_asegurada'], 2));
+								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.number_format($asegurado['accidentes_asegurado_gastos_medicos'], 2));
+								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_gastos_medicos'], 2));
 								
 								$total_suma_asegurada += $asegurado['accidentes_asegurado_suma_asegurada'];
 								$total_gastos_medicos += $asegurado['accidentes_asegurado_gastos_medicos'];
@@ -994,9 +994,9 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_asegurados);
 								$pdf->SetX($x + 145);
-								$pdf->Write(5, '$'.number_format($total_suma_asegurada, 2));
+								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
 								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.number_format($total_gastos_medicos, 2));
+								$pdf->Write(5, '$'.formatNumber($total_gastos_medicos, 2));
 							}
 							$count_asegurados++;
 							$count_asegurados_per_page++;

@@ -269,8 +269,8 @@
 			// Text 3
 			$txt3 = array(
 						array('maxwidth' => 96, 'text' => "Asegurados: ".$asegurados['cantidad']),
-						array('maxwidth' => 47, 'text' => "Suma asegurada: $".number_format($asegurados['suma_asegurada'], 2)),
-						array('maxwidth' => 47, 'text' => "Gastos médicos: $".number_format($asegurados['gastos_medicos'], 2)),
+						array('maxwidth' => 47, 'text' => "Suma asegurada: $".formatNumber($asegurados['suma_asegurada'], 2)),
+						array('maxwidth' => 47, 'text' => "Gastos médicos: $".formatNumber($asegurados['gastos_medicos'], 2)),
 			);																			
 			$pdf->SetXY(92.5, 116.5);
 			foreach ($txt3 as $array) {

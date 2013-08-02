@@ -23,6 +23,9 @@ $(document).ready(function() {
 			return value;
 		}
 	}
+	formatNumber = function(x) {
+	    return x.toString().replace(/\./g, ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
 		
 	<!-- Custom date validation -->
 	$.validator.addMethod("dateAR", function(value, element) {
@@ -1426,23 +1429,23 @@ $(document).ready(function() {
 					result += '</tr>';					
 					// Data
 					$.each(j, function(i, object) {
+						totalsuma += Number(object.accidentes_asegurado_suma_asegurada);	
+						totalmed += Number(object.accidentes_asegurado_gastos_medicos);	
+						count++;	
 						result += '<tr>';
 						result += '<td>'+object.accidentes_asegurado_nombre+'</td>';
 						result += '<td>'+object.accidentes_asegurado_documento+'</td>';
 						result += '<td>'+object.asegurado_actividad_nombre.substr(0, 15)+(object.asegurado_actividad_nombre.length>15?'...':'')+'</td>';
 						result += '<td>'+object.accidentes_asegurado_legal+'</td>';
-						result += '<td>'+object.accidentes_asegurado_suma_asegurada+'</td>';
-						result += '<td>'+object.accidentes_asegurado_gastos_medicos+'</td>';
+						result += '<td>'+formatNumber(object.accidentes_asegurado_suma_asegurada)+'</td>';
+						result += '<td>'+formatNumber(object.accidentes_asegurado_gastos_medicos)+'</td>';
 						result += '<td><ul class="listInlineIcons">';
 						result += '<li title="Editar Asegurado" onClick="javascript:editInBoxAsegurado('+object.accidentes_asegurado_id+');"><span class="ui-icon ui-icon-search"></span></li>';
 						result += '<li title="Eliminar Asegurado" onClick="javascript:deleteAccidentesAsegurado('+object.accidentes_asegurado_id+', '+id+');"><span class="ui-icon ui-icon-trash"></span></li>';
 						result += '</ul></td>';						
 						result += '</tr>';		
-						totalsuma += Number(object.accidentes_asegurado_suma_asegurada);	
-						totalmed += Number(object.accidentes_asegurado_gastos_medicos);	
-						count++;						
 					});
-					result += '<tr><td><strong>Total ('+count+')</strong></td><td></td><td></td><td></td><td><strong>'+Number(totalsuma).toFixed(2)+'</strong></td><td><strong>'+Number(totalmed).toFixed(2)+'</strong></td><td></td></tr>';
+					result += '<tr><td><strong>Total ('+count+')</strong></td><td></td><td></td><td></td><td><strong>'+formatNumber(Number(totalsuma).toFixed(2))+'</strong></td><td><strong>'+formatNumber(Number(totalmed).toFixed(2))+'</strong></td><td></td></tr>';
 					// Close Table
 					result += '</table>';
 				} else {
