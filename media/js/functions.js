@@ -2591,13 +2591,13 @@ $(document).ready(function() {
 					
 					// Init Datepickers
 					$("#box-cliente_nacimiento").datepicker({
-						dateFormat: 'yy-mm-dd',
+						dateFormat: 'dd/mm/yy',
 						changeYear: true,									
 						yearRange: "-100:+0",
 						changeMonth: true										
 					});
 					$("#box-cliente_reg_vencimiento").datepicker({
-						dateFormat: 'yy-mm-dd',
+						dateFormat: 'dd/mm/yy',
 						changeYear: true,									
 						yearRange: "c-10:c+10",
 						changeMonth: true										
@@ -2634,6 +2634,7 @@ $(document).ready(function() {
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?')) {
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								insertFormCliente();
 							}
 						};
@@ -2658,26 +2659,28 @@ $(document).ready(function() {
 				// Initialize buttons
 				$("#btnBox").button();
 				
+				// Init Datepickers
+				$("#box-cliente_nacimiento").datepicker({
+					dateFormat: 'yy-mm-dd',
+					changeYear: true,									
+					yearRange: "-100:+0",
+					changeMonth: true										
+				});
+				$("#box-cliente_reg_vencimiento").datepicker({
+					dateFormat: 'yy-mm-dd',
+					changeYear: true,									
+					yearRange: "c-10:c+10",
+					changeMonth: true										
+				});					
+				
 				// Disable form
 				formDisable('frmBox','ui',true);				
 
 				// Populate form, then initialize
 				$.when(populateFormBoxCliente(id)).then(function(){
 					
-					// Init Datepickers
-					$("#box-cliente_nacimiento").datepicker({
-						dateFormat: 'yy-mm-dd',
-						changeYear: true,									
-						yearRange: "-100:+0",
-						changeMonth: true										
-					});
-					$("#box-cliente_reg_vencimiento").datepicker({
-						dateFormat: 'yy-mm-dd',
-						changeYear: true,									
-						yearRange: "c-10:c+10",
-						changeMonth: true										
-					});						
-
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -2696,6 +2699,7 @@ $(document).ready(function() {
 					// Button action	
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							updateFormCliente();
 						};
 					});	
