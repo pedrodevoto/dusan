@@ -1,3 +1,4 @@
 .DS_Store
 fotos/
 git-ftp.py
+.gitftpignore
