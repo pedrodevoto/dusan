@@ -605,10 +605,10 @@
 						$pdf->SetAutoPageBreak(false);
 						$pdf->AddPage();
 						if (isset($_GET['print'])) {
-							$pdf->setSourceFile('pdf/cc_accidentes'.(!$first?2:'').'.pdf');
+							$pdf->setSourceFile('pdf/cc_dinamica'.(!$first?2:'').'.pdf');
 						}
 						else {
-							$pdf->setSourceFile('pdf/cc_digital_accidentes'.(!$first?2:'').'.pdf');
+							$pdf->setSourceFile('pdf/cc_digital_dinamica'.(!$first?2:'').'.pdf');
 						}	
 						$tplIdx = $pdf->importPage(1);
 						$pdf->useTemplate($tplIdx);
@@ -844,10 +844,10 @@
 					
 					// Firma
 					if (isset($_GET['print'])) {
-						$pdf->Image('pdf/cc_accidentes_firma.png', 0, 0, 215.9, 279.4);
+						$pdf->Image('pdf/cc_dinamica_firma.png', 0, 0, 215.9, 279.4);
 					}
 					else {
-						$pdf->Image('pdf/cc_digital_accidentes_firma.png', 0, 0, 215.9, 297);
+						$pdf->Image('pdf/cc_digital_dinamica_firma.png', 0, 0, 215.9, 297);
 					}
 					
 					break;
