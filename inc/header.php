@@ -18,8 +18,9 @@
             	<!-- Administrativo -->
                 <li><a href="#">Pólizas</a>
 					<ul>
-                        <li><a href="section-poli_auto_list.php">Patrimoniales</a></li>
-                        <li><a href="section-poli_otros_list.php">Otras</a></li>                        
+                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_patrimoniales_list.php">Patrimoniales (Otras)</a></li>
+                        <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
 				</li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
@@ -35,8 +36,9 @@
             	<!-- Master -->
                 <li><a href="#">Pólizas</a>
 					<ul>
-                        <li><a href="section-poli_auto_list.php">Patrimoniales</a></li>
-                        <li><a href="section-poli_otros_list.php">Otras</a></li>                  
+                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_patrimoniales_list.php">Patrimoniales (Otras)</a></li>
+                        <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
 				</li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
