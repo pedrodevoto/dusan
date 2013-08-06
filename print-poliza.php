@@ -1132,6 +1132,499 @@
 			// OUTPUT
 			$pdf->Output();	
 			break;
+			
+		case 'combinado_familiar':
+			// Recordset: Combinado Familiar
+			$query_Recordset2 = sprintf("SELECT *  FROM combinado_familiar WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
+			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
+			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+
+			// If no record found
+			if ($totalRows_Recordset2 === 0) {
+				die("Error: Detalle de Poliza no encontrado.");
+			}
+			
+			$query_Recordset3 = sprintf("SELECT * FROM combinado_familiar_tv_aud_vid WHERE combinado_familiar_id=%s", $row_Recordset2['combinado_familiar_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$tv_aud_vids = array();
+			while($row = mysql_fetch_assoc($Recordset3)) {
+				// for($i=0;$i<105;$i++) {
+					$tv_aud_vids[] = $row;
+				// }
+			}
+			
+			$query_Recordset3 = sprintf("SELECT * FROM combinado_familiar_obj_esp_prorrata WHERE combinado_familiar_id=%s", $row_Recordset2['combinado_familiar_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$obj_esp_prorratas = array();
+			while($row = mysql_fetch_assoc($Recordset3)) {
+				// for($i=0;$i<105;$i++) {
+					$obj_esp_prorratas[] = $row;
+				// }
+			}
+			
+			$query_Recordset3 = sprintf("SELECT * FROM combinado_familiar_equipos_computacion WHERE combinado_familiar_id=%s", $row_Recordset2['combinado_familiar_id']);
+			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
+			$equipos_comp = array();
+			while($row = mysql_fetch_assoc($Recordset3)) {
+				// for($i=0;$i<105;$i++) {
+					$equipos_comp[] = $row;
+				// }
+			}
+			
+			
+			// Compose Shared Texts
+			$txt_titular_c1 = array(
+				array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
+				array('maxwidth' => 130, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].(is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso']).(is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'])),
+				array('maxwidth' => 82, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']),
+				array('maxwidth' => 130, 'text' => "Teléfonos: ".$row_Recordset1['contacto_telefono1']." / ".$row_Recordset1['contacto_telefono2']),
+				array('maxwidth' => 82, 'text' => "Categoría de IVA: ".$row_Recordset1['cliente_cf']),
+				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
+			);
+			$txt_titular_c2 = array(
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
+				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
+				array('maxwidth' => 47, 'text' => ""),																
+				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
+				array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc'])
+			);
+			$txt_poliza = array(
+				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
+				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
+				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
+				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
+				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
+				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
+			);
+			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
+			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_imp_c1 = array(
+				array('maxwidth' => 95, 'text' => "Prima:"),
+				array('maxwidth' => 95, 'text' => "Premio:")
+			);
+			$txt_imp_c2 = array(
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_prima'])." "),
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_premio'])." ")
+			);
+			
+			switch($_GET['type']) {
+				case 'cc':
+					/****************************************
+					* CONSTANCIA DE COBERTURA
+					*****************************************/
+			
+					function newPage($pdf, $first) {
+						$pdf->SetAutoPageBreak(false);
+						$pdf->AddPage();
+						if (isset($_GET['print'])) {
+							$pdf->setSourceFile('pdf/cc_dinamica'.(!$first?2:'').'.pdf');
+						}
+						else {
+							$pdf->setSourceFile('pdf/cc_digital_dinamica'.(!$first?2:'').'.pdf');
+						}	
+						$tplIdx = $pdf->importPage(1);
+						$pdf->useTemplate($tplIdx);
+						// Fecha y hora
+						$txt_date = "FECHA: ".date("d/m/Y")." HORA: ".date("h:i a");
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);										
+						$pdf->SetXY(0, 45);
+						printText($txt_date, $pdf, 196, 0, 'R');
+					}
+			
+					// NEW DOCUMENT
+					$pdf = new FPDI('P','mm',array(215.9,297));
+					newPage($pdf, true);
+
+					// Compañía / Sucursal
+					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= "  -  Sucursal: ".strtoupper($row_Recordset1['sucursal_nombre']);
+					$pdf->SetFont('Arial', 'B', 10);
+					$pdf->SetTextColor(0,0,0);										
+					$pdf->SetXY(11, 51);
+					printText($txt_compania, $pdf, 190, 0);
+					// Datos del Titular
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(11, 61);
+					foreach ($txt_titular_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					$pdf->SetXY(95, 61);
+					foreach ($txt_titular_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					// Datos de la Póliza
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(147, 61);
+					foreach ($txt_poliza as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+										
+					$x = 9.8;
+					$y = 90;
+					
+					$pdf->SetFillColor(221,227,237);
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+					$pdf->SetXY(95, $y+0.5);
+					$pdf->SetFont('Arial','B',10);
+					$pdf->Write(5, 'General');
+					
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, 23, 1, '1234', 'D');
+					
+					$y += 9.5;
+
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['combinado_familiar_domicilio_calle'], $pdf, 60).' '.$row_Recordset2['combinado_familiar_domicilio_nro']);
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Piso/Dpto: '.$row_Recordset2['combinado_familiar_domicilio_piso'].' '.$row_Recordset2['combinado_familiar_domicilio_dpto']);
+					
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Localidad: '.trimText($row_Recordset2['combinado_familiar_domicilio_localidad'], $pdf, 60));
+					$pdf->SetX($x + 180);
+					$pdf->Write(5, 'CP: '.trimText($row_Recordset2['combinado_familiar_domicilio_cp'], $pdf, 60));
+					
+					
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Prorrata:                      '.$row_Recordset2['combinado_familiar_prorrata'] .'%');
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Incendio Edificio:         $'.formatNumber($row_Recordset2['combinado_familiar_inc_edif'], 2));
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'R/C Lind:                     $'.formatNumber($row_Recordset2['combinado_familiar_rc_lind'], 2));
+					
+					$y = 123;
+					
+					if (count($tv_aud_vids)){
+						$tv_aud_vids[] = array('total'=>true);
+						
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->SetXY(35, $y+0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto');
+						
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, (min(count($tv_aud_vids), 30) * 5) + 8, 1, '1234', 'D');
+						
+						$y += 9.5;
+						
+						// Imprimir tv_aud_vid
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', 'B', 8);
+						$pdf->Write(5, 'Cantidad');
+						$pdf->SetX($x + 20);
+						$pdf->Write(5, 'Producto');
+						$pdf->SetX($x + 110);
+						$pdf->Write(5, 'Marca');
+						$pdf->SetX($x + 170);
+						$pdf->Write(5, 'Valor');
+						$y += 5;
+						
+						$count_tv_aud_vids = 0;
+						$count_tv_aud_vids_per_page = 0;
+						$max_tv_aud_vids = 30;
+						$total_suma_asegurada = 0;
+						foreach ($tv_aud_vids as $tv_aud_vid){
+							if ($count_tv_aud_vids_per_page % $max_tv_aud_vids == 0 and $count_tv_aud_vids_per_page > 0) {
+								newPage($pdf, false);				
+								$y = 48;
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->SetXY(30, $y);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto (Cont)');
+								
+								$y += 7.5;
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect($x-0.5, $y, 196, (min(count($tv_aud_vids)-$count_tv_aud_vids, 46) * 5) + 4.5, 1, '1234', 'D');
+							
+								$y += 2;
+								$count_tv_aud_vids_per_page = 0;
+								$max_tv_aud_vids = 46;
+							}
+
+							if (!isset($tv_aud_vid['total'])){
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', '', 7);
+								$pdf->Write(5, $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad']);
+								$pdf->SetX($x + 20);
+								$pdf->Write(5, trimText($tv_aud_vid['combinado_familiar_tv_aud_vid_producto'], $pdf, 85));
+								$pdf->SetX($x + 110);
+								$pdf->Write(5, trimText($tv_aud_vid['combinado_familiar_tv_aud_vid_marca'], $pdf, 58));
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2));
+								
+								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'];
+								
+							}
+							else {
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', 'B', 8);
+								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
+							}
+							$count_tv_aud_vids++;
+							$count_tv_aud_vids_per_page++;
+							$y += 5;
+						}
+						$y += 4;
+					}
+			
+					if (count($obj_esp_prorratas)) {
+						$obj_esp_prorratas[] = array('total'=>true);
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->SetXY(38, $y + 0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'Robo y/o Hurto de Objetos Especificos y/o Aparatos Electrodomesticos a Prorrata');
+						
+						// Imprimir clausulas
+						$y += 9;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', 'B', 8);
+						$pdf->Write(5, 'Cantidad');
+						$pdf->SetX($x + 20);
+						$pdf->Write(5, 'Producto');
+						$pdf->SetX($x + 110);
+						$pdf->Write(5, 'Marca');
+						$pdf->SetX($x + 170);
+						$pdf->Write(5, 'Valor');
+						
+						
+						$y += 5;
+						
+						$count_obj_esp_prorratas = 0;
+						$count_obj_esp_prorratas_per_page = 0;
+						$max_obj_esp_prorratas = count($tv_aud_vids)?$max_tv_aud_vids - $count_tv_aud_vids_per_page -3 :30;
+						$total_suma_asegurada = 0;
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y-6, 196, (min(count($obj_esp_prorratas), $max_obj_esp_prorratas) * 5) + 6, 1, '1234', 'D');
+
+						foreach ($obj_esp_prorratas as $obj_esp_prorrata){
+							if ($count_obj_esp_prorratas_per_page % $max_obj_esp_prorratas == 0 and $count_obj_esp_prorratas_per_page > 0) {
+								newPage($pdf, false);				
+								$y = 48;
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->SetXY(35, $y);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, 'Robo y/o Hurto de Objetos Especificos y/o Aparatos Electrodomesticos a Prorrata (Cont)');
+							
+								$count_obj_esp_prorratas_per_page = 0;
+								$max_obj_esp_prorratas = 46;
+								
+								$y += 7.5;
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, (min(count($obj_esp_prorratas)-$count_obj_esp_prorratas, $max_obj_esp_prorratas) * 5) + 4.5, 1, '1234', 'D');
+								$y += 2;
+							}
+							
+							if (!isset($obj_esp_prorrata['total'])) {
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', '', 7);
+								$pdf->Write(5, $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad']);
+								$pdf->SetX($x + 20);
+								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
+								$pdf->SetX($x + 110);
+								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 58));
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')' );
+							
+								$total_suma_asegurada += $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'];
+							}							
+							else {
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', 'B', 8);
+								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $total_suma_asegurada, 2) . ')');
+							}
+							
+							$y += 5;
+							$count_obj_esp_prorratas++;
+							$count_obj_esp_prorratas_per_page++;
+						}
+						$y += 3;
+					}
+					
+					if (count($equipos_comp)) {
+						$equipos_comp[] = array('total'=>true);
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->SetXY(40, $y + 0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'Todo Riesgo Equipos de Computacion en Domicilio a Primer Riesgo Absoluto');
+						
+						// Imprimir clausulas
+						$y += 9;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', 'B', 8);
+						$pdf->Write(5, 'Cantidad');
+						$pdf->SetX($x + 20);
+						$pdf->Write(5, 'Producto');
+						$pdf->SetX($x + 110);
+						$pdf->Write(5, 'Marca');
+						$pdf->SetX($x + 170);
+						$pdf->Write(5, 'Valor');
+						
+						
+						$y += 5;
+						
+						$count_equipos_comp = 0;
+						$count_equipos_comp_per_page = 0;
+						$max_equipos_comp = count($obj_esp_prorratas)?$max_obj_esp_prorratas - $count_obj_esp_prorratas_per_page -3 : count($tv_aud_vids)?$max_tv_aud_vids - $count_tv_aud_vids_per_page -3 : 30;
+						$total_suma_asegurada = 0;
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y-6, 196, (min(count($equipos_comp), $max_equipos_comp) * 5) + 6, 1, '1234', 'D');
+
+						foreach ($equipos_comp as $equipo_comp){
+							if ($count_equipos_comp_per_page % $max_equipos_comp == 0 and $count_equipos_comp_per_page > 0) {
+								newPage($pdf, false);				
+								$y = 48;
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->SetXY(37, $y);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, 'Todo Riesgo Equipos de Computacion en Domicilio a Primer Riesgo Absoluto (Cont)');
+							
+								$count_equipos_comp_per_page = 0;
+								$max_equipos_comp = 46;
+								
+								$y += 7.5;
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect(10.5, $y, 196, (min(count($equipos_comp)-$count_equipos_comp, $max_equipos_comp) * 5) + 4.5, 1, '1234', 'D');
+								$y += 2;
+							}
+							
+							if (!isset($equipo_comp['total'])) {
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', '', 7);
+								$pdf->Write(5, $equipo_comp['combinado_familiar_equipos_computacion_cantidad']);
+								$pdf->SetX($x + 20);
+								$pdf->Write(5, trimText($equipo_comp['combinado_familiar_equipos_computacion_producto'], $pdf, 85));
+								$pdf->SetX($x + 110);
+								$pdf->Write(5, trimText($equipo_comp['combinado_familiar_equipos_computacion_marca'], $pdf, 58));
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2));
+							
+								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'];
+							}							
+							else {
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', 'B', 8);
+								$pdf->Write(5, 'Total: '.$count_equipos_comp);
+								$pdf->SetX($x + 170);
+								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
+							}
+							
+							$y += 5;
+							$count_equipos_comp++;
+							$count_equipos_comp_per_page++;
+						}
+						$y += 3;
+					}
+					
+					$pdf->SetFillColor(221,227,237);
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+					$pdf->SetXY(95, $y+0.5);
+					$pdf->SetFont('Arial','B',10);
+					$pdf->Write(5, 'Otros');
+					
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, 23, 1, '1234', 'D');
+					
+					$y += 9.5;
+
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Cristales a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_cristales'], 2));
+					
+					$y += 5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Responsabilidad Civil Hechos Privados a Primer Riesgo Absoluto con Franquicia: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
+					
+					$y += 5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, trimText('Daños por Agua al Mobiliario y/o Efectos Personales a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+					$y += 5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+					$y += 5;
+					
+					// Footer
+					if ($y > 200) {
+						newPage($pdf, false);
+					}
+					$y = 200;
+					$pdf->SetFillColor(229,233,253);
+					$pdf->SetDrawColor(138,162,234);
+					$pdf->SetLineWidth(0.6);
+					$pdf->RoundedRect(10.5, $y, 135, 19, 1, '1234', 'DF');
+					$pdf->RoundedRect(146, $y, 60, 19, 1, '1234', 'DF');
+					$pdf->SetFont('Arial','B',10);
+					$pdf->SetXY(65,$y + 1);
+					$pdf->Write(5, 'Forma de Pago');
+					$pdf->SetXY(168,$y + 1);
+					$pdf->Write(5, 'Importes');
+					
+					$y += 9;
+					
+					// Forma de Pago					
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(12.5, $y);
+					printText($txt_pago_c1, $pdf, 55, 3.8);
+					$pdf->SetXY(70, $y);
+					$pdf->SetXY(102, $y);
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
+					// Importes
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+					}
+					
+					// Firma
+					if (isset($_GET['print'])) {
+						$pdf->Image('pdf/cc_dinamica_firma.png', 0, 0, 215.9, 279.4);
+					}
+					else {
+						$pdf->Image('pdf/cc_digital_dinamica_firma.png', 0, 0, 215.9, 297);
+					}
+					break;
+				}
+				$pdf->Output();
+			
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
