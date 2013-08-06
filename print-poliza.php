@@ -860,7 +860,7 @@
 					function newPage($pdf, $first) {
 						$pdf->SetAutoPageBreak(false);
 						$pdf->AddPage();
-						$pdf->setSourceFile('pdf/pe_accidentes'.(!$first?2:'').'.pdf');
+						$pdf->setSourceFile('pdf/pe_dinamico'.(!$first?2:'').'.pdf');
 						$tplIdx = $pdf->importPage(1);
 						$pdf->useTemplate($tplIdx);
 						// Fecha y hora
