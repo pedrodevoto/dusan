@@ -172,6 +172,71 @@ CREATE TABLE `cliente_foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `combinado_familiar`;
+CREATE TABLE `combinado_familiar` (
+  `combinado_familiar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `combinado_familiar_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_prorrata` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_rc_lind` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_cristales` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_responsabilidad_civil` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_jugadores_golf` decimal(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`combinado_familiar_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `combinado_familiar_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_equipos_computacion`;
+CREATE TABLE `combinado_familiar_equipos_computacion` (
+  `combinado_familiar_equipos_computacion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_equipos_computacion_cantidad` int(11) NOT NULL,
+  `combinado_familiar_equipos_computacion_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_equipos_computacion_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_equipos_computacion_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_equipos_computacion_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_equipos_computacion_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_obj_esp_prorrata`;
+CREATE TABLE `combinado_familiar_obj_esp_prorrata` (
+  `combinado_familiar_obj_esp_prorrata_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_cantidad` int(11) NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_obj_esp_prorrata_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_obj_esp_prorrata_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_tv_aud_vid`;
+CREATE TABLE `combinado_familiar_tv_aud_vid` (
+  `combinado_familiar_tv_aud_vid_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_tv_aud_vid_cantidad` int(11) NOT NULL,
+  `combinado_familiar_tv_aud_vid_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_tv_aud_vid_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_tv_aud_vid_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_tv_aud_vid_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_tv_aud_vid_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `contacto`;
 CREATE TABLE `contacto` (
   `contacto_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -369,4 +434,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-01 12:40:25
+-- 2013-08-06 10:53:26
