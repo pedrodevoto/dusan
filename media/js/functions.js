@@ -1013,6 +1013,25 @@ $(document).ready(function() {
 				populateSectionAsegurado(id);
 				populateSectionClausula(id);
 				break;
+			case 'combinado_familiar':
+				$('.disabled').each(function(i, e) {
+					$('#'+$(e).attr('id')+'_flag').prop('checked', !$(e).val()=='');
+				});
+				$('.disabled').change(function() {
+					$('#'+$(this).attr('id')+'_flag').prop('checked', !$(this).val()=='');
+				});
+				$('.flag').change(function() {
+					$('#'+$(this).attr('id').substring(0, $(this).attr('id').indexOf('flag')-1)).attr('disabled', $(this).attr('checked')?false:true);
+				});
+				$('#box-combinado_familiar_prorrata').change(function() {
+					calculateObjEspProrrataTotal();
+				})
+				populateSectionTvAudVid(id);
+				populateSectionObjEspProrrata(id);
+				populateSectionEquiposComputacion(id);
+				
+				$("#box-combinado_familiar_domicilio_calle").focus();	
+				break;
 		}
 	}
 	populateSectionAsegurado = function(id) {
@@ -1078,6 +1097,96 @@ $(document).ready(function() {
 			};
 		});	
 	}
+	populateSectionTvAudVid = function(id) {
+		populateDiv_TvAudVid(id);
+
+		calculateTvAudVidTotal();		
+		$('#box-combinado_familiar_tv_aud_vid_add').button().click(function() {
+			addTvAudVidItem();
+		})
+	}	
+	populateSectionObjEspProrrata = function(id) {
+		populateDiv_ObjEspProrrata(id);
+
+		calculateObjEspProrrataTotal();		
+		$('#box-combinado_familiar_obj_esp_prorrata_add').button().click(function() {
+			addObjEspProrrataItem();
+		})
+	}
+	populateSectionEquiposComputacion = function(id) {
+		populateDiv_EquiposComputacion(id);
+
+		calculateEquiposComputacionTotal();		
+		$('#box-combinado_familiar_equipos_computacion_add').button().click(function() {
+			addEquiposComputacionItem();
+		})
+	}
+	
+	addTvAudVidItem = function(cantidad, producto, marca, valor) {
+		var j = 0;
+		$('#tv_aud_vid p').each(function(i,e){
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var tv_aud_vid = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][cantidad]" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][valor]" class="box-combinado_familiar_tv_aud_vid_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_tv_aud_vid_remove" value="-" /></p>';
+		$('#tv_aud_vid').append(tv_aud_vid);
+		$('#tv_aud_vid p#'+j+' :nth-child(1)').focus();
+		$('.box-combinado_familiar_tv_aud_vid_remove').button().click(function() {
+			$(this).parent().remove();
+			calculateTvAudVidTotal();
+		})
+		$('.box-combinado_familiar_tv_aud_vid_valor').change(function() {calculateTvAudVidTotal()});
+	}
+	addObjEspProrrataItem = function(cantidad, producto, marca, valor) {
+		var j = 0;
+		$('#obj_esp_prorrata p').each(function(i,e){
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var obj_esp_prorrata = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][cantidad]" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_obj_esp_prorrata['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_obj_esp_prorrata['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][valor]" class="box-combinado_familiar_obj_esp_prorrata_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_obj_esp_prorrata_remove" value="-" /></p>';
+		$('#obj_esp_prorrata').append(obj_esp_prorrata);
+		$('#obj_esp_prorrata p#'+j+' :nth-child(1)').focus();
+		$('.box-combinado_familiar_obj_esp_prorrata_remove').button().click(function() {
+			$(this).parent().remove();
+			calculateObjEspProrrataTotal()
+		})
+		$('.box-combinado_familiar_obj_esp_prorrata_valor').change(function() {calculateObjEspProrrataTotal()});
+	}
+	addEquiposComputacionItem = function(cantidad, producto, marca, valor) {
+		var j = 0;
+		$('#equipos_computacion p').each(function(i,e){
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var equipos_computacion = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][cantidad]" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][valor]" class="box-combinado_familiar_equipos_computacion_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_equipos_computacion_remove" value="-" /></p>';
+		$('#equipos_computacion').append(equipos_computacion);
+		$('#equipos_computacion p#'+j+' :nth-child(1)').focus();
+		$('.box-combinado_familiar_equipos_computacion_remove').button().click(function() {
+			$(this).parent().remove();
+			calculateEquiposComputacionTotal()
+		})
+		$('.box-combinado_familiar_equipos_computacion_valor').change(function() {calculateEquiposComputacionTotal()});
+	}
+	calculateTvAudVidTotal = function() {
+		var total = 0;
+		$('.box-combinado_familiar_tv_aud_vid_valor').each(function(i,e){
+			total += Number($(e).val());
+		});
+		$("#tv_aud_vid_total").html(total);
+	}
+	calculateObjEspProrrataTotal = function() {
+		var total = 0;
+		$('.box-combinado_familiar_obj_esp_prorrata_valor').each(function(i,e){
+			total += Number($(e).val());
+		});
+		var prorrota = Number($('#box-combinado_familiar_prorrata').val());
+		total = total * (prorrota > 0 ? prorrota : 100) / 100;
+		$("#obj_esp_prorrata_total").html(total);
+	}
+	calculateEquiposComputacionTotal = function() {
+		var total = 0;
+		$('.box-combinado_familiar_equipos_computacion_valor').each(function(i,e){
+			total += Number($(e).val());
+		});
+		$("#equipos_computacion_total").html(total);
+	}
 	populateFormBoxAsegurado = function(id){
 		var dfd = new $.Deferred();		
 		$.ajax({
@@ -1100,6 +1209,7 @@ $(document).ready(function() {
 		});	
 		return dfd.promise();				
 	}
+	
 	<!-- Other form functions -->
 	assignClientToPoliza = function(id){
 		$.ajax({
@@ -1500,6 +1610,48 @@ $(document).ready(function() {
 				$('#divBoxListClausula').html(result);								
 			}
 		});				
+	}
+	populateDiv_TvAudVid = function(id) {
+		$.getJSON("get-json-fich_combinado_familiar_tvaudvid.php?id=" + id, {}, function(j) {
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				$('#tv_aud_vid').empty();
+				$.each(j, function(i, object) {
+					addTvAudVidItem(object.combinado_familiar_tv_aud_vid_cantidad, object.combinado_familiar_tv_aud_vid_producto, object.combinado_familiar_tv_aud_vid_marca, object.combinado_familiar_tv_aud_vid_valor);
+				});
+				calculateTvAudVidTotal();
+				$("#box-combinado_familiar_domicilio_calle").focus();
+			}
+		})
+	}
+	populateDiv_ObjEspProrrata = function(id) {
+		$.getJSON("get-json-fich_combinado_familiar_objespprorrata.php?id=" + id, {}, function(j) {
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				$('#obj_esp_prorrata').empty();
+				$.each(j, function(i, object) {
+					addObjEspProrrataItem(object.combinado_familiar_obj_esp_prorrata_cantidad, object.combinado_familiar_obj_esp_prorrata_producto, object.combinado_familiar_obj_esp_prorrata_marca, object.combinado_familiar_obj_esp_prorrata_valor);
+				});
+				calculateObjEspProrrataTotal();
+				$("#box-combinado_familiar_domicilio_calle").focus();
+			}
+		})
+	}
+	populateDiv_EquiposComputacion = function(id) {
+		$.getJSON("get-json-fich_combinado_familiar_equiposcomputacion.php?id=" + id, {}, function(j) {
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				$('#equipos_computacion').empty();
+				$.each(j, function(i, object) {
+					addEquiposComputacionItem(object.combinado_familiar_equipos_computacion_cantidad, object.combinado_familiar_equipos_computacion_producto, object.combinado_familiar_equipos_computacion_marca, object.combinado_familiar_equipos_computacion_valor);
+				});
+				calculateEquiposComputacionTotal();
+				$("#box-combinado_familiar_domicilio_calle").focus();
+			}
+		})
 	}
 	populateDiv_Cliente_Results = function() {
 		$.getJSON("get-json-fich_poliza-cliente_search.php", $("#frmSelectClient").serialize(), function(j) {

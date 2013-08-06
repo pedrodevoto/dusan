@@ -7,6 +7,7 @@
 	require_once('Connections/connection.php');
 	// Require DB functions
 	require_once('inc/db_functions.php');
+	
 ?>
 <?php
 	// Obtain URL parameter
@@ -214,6 +215,71 @@
 			
 		}
 		
+			break;
+		case 'combinado_familiar':
+			// ---------------------------------- COMBINADO FAMILIAR ---------------------------------- //
+
+			$upsertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_prorrata, combinado_familiar_inc_edif, combinado_familiar_rc_lind, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf) 
+						          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), %8$s, %9$s, %10$s, %11$s, %12$s, %13$s, %14$s) 
+							  ON DUPLICATE KEY UPDATE combinado_familiar_domicilio_calle=UPPER(TRIM(%2$s)), combinado_familiar_domicilio_nro=UPPER(TRIM(%3$s)), combinado_familiar_domicilio_piso=UPPER(TRIM(%4$s)), combinado_familiar_domicilio_dpto=UPPER(TRIM(%5$s)), combinado_familiar_domicilio_localidad=UPPER(TRIM(%6$s)), combinado_familiar_domicilio_cp=UPPER(TRIM(%7$s)), combinado_familiar_prorrata=%8$s, combinado_familiar_inc_edif=%9$s, combinado_familiar_rc_lind=%10$s, combinado_familiar_cristales=%11$s, combinado_familiar_responsabilidad_civil=%12$s, combinado_familiar_danios_agua=%13$s, combinado_familiar_jugadores_golf=%14$s, combinado_familiar_id=LAST_INSERT_ID(combinado_familiar_id)',
+									$poliza_id,												
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_calle'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_nro'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_piso'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_dpto'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_localidad'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_domicilio_cp'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_prorrata'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_inc_edif'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_rc_lind'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_cristales'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_responsabilidad_civil'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_danios_agua'], 'double'),
+									GetSQLValueString($_POST['box-combinado_familiar_jugadores_golf'], 'double'));
+
+			$Result1 = mysql_query($upsertSQL, $connection);				
+			$combinado_familiar_id = mysql_insert_id();
+			
+			$deleteSQL = "DELETE FROM combinado_familiar_tv_aud_vid WHERE combinado_familiar_id = ".$combinado_familiar_id;
+			mysql_query($deleteSQL);
+			if (isset($_POST['box-combinado_familiar_tv_aud_vid'])) {
+				foreach ($_POST['box-combinado_familiar_tv_aud_vid'] as $tv_aud_vid) {
+					$insertSQL = sprintf("INSERT INTO combinado_familiar_tv_aud_vid (combinado_familiar_id, combinado_familiar_tv_aud_vid_cantidad, combinado_familiar_tv_aud_vid_producto, combinado_familiar_tv_aud_vid_marca, combinado_familiar_tv_aud_vid_valor) VALUES (%s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s) ",
+										$combinado_familiar_id,												
+										GetSQLValueString($tv_aud_vid['cantidad'], 'int'),
+										GetSQLValueString($tv_aud_vid['producto'], 'text'),
+										GetSQLValueString($tv_aud_vid['marca'], 'text'),
+										GetSQLValueString($tv_aud_vid['valor'], 'double'));
+					mysql_query($insertSQL);					
+				}
+			}
+			$deleteSQL = "DELETE FROM combinado_familiar_obj_esp_prorrata WHERE combinado_familiar_id = ".$combinado_familiar_id;
+			mysql_query($deleteSQL);
+				if (isset($_POST['box-combinado_familiar_obj_esp_prorrata'])) {
+				foreach ($_POST['box-combinado_familiar_obj_esp_prorrata'] as $obj_esp_prorrata) {
+					$insertSQL = sprintf("INSERT INTO combinado_familiar_obj_esp_prorrata (combinado_familiar_id, combinado_familiar_obj_esp_prorrata_cantidad, combinado_familiar_obj_esp_prorrata_producto, combinado_familiar_obj_esp_prorrata_marca, combinado_familiar_obj_esp_prorrata_valor) VALUES (%s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s) ",
+										$combinado_familiar_id,												
+										GetSQLValueString($obj_esp_prorrata['cantidad'], 'int'),
+										GetSQLValueString($obj_esp_prorrata['producto'], 'text'),
+										GetSQLValueString($obj_esp_prorrata['marca'], 'text'),
+										GetSQLValueString($obj_esp_prorrata['valor'], 'double'));
+					mysql_query($insertSQL);					
+				}
+			}
+			$deleteSQL = "DELETE FROM combinado_familiar_equipos_computacion WHERE combinado_familiar_id = ".$combinado_familiar_id;
+			mysql_query($deleteSQL);
+			if (isset($_POST['box-combinado_familiar_equipos_computacion'])) {
+				foreach ($_POST['box-combinado_familiar_equipos_computacion'] as $equipos_computacion) {
+					$insertSQL = sprintf("INSERT INTO combinado_familiar_equipos_computacion (combinado_familiar_id, combinado_familiar_equipos_computacion_cantidad, combinado_familiar_equipos_computacion_producto, combinado_familiar_equipos_computacion_marca, combinado_familiar_equipos_computacion_valor) VALUES (%s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s) ",
+										$combinado_familiar_id,												
+										GetSQLValueString($equipos_computacion['cantidad'], 'int'),
+										GetSQLValueString($equipos_computacion['producto'], 'text'),
+										GetSQLValueString($equipos_computacion['marca'], 'text'),
+										GetSQLValueString($equipos_computacion['valor'], 'double'));
+					mysql_query($insertSQL);					
+				}
+			}
+									
 			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		

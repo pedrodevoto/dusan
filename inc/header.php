@@ -18,7 +18,7 @@
             	<!-- Administrativo -->
                 <li><a href="#">Pólizas</a>
 					<ul>
-                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_auto_list.php">Patrimoniales</a></li>
                         <li><a href="section-poli_otros_list.php">Otras</a></li>                        
                     </ul>
 				</li>
@@ -35,7 +35,7 @@
             	<!-- Master -->
                 <li><a href="#">Pólizas</a>
 					<ul>
-                        <li><a href="section-poli_auto_list.php">Automotor</a></li>
+                        <li><a href="section-poli_auto_list.php">Patrimoniales</a></li>
                         <li><a href="section-poli_otros_list.php">Otras</a></li>                  
                     </ul>
 				</li>
