@@ -72,6 +72,7 @@
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
 						{"sWidth": "7%"},
+						{"sWidth": "7%"},
 						{"sWidth": "6%"},
 						{"sWidth": "7%"},
 						{"sWidth": "9%"},
@@ -83,7 +84,7 @@
 						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "5%"},
 						{"sWidth": "4%",  "bSearchable": false, "fnRender": function(oObj) {
-								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
+								return '<span title="'+oObj.aData[14]+'">'+oObj.aData[13]+'</span>';
 							}
 						},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
@@ -194,6 +195,7 @@
                         <tr>                        
                             <th>Poliza ID (Hide)</th>
                             <th>Póliza N°</th>                            
+                            <th>Tipo</th> 
                             <th>Compañía</th>
                             <th>Sucursal</th>
                             <th>Productor</th>
@@ -216,6 +218,7 @@
                         <tr>
                             <th></th>
                             <th></th>                            
+                            <th></th> 
                             <th></th> 
                             <th></th>
                             <th></th>
