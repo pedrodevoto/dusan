@@ -1270,13 +1270,13 @@
 					
 					$pdf->SetFillColor(221,227,237);
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 					$pdf->SetXY(95, $y+0.5);
 					$pdf->SetFont('Arial','B',10);
 					$pdf->Write(5, 'General');
 					
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
 					
 					$y += 9.5;
 
@@ -1309,13 +1309,13 @@
 						
 						$pdf->SetFillColor(221,227,237);
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 						$pdf->SetXY(35, $y+0.5);
 						$pdf->SetFont('Arial','B',10);
 						$pdf->Write(5, 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto');
 						
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, (min(count($tv_aud_vids), 30) * 5) + 8, 1, '1234', 'D');
+						$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, (min(count($tv_aud_vids), 30) * 5) + 8, 1, '1234', 'D');
 						
 						$y += 9.5;
 						
@@ -1327,7 +1327,7 @@
 						$pdf->Write(5, 'Producto');
 						$pdf->SetX($x + 110);
 						$pdf->Write(5, 'Marca');
-						$pdf->SetX($x + 170);
+						$pdf->SetX($x + 180);
 						$pdf->Write(5, 'Valor');
 						$y += 5;
 						
@@ -1341,14 +1341,14 @@
 								$y = 48;
 								$pdf->SetFillColor(221,227,237);
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 								$pdf->SetXY(30, $y);
 								$pdf->SetFont('Arial','B',10);
 								$pdf->Write(5, 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto (Cont)');
 								
 								$y += 7.5;
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect($x-0.5, $y, 196, (min(count($tv_aud_vids)-$count_tv_aud_vids, 46) * 5) + 4.5, 1, '1234', 'D');
+								$pdf->RoundedRect($x-0.5, $y, 197, (min(count($tv_aud_vids)-$count_tv_aud_vids, 46) * 5) + 4.5, 1, '1234', 'D');
 							
 								$y += 2;
 								$count_tv_aud_vids_per_page = 0;
@@ -1363,8 +1363,7 @@
 								$pdf->Write(5, trimText($tv_aud_vid['combinado_familiar_tv_aud_vid_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($tv_aud_vid['combinado_familiar_tv_aud_vid_marca'], $pdf, 58));
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2));
+								printText('$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2), $pdf, 50, 5, 'R');
 								
 								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'];
 								
@@ -1373,8 +1372,7 @@
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
+								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
 							}
 							$count_tv_aud_vids++;
 							$count_tv_aud_vids_per_page++;
@@ -1387,7 +1385,7 @@
 						$obj_esp_prorratas[] = array('total'=>true);
 						$pdf->SetFillColor(221,227,237);
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 						$pdf->SetXY(38, $y + 0.5);
 						$pdf->SetFont('Arial','B',10);
 						$pdf->Write(5, 'Robo y/o Hurto de Objetos Especificos y/o Aparatos Electrodomesticos a Prorrata');
@@ -1401,7 +1399,7 @@
 						$pdf->Write(5, 'Producto');
 						$pdf->SetX($x + 110);
 						$pdf->Write(5, 'Marca');
-						$pdf->SetX($x + 170);
+						$pdf->SetX($x + 180);
 						$pdf->Write(5, 'Valor');
 						
 						
@@ -1412,7 +1410,7 @@
 						$max_obj_esp_prorratas = count($tv_aud_vids)?$max_tv_aud_vids - $count_tv_aud_vids_per_page -3 :30;
 						$total_suma_asegurada = 0;
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y-6, 196, (min(count($obj_esp_prorratas), $max_obj_esp_prorratas) * 5) + 6, 1, '1234', 'D');
+						$pdf->RoundedRect($x - 0.5, $y-6, 197, (min(count($obj_esp_prorratas), $max_obj_esp_prorratas) * 5) + 6, 1, '1234', 'D');
 
 						foreach ($obj_esp_prorratas as $obj_esp_prorrata){
 							if ($count_obj_esp_prorratas_per_page % $max_obj_esp_prorratas == 0 and $count_obj_esp_prorratas_per_page > 0) {
@@ -1420,7 +1418,7 @@
 								$y = 48;
 								$pdf->SetFillColor(221,227,237);
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect(10.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->RoundedRect(10.5, $y, 197, 6, 1, '1234', 'DF');
 								$pdf->SetXY(35, $y);
 								$pdf->SetFont('Arial','B',10);
 								$pdf->Write(5, 'Robo y/o Hurto de Objetos Especificos y/o Aparatos Electrodomesticos a Prorrata (Cont)');
@@ -1430,7 +1428,7 @@
 								
 								$y += 7.5;
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect(10.5, $y, 196, (min(count($obj_esp_prorratas)-$count_obj_esp_prorratas, $max_obj_esp_prorratas) * 5) + 4.5, 1, '1234', 'D');
+								$pdf->RoundedRect(10.5, $y, 197, (min(count($obj_esp_prorratas)-$count_obj_esp_prorratas, $max_obj_esp_prorratas) * 5) + 4.5, 1, '1234', 'D');
 								$y += 2;
 							}
 							
@@ -1442,8 +1440,7 @@
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 58));
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')' );
+								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'];
 							}							
@@ -1451,8 +1448,8 @@
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $total_suma_asegurada, 2) . ')');
+								// $pdf->SetX($x + 165);
+								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
 							}
 							
 							$y += 5;
@@ -1466,7 +1463,7 @@
 						$equipos_comp[] = array('total'=>true);
 						$pdf->SetFillColor(221,227,237);
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 						$pdf->SetXY(40, $y + 0.5);
 						$pdf->SetFont('Arial','B',10);
 						$pdf->Write(5, 'Todo Riesgo Equipos de Computacion en Domicilio a Primer Riesgo Absoluto');
@@ -1480,7 +1477,7 @@
 						$pdf->Write(5, 'Producto');
 						$pdf->SetX($x + 110);
 						$pdf->Write(5, 'Marca');
-						$pdf->SetX($x + 170);
+						$pdf->SetX($x + 180);
 						$pdf->Write(5, 'Valor');
 						
 						
@@ -1491,7 +1488,7 @@
 						$max_equipos_comp = count($obj_esp_prorratas)?$max_obj_esp_prorratas - $count_obj_esp_prorratas_per_page -3 : count($tv_aud_vids)?$max_tv_aud_vids - $count_tv_aud_vids_per_page -3 : 30;
 						$total_suma_asegurada = 0;
 						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y-6, 196, (min(count($equipos_comp), $max_equipos_comp) * 5) + 6, 1, '1234', 'D');
+						$pdf->RoundedRect($x - 0.5, $y-6, 197, (min(count($equipos_comp), $max_equipos_comp) * 5) + 6, 1, '1234', 'D');
 
 						foreach ($equipos_comp as $equipo_comp){
 							if ($count_equipos_comp_per_page % $max_equipos_comp == 0 and $count_equipos_comp_per_page > 0) {
@@ -1499,7 +1496,7 @@
 								$y = 48;
 								$pdf->SetFillColor(221,227,237);
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect(10.5, $y, 196, 6, 1, '1234', 'DF');
+								$pdf->RoundedRect(10.5, $y, 197, 6, 1, '1234', 'DF');
 								$pdf->SetXY(37, $y);
 								$pdf->SetFont('Arial','B',10);
 								$pdf->Write(5, 'Todo Riesgo Equipos de Computacion en Domicilio a Primer Riesgo Absoluto (Cont)');
@@ -1509,7 +1506,7 @@
 								
 								$y += 7.5;
 								$pdf->SetLineWidth(0.4);
-								$pdf->RoundedRect(10.5, $y, 196, (min(count($equipos_comp)-$count_equipos_comp, $max_equipos_comp) * 5) + 4.5, 1, '1234', 'D');
+								$pdf->RoundedRect(10.5, $y, 197, (min(count($equipos_comp)-$count_equipos_comp, $max_equipos_comp) * 5) + 4.5, 1, '1234', 'D');
 								$y += 2;
 							}
 							
@@ -1521,8 +1518,7 @@
 								$pdf->Write(5, trimText($equipo_comp['combinado_familiar_equipos_computacion_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($equipo_comp['combinado_familiar_equipos_computacion_marca'], $pdf, 58));
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2));
+								printText('$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2), $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'];
 							}							
@@ -1530,8 +1526,7 @@
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_equipos_comp);
-								$pdf->SetX($x + 170);
-								$pdf->Write(5, '$'.formatNumber($total_suma_asegurada, 2));
+								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
 							}
 							
 							$y += 5;
@@ -1543,13 +1538,13 @@
 					
 					$pdf->SetFillColor(221,227,237);
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y, 196, 6, 1, '1234', 'DF');
+					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 					$pdf->SetXY(95, $y+0.5);
 					$pdf->SetFont('Arial','B',10);
 					$pdf->Write(5, 'Otros');
 					
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 196, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
 					
 					$y += 9.5;
 
@@ -1583,7 +1578,7 @@
 					$pdf->SetDrawColor(138,162,234);
 					$pdf->SetLineWidth(0.6);
 					$pdf->RoundedRect(10.5, $y, 135, 19, 1, '1234', 'DF');
-					$pdf->RoundedRect(146, $y, 60, 19, 1, '1234', 'DF');
+					$pdf->RoundedRect(146, $y, 60, 21, 1, '1234', 'DF');
 					$pdf->SetFont('Arial','B',10);
 					$pdf->SetXY(65,$y + 1);
 					$pdf->Write(5, 'Forma de Pago');
