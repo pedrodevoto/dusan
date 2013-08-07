@@ -206,7 +206,7 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
-	populateListUsuario_Sucursal = function(field, context){
+	populateListUsuario_Sucursal = function(field, context, all){
 		var dfd = new $.Deferred();		
 		$.ajax({
 			url: "get-json-suc.php",
@@ -226,7 +226,7 @@ $(document).ready(function() {
 					// Sort options by index value
 					sortListValue(field);
 					// Append option: "all"
-					// appendListItem(field, '', 'Todos');
+					if (all) appendListItem(field, '', 'Todos');
 					// Select first item
 					// selectFirstItem(field);	
 					dfd.resolve();								
@@ -602,10 +602,10 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
-	populateListProductorSeguro_Productor = function(parent_id, field, context){
+	populateListProductorSeguro_Productor = function(seguro_id, sucursal_id, field, context){
 		var dfd = new $.Deferred();		
 		$.ajax({
-			url: "get-json-productorseguro_productor.php?id="+parent_id,
+			url: "get-json-productorseguro_productor.php?id="+seguro_id+'&id2='+sucursal_id,
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
@@ -906,7 +906,7 @@ $(document).ready(function() {
 					// Populate drop-downs, then form
 					$.when(
 						populateListSeguro('box-seguro_id', 'box'),
-						populateListProductorSeguro_Productor(j.seguro_id, 'box-productor_seguro_id', 'box'),
+						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
 					).then(function(){	
 						// Populate Form
@@ -936,7 +936,7 @@ $(document).ready(function() {
 					// Populate drop-downs, then form
 					$.when(
 						populateListSeguro('box-seguro_id', 'box'),
-						populateListProductorSeguro_Productor(j.seguro_id, 'box-productor_seguro_id', 'box'),
+						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
 						populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
 						populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),						
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
@@ -1281,14 +1281,16 @@ $(document).ready(function() {
 					result += '<table class="tblBox">';			
 					// Table Head
 					result += '<tr>';
-					result += '<th width="40%">Seguro</th>';
-					result += '<th width="45%">Código</th>';
-					result += '<th width="15%">Acciones</th>';					
+					result += '<th width="30%">Seguro</th>';
+					result += '<th width="30%">Sucursal</th>';
+					result += '<th width="30%">Código</th>';
+					result += '<th width="10%">Acciones</th>';					
 					result += '</tr>';					
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
 						result += '<td>'+object.seguro_nombre+'</td>';
+						result += '<td>'+object.sucursal_nombre+'</td>';
 						result += '<td><span class="jeditrow1" id="prodseg_'+object.productor_seguro_id+'">'+object.productor_seguro_codigo+'</span></td>';														
 						result += '<td><span onClick="javascript:deleteProdSeg('+object.productor_seguro_id+', '+id+')" style="cursor: pointer;" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
 						result += '</tr>';									
@@ -2610,13 +2612,15 @@ $(document).ready(function() {
 
 				// Populate drop-downs, then initialize form
 				$.when(
-					populateListSeguro('box-seguro_id', 'box')
+					populateListSeguro('box-seguro_id', 'box'),
+					populateListUsuario_Sucursal('box-sucursal_id', 'box', true	)
 				).then(function(){							
 								
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {							
 							"box-seguro_id": {required: true},
+							"box-sucursal_id": {required: true},
 							"box-productor_seguro_codigo": {required: true}
 						}
 					});																	
@@ -3025,6 +3029,7 @@ $(document).ready(function() {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
+					var empty = '<option value="">Todos</option>';
 					$("#box-tipo_poliza_id").change(function(){
 						$('#box-subtipo_poliza_id').html(loading);
 						populateListSubtipoPoliza($(this).val(), 'box-subtipo_poliza_id', 'box');
@@ -3039,9 +3044,13 @@ $(document).ready(function() {
 						}
 						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $(this).val());
 					});	
+					$('#box-sucursal_id').change(function(){
+						$('#box-productor_seguro_id').html(loading);						
+						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
+					})
 					$("#box-seguro_id").change(function(){
 						$('#box-productor_seguro_id').html(loading);						
-						populateListProductorSeguro_Productor($(this).val(), 'box-productor_seguro_id', 'box');
+						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 					});	
 					$("#box-poliza_vigencia").change(function(){
 						var months;
@@ -3230,7 +3239,7 @@ $(document).ready(function() {
 					var loading = '<option value="">Cargando...</option>';	
 					$("#box-seguro_id").change(function(){
 						$('#box-productor_seguro_id').html(loading);						
-						populateListProductorSeguro_Productor($(this).val(), 'box-productor_seguro_id', 'box');
+						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 					});		
 					
 					// Validate form
@@ -3303,7 +3312,7 @@ $(document).ready(function() {
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function(){
 						$('#box-productor_seguro_id').html(loading);						
-						populateListProductorSeguro_Productor($(this).val(), 'box-productor_seguro_id', 'box');
+						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 					});	
 					$("#box-poliza_vigencia").change(function(){
 						var months;

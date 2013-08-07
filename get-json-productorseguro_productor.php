@@ -11,11 +11,13 @@
 <?php	
 	// Main Query
 	$colname_Recordset1 = "-1";
-	if (isset($_GET['id'])) {
+	if (isset($_GET['id']) and isset($_GET['id2'])) {
 		$colname_Recordset1 = $_GET['id'];
+		$sucursal_id = $_GET['id2'];
 	}
-	$query_Recordset1 = sprintf("SELECT productor_seguro_id, CONCAT(productor_nombre,' [',productor_seguro_codigo,']') AS productor_nombre FROM productor_seguro JOIN (productor) ON (productor_seguro.productor_id=productor.productor_id) WHERE productor_seguro.seguro_id=%s",
-						GetSQLValueString($colname_Recordset1, "int"));
+	$query_Recordset1 = sprintf("SELECT productor_seguro_id, CONCAT(productor_nombre,' [',productor_seguro_codigo,']') AS productor_nombre FROM productor_seguro JOIN (productor) ON (productor_seguro.productor_id=productor.productor_id) WHERE productor_seguro.seguro_id=%s AND sucursal_id = %s",
+						GetSQLValueString($colname_Recordset1, "int"),
+						GetSQLValueString($sucursal_id, "int"));
 	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	

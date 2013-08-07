@@ -14,7 +14,7 @@
             <legend class="ui-widget ui-widget-header ui-corner-all">Poliza (General)</legend>  
             <p>
                 <label for="box-sucursal_nombre">Sucursal ^</label>
-                <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
+                <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly"><input type="hidden" name="box-sucursal_id" id="box-sucursal_id" />
 			</p>
 			<p>
                 <label for="box-cliente_nombre">Cliente ^</label>

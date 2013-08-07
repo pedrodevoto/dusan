@@ -348,6 +348,7 @@ CREATE TABLE `productor_seguro` (
   `productor_seguro_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `productor_id` int(10) unsigned NOT NULL,
   `seguro_id` int(10) unsigned NOT NULL,
+  `sucursal_id` int(10) unsigned NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`productor_seguro_id`),
   UNIQUE KEY `code` (`productor_id`,`seguro_id`,`productor_seguro_codigo`) USING BTREE,
@@ -434,4 +435,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-06 10:53:26
+-- 2013-08-07 11:21:15

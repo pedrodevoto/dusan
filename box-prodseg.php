@@ -23,7 +23,13 @@
                     <select name="box-seguro_id" id="box-seguro_id" class="ui-widget-content" style="width:180px">
                         <option value="">Cargando</option>                
                     </select>                        
-                </p>                                                
+                </p>
+                <p>
+                    <label for="box-sucursal_id">Sucursal *</label>
+                    <select name="box-sucursal_id" id="box-sucursal_id" class="ui-widget-content" style="width:180px">
+                        <option value="">Cargando</option>                
+                    </select>                        
+                </p>                                                     
                 <p>
                     <label for="box-productor_seguro_codigo">Código *</label>
                     <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:220px" />

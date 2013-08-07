@@ -12,9 +12,10 @@
 	if (isset($_POST["box-productor_id"]) && $_POST["box-productor_id"]!="") {
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO productor_seguro (productor_seguro.productor_id, productor_seguro.seguro_id, productor_seguro_codigo) VALUES (%s, %s, TRIM(%s))",
+		$insertSQL = sprintf("INSERT INTO productor_seguro (productor_id, seguro_id, sucursal_id, productor_seguro_codigo) VALUES (%s, %s, %s, TRIM(%s))",
 						GetSQLValueString($_POST['box-productor_id'], "int"),
 						GetSQLValueString($_POST['box-seguro_id'], "int"),						
+						GetSQLValueString($_POST['box-sucursal_id'], "int"),						
 						GetSQLValueString($_POST['box-productor_seguro_codigo'], "text"));						
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
