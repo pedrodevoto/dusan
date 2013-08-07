@@ -348,12 +348,14 @@ CREATE TABLE `productor_seguro` (
   `productor_seguro_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `productor_id` int(10) unsigned NOT NULL,
   `seguro_id` int(10) unsigned NOT NULL,
-  `sucursal_id` int(10) unsigned NOT NULL,
+  `sucursal_id` int(11) NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`productor_seguro_id`),
   UNIQUE KEY `code` (`productor_id`,`seguro_id`,`productor_seguro_codigo`) USING BTREE,
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
+  KEY `sucursal_id` (`sucursal_id`),
+  CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`),
   CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
   CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -435,4 +437,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-07 11:21:15
+-- 2013-08-07 13:01:29
