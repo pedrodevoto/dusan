@@ -1176,8 +1176,8 @@ $(document).ready(function() {
 		$('.box-combinado_familiar_obj_esp_prorrata_valor').each(function(i,e){
 			total += Number($(e).val());
 		});
-		var prorrota = Number($('#box-combinado_familiar_prorrata').val());
-		total = total * (prorrota > 0 ? prorrota : 100) / 100;
+		var prorrata = Number($('#box-combinado_familiar_prorrata').val());
+		total = total * (prorrata > 0 ? prorrata : 100) / 100;
 		$("#obj_esp_prorrata_total").html(total);
 	}
 	calculateEquiposComputacionTotal = function() {

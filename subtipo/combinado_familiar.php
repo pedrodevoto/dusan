@@ -26,7 +26,7 @@
             <input type="text" name="box-combinado_familiar_domicilio_cp" id="box-combinado_familiar_domicilio_cp" maxlength="10" class="ui-widget-content required" style="width:100px" />
         </p>
         <p>
-            <label for="box-combinado_familiar_prorrata" style="width:200px">Prorrota</label>
+            <label for="box-combinado_familiar_prorrata" style="width:200px">Prorrata</label>
             <input type="number" name="box-combinado_familiar_prorrata" id="box-combinado_familiar_prorrata" maxlength="10" class="ui-widget-content" style="width:50px" /> %
         </p>
 		<p>
