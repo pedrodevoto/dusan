@@ -66,10 +66,10 @@ CREATE TABLE `automotor` (
   `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `castigado` tinyint(1) NOT NULL DEFAULT '0',
   `patente` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `tipo` enum('Automotor','Pickup A','Pickup B','Moto','Acoplado','Batán') COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_tipo_id` int(11) NOT NULL,
   `uso` enum('Particular','Comercial','Comercial / Particular') COLLATE utf8_unicode_ci NOT NULL,
   `ano` smallint(5) unsigned NOT NULL,
-  `carroceria` enum('Sedan 2 puertas','Sedan 3 puertas','Sedan 4 puertas','Sedan 5 puertas','Rural 3 puertas','Rural 5 puertas','Berlina 3 puertas','Berlina 5 puertas','Break') COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_carroceria_id` int(11) NOT NULL,
   `combustible` enum('Nafta','Diesel') COLLATE utf8_unicode_ci NOT NULL,
   `0km` tinyint(3) unsigned NOT NULL,
   `importado` tinyint(3) unsigned NOT NULL,
@@ -134,8 +134,41 @@ CREATE TABLE `automotor` (
   PRIMARY KEY (`automotor_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`) USING BTREE,
   KEY `cobertura_tipo_id` (`cobertura_tipo_id`),
+  KEY `automotor_tipo_id` (`automotor_tipo_id`),
+  KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
   CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
-  CONSTRAINT `automotor_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`)
+  CONSTRAINT `automotor_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`),
+  CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
+  CONSTRAINT `automotor_ibfk_4` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_carroceria`;
+CREATE TABLE `automotor_carroceria` (
+  `automotor_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_carroceria_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_carroceria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_tipo`;
+CREATE TABLE `automotor_tipo` (
+  `automotor_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_tipo_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_tipo_carroceria`;
+CREATE TABLE `automotor_tipo_carroceria` (
+  `automotor_tipo_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_tipo_id` int(11) NOT NULL,
+  `automotor_carroceria_id` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_tipo_carroceria_id`),
+  KEY `automotor_tipo_id` (`automotor_tipo_id`),
+  KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
+  CONSTRAINT `automotor_tipo_carroceria_ibfk_1` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`) ON DELETE CASCADE,
+  CONSTRAINT `automotor_tipo_carroceria_ibfk_2` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -464,4 +497,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-08 09:29:31
+-- 2013-08-08 12:29:40

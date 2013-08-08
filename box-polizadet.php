@@ -7,7 +7,7 @@
 	require_once('Connections/connection.php');	
 	// Require DB functions
 	require_once('inc/db_functions.php');	
-	require_once('echo-cobertura_tipo.php');	
+	require_once('inc/echo_functions.php');	
 ?>
 <?php
 	// Obtain URL parameter

@@ -29,6 +29,33 @@
 		});
 		$('#box-valor_total').val(total);
 	}
+	function populateCarroceria(field, context, automotor_tipo) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-automotor_carroceria.php?id="+automotor_tipo,
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else {				
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Todos');
+					// Select first item
+					selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+	}
+	
 	// On Change
 	$('#box-prendado').change(function(){
 		if ($(this).is(":checked")) {
@@ -48,6 +75,10 @@
 			$('#box-franquicia').val('');
 			$('#box-franquicia').attr("readonly", true);			
 		}
+	});
+	$('#box-automotor_tipo_id').change(function(){
+		$('box-automotor_carroceria_id').html('<option value="">Cargando...</option>');
+		populateCarroceria('box-automotor_carroceria_id', 'box', $(this).val());
 	});
 	$('.calculator').keyup(function() {		
 		calculateTotal();
@@ -73,10 +104,10 @@
         <input type="text" name="box-patente" id="box-patente" maxlength="20" class="ui-widget-content required" style="width:110px" />
     </p>
     <p>
-        <label for="box-tipo">Tipo *</label>
-        <select name="box-tipo" id="box-tipo" class="ui-widget-content required" style="width:110px">    
+        <label for="box-automotor_tipo_id">Tipo *</label>
+        <select name="box-automotor_tipo_id" id="box-automotor_tipo_id" class="ui-widget-content required" style="width:110px">    
             <option value="">Seleccione</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tipo', 'select', 'Automotor'); ?>
+            <?php showAutomotorTipo(); ?>
         </select>
     </p>
     <p>
@@ -91,10 +122,10 @@
         <input type="text" name="box-ano" id="box-ano" maxlength="4" class="ui-widget-content required" digits="true" min="1900" max="2100" style="width:110px" />
     </p>
     <p>
-        <label for="box-carroceria">Carrocería *</label>
-        <select name="box-carroceria" id="box-carroceria" class="ui-widget-content required" style="width:140px">    
+        <label for="box-automotor_carroceria_id">Carrocería *</label>
+        <select name="box-automotor_carroceria_id" id="box-automotor_carroceria_id" class="ui-widget-content required" style="width:140px">    
             <option value="">Seleccione</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'carroceria', 'select'); ?>        
+            <?php showCarroceria($poliza_id); ?>        
         </select>
     </p>
     <p>
