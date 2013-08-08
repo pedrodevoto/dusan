@@ -377,6 +377,10 @@ CREATE TABLE `seguro` (
   `seguro_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seguro_email_siniestro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_email_emision` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_direccion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_cp` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`seguro_id`),
   UNIQUE KEY `seguro_nombre` (`seguro_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
