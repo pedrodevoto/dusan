@@ -21,6 +21,22 @@
                 <label for="box-seguro_email_emision">E-mail Emisión</label>
                 <input type="text" name="box-seguro_email_emision" id="box-seguro_email_emision" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
+            <p>
+                <label for="box-seguro_cuit">CUIT</label>
+                <input type="text" name="box-seguro_cuit" id="box-seguro_cuit" maxlength="15" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_direccion">Dirección</label>
+                <input type="text" name="box-seguro_direccion" id="box-seguro_direccion" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_localidad">Localidad</label>
+                <input type="text" name="box-seguro_localidad" id="box-seguro_localidad" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_cp">Código Postal</label>
+                <input type="text" name="box-seguro_cp" id="box-seguro_cp" maxlength="15" class="ui-widget-content" style="width:220px" />
+            </p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     

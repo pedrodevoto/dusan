@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT seguro.seguro_id, seguro_nombre, seguro_email_siniestro, seguro_email_emision FROM seguro WHERE seguro.seguro_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT * FROM seguro WHERE seguro.seguro_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Seguro
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
