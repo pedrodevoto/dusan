@@ -56,7 +56,7 @@
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
 <fieldset class="ui-widget ui-widget-content ui-corner-all">    
-    <legend class="ui-widget ui-widget-header ui-corner-all">Subpoliza (<?php echo($row_Recordset1['subtipo_poliza_nombre']); ?>)</legend>        
+    <legend class="ui-widget ui-widget-header ui-corner-all">Subpoliza (<?php echo($row_Recordset1['subtipo_poliza_nombre']); ?>)</legend>      
     <p>
         <label for="box-marca">Marca *</label>
         <input type="text" name="box-marca" id="box-marca" maxlength="100" class="ui-widget-content required" style="width:220px" />
@@ -343,10 +343,10 @@
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
     <p>
-        <label for="box-cobertura_tipo">Tipo *</label>
-        <select name="box-cobertura_tipo" id="box-cobertura_tipo" class="ui-widget-content required" style="width:90px">
+        <label for="box-cobertura_tipo_id">Tipo *</label>
+        <select name="box-cobertura_tipo_id" id="box-cobertura_tipo_id" class="ui-widget-content required" style="width:90px">
         	<option value="">Seleccione</option>
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'cobertura_tipo', 'select'); ?>           
+			<?php showCobertura($row_Recordset1['seguro_id']); ?>
         </select>        
     </p>
     <p>

@@ -654,6 +654,33 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
+	populateListPoliza_Cobertura = function(field, context, seguro){
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-cobertura_tipo.php?id="+seguro,
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else {				
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Todos');
+					// Select first item
+					selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+
+	}
 	<!-- Delete via Link functions -->	
 	deleteViaLink = function(section, id){	
 		var dfd = new $.Deferred();						
