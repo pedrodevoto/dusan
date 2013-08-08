@@ -6,7 +6,7 @@
 			$('#box-acreedor_rs').attr("readonly", false);
 			$('#box-acreedor_cuit').attr("readonly", false);			
 		}		
-		if ($('#box-cobertura_tipo').val() === 'D') {
+		if ($('#box-cobertura_tipo_id').find(':selected').text() === 'D') {
 			$('#box-franquicia').attr("readonly", false);
 		};
 		$('#box-venc_oblea').datepicker({
@@ -41,8 +41,8 @@
 			$('#box-acreedor_cuit').attr("readonly", true);			
 		}
 	});	
-	$('#box-cobertura_tipo').change(function(){
-		if ($(this).val() === 'D') {
+	$('#box-cobertura_tipo_id').change(function(){
+		if ($(this).find(':selected').text() === 'D') {
 			$('#box-franquicia').attr("readonly", false);
 		} else {
 			$('#box-franquicia').val('');
