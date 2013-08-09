@@ -49,7 +49,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, cobertura_tipo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.cobertura_tipo_id = cobertura_tipo.cobertura_tipo_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -86,7 +86,7 @@
 			);
 			$txt_marca_modelo = $row_Recordset2['marca']." - ".strtoupper($row_Recordset2['modelo']);
 			$txt_datos_vehiculo_c1 = array(
-				array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['tipo'])),
+				array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 				array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),
 				array('maxwidth' => 57, 'text' => "Año: ".$row_Recordset2['ano']),
 				array('maxwidth' => 57, 'text' => "Motor: ".$row_Recordset2['nro_motor']),
@@ -127,7 +127,7 @@
 				array('maxwidth' => 95, 'text' => ""),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 			);
-			$txt_cobertura = "Cobertura: ".$row_Recordset2['cobertura_tipo']." | Límite RC: ".$row_Recordset2['limite_rc']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
+			$txt_cobertura = "Cobertura: ".$row_Recordset2['cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['limite_rc']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
