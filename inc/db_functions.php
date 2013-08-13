@@ -71,14 +71,14 @@ function determineState($startdiff, $enddiff) {
 	$estado = NULL;
 	if ($startdiff > $enddiff) {
 		if ($startdiff < 0) {
-			$estado = 'PENDIENTE';
+			$estado = 2; // PENDIENTE
 		} elseif ($enddiff > 0) {
-			$estado = 'FINALIZADA';
+			$estado = 6; // FINALIZADA
 		} else {
 			if ($enddiff >= -30) {
-				$estado = 'A RENOVAR';
+				$estado = 4; // A RENOVAR
 			} else {
-				$estado = 'VIGENTE';	
+				$estado = 3; // VIGENTE
 			}
 		}
 	}

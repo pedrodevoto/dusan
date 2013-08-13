@@ -29,8 +29,8 @@
                 <input type="text" name="box-subtipo_poliza_nombre" id="box-subtipo_poliza_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
             </p>
             <p>
-                <label for="box-poliza_estado">Estado ^</label>
-                <input type="text" name="box-poliza_estado" id="box-poliza_estado" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
+                <label for="box-poliza_estado_nombre">Estado ^</label>
+                <input type="text" name="box-poliza_estado_nombre" id="box-poliza_estado_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
             </p>            
             <p>
                 <label for="box-poliza_numero">Nº de Poliza</label>

@@ -22,7 +22,7 @@
 	$affected_rows = 0;
 		
 	// Recordset: Poliza
-	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_estado<>'RENOVADA'";
+	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado_id, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_estado_id<>5";
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	
 	// While rows in Recordset
@@ -32,11 +32,11 @@
 		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff']);
 
 		// If state is valid and has changed
-		if (!is_null($estado) && ($estado !== $row_Recordset1['poliza_estado'])) {
+		if (!is_null($estado) && ($estado !== $row_Recordset1['poliza_estado_id'])) {
 		
 			// Update
-			$updateSQL = sprintf("UPDATE poliza SET poliza_estado=%s WHERE poliza.poliza_id=%s LIMIT 1",
-							GetSQLValueString($estado, "text"),
+			$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s WHERE poliza.poliza_id=%s LIMIT 1",
+							GetSQLValueString($estado, "int"),
 							$row_Recordset1['poliza_id']);			
 			$Result1 = mysql_query($updateSQL, $connection) or die(mysql_die());
 			

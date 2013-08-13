@@ -24,6 +24,7 @@
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
+				populateListPlizaEstado('poliza_estado_id', 'main');
 							
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -161,15 +162,8 @@
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
                             <td width="16%">
-                                <label for="poliza_estado">Estado</label>                                
-                                <select name="poliza_estado" id="poliza_estado">
-									<option value="">Todos</option>
-									<option value="M/C">M/C</option>
-									<option value="PENDIENTE">PENDIENTE</option>
-									<option value="VIGENTE">VIGENTE</option>
-									<option value="A RENOVAR">A RENOVAR</option>
-									<option value="RENOVADA">RENOVADA</option>
-									<option value="FINALIZADA">FINALIZADA</option>
+                                <label for="poliza_estado_id">Estado</label>                                
+                                <select name="poliza_estado_id" id="poliza_estado_id">
 								</select>
                             </td>
                         </tr>

@@ -328,6 +328,7 @@ CREATE TABLE `poliza` (
   `subtipo_poliza_id` int(10) unsigned NOT NULL,
   `productor_seguro_id` int(10) unsigned NOT NULL,
   `poliza_estado` enum('M/C','PENDIENTE','VIGENTE','A RENOVAR','RENOVADA','FINALIZADA') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_estado_id` int(11) NOT NULL,
   `poliza_anulada` tinyint(3) unsigned NOT NULL,
   `poliza_numero` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_renueva_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -353,9 +354,19 @@ CREATE TABLE `poliza` (
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
+  KEY `poliza_estado_id` (`poliza_estado_id`),
+  CONSTRAINT `poliza_ibfk_6` FOREIGN KEY (`poliza_estado_id`) REFERENCES `poliza_estado` (`poliza_estado_id`),
   CONSTRAINT `poliza_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
   CONSTRAINT `poliza_ibfk_4` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
   CONSTRAINT `poliza_ibfk_5` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `poliza_estado`;
+CREATE TABLE `poliza_estado` (
+  `poliza_estado_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_estado_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`poliza_estado_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -497,4 +508,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-08 12:29:40
+-- 2013-08-13 13:33:26
