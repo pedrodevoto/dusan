@@ -668,8 +668,6 @@ $(document).ready(function() {
 						options += '<option value="' + key + '">' + value + '</option>';
 					});		
 					$('#'+field).html(options);
-					// Sort options alphabetically
-					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
