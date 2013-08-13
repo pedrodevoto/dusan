@@ -106,7 +106,10 @@ textarea {
 #dtDivHeaderIcons ul span.ui-icon {
     margin: 0 3px;
 }
-
+#dtDivFooterTotal {
+	float: left;
+	padding-top:3px;
+}
 .dataTables_filter input {
 	font-size: 1em;
 }

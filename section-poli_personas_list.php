@@ -57,7 +57,7 @@
 				oTable = $('#table1').dataTable({	
 
 					// General
-					"sDom": '<"H"l<"#dtDivHeaderIcons">fr>t<"F"ip>',
+					"sDom": '<"H"l<"#dtDivHeaderIcons">fr>t<"F"i<"#dtDivFooterTotal">p>',
 					"oLanguage": {
 						"sUrl": "jquery-plugins/dataTables/media/language/es_AR.txt"						
 					},
@@ -121,6 +121,11 @@
 								sessionExpire('main');
 							}
 						});
+						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php', function(data){
+							if (data=='Session expired') {
+								sessionExpire('main');
+							}
+						});
 					}							
 												
 				});
@@ -160,9 +165,7 @@
                                 <label for="cliente_nombre">Cliente</label>                                
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
-                            <td width="16%">
-                                <label for="poliza_estado_id">Estado</label>                                
-                                <select name="poliza_estado_id" id="poliza_estado_id">
+                            <td poliza_estado_id                               <label for="poliza_estado_id">Estado</label>                   poliza_estado_id     poliza_estado_id             <select name="poliza_estado_id" id="poliza_estado_id">
 								</select>
                             </td>
                         </tr>

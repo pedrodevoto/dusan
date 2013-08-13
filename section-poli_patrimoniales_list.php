@@ -57,7 +57,7 @@
 				oTable = $('#table1').dataTable({	
 
 					// General
-					"sDom": '<"H"l<"#dtDivHeaderIcons">fr>t<"F"ip>',
+					"sDom": '<"H"l<"#dtDivHeaderIcons">fr>t<"F"i<"#dtDivFooterTotal">p>',
 					"oLanguage": {
 						"sUrl": "jquery-plugins/dataTables/media/language/es_AR.txt"						
 					},
@@ -118,6 +118,11 @@
 					// Load icons when initialized
 					"fnInitComplete": function(oSettings, json) {
 						$('#dtDivHeaderIcons').load('section-<?php echo(getCurrentSection()); ?>-dticons.php', function(data){
+							if (data=='Session expired') {
+								sessionExpire('main');
+							}
+						});
+						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php', function(data){
 							if (data=='Session expired') {
 								sessionExpire('main');
 							}
