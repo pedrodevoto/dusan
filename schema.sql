@@ -226,9 +226,14 @@ CREATE TABLE `combinado_familiar` (
   `combinado_familiar_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `combinado_familiar_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `combinado_familiar_prorrata` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_country` tinyint(1) NOT NULL,
+  `combinado_familiar_lote` tinyint(1) NOT NULL,
+  `combinado_familiar_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `combinado_familiar_prorrata_obj_esp` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif_prorrata` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_rc_lind` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_rc_lind_prorrata` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_cristales` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_responsabilidad_civil` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
@@ -516,4 +521,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-14 10:44:15
+-- 2013-08-14 14:00:09

@@ -25,17 +25,28 @@
             <label for="box-combinado_familiar_domicilio_cp" style="width:200px">Código Postal *</label>
             <input type="text" name="box-combinado_familiar_domicilio_cp" id="box-combinado_familiar_domicilio_cp" maxlength="10" class="ui-widget-content required" style="width:100px" />
         </p>
-        <p>
-            <label for="box-combinado_familiar_prorrata" style="width:200px">Prorrata</label>
-            <input type="number" name="box-combinado_familiar_prorrata" id="box-combinado_familiar_prorrata" maxlength="10" class="ui-widget-content" style="width:50px" /> %
-        </p>
 		<p>
-			<label for="box-combinado_familiar_inc_edif" style="width:200px">Incendio Edificio</label><input type="number" name="box-combinado_familiar_inc_edif" id="box-combinado_familiar_inc_edif" placeholder="Opcional" class="ui-widget-content" />
+			<label for="box-combinado_familiar_country" style="width:200px">Barrio Cerrado / Country </label><input type="checkbox" name="box-combinado_familiar_country" id="box-combinado_familiar_country" />
 		</p>
 		<p>
-			<label for="box-combinado_familiar_rc_lind" style="width:200px">R/C Lind</label><input type="number" name="box-combinado_familiar_rc_lind" id="box-combinado_familiar_rc_lind" class="ui-widget-content" placeholder="Opcional" />
+			<label for="box-combinado_familiar_lote" style="width:200px">Lote </label><input type="checkbox" name="box-combinado_familiar_lote" id="box-combinado_familiar_lote" />
 		</p>
-		
+		<p>
+			<label for="box-combinado_familiar_valor_tasado" style="width:200px">Valor tasado de la propiedad</label><input type="number" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
+		</p>
+	</fieldset>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Incendio Edificio</legend> 
+		<p>
+			<label for="box-combinado_familiar_inc_edif" style="width:200px">Valor - Prorrata</label><input type="number" min="0" name="box-combinado_familiar_inc_edif" id="box-combinado_familiar_inc_edif" placeholder="Opcional" class="ui-widget-content" style="width:100px" /> <input type="number" min="0" max="100" name="box-combinado_familiar_inc_edif_prorrata" id="box-combinado_familiar_inc_edif_prorrata" maxlength="10" class="ui-widget-content" style="width:50px" /> %
+		</p>
+	</fieldset>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Responsabilidad Civil Linderos</legend> 
+		<p>
+			<label for="box-combinado_familiar_rc_lind" style="width:200px">Valor - Prorrata</label><input type="number" min="0" name="box-combinado_familiar_rc_lind" id="box-combinado_familiar_rc_lind" class="ui-widget-content" placeholder="Opcional" style="width:100px" /> <input type="number" min="0" max="100" name="box-combinado_familiar_rc_lind_prorrata" id="box-combinado_familiar_rc_lind_prorrata" maxlength="10" class="ui-widget-content" style="width:50px" /> %
+		</p>
+
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all">Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto</legend> 
@@ -49,6 +60,10 @@
 	
 	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all">Robo y/o Hurto de Objetos Específicos y/o Aparatos Electrodomésticos a Prorrata</legend> 
+		<p>
+            <label for="box-combinado_familiar_prorrata_obj_esp" style="width:200px">Prorrata</label>
+            <input type="number" min="0" max="100" name="box-combinado_familiar_prorrata_obj_esp" id="box-combinado_familiar_prorrata_obj_esp" maxlength="10" class="ui-widget-content" style="width:50px" /> %
+		</p>
 		<p>
 			<input type="button" id="box-combinado_familiar_obj_esp_prorrata_add" value="Agregar" />
 			Suma asegurada total (con prorrata): <span id="obj_esp_prorrata_total"></span>
