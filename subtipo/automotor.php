@@ -27,7 +27,7 @@
 				total += parseInt(value);
 			}
 		});
-		$('#box-valor_total').val(total);
+		$('#box-valor_total, #box-suma_asegurada').val(total);
 	}
 	function populateCarroceria(field, context, automotor_tipo) {
 		var dfd = new $.Deferred();		
@@ -86,19 +86,44 @@
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
-<fieldset class="ui-widget ui-widget-content ui-corner-all">    
+	<fieldset class="ui-widget ui-widget-content ui-corner-all">    
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Resumen</legend>      
+	    <p>
+	        <label for="box-marca">Marca *</label>
+	        <input type="text" name="box-marca" id="box-marca" maxlength="100" class="ui-widget-content required" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-modelo">Modelo *</label>
+	        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content required" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-ano">Año *</label>
+	        <input type="text" name="box-ano" id="box-ano" maxlength="4" class="ui-widget-content required" digits="true" min="1900" max="2100" style="width:110px" />
+	    </p>
+	    <p>
+	        <label for="box-suma_asegurada">Suma Asegurada ^</label>
+	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
+	    </p> 
+		<p>
+			<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
+		</p>
+	    <p>
+	        <label for="box-equipo_rastreo_id">Equipo Rastreo</label>
+	        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
+	            <option value="">Ninguno</option>    
+	            <?php showEquipoRastreo(); ?>
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-infoauto">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
+	    </p>
+	</fieldset>
+	
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Subpoliza (<?php echo($row_Recordset1['subtipo_poliza_nombre']); ?>)</legend>      
-    <p>
-        <label for="box-marca">Marca *</label>
-        <input type="text" name="box-marca" id="box-marca" maxlength="100" class="ui-widget-content required" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-modelo">Modelo *</label>
-        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content required" style="width:220px" />
-    </p>
-	<p>
-		<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
-	</p>
+
+
+
     <p>
         <label for="box-patente">Patente *</label>
         <input type="text" name="box-patente" id="box-patente" maxlength="20" class="ui-widget-content required" style="width:110px" />
@@ -117,10 +142,7 @@
             <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'uso', 'select', 'Particular'); ?>
         </select>
     </p>
-    <p>
-        <label for="box-ano">Año *</label>
-        <input type="text" name="box-ano" id="box-ano" maxlength="4" class="ui-widget-content required" digits="true" min="1900" max="2100" style="width:110px" />
-    </p>
+
     <p>
         <label for="box-automotor_carroceria_id">Carrocería *</label>
         <select name="box-automotor_carroceria_id" id="box-automotor_carroceria_id" class="ui-widget-content required" style="width:140px">    
@@ -207,10 +229,6 @@
         <input type="text" name="box-acreedor_cuit" id="box-acreedor_cuit" maxlength="15" class="ui-widget-content" style="width:220px" readonly="readonly" />
     </p>
     <p>
-        <label for="box-infoauto">Infoauto *</label>
-        <input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
-    </p>
-    <p>
         <label for="box-observaciones">Observaciones</label>
         <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
     </p>                            
@@ -226,19 +244,18 @@
                     <input type="checkbox" name="box-traba_volante" id="box-traba_volante" value="1" /><label for="box-traba_volante" class="secondary">Traba Volante</label><br />                
                     <input type="checkbox" name="box-matafuego" id="box-matafuego" value="1" /><label for="box-matafuego" class="secondary">Matafuego</label><br />                
                     <input type="checkbox" name="box-tuercas" id="box-tuercas" value="1" /><label for="box-tuercas" class="secondary">Tuercas</label><br />                
-                    <input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" value="1" /><label for="box-equipo_rastreo" class="secondary">Equipo Rastreo</label>
+                    <input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" /><label for="box-micro_grabado" class="secondary">Micro Grabado</label><br />                           
                 </td>
                 <td valign="top"> 
-                    <input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" /><label for="box-micro_grabado" class="secondary">Micro Grabado</label><br />                           
                     <input type="checkbox" name="box-antena" id="box-antena" value="1" /><label for="box-antena" class="secondary">Antena</label><br />                
                     <input type="checkbox" name="box-estereo" id="box-estereo" value="1" /><label for="box-estereo" class="secondary">Estereo</label><br />                
                     <input type="checkbox" name="box-parlantes" id="box-parlantes" value="1" /><label for="box-parlantes" class="secondary">Parlantes</label><br />                
                     <input type="checkbox" name="box-aire" id="box-aire" value="1" /><label for="box-aire" class="secondary">Aire</label><br />                
                     <input type="checkbox" name="box-cristales_electricos" id="box-cristales_electricos" value="1" /><label for="box-cristales_electricos" class="secondary">C. Eléctricos</label><br />                
                     <input type="checkbox" name="box-faros_adicionales" id="box-faros_adicionales" value="1" /><label for="box-faros_adicionales" class="secondary">Faros Adic.</label><br />                
+                    <input type="checkbox" name="box-cierre_sincro" id="box-cierre_sincro" value="1" /><label for="box-cierre_sincro" class="secondary">Cierre Sincro</label><br />                
                 </td>
                 <td valign="top">
-                    <input type="checkbox" name="box-cierre_sincro" id="box-cierre_sincro" value="1" /><label for="box-cierre_sincro" class="secondary">Cierre Sincro</label><br />                
                     <input type="checkbox" name="box-techo_corredizo" id="box-techo_corredizo" value="1" /><label for="box-techo_corredizo">Techo Corredizo</label><br />                
                     <input type="checkbox" name="box-direccion_hidraulica" id="box-direccion_hidraulica" value="1" /><label for="box-direccion_hidraulica">Dir. Hidráulica</label><br />                
                     <input type="checkbox" name="box-frenos_abs" id="box-frenos_abs" value="1" /><label for="box-frenos_abs">Frenos ABS</label><br />                

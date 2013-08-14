@@ -93,7 +93,7 @@ CREATE TABLE `automotor` (
   `traba_volante` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `matafuego` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `tuercas` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `equipo_rastreo` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `equipo_rastreo_id` int(11) unsigned DEFAULT NULL,
   `micro_grabado` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `antena` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `estereo` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -136,6 +136,7 @@ CREATE TABLE `automotor` (
   KEY `cobertura_tipo_id` (`cobertura_tipo_id`),
   KEY `automotor_tipo_id` (`automotor_tipo_id`),
   KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
+  KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
   CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
   CONSTRAINT `automotor_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`),
   CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
@@ -317,6 +318,14 @@ CREATE TABLE `cuota` (
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),
   UNIQUE KEY `cuota_recibo` (`cuota_recibo`),
   CONSTRAINT `cuota_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `equipo_rastreo`;
+CREATE TABLE `equipo_rastreo` (
+  `equipo_rastreo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `equipo_rastreo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`equipo_rastreo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

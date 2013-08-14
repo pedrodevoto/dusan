@@ -3523,7 +3523,9 @@ $(document).ready(function() {
 								
 				// Populate form, then initialize
 				$.when(populateFormBoxPolizaDet(id)).then(function(){				
-				
+					
+					$('#box-suma_asegurada').val($('#box-valor_total').val());
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate();				
 							
