@@ -1048,15 +1048,6 @@ $(document).ready(function() {
 				populateSectionClausula(id);
 				break;
 			case 'combinado_familiar':
-				$('.disabled').each(function(i, e) {
-					$('#'+$(e).attr('id')+'_flag').prop('checked', !$(e).val()=='');
-				});
-				$('.disabled').change(function() {
-					$('#'+$(this).attr('id')+'_flag').prop('checked', !$(this).val()=='');
-				});
-				$('.flag').change(function() {
-					$('#'+$(this).attr('id').substring(0, $(this).attr('id').indexOf('flag')-1)).attr('disabled', $(this).attr('checked')?false:true);
-				});
 				$('#box-combinado_familiar_prorrata_obj_esp').change(function() {
 					calculateObjEspProrrataTotal();
 				})
