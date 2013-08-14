@@ -20,7 +20,7 @@
 	    </p>
 	    <p>
 	        <label for="box-accidentes_asegurado_actividad" style="width:160px">Actividad *</label>
-	        <select name="box-accidentes_asegurado_actividad" id="box-accidentes_asegurado_actividad" class="ui-widget-content" style="width:110px">
+	        <select name="box-accidentes_asegurado_actividad" id="box-accidentes_asegurado_actividad" class="ui-widget-content" style="width:200px">
 	            <option value="">Cargando</option>                
 	        </select>                        
 	    </p>            
