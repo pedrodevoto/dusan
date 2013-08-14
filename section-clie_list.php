@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Admin - Clientes - Listado</title>
+		<title>JARVIS - Clientes - Listado</title>
 
 		<?php require_once('inc/library.php'); ?>               
         

@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Admin - Seguros - Listado</title>
+		<title>JARVIS - Seguros - Listado</title>
 
 		<?php require_once('inc/library.php'); ?>               
         

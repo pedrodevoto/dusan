@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>Admin - Sucursales - Listado</title>
+		<title>JARVIS - Sucursales - Listado</title>
 
 		<?php require_once('inc/library.php'); ?>               
         
