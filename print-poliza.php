@@ -395,7 +395,7 @@
 					$txt_ins_eq_c3 = array(
 						array('maxwidth' => 25, 'text' => "Airbag: ".FormatCB($row_Recordset2['airbag'],'X')),
 						array('maxwidth' => 25, 'text' => "C. Tonalizados: ".FormatCB($row_Recordset2['cristales_tonalizados'],'X')),
-						array('maxwidth' => 25, 'text' => "Equipo Rastreo: ".FormatCB($row_Recordset2['equipo_rastreo'],'X')),
+						array('maxwidth' => 25, 'text' => "Equipo Rastreo: ".FormatCB($row_Recordset2['equipo_rastreo_id']?1:0,'X')),
 						array('maxwidth' => 25, 'text' => "Micro Grabado: ".FormatCB($row_Recordset2['micro_grabado'],'X')),
 						array('maxwidth' => 25, 'text' => "GPS: ".FormatCB($row_Recordset2['gps'],'X'))												
 					);											
