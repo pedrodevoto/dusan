@@ -334,6 +334,27 @@ CREATE TABLE `equipo_rastreo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `incendio_edificio`;
+CREATE TABLE `incendio_edificio` (
+  `incendio_edificio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `incendio_edificio_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_country` tinyint(1) NOT NULL,
+  `incendio_edificio_lote` tinyint(1) NOT NULL,
+  `incendio_edificio_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `incendio_edificio_suma_asegurada` decimal(10,2) unsigned NOT NULL,
+  `incendio_edificio_prorrata` decimal(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`incendio_edificio_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `incendio_edificio_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -521,4 +542,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-14 14:00:09
+-- 2013-08-14 21:12:46
