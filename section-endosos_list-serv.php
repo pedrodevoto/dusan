@@ -11,9 +11,25 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " endoso_id, poliza_id, poliza_id, endoso_completo";
-	$query_Recordset1_tables = " FROM endoso";
+	$query_Recordset1_fields = " endoso_id, poliza_numero, endoso_tipo_nombre, endoso_fecha_pedido, IF(endoso_completo = 1, 'SÍ', 'NO') as endoso_completo";
+	$query_Recordset1_tables = " FROM endoso JOIN (poliza, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id) ";
+	
 	$query_Recordset1_where = " WHERE 1";
+	
+	// Filter by: poliza_numero
+	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
+	}
+	
+	// Filter by: endoso_completo
+	if(isset($_GET['endoso_completo'])){	
+		if ($_GET['endoso_completo']!="") {
+			$query_Recordset1_where .= sprintf(" AND endoso_completo = %s",GetSQLValueString($_GET['endoso_completo'], "int"));
+		}
+	}
+	else {
+		$query_Recordset1_where .= " AND endoso_completo = 0";
+	}
 	
 ?>
 <?php
@@ -34,7 +50,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('endoso_id', 'poliza_id', 'endoso_tipo_id', 'endoso_estado', ' ');
+			$aColumns = array('endoso_id', 'poliza_numero', 'endoso_tipo_nombre', 'endoso_fecha_pedido', 'endoso_completo', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "endoso.endoso_id";		

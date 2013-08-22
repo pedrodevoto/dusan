@@ -20,6 +20,35 @@
 			
 			});
 		</script> 
+		
+		<!-- Filter initialization -->
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {	            
+							
+				// Filter: Assign listening functions to input-text for Submit
+				listenToTxtForSubmit();				
+
+				// Filter: Submit handler
+				$('#btnFiltro').click(function() {						
+					var filtersource = $('#frmFiltro').serialize();					
+					// Get table data
+					var newsource = sourceURL+'?action=view&' + filtersource;
+					oTable.fnSettings().sAjaxSource = newsource;
+					oTable.fnDraw();
+				});	
+				// Filter: Reset handler							
+				$('#btnReset').click(function() {								
+					$('#frmFiltro').each(function(){
+						this.reset();
+					});
+					$("#endoso_completo").val(0);
+				});	
+				$("#endoso_completo").val(0);
+				// Filter: Get focus
+				$("#poliza_numero").focus();				
+				
+			});	
+		</script>   
 
         <!-- DataTables initialization -->
 		<script type="text/javascript" charset="utf-8">
@@ -43,10 +72,22 @@
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)						
-						{"sWidth": "20%"},					
+						{"sWidth": "10%"},					
+						null,
 						{"sWidth": "10%"},
-						{"sWidth": "25%", "bSearchable": false},
-						{"sWidth": "15%", "bSearchable": false}
+						{"sWidth": "8%", "bSearchable": false},
+						{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
+							var returnval = '';
+							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+							returnval += '<li title="Editar" onclick="openBoxModEndoso('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
+							// returnval += '<li title="Certificados" onclick="openBoxEndosoCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li>';
+							
+							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
+							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'endoso\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							<? } ?>
+							returnval += '</ul>';
+							return returnval;
+						}}
 					],	
 					"aaSorting": [[1,'asc']],					
 					
@@ -70,19 +111,7 @@
 						});
 					}						
 												
-				}).columnFilter({
-					"sPlaceHolder": "head:foot",					
-					aoColumns: [
-						null,
-						{type: "text"},
-						{type: "text"},
-						null,
-						null,
-						null,
-						null
-					]
-				}); // Enable column filtering										
-
+				});
 			});	
 		</script>      
 
@@ -98,26 +127,35 @@
                 <form id="frmFiltro" name="frmFiltro">
                     <table cellpadding="5" cellspacing="0" border="0" width="100%">
                         <tr>                   
-                            <td width="33%">
-                                <label for="cliente_nombre">Nombre</label>                                
-                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
+                            <td width="20%">
+                                <label for="poliza_numero">Número de póliza</label>                                
+                                <input type="text" name="poliza_numero" id="poliza_numero" maxlength="255" />
                             </td>
-                            <td width="33%">
-                                <label for="cliente_nro_doc">Documento</label>                                
-                                <input type="text" name="cliente_nro_doc" id="cliente_nro_doc" maxlength="15" />
-                            </td>
-                            <td width="33%">
-                                <label for="cliente_email">E-mail</label>                                
-                                <input type="text" name="cliente_email" id="cliente_email" maxlength="255" />
-                            </td>          
+                            <td width="20%">
+                                <label for="cliente_nro_doc">Completo</label>                                
+                                <select name="endoso_completo" id="endoso_completo">
+									<option value="">Todos</option>
+									<option value="0">No completo</option>
+									<option value="1">Completo</option>
+								</select>
+                            </td>      
+							<td width="20%">
+								
+							</td>  
+							<td width="20%">
+								
+							</td>  
+							<td width="20%">
+								
+							</td>  
                         </tr>
                         <tr>                                
-                            <td colspan="3" align="center">
+                            <td colspan="5" align="center">
                             	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
                             </td>  
                         </tr>                                 
                         <tr>                                
-                            <td colspan="3" align="center">
+                            <td colspan="5" align="center">
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    
@@ -132,9 +170,10 @@
                     <thead>
                         <tr>                        
                             <th>Endoso ID (Hide)</th>
-                            <th>Póliza</th>                            
+                            <th>Póliza</th>
                             <th>Tipo</th> 
-                            <th>Estado</th>
+							<th>Fecha de pedido</th>
+                            <th>Completo</th>
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -144,8 +183,9 @@
 	                <tfoot>
                         <tr>
                             <th></th>
-                            <th>Nombre</th>                            
-                            <th>Documento</th> 
+                            <th></th>   
+							<th></th>                         
+                            <th></th> 
                             <th></th>
                             <th></th>                                                        
                         </tr>

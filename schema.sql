@@ -326,6 +326,57 @@ CREATE TABLE `cuota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `endoso`;
+CREATE TABLE `endoso` (
+  `endoso_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `endoso_fecha_pedido` date NOT NULL,
+  `endoso_tipo_id` int(11) NOT NULL,
+  `endoso_cuerpo` text COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_numero` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `endoso_fecha_compania` date DEFAULT NULL,
+  `endoso_completo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`endoso_id`),
+  KEY `poliza_id` (`poliza_id`),
+  KEY `endoso_tipo_id` (`endoso_tipo_id`),
+  CONSTRAINT `endoso_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  CONSTRAINT `endoso_ibfk_2` FOREIGN KEY (`endoso_tipo_id`) REFERENCES `endoso_tipo` (`endoso_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `endoso_foto`;
+CREATE TABLE `endoso_foto` (
+  `endoso_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_id` int(11) NOT NULL,
+  `endoso_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_foto_width` int(11) NOT NULL,
+  `endoso_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`endoso_foto_id`),
+  KEY `endoso_id` (`endoso_id`),
+  CONSTRAINT `endoso_foto_ibfk_1` FOREIGN KEY (`endoso_id`) REFERENCES `endoso` (`endoso_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `endoso_tipo`;
+CREATE TABLE `endoso_tipo` (
+  `endoso_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_tipo_grupo_id` int(11) NOT NULL,
+  `endoso_tipo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`endoso_tipo_id`),
+  KEY `endoso_tipo_grupo_id` (`endoso_tipo_grupo_id`),
+  CONSTRAINT `endoso_tipo_ibfk_1` FOREIGN KEY (`endoso_tipo_grupo_id`) REFERENCES `endoso_tipo_grupo` (`endoso_tipo_grupo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `endoso_tipo_grupo`;
+CREATE TABLE `endoso_tipo_grupo` (
+  `endoso_tipo_grupo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_tipo_grupo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`endoso_tipo_grupo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `equipo_rastreo`;
 CREATE TABLE `equipo_rastreo` (
   `equipo_rastreo_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -443,9 +494,9 @@ CREATE TABLE `productor_seguro` (
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
   KEY `sucursal_id` (`sucursal_id`),
-  CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`),
   CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
-  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`)
+  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`),
+  CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -542,4 +593,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-14 22:01:09
+-- 2013-08-22 12:58:49

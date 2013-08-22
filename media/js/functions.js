@@ -699,8 +699,12 @@ $(document).ready(function() {
 					sessionExpire(context);
 				} else {				
 					var options = ''; 
-					$.each(j, function(key, value) { 
-						options += '<option value="' + key + '">' + value + '</option>';
+					$.each(j, function(key0, value0) { 
+						options += '<optgroup label="'+key0+'">';
+						$.each(value0, function(key, value) {
+							options += '<option value="' + key + '">' + value + '</option>';
+						})
+						options += '</optgroup>';
 					});		
 					$('#'+field).html(options);
 					// Append option: "all"
@@ -1042,6 +1046,34 @@ $(document).ready(function() {
 			}
 		});	
 		return dfd.promise();				
+	}
+	populateFormBoxEndoso = function(id) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-fich_endoso.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');				
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListEndosoTipo('box-endoso_tipo_id', 'box')
+					).then(function(){	
+						// Populate Form
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						// Resolve
+						dfd.resolve();														
+					});
+				}
+			}
+		});
+		return dfd.promise();
 	}
 	
 	populatePolizaDet = function(subtipo_poliza, id) {
@@ -2122,13 +2154,13 @@ $(document).ready(function() {
 				if (typeof oTable != 'undefined') {
 					oTable.fnStandingRedraw();									
 				}
-				// Show message
-				showBoxConf(data, true, 'onerror', 3000, function(){
-					// Clear form
-					$('#frmBox').each(function(){
-						this.reset();
-					});
-				});
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					var id = parseInt(data);
+					openBoxModEndoso(id);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function(){});
+				}
 			}
 		});
 	}
@@ -2288,6 +2320,26 @@ $(document).ready(function() {
 	}
 	updateFormClausula = function(id){	
 		
+	}
+	updateFormEndoso = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);		
+		// Post				
+		$.post("update-endoso.php", $("#frmBox").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}
+				// Show message
+				showBoxConf(data, true, 'always', 3000, function(){					
+					// Repopulate form
+					populateFormBoxEndoso($('#box-endoso_id').val());					
+				});
+			}
+		});
 	}
 	<!-- Update via Link functions -->
 	updateLinkContacto_Default = function(id, cliente_id){	
@@ -3780,6 +3832,75 @@ $(document).ready(function() {
 				// Set focus on search
 				$("#box0-poliza_numero").focus();		
 			
+			}
+			
+		});
+	}
+	openBoxModEndoso = function(id) {
+		$.colorbox({
+			title:'Endoso',
+			href:'box-endoso_mod.php',												
+			width:'700px',
+			height:'100%',
+			onComplete: function() {			
+			
+				$("#btnBox").button();
+				$("#btnBoxExport").button();
+			
+				formDisable('frmBox','ui',true);
+				
+				populateDiv_Fotos('endoso', id);
+				$("#endoso_id").val(id);
+				// AJAX file form
+				$("#fileForm").ajaxForm({
+					beforeSend: function() {
+				    	$("#fotosLoading").show();
+					},
+					uploadProgress: function(event, position, total, percentComplete) {
+					       
+					},
+					complete: function(xhr) {
+						if (xhr.responseText.indexOf('Error:')!=-1) {
+							alert(xhr.responseText);
+						}
+						else {
+							$("#fotosLoading").hide();
+						}
+						populateDiv_Fotos('endoso', id);
+					}
+				});
+				
+				$.when(
+					populateFormBoxEndoso(id)
+				).then(function() {
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-endoso_fecha_pedido": {required: true, dateAR: true},
+							"box-endoso_tipo": {required: true},
+							"box-endoso_cuerpo": {required: true},
+							"box-endoso_fecha_compania": {dateAR: true},
+						},
+						errorPlacement: function(error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					// Button action	
+					$("#btnBox").click(function() {
+						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							updateFormEndoso();
+						}
+					});
+					$("#btnBoxExport").click(function() {
+						alert('Export!');
+					})
+					// Enable form							
+					formDisable('frmBox','ui',false);
+				});
 			}
 			
 		});

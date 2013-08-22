@@ -26,7 +26,8 @@
 		// Evaluate insert
 		switch (mysql_errno()) {
 			case 0:
-				echo "El registro ha sido insertado con éxito.";
+				$endoso_id = mysql_insert_id();
+				echo $endoso_id;
 				break;
 			case 1062:
 				echo 'Error: Registro duplicado.';
