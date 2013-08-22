@@ -3734,6 +3734,7 @@ $(document).ready(function() {
 				$("#btnCCd").button();
 				$("#btnPE").button();
 				$("#btnPEMC").button();
+				$("#btnPR").button();
 				
 				// Button action	
 				$("#btnCCp").click(function() {
@@ -3748,7 +3749,9 @@ $(document).ready(function() {
 				$("#btnPEMC").click(function() {
 					window.open('print-poliza.php?type=pe&mc=1&id='+id);
 				});								
-				
+				$("#btnPR").click(function() {
+					window.open('print-poliza.php?type=pe&re=1&id='+id);
+				});
 			}
 		});		
 	}		

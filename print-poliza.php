@@ -303,7 +303,12 @@
 					if (isset($_GET['mc']) && $_GET['mc'] === "1") {
 						$txt_emitir = "MC";
 					} else {
-						$txt_emitir = "EMITIR";						
+						if (isset($_GET['re']) && $_GET['re'] === "1") {
+							$txt_emitir = "RENOVACIÓN";
+						}
+						else {
+							$txt_emitir = "EMITIR";						
+						}
 					}
 					$pdf->SetFont('Arial', 'B', 44);
 					$pdf->SetTextColor(0,0,0);										
@@ -878,7 +883,13 @@
 						if (isset($_GET['mc']) && $_GET['mc'] === "1") {
 							$txt_emitir = "MC";
 						} else {
-							$txt_emitir = "EMITIR";						
+							if (isset($_GET['re']) && $_GET['re'] === "1") {
+								$txt_emitir = "RENOVACIÓN";
+							}
+							else {
+								$txt_emitir = "EMITIR";						
+							}
+											
 						}
 						$pdf->SetFont('Arial', 'B', 44);
 						$pdf->SetTextColor(0,0,0);										

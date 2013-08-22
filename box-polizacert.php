@@ -15,6 +15,7 @@
 			<input type="button" name="btnCCp" id="btnCCp" value="Imprimir C.C." />
             <input type="button" name="btnPE" id="btnPE" value="Pedido de Emisión" />
             <input type="button" name="btnPEMC" id="btnPEMC" value="Pedido de Emisión MC" />            
+			<input type="button" name="btnPR" id="btnPR" value="Pedido de Renovación" />
 	    </fieldset>
     </form>
     
