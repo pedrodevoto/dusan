@@ -22,7 +22,8 @@
 	$affected_rows = 0;
 		
 	// Recordset: Poliza
-	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado_id, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_estado_id<>5";
+	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado_id, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza LEFT JOIN (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE poliza_estado_id<>5 AND endoso_id IS NULL;
+";
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	
 	// While rows in Recordset
