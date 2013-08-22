@@ -1901,6 +1901,45 @@ $(document).ready(function() {
 			}			
 		});		
 	}
+	populateDiv_Endosos = function(id) {
+		$.getJSON("get-json-fich_poliendosos.php?id="+id, {}, function(j){
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				var result = '';			
+				// Check if empty
+				if (j.length>0) {
+					
+					// Open Table
+					result += '<table class="tblBox">';			
+					// Table Head
+					result += '<tr>';
+					result += '<th width="10%">Pedido</th>';
+					result += '<th width="10%">Aceptado</th>';
+					result += '<th width="60%">Motivo</th>';	
+					result += '<th width="10%">Completo</th>';	
+					result += '<th width="10%">Acciones</th>';								
+					result += '</tr>';					
+					// Data
+					$.each(j, function(i, object) {
+						result += '<tr>';
+						result += '<td>'+object.endoso_fecha_pedido+'</td>';
+						result += '<td>'+object.endoso_fecha_compania+'</td>';	
+						result += '<td><span title="'+object.endoso_tipo+'">'+object.endoso_tipo+'</span></td>';	
+						result += '<td>'+object.endoso_completo+'</td>';
+						result += '<td><span onClick="openBoxModEndoso('+object.endoso_id+')" style="cursor: pointer;" class="ui-icon ui-icon-extlink" title="Ir al endoso"></span></td>';
+						result += '</tr>';									
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no posee endosos.';
+				}
+				// Populate DIV					
+				$('#divBoxList').html(result);					
+			}
+		});
+	}
 	
 	<!-- Insert via form functions -->
 	insertFormUsuario = function(){													
@@ -3904,5 +3943,21 @@ $(document).ready(function() {
 			}
 			
 		});
+	}
+	openBoxEndosos = function(id) {
+		$.colorbox({
+			title:'Póliza/Endosos',
+			href:'box-poliendosos.php',												
+			width:'700px',
+			height:'600px',
+			onComplete: function() {	
+			
+				// -------------------- GENERAL ---------------------
+				
+				// Populate DIVs
+				populateDiv_Poliza_Info(id);
+				populateDiv_Endosos(id);													
+			}
+		});	
 	}
 });
