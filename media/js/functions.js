@@ -92,6 +92,17 @@ $(document).ready(function() {
             }
 		});
 	}
+	initAutocompletePoliza = function (field, context) {
+		$("#"+field).autocomplete({
+			source: "get-json-poliza_numero.php",
+			minLength: 2,
+            select: function (event, ui) {
+				if (ui.item.value=='Session expired') {
+					sessionExpire(context);
+				}
+            }
+		});
+	}
 	
 	<!-- Filter functions -->
 	disableFilters = function(disabled) {					
@@ -678,7 +689,30 @@ $(document).ready(function() {
 		});			
 		return dfd.promise();	
 	}
-	
+	populateListEndosoTipo = function(field, context) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-endoso_tipo.php",
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else {				
+					var options = ''; 
+					$.each(j, function(key, value) { 
+						options += '<option value="' + key + '">' + value + '</option>';
+					});		
+					$('#'+field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccionar');
+					// Select first item
+					selectFirstItem(field);	
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();	
+	}
 
 	<!-- Delete via Link functions -->	
 	deleteViaLink = function(section, id){	
@@ -1263,6 +1297,21 @@ $(document).ready(function() {
 			}
 		});
 	}
+	assignPolizaToEndoso = function(id, poliza_numero){
+		$("#box-poliza_numero").val(poliza_numero);
+		$("#box-poliza_id").val(id);
+		
+		// Clear search form
+		$('#frmSelectPoliza').each(function(){
+			this.reset();
+		});						
+		// Clear search results
+		$('#divBoxPolizaSearchResults').html('');						
+		// Enable main form
+		formDisable('frmBox','ui',false);
+		// Set focus
+		$("#box-endoso_tipo").focus();		
+	}
 	
 	<!-- Populate DIV functions -->
 	populateDiv_Prod_Info = function(id){
@@ -1796,6 +1845,30 @@ $(document).ready(function() {
 			}
 		});						
 	}	
+	populateDiv_Poliza_Results = function() {
+		$.getJSON("get-json-fich_poliza_search.php", $("#frmSelectPoliza").serialize(), function(j) {
+			if(j.error == 'expired') {
+				sessionExpire('box');
+			} else {			
+				if (j.empty == true) {
+					$('#divBoxPolizaSearchResults').html('Póliza no encontrada. Intente nuevamente.');
+				} else {
+					var result = '';
+					<!-- Open Table and Row -->
+					result += '<table class="tblBox2">';
+					result += '<tr>';
+					<!-- Table Data -->
+					result += '<td>' + j.poliza_numero + '</td>';
+					result += '<td>' + j.subtipo_poliza_nombre + '</td>';
+					result += '<td style="text-align:right"><a href="javascript:assignPolizaToEndoso(' + j.poliza_id + ', \'' + j.poliza_numero + '\')">SELECCIONAR</a></td>';
+					<!-- Close Row and Table -->
+					result += '</tr>';
+					result += '</table>';
+					$('#divBoxPolizaSearchResults').html(result);
+				}
+			}			
+		});		
+	}
 	
 	<!-- Insert via form functions -->
 	insertFormUsuario = function(){													
@@ -2037,6 +2110,29 @@ $(document).ready(function() {
 			}
 		});
 	}
+	insertFormEndoso = function(id){
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);			
+		// Post				
+		$.post("insert-endoso.php", $("#frmBox").serializeArray(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}
+				// Show message
+				showBoxConf(data, true, 'onerror', 3000, function(){
+					// Clear form
+					$('#frmBox').each(function(){
+						this.reset();
+					});
+				});
+			}
+		});
+	}
+	
 	<!-- Update via form functions -->	
 	updateFormUsuario = function(){
 		// Disable button
@@ -3615,5 +3711,77 @@ $(document).ready(function() {
 			$("#box-accidentes_asegurado_nombre").focus();
 		});
 	}	
-
+	openBoxAltaEndoso = function() {
+		$.colorbox({
+			title:'Endoso',
+			href:'box-endoso_alta.php',												
+			width:'700px',
+			height:'100%',
+			onComplete: function() {			
+			
+				$("#btnBox").button();
+			
+			
+				formDisable('frmSelectPoliza','normal',false);
+				formDisable('frmBox','ui',true);
+				
+				$.when(
+					populateListEndosoTipo('box-endoso_tipo_id', 'box')
+				).then(function() {
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					$('#box-endoso_fecha_pedido').val(Date.today().clearTime().toString("dd/MM/yy"));
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-endoso_fecha_pedido": {required: true, dateAR: true},
+							"box-endoso_tipo": {required: true},
+							"box-endoso_cuerpo": {required: true},
+							"box-endoso_fecha_compania": {dateAR: true},
+						},
+						errorPlacement: function(error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					// Button action	
+					$("#btnBox").click(function() {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								insertFormEndoso();
+							}
+						}
+					});
+				});
+				
+				// FORM SELECT POLIZA
+				// Initialize special fields
+				initAutocompletePoliza('box0-poliza_numero', 'box');
+				// Assign functions to buttons
+				$("#BtnSearchPoliza").click(function() {
+					// If a field was completed
+					if ($('#box0-poliza_numero').val() != '') {
+						populateDiv_Poliza_Results();
+					} else {
+						$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');
+					}
+				});
+				// Submit on Enter
+				$("#frmSelectPoliza :input[type=text]").each(function() {
+					$(this).keypress(function(e) {
+						if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+							$("#BtnSearchPoliza").click();
+						}
+					});
+				});													
+				// Enable form					
+				formDisable('frmSelectPoliza','normal',false);
+				// Set focus on search
+				$("#box0-poliza_numero").focus();		
+			
+			}
+			
+		});
+	}
 });

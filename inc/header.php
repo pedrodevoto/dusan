@@ -41,6 +41,7 @@
                         <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
 				</li>
+				<li><a href="section-endosos_list.php">Endosos</a></li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
                     <ul>
