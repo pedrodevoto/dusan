@@ -26,10 +26,12 @@
             <input type="text" name="box-combinado_familiar_domicilio_cp" id="box-combinado_familiar_domicilio_cp" maxlength="10" class="ui-widget-content required" style="width:100px" />
         </p>
 		<p>
-			<label for="box-combinado_familiar_country" style="width:200px">Barrio Cerrado / Country </label><input type="checkbox" name="box-combinado_familiar_country" id="box-combinado_familiar_country" />
+			<label for="box-combinado_familiar_country" style="width:200px">Barrio Cerrado / Country </label>
+			<input type="text" name="box-combinado_familiar_country" id="box-combinado_familiar_country" maxlength="255" class="ui-widget-content" style="width:200px" />
 		</p>
 		<p>
-			<label for="box-combinado_familiar_lote" style="width:200px">Lote </label><input type="checkbox" name="box-combinado_familiar_lote" id="box-combinado_familiar_lote" />
+			<label for="box-combinado_familiar_lote" style="width:200px">Lote </label>
+			<input type="text" name="box-combinado_familiar_lote" id="box-combinado_familiar_lote" maxlength="255" class="ui-widget-content" style="width:200px" />
 		</p>
 		<p>
 			<label for="box-combinado_familiar_valor_tasado" style="width:200px">Valor tasado de la propiedad</label><input type="number" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />

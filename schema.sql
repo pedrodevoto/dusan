@@ -228,8 +228,8 @@ CREATE TABLE `combinado_familiar` (
   `combinado_familiar_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `combinado_familiar_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `combinado_familiar_country` tinyint(1) NOT NULL,
-  `combinado_familiar_lote` tinyint(1) NOT NULL,
+  `combinado_familiar_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_valor_tasado` decimal(10,2) DEFAULT NULL,
   `combinado_familiar_prorrata_obj_esp` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
@@ -595,4 +595,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-26 09:55:44
+-- 2013-08-26 10:57:11

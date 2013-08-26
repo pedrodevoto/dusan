@@ -224,8 +224,8 @@
 			// ---------------------------------- COMBINADO FAMILIAR ---------------------------------- //
 
 			$upsertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_country, combinado_familiar_lote, combinado_familiar_valor_tasado, combinado_familiar_prorrata_obj_esp, combinado_familiar_inc_edif, combinado_familiar_inc_edif_prorrata, combinado_familiar_rc_lind, combinado_familiar_rc_lind_prorrata, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf) 
-						          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), %8$s, %9$s, %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s) 
-							  ON DUPLICATE KEY UPDATE combinado_familiar_domicilio_calle=UPPER(TRIM(%2$s)), combinado_familiar_domicilio_nro=UPPER(TRIM(%3$s)), combinado_familiar_domicilio_piso=UPPER(TRIM(%4$s)), combinado_familiar_domicilio_dpto=UPPER(TRIM(%5$s)), combinado_familiar_domicilio_localidad=UPPER(TRIM(%6$s)), combinado_familiar_domicilio_cp=UPPER(TRIM(%7$s)), combinado_familiar_country=%8$s, combinado_familiar_lote=%9$s, combinado_familiar_valor_tasado=%10$s, combinado_familiar_prorrata_obj_esp=%11$s, combinado_familiar_inc_edif=%12$s, combinado_familiar_inc_edif_prorrata=%13$s, combinado_familiar_rc_lind=%14$s, combinado_familiar_rc_lind_prorrata=%15$s, combinado_familiar_cristales=%16$s, combinado_familiar_responsabilidad_civil=%17$s, combinado_familiar_danios_agua=%18$s, combinado_familiar_jugadores_golf=%19$s, combinado_familiar_id=LAST_INSERT_ID(combinado_familiar_id)',
+						          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s) 
+							  ON DUPLICATE KEY UPDATE combinado_familiar_domicilio_calle=UPPER(TRIM(%2$s)), combinado_familiar_domicilio_nro=UPPER(TRIM(%3$s)), combinado_familiar_domicilio_piso=UPPER(TRIM(%4$s)), combinado_familiar_domicilio_dpto=UPPER(TRIM(%5$s)), combinado_familiar_domicilio_localidad=UPPER(TRIM(%6$s)), combinado_familiar_domicilio_cp=UPPER(TRIM(%7$s)), combinado_familiar_country=UPPER(TRIM(%8$s)), combinado_familiar_lote=UPPER(TRIM(%9$s)), combinado_familiar_valor_tasado=%10$s, combinado_familiar_prorrata_obj_esp=%11$s, combinado_familiar_inc_edif=%12$s, combinado_familiar_inc_edif_prorrata=%13$s, combinado_familiar_rc_lind=%14$s, combinado_familiar_rc_lind_prorrata=%15$s, combinado_familiar_cristales=%16$s, combinado_familiar_responsabilidad_civil=%17$s, combinado_familiar_danios_agua=%18$s, combinado_familiar_jugadores_golf=%19$s, combinado_familiar_id=LAST_INSERT_ID(combinado_familiar_id)',
 									$poliza_id,												
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_calle'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_nro'], 'text'),
@@ -233,8 +233,8 @@
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_dpto'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_localidad'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_cp'], 'text'),
-									GetSQLValueString(isset($_POST['box-combinado_familiar_country']) ? 'true' : '', 'defined','1','0'),
-									GetSQLValueString(isset($_POST['box-combinado_familiar_lote']) ? 'true' : '', 'defined','1','0'),
+									GetSQLValueString($_POST['box-combinado_familiar_country'], 'text'),
+									GetSQLValueString($_POST['box-combinado_familiar_lote'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_valor_tasado'], 'double'),
 									GetSQLValueString($_POST['box-combinado_familiar_prorrata_obj_esp'], 'double'),
 									GetSQLValueString($_POST['box-combinado_familiar_inc_edif'], 'double'),
