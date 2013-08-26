@@ -1131,6 +1131,9 @@ $(document).ready(function() {
 		
 		$("#box-accidentes_asegurado_suma_asegurada, #box-accidentes_asegurado_gastos_medicos").change(function() {
 			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
+			if ($(this).prop('id')=='box-accidentes_asegurado_suma_asegurada' && $("#box-accidentes_asegurado_gastos_medicos").val() == '') {
+				$("#box-accidentes_asegurado_gastos_medicos").val(Number(suma_asegurada) * 0.1);
+			}
 			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
 			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
 		});
