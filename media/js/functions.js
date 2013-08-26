@@ -1135,7 +1135,7 @@ $(document).ready(function() {
 			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
 		});
 		$("#box-accidentes_asegurado_beneficiario").change(function() {
-			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento").prop('disabled', !($(this).prop('checked')));
+			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', !($(this).prop('checked')));
 			$("#box-accidentes_asegurado_beneficiario_nombre").focus();
 		});
 		$("#btnBoxAsegurado, #btnBoxAseguradoReset").button();
@@ -2348,7 +2348,9 @@ $(document).ready(function() {
 					$("#box-action").val('insert');
 					$("#btnBoxAseguradoReset").button('option', 'label', 'Borrar');
 					$("#btnBoxAsegurado").button('option', 'label', 'Agregar');
+					$("#box-accidentes_asegurado_beneficiario_tomador").prop('checked', false);
 					$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
+					$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', true);
 					// Refresh DIVs
 					populateDiv_Asegurado(id);					
 				}
@@ -3775,7 +3777,7 @@ $(document).ready(function() {
 		formDisable('frmBoxAsegurado','ui',true);
 		$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');	
 		$.when(populateFormBoxAsegurado(id)).then(function() {
-			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento").prop('disabled', !($("#box-accidentes_asegurado_beneficiario").prop('checked')));
+			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', !($("#box-accidentes_asegurado_beneficiario").prop('checked')));
 			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
 			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
 			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));

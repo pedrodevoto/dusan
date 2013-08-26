@@ -52,6 +52,10 @@
 	        <label for="box-accidentes_asegurado_beneficiario_nacimiento" style="width:160px">Fecha de nacimiento de beneficiario *</label>
 	        <input type="text" name="box-accidentes_asegurado_beneficiario_nacimiento" id="box-accidentes_asegurado_beneficiario_nacimiento" maxlength="255" class="ui-widget-content box-date" style="width:200px" disabled />
 	    </p>
+		<p>
+			<label for="box-accidentes_asegurado_beneficiario_tomador" style="width:160px">Tomador</label>
+			<input type="checkbox" name="box-accidentes_asegurado_beneficiario_tomador" id="box-accidentes_asegurado_beneficiario_tomador" disabled />
+		</p>
 		<p align="center" style="margin-top:10px">
 			<input type="reset" name="btnBoxAseguradoReset" id="btnBoxAseguradoReset" value="Borrar" /> <input type="button" name="btnBoxAsegurado" id="btnBoxAsegurado" value="Agregar" />                                    
 	    </p>

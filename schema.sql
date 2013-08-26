@@ -29,6 +29,7 @@ CREATE TABLE `accidentes_asegurado` (
   `accidentes_asegurado_beneficiario_nombre` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accidentes_asegurado_beneficiario_documento` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accidentes_asegurado_beneficiario_nacimiento` date DEFAULT NULL,
+  `accidentes_asegurado_beneficiario_tomador` tinyint(4) NOT NULL,
   PRIMARY KEY (`accidentes_asegurado_id`),
   KEY `accidentes_asegurado_actividad` (`accidentes_asegurado_actividad`),
   KEY `poliza_id` (`poliza_id`),
@@ -594,4 +595,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-26 09:29:16
+-- 2013-08-26 09:55:44
