@@ -5,7 +5,7 @@
 <?php
 	require_once('Connections/connection.php');
 	
-	$sql = "SELECT COUNT(poliza_id) AS total FROM poliza WHERE poliza_estado_id IN(3,4) AND subtipo_poliza_id=6";
+	$sql = "SELECT COUNT(poliza.poliza_id) AS total FROM poliza LEFT JOIN (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE poliza_estado_id IN(3,4) AND subtipo_poliza_id=6 AND endoso_id IS NULL";
 	$res = mysql_query($sql, $connection);
 	$row = mysql_fetch_assoc($res);
 	$total = $row['total'];
