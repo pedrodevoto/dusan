@@ -95,6 +95,7 @@ CREATE TABLE `automotor` (
   `tuercas` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `equipo_rastreo_id` int(11) unsigned DEFAULT NULL,
   `micro_grabado` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `cupon_vintrak` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `antena` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `estereo` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `parlantes` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -593,4 +594,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-22 12:58:49
+-- 2013-08-26 09:29:16

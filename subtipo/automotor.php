@@ -244,7 +244,6 @@
                     <input type="checkbox" name="box-traba_volante" id="box-traba_volante" value="1" /><label for="box-traba_volante" class="secondary">Traba Volante</label><br />                
                     <input type="checkbox" name="box-matafuego" id="box-matafuego" value="1" /><label for="box-matafuego" class="secondary">Matafuego</label><br />                
                     <input type="checkbox" name="box-tuercas" id="box-tuercas" value="1" /><label for="box-tuercas" class="secondary">Tuercas</label><br />                
-                    <input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" /><label for="box-micro_grabado" class="secondary">Micro Grabado</label><br />                           
                 </td>
                 <td valign="top"> 
                     <input type="checkbox" name="box-antena" id="box-antena" value="1" /><label for="box-antena" class="secondary">Antena</label><br />                
@@ -265,6 +264,16 @@
                 </td>
             </tr>
         </table>
+</fieldset>
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
+    <p>
+		<label for="box-micro_grabado">Micro Grabado</label>
+		<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
+	<p>
+        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
+        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:220px" />
+    </p>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
