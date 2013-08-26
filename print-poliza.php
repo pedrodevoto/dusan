@@ -49,7 +49,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, cobertura_tipo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.cobertura_tipo_id = cobertura_tipo.cobertura_tipo_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, cobertura_tipo, automotor_marca) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.cobertura_tipo_id = cobertura_tipo.cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -84,7 +84,7 @@
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
-			$txt_marca_modelo = $row_Recordset2['marca']." - ".strtoupper($row_Recordset2['modelo']);
+			$txt_marca_modelo = $row_Recordset2['automotor_marca_nombre']." - ".strtoupper($row_Recordset2['modelo']);
 			$txt_datos_vehiculo_c1 = array(
 				array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 				array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),

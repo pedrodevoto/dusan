@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `automotor`;
 CREATE TABLE `automotor` (
   `automotor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `poliza_id` int(10) unsigned NOT NULL,
-  `marca` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_marca_id` int(11) NOT NULL,
   `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `castigado` tinyint(1) NOT NULL DEFAULT '0',
   `patente` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -151,6 +151,14 @@ CREATE TABLE `automotor_carroceria` (
   `automotor_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
   `automotor_carroceria_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`automotor_carroceria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_marca`;
+CREATE TABLE `automotor_marca` (
+  `automotor_marca_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_marca_nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_marca_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -597,4 +605,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-26 11:55:03
+-- 2013-08-26 19:15:11

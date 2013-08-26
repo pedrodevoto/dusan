@@ -40,4 +40,20 @@ function showEquipoRastreo() {
 		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
 	}
 }
+
+function showYears($future = 0, $start = 1974) {
+	foreach(range($start, date('Y') + $future) as $year) {
+		echo '<option value="'.$year.'">'.$year.'</option>';
+	}
+}
+
+function showMarcas() {
+	$query_Recordset1 = sprintf("SELECT automotor_marca_id, automotor_marca_nombre FROM automotor_marca");
+
+	// Recordset: Main
+	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
+	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
+		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
+	}
+}
 ?>

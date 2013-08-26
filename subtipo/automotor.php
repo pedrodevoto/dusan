@@ -89,16 +89,22 @@
 	<fieldset class="ui-widget ui-widget-content ui-corner-all">    
 	    <legend class="ui-widget ui-widget-header ui-corner-all">Resumen</legend>      
 	    <p>
-	        <label for="box-marca">Marca *</label>
-	        <input type="text" name="box-marca" id="box-marca" maxlength="100" class="ui-widget-content required" style="width:220px" />
-	    </p>
+	        <label for="box-automotor_marca_id">Marca *</label>
+	        <select name="box-automotor_marca_id" id="box-automotor_marca_id" class="ui-widget-content required">
+				<option value="">Seleccionar</option>
+				<?php showMarcas(); ?>
+			</select>
+		</p>
 	    <p>
 	        <label for="box-modelo">Modelo *</label>
 	        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content required" style="width:220px" />
 	    </p>
 	    <p>
 	        <label for="box-ano">Año *</label>
-	        <input type="text" name="box-ano" id="box-ano" maxlength="4" class="ui-widget-content required" digits="true" min="1900" max="2100" style="width:110px" />
+	        <select name="box-ano" id="box-ano" class="ui-widget-content required">
+				<option value="">Seleccionar</option>
+				<?php showYears(1); ?>
+			</select>
 	    </p>
 	    <p>
 	        <label for="box-suma_asegurada">Suma Asegurada ^</label>
