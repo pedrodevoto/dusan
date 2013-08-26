@@ -299,6 +299,8 @@ CREATE TABLE `contacto` (
   `contacto_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT '0',
   `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contacto_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_default` tinyint(3) unsigned NOT NULL,
@@ -595,4 +597,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-26 10:57:11
+-- 2013-08-26 11:55:03

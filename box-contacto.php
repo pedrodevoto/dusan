@@ -62,6 +62,14 @@
                     <label for="box-contacto_cp">Código Postal *</label>
                     <input type="text" name="box-contacto_cp" id="box-contacto_cp" maxlength="10" class="ui-widget-content" style="width:100px" />
                 </p>
+				<p>
+					<label for="box-contacto_country">Barrio Cerrado / Country </label>
+					<input type="text" name="box-contacto_country" id="box-contacto_country" maxlength="255" class="ui-widget-content" style="width:200px" />
+				</p>
+				<p>
+					<label for="box-contacto_lote">Lote </label>
+					<input type="text" name="box-contacto_lote" id="box-contacto_lote" maxlength="255" class="ui-widget-content" style="width:200px" />
+				</p>
                 <p>
                     <label for="box-contacto_telefono1">Teléfono 1</label>
                     <input type="text" name="box-contacto_telefono1" id="box-contacto_telefono1" maxlength="25" class="ui-widget-content" style="width:200px" />

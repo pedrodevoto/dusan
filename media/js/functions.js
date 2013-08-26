@@ -1474,6 +1474,8 @@ $(document).ready(function() {
 					result += '<th>Piso</th>';
 					result += '<th>Dpto</th>';
 					result += '<th>Localidad</th>';
+					result += '<th>Country</th>';
+					result += '<th>Lote</th>';
 					result += '<th>CP</th>';
 					result += '<th>Teléfono 1</th>';
 					result += '<th>Teléfono 2</th>';
@@ -1493,6 +1495,8 @@ $(document).ready(function() {
 						result += '<td>'+object.contacto_piso+'</td>';
 						result += '<td>'+object.contacto_dpto+'</td>';
 						result += '<td>'+object.contacto_localidad+'</td>';
+						result += '<td>'+object.contacto_country+'</td>';
+						result += '<td>'+object.contacto_lote+'</td>';
 						result += '<td>'+object.contacto_cp+'</td>';
 						result += '<td>'+object.contacto_telefono1+'</td>';
 						result += '<td>'+object.contacto_telefono2+'</td>';
