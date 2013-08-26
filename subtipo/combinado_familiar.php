@@ -34,7 +34,8 @@
 			<input type="text" name="box-combinado_familiar_lote" id="box-combinado_familiar_lote" maxlength="255" class="ui-widget-content" style="width:200px" />
 		</p>
 		<p>
-			<label for="box-combinado_familiar_valor_tasado" style="width:200px">Valor tasado de la propiedad</label><input type="number" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
+			<label for="box-combinado_familiar_valor_tasado" style="width:200px">Valor tasado de la propiedad</label>
+			<input type="number" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
 		</p>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">

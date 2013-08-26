@@ -1305,13 +1305,23 @@
 					
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Prorrata:                      '.$row_Recordset2['combinado_familiar_prorrata'] .'%');
+					$pdf->Write(5, 'Barrio cerrado/country: '.$row_Recordset2['combinado_familiar_country']);
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Lote: '.$row_Recordset2['combinado_familiar_lote']);
+					
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->Write(5, 'Incendio Edificio:         $'.formatNumber($row_Recordset2['combinado_familiar_inc_edif'], 2));
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['combinado_familiar_inc_edif_prorrata'], 2).'%');
+					
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->Write(5, 'R/C Lind:                     $'.formatNumber($row_Recordset2['combinado_familiar_rc_lind'], 2));
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['combinado_familiar_rc_lind_prorrata'], 2).'%');
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['combinado_familiar_valor_tasado'], 2));
 					
 					$y = 123;
 					
@@ -1376,7 +1386,7 @@
 								$pdf->Write(5, trimText($tv_aud_vid['combinado_familiar_tv_aud_vid_marca'], $pdf, 58));
 								printText('$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2), $pdf, 50, 5, 'R');
 								
-								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'];
+								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'] * $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad'];
 								
 							}
 							else {
@@ -1450,17 +1460,17 @@
 								$pdf->SetX($x + 20);
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
-								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 58));
-								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
+								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_marca'], $pdf, 58));
+								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
 							
-								$total_suma_asegurada += $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'];
+								$total_suma_asegurada += ($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
-								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
+								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
-								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata'] / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
 							}
 							
 							$y += 5;
@@ -1531,7 +1541,7 @@
 								$pdf->Write(5, trimText($equipo_comp['combinado_familiar_equipos_computacion_marca'], $pdf, 58));
 								printText('$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2), $pdf, 50, 5, 'R');
 							
-								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'];
+								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'] * $equipo_comp['combinado_familiar_equipos_computacion_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
@@ -1627,6 +1637,8 @@
 						$pdf->Image('pdf/cc_digital_dinamica_firma.png', 0, 0, 215.9, 297);
 					}
 					break;
+					default:
+					die('Certificado no habilitado.');
 				}
 				$pdf->Output();
 			
