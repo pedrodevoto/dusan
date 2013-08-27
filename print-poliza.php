@@ -1461,16 +1461,16 @@
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_marca'], $pdf, 58));
-								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
 							
-								$total_suma_asegurada += ($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
+								$total_suma_asegurada += (($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
-								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber($row_Recordset2['combinado_familiar_prorrata_obj_esp'] / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
 							}
 							
 							$y += 5;
@@ -1556,7 +1556,10 @@
 						}
 						$y += 3;
 					}
-					
+					if ($y > 260) {
+						newPage($pdf, false);
+					}
+					$y = 48;
 					$pdf->SetFillColor(221,227,237);
 					$pdf->SetLineWidth(0.4);
 					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
@@ -1598,7 +1601,7 @@
 					$pdf->SetFillColor(229,233,253);
 					$pdf->SetDrawColor(138,162,234);
 					$pdf->SetLineWidth(0.6);
-					$pdf->RoundedRect(10.5, $y, 135, 19, 1, '1234', 'DF');
+					$pdf->RoundedRect(10.5, $y, 135, 21, 1, '1234', 'DF');
 					$pdf->RoundedRect(146, $y, 60, 21, 1, '1234', 'DF');
 					$pdf->SetFont('Arial','B',10);
 					$pdf->SetXY(65,$y + 1);
