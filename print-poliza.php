@@ -747,6 +747,7 @@
 								$pdf->Write(5, '(Beneficiario)');
 								$pdf->SetX($x + 125);
 								$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_tomador']);
+								$count_asegurados++;
 								$count_asegurados_per_page++;
 							}
 							else {
@@ -997,7 +998,11 @@
 								$count_asegurados_per_page = 0;
 								$max_asegurados = 43;
 							}
-
+							if (isset($asegurado['beneficiario'])) {
+								$count_asegurados++;
+								$count_asegurados_per_page++;
+								continue;
+							}
 							if (!isset($asegurado['total'])){
 								$pdf->SetXY($x, $y);
 								$pdf->SetFont('Arial', '', 7);
@@ -1016,6 +1021,18 @@
 								$total_suma_asegurada += $asegurado['accidentes_asegurado_suma_asegurada'];
 								$total_gastos_medicos += $asegurado['accidentes_asegurado_gastos_medicos'];
 								
+								$y += 5;
+								if ($asegurado['accidentes_asegurado_legal']=='No') {
+									$pdf->SetXY($x, $y);
+									$pdf->SetFont('Arial', 'I', 7);
+									$pdf->Write(5, trimText($asegurado['accidentes_asegurado_beneficiario_nombre'], $pdf, 48));
+									$pdf->SetX($x + 48);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_documento']);
+									$pdf->SetX($x + 70);
+									$pdf->Write(5, '(Beneficiario)');
+									$pdf->SetX($x + 125);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_tomador']);
+								}
 							}
 							else {
 								$pdf->SetXY($x, $y);
