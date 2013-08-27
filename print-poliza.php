@@ -1387,6 +1387,7 @@
 								printText('$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2), $pdf, 50, 5, 'R');
 								
 								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'] * $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad'];
+								$count_tv_aud_vids += 1 * $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad'];
 								
 							}
 							else {
@@ -1394,8 +1395,8 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
 								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+								$count_tv_aud_vids++;
 							}
-							$count_tv_aud_vids++;
 							$count_tv_aud_vids_per_page++;
 							$y += 5;
 						}
@@ -1464,6 +1465,7 @@
 								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += (($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
+								$count_obj_esp_prorratas += 1 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
@@ -1471,10 +1473,10 @@
 								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
 								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								$count_obj_esp_prorratas++;
 							}
 							
 							$y += 5;
-							$count_obj_esp_prorratas++;
 							$count_obj_esp_prorratas_per_page++;
 						}
 						$y += 3;
@@ -1542,16 +1544,17 @@
 								printText('$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2), $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'] * $equipo_comp['combinado_familiar_equipos_computacion_cantidad'];
+								$count_equipos_comp += 1 * $equipo_comp['combinado_familiar_equipos_computacion_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_equipos_comp);
 								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+								$count_equipos_comp++;
 							}
 							
 							$y += 5;
-							$count_equipos_comp++;
 							$count_equipos_comp_per_page++;
 						}
 						$y += 3;
@@ -1820,6 +1823,7 @@
 								printText('$'.formatNumber($tv_aud_vid['combinado_familiar_tv_aud_vid_valor'], 2), $pdf, 50, 5, 'R');
 								
 								$total_suma_asegurada += $tv_aud_vid['combinado_familiar_tv_aud_vid_valor'] * $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad'];
+								$count_tv_aud_vids += $tv_aud_vid['combinado_familiar_tv_aud_vid_cantidad'];
 								
 							}
 							else {
@@ -1827,8 +1831,8 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_tv_aud_vids);
 								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+								$count_tv_aud_vids++;
 							}
-							$count_tv_aud_vids++;
 							$count_tv_aud_vids_per_page++;
 							$y += 5;
 						}
@@ -1897,6 +1901,7 @@
 								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += (($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
+								$count_obj_esp_prorratas += 1 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
@@ -1904,10 +1909,10 @@
 								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
 								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								$count_obj_esp_prorratas++;
 							}
 							
 							$y += 5;
-							$count_obj_esp_prorratas++;
 							$count_obj_esp_prorratas_per_page++;
 						}
 						$y += 3;
@@ -1975,16 +1980,17 @@
 								printText('$'.formatNumber($equipo_comp['combinado_familiar_equipos_computacion_valor'], 2), $pdf, 50, 5, 'R');
 							
 								$total_suma_asegurada += $equipo_comp['combinado_familiar_equipos_computacion_valor'] * $equipo_comp['combinado_familiar_equipos_computacion_cantidad'];
+								$count_equipos_comp += $equipo_comp['combinado_familiar_equipos_computacion_cantidad'];
 							}							
 							else {
 								$pdf->SetXY($x + 2, $y);
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_equipos_comp);
 								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+								$count_equipos_comp++;
 							}
 							
 							$y += 5;
-							$count_equipos_comp++;
 							$count_equipos_comp_per_page++;
 						}
 						$y += 3;
