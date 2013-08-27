@@ -2098,6 +2098,206 @@
 				$pdf->Output();
 			
 			break;
+		case 'incendio_edificio':
+			// Recordset: Combinado Familiar
+			$query_Recordset2 = sprintf("SELECT *  FROM incendio_edificio WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
+			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
+			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+
+			// If no record found
+			if ($totalRows_Recordset2 === 0) {
+				die("Error: Detalle de Poliza no encontrado.");
+			}
+			
+			// Compose Shared Texts
+			$txt_titular_c1 = array(
+				array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
+				array('maxwidth' => 130, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].(is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso']).(is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'])),
+				array('maxwidth' => 82, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']),
+				array('maxwidth' => 130, 'text' => "Teléfonos: ".$row_Recordset1['contacto_telefono1']." / ".$row_Recordset1['contacto_telefono2']),
+				array('maxwidth' => 82, 'text' => "Categoría de IVA: ".$row_Recordset1['cliente_cf']),
+				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
+			);
+			$txt_titular_c2 = array(
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
+				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
+				array('maxwidth' => 47, 'text' => ""),																
+				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
+				array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc'])
+			);
+			$txt_poliza = array(
+				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
+				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
+				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
+				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
+				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
+				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
+			);
+			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
+			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_imp_c1 = array(
+				array('maxwidth' => 95, 'text' => "Prima:"),
+				array('maxwidth' => 95, 'text' => "Premio:")
+			);
+			$txt_imp_c2 = array(
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_prima'])." "),
+				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_premio'])." ")
+			);
+			
+			switch($_GET['type']) {
+				case 'cc':
+					/****************************************
+					* CONSTANCIA DE COBERTURA
+					*****************************************/
+		
+					function newPage($pdf, $first) {
+						$pdf->SetAutoPageBreak(false);
+						$pdf->AddPage();
+						if (isset($_GET['print'])) {
+							$pdf->setSourceFile('pdf/cc_dinamica'.(!$first?2:'').'.pdf');
+						}
+						else {
+							$pdf->setSourceFile('pdf/cc_digital_dinamica'.(!$first?2:'').'.pdf');
+						}	
+						$tplIdx = $pdf->importPage(1);
+						$pdf->useTemplate($tplIdx);
+						// Fecha y hora
+						$txt_date = "FECHA: ".date("d/m/Y")." HORA: ".date("h:i a");
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);										
+						$pdf->SetXY(0, 45);
+						printText($txt_date, $pdf, 196, 0, 'R');
+					}
+		
+					// NEW DOCUMENT
+					$pdf = new FPDI('P','mm',array(215.9,297));
+					newPage($pdf, true);
+
+					// Compañía / Sucursal
+					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= "  -  Sucursal: ".strtoupper($row_Recordset1['sucursal_nombre']);
+					$pdf->SetFont('Arial', 'B', 10);
+					$pdf->SetTextColor(0,0,0);										
+					$pdf->SetXY(11, 51);
+					printText($txt_compania, $pdf, 190, 0);
+					// Datos del Titular
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(11, 61);
+					foreach ($txt_titular_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					$pdf->SetXY(95, 61);
+					foreach ($txt_titular_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					// Datos de la Póliza
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(147, 61);
+					foreach ($txt_poliza as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+									
+					$x = 9.8;
+					$y = 90;
+				
+					$pdf->SetFillColor(221,227,237);
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+					$pdf->SetXY(95, $y+0.5);
+					$pdf->SetFont('Arial','B',10);
+					$pdf->Write(5, 'General');
+				
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
+				
+					$y += 9.5;
+
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['incendio_edificio_domicilio_calle'], $pdf, 60).' '.$row_Recordset2['incendio_edificio_domicilio_nro']);
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Piso/Dpto: '.$row_Recordset2['incendio_edificio_domicilio_piso'].' '.$row_Recordset2['incendio_edificio_domicilio_dpto']);
+				
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Localidad: '.trimText($row_Recordset2['incendio_edificio_domicilio_localidad'], $pdf, 60));
+					$pdf->SetX($x + 180);
+					$pdf->Write(5, 'CP: '.trimText($row_Recordset2['incendio_edificio_domicilio_cp'], $pdf, 60));
+				
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Barrio cerrado/country: '.$row_Recordset2['incendio_edificio_country']);
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Lote: '.$row_Recordset2['incendio_edificio_lote']);
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Incendio Edificio: $'.formatNumber($row_Recordset2['incendio_edificio_suma_asegurada'], 2));
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['incendio_edificio_prorrata'], 2).'%');
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
+				
+					// Footer
+					if ($y > 200) {
+						newPage($pdf, false);
+					}
+					$y = 200;
+					$pdf->SetFillColor(229,233,253);
+					$pdf->SetDrawColor(138,162,234);
+					$pdf->SetLineWidth(0.6);
+					$pdf->RoundedRect(10.5, $y, 135, 21, 1, '1234', 'DF');
+					$pdf->RoundedRect(146, $y, 60, 21, 1, '1234', 'DF');
+					$pdf->SetFont('Arial','B',10);
+					$pdf->SetXY(65,$y + 1);
+					$pdf->Write(5, 'Forma de Pago');
+					$pdf->SetXY(168,$y + 1);
+					$pdf->Write(5, 'Importes');
+					
+					$y += 9;
+					
+					// Forma de Pago					
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(12.5, $y);
+					printText($txt_pago_c1, $pdf, 55, 3.8);
+					$pdf->SetXY(70, $y);
+					$pdf->SetXY(102, $y);
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
+					// Importes
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(149, $y);
+					foreach ($txt_imp_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+					}
+					
+					// Firma
+					if (isset($_GET['print'])) {
+						$pdf->Image('pdf/cc_dinamica_firma.png', 0, 0, 215.9, 279.4);
+					}
+					else {
+						$pdf->Image('pdf/cc_digital_dinamica_firma.png', 0, 0, 215.9, 297);
+					}
+					break;
+				default:
+					die ('Documento no definido');
+					break;
+			}
+			$pdf->Output();
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
