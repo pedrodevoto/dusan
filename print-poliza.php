@@ -41,6 +41,8 @@
 	if (is_null($row_Recordset1['contacto_domicilio']) || is_null($row_Recordset1['contacto_nro'])) {
 		die("Error: El cliente no tiene un contacto primario asignado.");
 	}
+	
+	$row_Recordset1['poliza_pago_detalle'] = Encryption::decrypt($row_Recordset1['poliza_pago_detalle']);
 
 	// Determine subtype
 	switch($row_Recordset1['subtipo_poliza_tabla']) {
@@ -131,7 +133,7 @@
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
-			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -256,10 +258,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, 205);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);					
 					$pdf->SetXY(70, 205);
 					$pdf->SetXY(102, 205);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);					
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -479,10 +481,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, 250);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, 250);
 					$pdf->SetXY(102, 250);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -589,7 +591,7 @@
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
-			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -831,10 +833,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, $y);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -1099,10 +1101,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, 250);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, 250);
 					$pdf->SetXY(102, 250);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -1211,7 +1213,7 @@
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
-			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -1619,10 +1621,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, $y);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -2057,10 +2059,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, 250);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, 250);
 					$pdf->SetXY(102, 250);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -2137,7 +2139,7 @@
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
-			// $txt_pago_c3 = "Cuota Base: $ ".formatNumber($row_Recordset1['poliza_premio'] / $row_Recordset1['poliza_cant_cuotas']);			
+			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -2268,10 +2270,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, $y);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -2430,10 +2432,10 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(12.5, 250);
 					printText($txt_pago_c1, $pdf, 55, 3.8);
+					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, 250);
 					$pdf->SetXY(102, 250);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// printText($txt_pago_c3, $pdf, 40, 3.8);	
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
