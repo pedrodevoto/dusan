@@ -2292,6 +2292,180 @@
 						$pdf->Image('pdf/cc_digital_dinamica_firma.png', 0, 0, 215.9, 297);
 					}
 					break;
+				case 'pe':
+					/****************************************
+					* PEDIDO DE EMISIÓN
+					*****************************************/				
+		
+				
+					function newPage($pdf, $first) {
+						$pdf->SetAutoPageBreak(false);
+						$pdf->AddPage();
+						$pdf->setSourceFile('pdf/pe_dinamico'.(!$first?2:'').'.pdf');
+						$tplIdx = $pdf->importPage(1);
+						$pdf->useTemplate($tplIdx);
+						// Fecha y hora
+						$txt_date = array(
+							array('maxwidth' => 30, 'text' => "FECHA:  ".date("d/m/Y")),
+							array('maxwidth' => 30, 'text' => "HORA:    ".date("h:i a"))
+						);					
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(175, 5);
+						foreach ($txt_date as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 5);
+						}
+						// Emitir
+						if (isset($_GET['mc']) && $_GET['mc'] === "1") {
+							$txt_emitir = "MC";
+						} else {
+							if (isset($_GET['re']) && $_GET['re'] === "1") {
+								$txt_emitir = "RENOVACIÓN";
+							}
+							else {
+								$txt_emitir = "EMITIR";						
+							}
+										
+						}
+						$pdf->SetFont('Arial', 'B', 44);
+						$pdf->SetTextColor(0,0,0);										
+						$pdf->SetXY(50, 11.5);
+						printText($txt_emitir, $pdf, 120, 0);
+					}
+					// NEW DOCUMENT
+					$pdf = new FPDI('P','mm',array(215.9,279.4));
+				
+					newPage($pdf, true);				
+					// Compañía
+					$txt_compania = strtoupper($row_Recordset1['seguro_nombre']);
+					$txt_compania.= ' (' . strtoupper($row_Recordset1['sucursal_nombre']) . ')';
+					$pdf->SetFont('Arial', 'B', 28);
+					$pdf->SetTextColor(255,0,0);										
+					$pdf->SetXY(50, 30);
+					printText($txt_compania, $pdf, 155, 0);					
+					// Datos del Titular
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(11, 51.5);
+					foreach ($txt_titular_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					$pdf->SetXY(95, 51.5);
+					foreach ($txt_titular_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					// Datos de la Póliza
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(147, 51.5);
+					foreach ($txt_poliza as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
+					}
+					$x = 11;
+					$y = 78.5;
+				
+					$pdf->SetFillColor(221,227,237);
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y, 195.5, 6, 1, '1234', 'DF');
+					$pdf->SetXY(95, $y+0.5);
+					$pdf->SetFont('Arial','B',10);
+					$pdf->Write(5, 'General');
+				
+					$pdf->SetLineWidth(0.4);
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 195.5, 23, 1, '1234', 'D');
+				
+					$y += 9.5;
+
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['incendio_edificio_domicilio_calle'], $pdf, 60).' '.$row_Recordset2['incendio_edificio_domicilio_nro']);
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Piso/Dpto: '.$row_Recordset2['incendio_edificio_domicilio_piso'].' '.$row_Recordset2['incendio_edificio_domicilio_dpto']);
+				
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Localidad: '.trimText($row_Recordset2['incendio_edificio_domicilio_localidad'], $pdf, 60));
+					$pdf->SetX($x + 180);
+					$pdf->Write(5, 'CP: '.trimText($row_Recordset2['incendio_edificio_domicilio_cp'], $pdf, 60));
+				
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Barrio cerrado/country: '.$row_Recordset2['incendio_edificio_country']);
+					$pdf->SetX($x + 95);
+					$pdf->Write(5, 'Lote: '.$row_Recordset2['incendio_edificio_lote']);
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Incendio Edificio: $'.formatNumber($row_Recordset2['incendio_edificio_suma_asegurada'], 2));
+					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['incendio_edificio_prorrata'], 2).'%');
+				
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
+				
+	
+					
+					// Footer
+					if ($y > 238) {
+						newPage($pdf, false);
+					}
+					$pdf->SetFillColor(229,233,253);
+					$pdf->SetDrawColor(138,162,234);
+					$pdf->SetLineWidth(0.6);
+					$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
+					$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
+					$pdf->SetFont('Arial','B',10);
+					$pdf->SetXY(65,242);
+					$pdf->Write(5, 'Forma de Pago');
+					$pdf->SetXY(168,242);
+					$pdf->Write(5, 'Importes');
+					
+					$pdf->SetLineWidth(0.4);
+					$pdf->SetDrawColor(0,0,0);
+					$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
+					
+					// Forma de Pago					
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(12.5, 250);
+					printText($txt_pago_c1, $pdf, 55, 3.8);
+					$pdf->SetXY(70, 250);
+					$pdf->SetXY(102, 250);
+					printText($txt_pago_c2, $pdf, 30, 3.8);
+					// printText($txt_pago_c3, $pdf, 40, 3.8);	
+					// Importes
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);								
+					$pdf->SetXY(149, 250);
+					foreach ($txt_imp_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(149, 250);
+					foreach ($txt_imp_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+					}
+					// Misc
+					$txt_misc_c1 = array(
+						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+					);
+					$txt_misc_c2 = array(
+						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+					);											
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->SetTextColor(0,0,0);
+					$pdf->SetXY(12, 263.7);
+					foreach ($txt_misc_c1 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					$pdf->SetXY(110, 263.7);
+					foreach ($txt_misc_c2 as $array) {
+						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+					}
+					
+					break;
 				default:
 					die ('Documento no definido');
 					break;
