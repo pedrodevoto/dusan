@@ -10,7 +10,7 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT poliza_id, poliza_numero, subtipo_poliza_nombre FROM poliza JOIN subtipo_poliza ON poliza.subtipo_poliza_id = subtipo_poliza.subtipo_poliza_id WHERE 1";
+	$query_Recordset1 = "SELECT poliza_id, poliza_numero, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%y'), ' - ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y')) AS validez, seguro_nombre FROM poliza JOIN (subtipo_poliza, productor_seguro, seguro) ON poliza.subtipo_poliza_id = subtipo_poliza.subtipo_poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE 1";
 	
 	// Query Where	
 	if (isset($_GET['box0-poliza_numero'])) {
@@ -30,9 +30,12 @@
 	// Output
 	$output = array();
 	if ($totalRows_Recordset1 > 0) {
-		foreach ($row_Recordset1 as $key=>$value) {
-			$output[$key] = strip_tags($value);
-		}	
+		for ($i=0; $i<$totalRows_Recordset1; $i++) {
+			foreach ($row_Recordset1 as $key=>$value) {
+				$output[$i][$key] = strip_tags($value);
+			}		
+			$row_Recordset1 = mysql_fetch_assoc($Recordset1);		
+		}
 	} else {
 		$output["empty"] = true;
 	}

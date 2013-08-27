@@ -1906,13 +1906,14 @@ $(document).ready(function() {
 					var result = '';
 					<!-- Open Table and Row -->
 					result += '<table class="tblBox2">';
-					result += '<tr>';
-					<!-- Table Data -->
-					result += '<td>' + j.poliza_numero + '</td>';
-					result += '<td>' + j.subtipo_poliza_nombre + '</td>';
-					result += '<td style="text-align:right"><a href="javascript:assignPolizaToEndoso(' + j.poliza_id + ', \'' + j.poliza_numero + '\')">SELECCIONAR</a></td>';
-					<!-- Close Row and Table -->
-					result += '</tr>';
+					$.each(j, function(i, object) {
+						result += '<tr>';
+						result += '<td>' + object.poliza_numero + '</td>';
+						result += '<td>' + object.validez + '</td>';
+						result += '<td>' + object.seguro_nombre + '</td>';
+						result += '<td style="text-align:right"><a href="javascript:assignPolizaToEndoso(' + object.poliza_id + ', \'' + object.poliza_numero + '\')">SELECCIONAR</a></td>';
+						result += '</tr>';
+					});
 					result += '</table>';
 					$('#divBoxPolizaSearchResults').html(result);
 				}

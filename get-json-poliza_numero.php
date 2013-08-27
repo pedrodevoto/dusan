@@ -13,7 +13,7 @@
 	$query_Recordset1 = "SELECT DISTINCT poliza_numero FROM poliza WHERE 1";
 	// Append Search
 	if (isset($_GET['term']) && $_GET['term'] !== "") {
-		$query_Recordset1 .= sprintf(" AND poliza_nombre LIKE %s",
+		$query_Recordset1 .= sprintf(" AND poliza_numero LIKE %s",
 								GetSQLValueString('%'.$_GET['term'].'%', "text"));
 	}	
 	// Order By / Limit
