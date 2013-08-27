@@ -291,9 +291,11 @@
 									
 		break;
 		case 'incendio_edificio':
+			// ---------------------------------- INCENDIO EDIFICIO ---------------------------------- //
+			
 			$upsertSQL = sprintf('INSERT INTO incendio_edificio (poliza_id, incendio_edificio_domicilio_calle, incendio_edificio_domicilio_nro, incendio_edificio_domicilio_piso, incendio_edificio_domicilio_dpto, incendio_edificio_domicilio_localidad, incendio_edificio_domicilio_cp, incendio_edificio_country, incendio_edificio_lote, incendio_edificio_valor_tasado, incendio_edificio_suma_asegurada, incendio_edificio_prorrata) 
-				VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), %8$s, %9$s, %10$s, %11$s, %12$s)
-				ON DUPLICATE KEY UPDATE incendio_edificio_domicilio_calle=UPPER(TRIM(%2$s)), incendio_edificio_domicilio_nro=UPPER(TRIM(%3$s)), incendio_edificio_domicilio_piso=UPPER(TRIM(%4$s)), incendio_edificio_domicilio_dpto=UPPER(TRIM(%5$s)), incendio_edificio_domicilio_localidad=UPPER(TRIM(%6$s)), incendio_edificio_domicilio_cp=UPPER(TRIM(%7$s)), incendio_edificio_country=%8$s, incendio_edificio_lote=%9$s, incendio_edificio_valor_tasado=%10$s, incendio_edificio_suma_asegurada=%11$s, incendio_edificio_prorrata=%12$s, incendio_edificio_id=LAST_INSERT_ID(incendio_edificio_id)',
+				VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s)
+				ON DUPLICATE KEY UPDATE incendio_edificio_domicilio_calle=UPPER(TRIM(%2$s)), incendio_edificio_domicilio_nro=UPPER(TRIM(%3$s)), incendio_edificio_domicilio_piso=UPPER(TRIM(%4$s)), incendio_edificio_domicilio_dpto=UPPER(TRIM(%5$s)), incendio_edificio_domicilio_localidad=UPPER(TRIM(%6$s)), incendio_edificio_domicilio_cp=UPPER(TRIM(%7$s)), incendio_edificio_country=UPPER(TRIM(%8$s)), incendio_edificio_lote=UPPER(TRIM(%9$s)), incendio_edificio_valor_tasado=%10$s, incendio_edificio_suma_asegurada=%11$s, incendio_edificio_prorrata=%12$s, incendio_edificio_id=LAST_INSERT_ID(incendio_edificio_id)',
 				$poliza_id,												
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_calle'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_nro'], 'text'),
@@ -301,8 +303,8 @@
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_dpto'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_localidad'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_cp'], 'text'),
-				GetSQLValueString(isset($_POST['box-incendio_edificio_country']) ? 'true' : '', 'defined','1','0'),
-				GetSQLValueString(isset($_POST['box-incendio_edificio_lote']) ? 'true' : '', 'defined','1','0'),
+				GetSQLValueString($_POST['box-incendio_edificio_country'], 'text'),
+				GetSQLValueString($_POST['box-incendio_edificio_lote'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_valor_tasado'], 'double'),
 				GetSQLValueString($_POST['box-incendio_edificio_suma_asegurada'], 'double'),
 				GetSQLValueString($_POST['box-incendio_edificio_prorrata'], 'double'));
