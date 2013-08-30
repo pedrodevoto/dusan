@@ -421,8 +421,8 @@ CREATE TABLE `incendio_edificio` (
   `incendio_edificio_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `incendio_edificio_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `incendio_edificio_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `incendio_edificio_country` tinyint(1) NOT NULL,
-  `incendio_edificio_lote` tinyint(1) NOT NULL,
+  `incendio_edificio_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `incendio_edificio_valor_tasado` decimal(10,2) DEFAULT NULL,
   `incendio_edificio_suma_asegurada` decimal(10,2) unsigned NOT NULL,
   `incendio_edificio_prorrata` decimal(10,2) unsigned DEFAULT NULL,
@@ -619,4 +619,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-27 09:43:47
+-- 2013-08-30 12:27:59
