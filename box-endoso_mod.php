@@ -17,7 +17,7 @@
 					<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 			    </p>
 			</form>
-			<div id="divBoxFotos" style="width:840px;height:135px;overflow:auto;white-space: nowrap;display:none">
+			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
 			</div>
 		</fieldset>
 	</div>
