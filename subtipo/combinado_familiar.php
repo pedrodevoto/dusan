@@ -69,7 +69,7 @@
 		</p>
 		<p>
 			<input type="button" id="box-combinado_familiar_obj_esp_prorrata_add" value="Agregar" />
-			Suma asegurada total (con prorrata): <span id="obj_esp_prorrata_total"></span>
+			Suma asegurada total: <span id="obj_esp_prorrata_total"></span>
 		</p>
 		<div id="obj_esp_prorrata">
 		</div>

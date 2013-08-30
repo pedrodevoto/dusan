@@ -1496,9 +1496,9 @@
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_marca'], $pdf, 58));
-								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2), $pdf, 50, 5, 'R');
 							
-								$total_suma_asegurada += (($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
+								$total_suma_asegurada += $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'] * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 								$count_obj_esp_prorratas += 1 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
@@ -1506,7 +1506,7 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
-								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
 								$count_obj_esp_prorratas++;
 							}
 							
@@ -1932,9 +1932,9 @@
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_producto'], $pdf, 85));
 								$pdf->SetX($x + 110);
 								$pdf->Write(5, trimText($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_marca'], $pdf, 58));
-								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'], 2), $pdf, 50, 5, 'R');
 							
-								$total_suma_asegurada += (($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor']) * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
+								$total_suma_asegurada += $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_valor'] * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 								$count_obj_esp_prorratas += 1 * $obj_esp_prorrata['combinado_familiar_obj_esp_prorrata_cantidad'];
 							}							
 							else {
@@ -1942,7 +1942,7 @@
 								$pdf->SetFont('Arial', 'B', 8);
 								$pdf->Write(5, 'Total: '.$count_obj_esp_prorratas);
 								// $pdf->SetX($x + 165);
-								printText('$'.formatNumber($total_suma_asegurada, 2) . ' ($' . formatNumber(($row_Recordset2['combinado_familiar_prorrata_obj_esp']?$row_Recordset2['combinado_familiar_prorrata_obj_esp']:100) / 100 * $total_suma_asegurada, 2) . ')', $pdf, 50, 5, 'R');
+								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
 								$count_obj_esp_prorratas++;
 							}
 							

@@ -1281,8 +1281,6 @@ $(document).ready(function() {
 		$('.box-combinado_familiar_obj_esp_prorrata_valor').each(function(i,e){
 			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
 		});
-		var prorrata = Number($('#box-combinado_familiar_prorrata_obj_esp').val());
-		total = total * (prorrata > 0 ? prorrata : 100) / 100;
 		$("#obj_esp_prorrata_total").html(total);
 	}
 	calculateEquiposComputacionTotal = function() {
