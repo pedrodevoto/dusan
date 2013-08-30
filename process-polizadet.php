@@ -7,7 +7,7 @@
 	require_once('Connections/connection.php');
 	// Require DB functions
 	require_once('inc/db_functions.php');
-	
+	require_once('inc/process-foto.php');
 ?>
 <?php
 	// Obtain URL parameter
@@ -196,6 +196,14 @@
 			
 			// Close Recordset: Automotor
 			mysql_free_result($Recordset2);									
+		
+			// Foto micrograbado
+			if ($_FILES['box-micrograbado_foto']['error'] == 0) {
+				if ($micrograbado_foto = processFoto($_FILES['box-micrograbado_foto'], $poliza_id)){
+					$sql = sprintf("INSERT INTO automotor_micrograbado_foto (poliza_id, automotor_micrograbado_foto_url, automotor_micrograbado_foto_thumb_url, automotor_micrograbado_foto_width, automotor_micrograbado_foto_height) VALUES (%s, '%s', '%s', %s, %s)", $poliza_id, $micrograbado_foto['filename'], $micrograbado_foto['thumb_filename'], $micrograbado_foto['width'], $micrograbado_foto['height']);
+					mysql_query($sql, $connection) or die(mysql_error());
+				}
+			}
 		
 			// Break
 			break;

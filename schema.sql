@@ -162,6 +162,20 @@ CREATE TABLE `automotor_marca` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `automotor_micrograbado_foto`;
+CREATE TABLE `automotor_micrograbado_foto` (
+  `automotor_micrograbado_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_micrograbado_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_micrograbado_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_micrograbado_foto_width` int(11) NOT NULL,
+  `automotor_micrograbado_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_micrograbado_foto_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `automotor_micrograbado_foto_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `automotor_tipo`;
 CREATE TABLE `automotor_tipo` (
   `automotor_tipo_id` int(11) NOT NULL AUTO_INCREMENT,

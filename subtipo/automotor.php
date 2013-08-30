@@ -85,7 +85,7 @@
 	});	
 //--> 
 </script>
-<form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
+<form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
 	<fieldset class="ui-widget ui-widget-content ui-corner-all">    
 	    <legend class="ui-widget ui-widget-header ui-corner-all">Resumen</legend>      
 	    <p>
@@ -280,6 +280,12 @@
         <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
         <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:220px" />
     </p>
+    <p>
+        <label for="box-micrograbado_foto">Imagen</label>
+        <input type="file" name="box-micrograbado_foto" id="box-micrograbado_foto" class="ui-widget-content" style="width:220px" />
+    </p>
+	<div id="divBoxFotosMicrograbado" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
+	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>

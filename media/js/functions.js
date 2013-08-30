@@ -1092,7 +1092,8 @@ $(document).ready(function() {
 			case 'automotor':
 				// Populate DIVs
 				populateDiv_Fotos('poliza', id);
-			
+				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
+				
 				// AJAX file form
 				$("#fileForm").ajaxForm({
 					beforeSend: function() {
@@ -1598,7 +1599,8 @@ $(document).ready(function() {
 			}
 		});						
 	}
-	populateDiv_Fotos = function(section, id){
+	populateDiv_Fotos = function(section, id, divsuffix){
+		divsuffix = divsuffix || '';
 		$.getJSON("get-json-"+section+"_fotos.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				// Session expired
@@ -1617,18 +1619,18 @@ $(document).ready(function() {
 						
 						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.foto_thumb_url + '" /></a>';	
 						result += '<br />';
-						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\''+section+'_foto\', \''+object.foto_id+'\');$(\'#divShowFoto\').hide();populateDiv_Fotos(\''+section+'\', '+id+');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
+						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\''+section+'_foto\', \''+object.foto_id+'\');$(\'#divShowFoto'+divsuffix+'\').hide();populateDiv_Fotos(\''+section+'\', '+id+', \''+divsuffix+'\');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
 						result += '</td>';
 					});
 					// Close Table									
 					result += '</tr></tbody></table>';
 					// Populate DIV					
-					$('#divBoxFotos').html(result);
+					$('#divBoxFotos'+divsuffix).html(result);
 					if (j != '') {
-						$('#divBoxFotos').show();
+						$('#divBoxFotos'+divsuffix).show();
 					}
 					else {
-						$('#divBoxFotos').hide();
+						$('#divBoxFotos'+divsuffix).hide();
 					}
 				}
 			}
@@ -2447,42 +2449,52 @@ $(document).ready(function() {
 	processFormPolizaDet = function(id, fromcreate){													
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Set form parameters
-		var param = $("#frmBox").serializeArray();	
-		param.push({ name: "box-poliza_id", value: id });		
-		// Post				
-		$.post("process-polizadet.php", param, function(data){		
-			if (data=='Session expired') {
-				sessionExpire('box');
-			} else {
-				// Table standing redraw
-				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}								
-				// If no error ocurred
-				if ((data.toLowerCase().indexOf("error") === -1)) {
-					// If user comes from creation process
-					if (fromcreate === true) {
-						// Open next box
-						openBoxPolizaCert(id);						
+		
+		// AJAXize form
+		$("#frmBox").ajaxSubmit({
+			url: 'process-polizadet.php',
+			type: 'POST',
+			data: { 'box-poliza_id': id },
+			beforeSend: function() {
+		    	
+			},
+			uploadProgress: function(event, position, total, percentComplete) {
+		       
+			},
+			success: function(responseText, statusText, xhr) {
+				data = responseText;
+				if (data=='Session expired') {
+					sessionExpire('box');
+				} else {
+					// Table standing redraw
+					if (typeof oTable != 'undefined') {
+						oTable.fnStandingRedraw();									
+					}								
+					// If no error ocurred
+					if ((data.toLowerCase().indexOf("error") === -1)) {
+						// If user comes from creation process
+						if (fromcreate === true) {
+							// Open next box
+							openBoxPolizaCert(id);						
+						} else {
+							// Show message
+							showBoxConf(data, true, 'always', 3000, function(){						
+								// Populate form
+								populateFormBoxPolizaDet(id);
+								// Enable button
+								$('#btnBox').button("option", "disabled", false);						
+							});
+						}					
 					} else {
 						// Show message
-						showBoxConf(data, true, 'always', 3000, function(){						
-							// Populate form
-							populateFormBoxPolizaDet(id);
+						showBoxConf(data, true, 'always', 3000, function(){
 							// Enable button
 							$('#btnBox').button("option", "disabled", false);						
-						});
-					}					
-				} else {
-					// Show message
-					showBoxConf(data, true, 'always', 3000, function(){
-						// Enable button
-						$('#btnBox').button("option", "disabled", false);						
-					});					
-				}				
+						});					
+					}				
+				}
 			}
-		});		
+		});
 	}
 	processFormPolizaRen = function(){													
 		// Disable button
