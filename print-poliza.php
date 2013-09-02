@@ -61,6 +61,13 @@
 				die("Error: Detalle de Poliza no encontrado.");
 			}
 			
+			if (isset($_GET['endoso_id']) && $_GET['endoso_id']!='') {
+				$endoso_id = mysql_real_escape_string($_GET['endoso_id']);
+				$sql = sprintf("SELECT endoso_tipo_nombre, endoso_cuerpo, IF(endoso_tipo_grupo_id=1, 1, 0) AS anulacion FROM endoso JOIN endoso_tipo ON endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id WHERE endoso_id=%s", $endoso_id);
+				$res = mysql_query($sql) or die(mysql_die());
+				$endoso = mysql_fetch_assoc($res);
+			}
+			
 			// Compose Shared Texts
 			$txt_titular_c1 = array(
 				array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
@@ -287,7 +294,7 @@
 					$pdf = new FPDI('P','mm',array(215.9,279.4));
 					$pdf->SetAutoPageBreak(false);
 					$pdf->AddPage();
-					$pdf->setSourceFile('pdf/pe.pdf');
+					$pdf->setSourceFile('pdf/pe'.(isset($_GET['en'])&&$_GET['en']==1?'_dinamico':'').'.pdf');
 					$tplIdx = $pdf->importPage(1);
 					$pdf->useTemplate($tplIdx);
 					// Fecha y hora
@@ -302,17 +309,62 @@
 						printText($array['text'], $pdf, $array['maxwidth'], 5);
 					}
 					// Emitir
+					$size_emitir = 44;
 					if (isset($_GET['mc']) && $_GET['mc'] === "1") {
 						$txt_emitir = "MC";
-					} else {
-						if (isset($_GET['re']) && $_GET['re'] === "1") {
-							$txt_emitir = "RENOVACIÓN";
-						}
-						else {
-							$txt_emitir = "EMITIR";						
-						}
+					} 
+					elseif (isset($_GET['re']) && $_GET['re'] === "1") {
+						$txt_emitir = "RENOVACIÓN";
 					}
-					$pdf->SetFont('Arial', 'B', 44);
+					elseif (isset($_GET['en']) && $_GET['en']==1) {
+						$txt_emitir = "ENDOSO";
+						if($endoso['anulacion']) {
+							$size_emitir = 30;
+							$txt_emitir = "ENDOSO - ANULACION";
+						}
+					} 
+					else {
+						$txt_emitir = "EMITIR";						
+					}
+					
+					if (isset($_GET['en']) && $_GET['en']==1) {
+						// draw rects
+						$x = 11;
+						$y = 78.5;
+					
+						$pdf->SetFillColor(172,190,219);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 195.5, 6, 1, '1234', 'DF');
+						$pdf->SetXY(95, $y+0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'VEHICULOS');
+						
+						$y += 7.5;
+						$pdf->SetFillColor(200,207,231);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 195.5, 6, 1, '1234', 'DF');
+						
+						$pdf->RoundedRect($x + 132, $y + 10, 32, 5, 1, '1234', 'D');
+						
+						$y += 7.5;
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 195.5, 25, 1, '1234', 'D');
+					
+						$y += 26.5;
+						$pdf->RoundedRect($x - 0.5, $y, 195.5, 50, 1, '1234', 'D');
+						
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
+						$y += 7;
+						$pdf->SetXY($x, $y);
+						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
+						$pdf->Write(5, 'Cuerpo del endoso: '.$endoso_cuerpo);
+						
+					}
+					
+					$pdf->SetFont('Arial', 'B', $size_emitir);
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(50, 11.5);
 					printText($txt_emitir, $pdf, 120, 0);						
@@ -362,120 +414,142 @@
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(144, 98.5);
 					printText($txt_patente, $pdf, 28, 0);
-					// Inspecciones (General)
-					$txt_ins_gral = array(
-						array('maxwidth' => 34, 'text' => "Chapa: ".$row_Recordset2['chapa']),
-						array('maxwidth' => 34, 'text' => "Pintura: ".$row_Recordset2['pintura']),
-						array('maxwidth' => 34, 'text' => "Tipo de Pintura: ".$row_Recordset2['tipo_pintura']),
-						array('maxwidth' => 34, 'text' => "Tapizado: ".$row_Recordset2['tapizado']),
-						array('maxwidth' => 34, 'text' => "Combustible: ".$row_Recordset2['combustible']),
-						array('maxwidth' => 34, 'text' => "Color: ".$row_Recordset2['color'])
-					);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12.5, 129.5);
-					foreach ($txt_ins_gral as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					// Inspecciones (Equipamiento)
-					$txt_ins_eq_c1 = array(
-						array('maxwidth' => 25, 'text' => "Alarma: ".FormatCB($row_Recordset2['alarma'],'X')),
-						array('maxwidth' => 25, 'text' => "Corta Corriente: ".FormatCB($row_Recordset2['corta_corriente'],'X')),
-						array('maxwidth' => 25, 'text' => "Corta Nafta: ".FormatCB($row_Recordset2['corta_nafta'],'X')),
-						array('maxwidth' => 25, 'text' => "Traba Volante: ".FormatCB($row_Recordset2['traba_volante'],'X')),
-						array('maxwidth' => 25, 'text' => "Matafuego: ".FormatCB($row_Recordset2['matafuego'],'X')),
-						array('maxwidth' => 25, 'text' => "Tuercas: ".FormatCB($row_Recordset2['tuercas'],'X')),
-						array('maxwidth' => 25, 'text' => "Antena: ".FormatCB($row_Recordset2['antena'],'X')),
-						array('maxwidth' => 25, 'text' => "Estéreo: ".FormatCB($row_Recordset2['estereo'],'X'))
+					
+					if (isset($_GET['en']) && $_GET['en']==1) {
 						
-					);
-					$txt_ins_eq_c2 = array(
-						array('maxwidth' => 25, 'text' => "Parlantes: ".FormatCB($row_Recordset2['parlantes'],'X')),
-						array('maxwidth' => 25, 'text' => "Aire: ".FormatCB($row_Recordset2['aire'],'X')),
-						array('maxwidth' => 25, 'text' => "C. Eléctricos: ".FormatCB($row_Recordset2['cristales_electricos'],'X')),
-						array('maxwidth' => 25, 'text' => "Faros Adic: ".FormatCB($row_Recordset2['faros_adicionales'],'X')),
-						array('maxwidth' => 25, 'text' => "Cierre Sincro: ".FormatCB($row_Recordset2['cierre_sincro'],'X')),
-						array('maxwidth' => 25, 'text' => "Techo Corredizo: ".FormatCB($row_Recordset2['techo_corredizo'],'X')),
-						array('maxwidth' => 25, 'text' => "Dir. Hidráulica: ".FormatCB($row_Recordset2['direccion_hidraulica'],'X')),
-						array('maxwidth' => 25, 'text' => "Frenos ABS: ".FormatCB($row_Recordset2['frenos_abs'],'X'))
-					);
-					$txt_ins_eq_c3 = array(
-						array('maxwidth' => 25, 'text' => "Airbag: ".FormatCB($row_Recordset2['airbag'],'X')),
-						array('maxwidth' => 25, 'text' => "C. Tonalizados: ".FormatCB($row_Recordset2['cristales_tonalizados'],'X')),
-						array('maxwidth' => 25, 'text' => "Equipo Rastreo: ".FormatCB($row_Recordset2['equipo_rastreo_id']?1:0,'X')),
-						array('maxwidth' => 25, 'text' => "Micro Grabado: ".FormatCB($row_Recordset2['micro_grabado'],'X')),
-						array('maxwidth' => 25, 'text' => "GPS: ".FormatCB($row_Recordset2['gps'],'X'))												
-					);											
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(60.5, 133.7);
-					foreach ($txt_ins_eq_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.4);
+						
+						
+						$pdf->SetFillColor(229,233,253);
+						$pdf->SetDrawColor(138,162,234);
+						$pdf->SetLineWidth(0.6);
+						$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
+						$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
+						$pdf->SetFont('Arial','B',10);
+						$pdf->SetXY(65,242);
+						$pdf->Write(5, 'Forma de Pago');
+						$pdf->SetXY(168,242);
+						$pdf->Write(5, 'Importes');
+					
+						$pdf->SetLineWidth(0.4);
+						$pdf->SetDrawColor(0,0,0);
+						$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
 					}
-					$pdf->SetXY(91, 133.7);
-					foreach ($txt_ins_eq_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.4);
+					else {
+						// Inspecciones (General)
+						$txt_ins_gral = array(
+							array('maxwidth' => 34, 'text' => "Chapa: ".$row_Recordset2['chapa']),
+							array('maxwidth' => 34, 'text' => "Pintura: ".$row_Recordset2['pintura']),
+							array('maxwidth' => 34, 'text' => "Tipo de Pintura: ".$row_Recordset2['tipo_pintura']),
+							array('maxwidth' => 34, 'text' => "Tapizado: ".$row_Recordset2['tapizado']),
+							array('maxwidth' => 34, 'text' => "Combustible: ".$row_Recordset2['combustible']),
+							array('maxwidth' => 34, 'text' => "Color: ".$row_Recordset2['color'])
+						);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12.5, 129.5);
+						foreach ($txt_ins_gral as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						// Inspecciones (Equipamiento)
+						$txt_ins_eq_c1 = array(
+							array('maxwidth' => 25, 'text' => "Alarma: ".FormatCB($row_Recordset2['alarma'],'X')),
+							array('maxwidth' => 25, 'text' => "Corta Corriente: ".FormatCB($row_Recordset2['corta_corriente'],'X')),
+							array('maxwidth' => 25, 'text' => "Corta Nafta: ".FormatCB($row_Recordset2['corta_nafta'],'X')),
+							array('maxwidth' => 25, 'text' => "Traba Volante: ".FormatCB($row_Recordset2['traba_volante'],'X')),
+							array('maxwidth' => 25, 'text' => "Matafuego: ".FormatCB($row_Recordset2['matafuego'],'X')),
+							array('maxwidth' => 25, 'text' => "Tuercas: ".FormatCB($row_Recordset2['tuercas'],'X')),
+							array('maxwidth' => 25, 'text' => "Antena: ".FormatCB($row_Recordset2['antena'],'X')),
+							array('maxwidth' => 25, 'text' => "Estéreo: ".FormatCB($row_Recordset2['estereo'],'X'))
+						
+						);
+						$txt_ins_eq_c2 = array(
+							array('maxwidth' => 25, 'text' => "Parlantes: ".FormatCB($row_Recordset2['parlantes'],'X')),
+							array('maxwidth' => 25, 'text' => "Aire: ".FormatCB($row_Recordset2['aire'],'X')),
+							array('maxwidth' => 25, 'text' => "C. Eléctricos: ".FormatCB($row_Recordset2['cristales_electricos'],'X')),
+							array('maxwidth' => 25, 'text' => "Faros Adic: ".FormatCB($row_Recordset2['faros_adicionales'],'X')),
+							array('maxwidth' => 25, 'text' => "Cierre Sincro: ".FormatCB($row_Recordset2['cierre_sincro'],'X')),
+							array('maxwidth' => 25, 'text' => "Techo Corredizo: ".FormatCB($row_Recordset2['techo_corredizo'],'X')),
+							array('maxwidth' => 25, 'text' => "Dir. Hidráulica: ".FormatCB($row_Recordset2['direccion_hidraulica'],'X')),
+							array('maxwidth' => 25, 'text' => "Frenos ABS: ".FormatCB($row_Recordset2['frenos_abs'],'X'))
+						);
+						$txt_ins_eq_c3 = array(
+							array('maxwidth' => 25, 'text' => "Airbag: ".FormatCB($row_Recordset2['airbag'],'X')),
+							array('maxwidth' => 25, 'text' => "C. Tonalizados: ".FormatCB($row_Recordset2['cristales_tonalizados'],'X')),
+							array('maxwidth' => 25, 'text' => "Equipo Rastreo: ".FormatCB($row_Recordset2['equipo_rastreo_id']?1:0,'X')),
+							array('maxwidth' => 25, 'text' => "Micro Grabado: ".FormatCB($row_Recordset2['micro_grabado'],'X')),
+							array('maxwidth' => 25, 'text' => "GPS: ".FormatCB($row_Recordset2['gps'],'X'))												
+						);											
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(60.5, 133.7);
+						foreach ($txt_ins_eq_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.4);
+						}
+						$pdf->SetXY(91, 133.7);
+						foreach ($txt_ins_eq_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.4);
+						}
+						$pdf->SetXY(121.5, 133.7);
+						foreach ($txt_ins_eq_c3 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.4);
+						}
+						// Inspecciones (Cubiertas)
+						$txt_ins_cub = array(
+							array('maxwidth' => 34, 'text' => "CUBIERTAS"),
+							array('maxwidth' => 34, 'text' => "Medida: ".$row_Recordset2['cubiertas_medidas']),
+							array('maxwidth' => 34, 'text' => "Marca: ".$row_Recordset2['cubiertas_marca']),
+							array('maxwidth' => 34, 'text' => "Desgaste: "),
+							array('maxwidth' => 34, 'text' => "Del. Izq: ".FormatNumber($row_Recordset2['cubiertas_desgaste_di'],0)." %"),
+							array('maxwidth' => 34, 'text' => "Del. Der: ".FormatNumber($row_Recordset2['cubiertas_desgaste_dd'],0)." %"),
+							array('maxwidth' => 34, 'text' => "Tra. Izq: ".FormatNumber($row_Recordset2['cubiertas_desgaste_ti'],0)." %"),
+							array('maxwidth' => 34, 'text' => "Tra. Der: ".FormatNumber($row_Recordset2['cubiertas_desgaste_td'],0)." %"),
+							array('maxwidth' => 34, 'text' => "1E Izq: ".(!is_null($row_Recordset2['cubiertas_desgaste_1ei']) ? FormatNumber($row_Recordset2['cubiertas_desgaste_1ei'],0)." %" : "-")),
+							array('maxwidth' => 34, 'text' => "1E Der: ".(!is_null($row_Recordset2['cubiertas_desgaste_1ed']) ? FormatNumber($row_Recordset2['cubiertas_desgaste_1ed'],0)." %" : "-")),						
+							array('maxwidth' => 34, 'text' => "Auxilio: ".FormatNumber($row_Recordset2['cubiertas_desgaste_auxilio'],0)." %")						
+						);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(151, 129.5);
+						foreach ($txt_ins_cub as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 2.8);
+						}																									
+						// GNC
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 181.5);
+						foreach ($txt_gnc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						$pdf->SetXY(75, 181.5);
+						foreach ($txt_gnc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						$pdf->SetXY(145, 181.5);
+						foreach ($txt_gnc_c3 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						// Sumas Seguro
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 199);
+						foreach ($txt_sumas_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(11, 199);
+						foreach ($txt_sumas_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Cobertura
+						$pdf->SetFont('Arial', 'B', 9);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12, 223);
+						printText($txt_cobertura, $pdf, 190, 0);
+						// Observaciones
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12, 237);
+						printText($txt_observaciones, $pdf, 190, 0);				
 					}
-					$pdf->SetXY(121.5, 133.7);
-					foreach ($txt_ins_eq_c3 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.4);
-					}
-					// Inspecciones (Cubiertas)
-					$txt_ins_cub = array(
-						array('maxwidth' => 34, 'text' => "CUBIERTAS"),
-						array('maxwidth' => 34, 'text' => "Medida: ".$row_Recordset2['cubiertas_medidas']),
-						array('maxwidth' => 34, 'text' => "Marca: ".$row_Recordset2['cubiertas_marca']),
-						array('maxwidth' => 34, 'text' => "Desgaste: "),
-						array('maxwidth' => 34, 'text' => "Del. Izq: ".FormatNumber($row_Recordset2['cubiertas_desgaste_di'],0)." %"),
-						array('maxwidth' => 34, 'text' => "Del. Der: ".FormatNumber($row_Recordset2['cubiertas_desgaste_dd'],0)." %"),
-						array('maxwidth' => 34, 'text' => "Tra. Izq: ".FormatNumber($row_Recordset2['cubiertas_desgaste_ti'],0)." %"),
-						array('maxwidth' => 34, 'text' => "Tra. Der: ".FormatNumber($row_Recordset2['cubiertas_desgaste_td'],0)." %"),
-						array('maxwidth' => 34, 'text' => "1E Izq: ".(!is_null($row_Recordset2['cubiertas_desgaste_1ei']) ? FormatNumber($row_Recordset2['cubiertas_desgaste_1ei'],0)." %" : "-")),
-						array('maxwidth' => 34, 'text' => "1E Der: ".(!is_null($row_Recordset2['cubiertas_desgaste_1ed']) ? FormatNumber($row_Recordset2['cubiertas_desgaste_1ed'],0)." %" : "-")),						
-						array('maxwidth' => 34, 'text' => "Auxilio: ".FormatNumber($row_Recordset2['cubiertas_desgaste_auxilio'],0)." %")						
-					);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(151, 129.5);
-					foreach ($txt_ins_cub as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 2.8);
-					}																									
-					// GNC
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 181.5);
-					foreach ($txt_gnc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					$pdf->SetXY(75, 181.5);
-					foreach ($txt_gnc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					$pdf->SetXY(145, 181.5);
-					foreach ($txt_gnc_c3 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					// Sumas Seguro
-					$pdf->SetFont('Arial', '', 9);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 199);
-					foreach ($txt_sumas_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(11, 199);
-					foreach ($txt_sumas_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Cobertura
-					$pdf->SetFont('Arial', 'B', 9);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12, 223);
-					printText($txt_cobertura, $pdf, 190, 0);
-					// Observaciones
-					$pdf->SetFont('Arial', '', 9);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12, 237);
-					printText($txt_observaciones, $pdf, 190, 0);				
 					// Forma de Pago					
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								

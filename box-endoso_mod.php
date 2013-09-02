@@ -58,6 +58,7 @@
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
 			<input type="hidden" name="box-endoso_id" id="box-endoso_id" value="" />
+			<input type="hidden" name="box-poliza_id" id="box-poliza_id" value="" />
 			<input type="button" name="btnBox" id="btnBox" value="Guardar" /> <input type="button" name="btnBoxExport" id="btnBoxExport" value="Exportar" />
         </p>
         <!-- Nota -->

@@ -3968,7 +3968,8 @@ $(document).ready(function() {
 						}
 					});
 					$("#btnBoxExport").click(function() {
-						alert('Export!');
+						var poliza_id = $('#box-poliza_id').val();
+						window.open('print-poliza.php?type=pe&en=1&id='+poliza_id+'&endoso_id='+id);
 					})
 					// Enable form							
 					formDisable('frmBox','ui',false);
