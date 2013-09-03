@@ -812,17 +812,19 @@
 								
 								$y += 5;
 								
-								$pdf->SetXY($x, $y);
-								$pdf->SetFont('Arial', 'I', 7);
-								$pdf->Write(5, trimText($asegurado['accidentes_asegurado_beneficiario_nombre'], $pdf, 48));
-								$pdf->SetX($x + 48);
-								$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_documento']);
-								$pdf->SetX($x + 70);
-								$pdf->Write(5, '(Beneficiario)');
-								$pdf->SetX($x + 125);
-								$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_tomador']);
-								$count_asegurados++;
-								$count_asegurados_per_page++;
+								if ($asegurado['accidentes_asegurado_legal']=='No') {
+									$pdf->SetXY($x, $y);
+									$pdf->SetFont('Arial', 'I', 7);
+									$pdf->Write(5, trimText($asegurado['accidentes_asegurado_beneficiario_nombre'], $pdf, 48));
+									$pdf->SetX($x + 48);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_documento']);
+									$pdf->SetX($x + 70);
+									$pdf->Write(5, '(Beneficiario)');
+									$pdf->SetX($x + 125);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_tomador']);
+									$count_asegurados++;
+									$count_asegurados_per_page++;
+								}
 							}
 							else {
 								$pdf->SetXY($x, $y);
@@ -1401,11 +1403,11 @@
 
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['combinado_familiar_domicilio_calle'], $pdf, 60).' '.$row_Recordset2['combinado_familiar_domicilio_nro']);
-					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['combinado_familiar_domicilio_calle'], $pdf, 70).' '.$row_Recordset2['combinado_familiar_domicilio_nro']);
+					$pdf->SetX($x + 65 + 30);
 					$pdf->Write(5, 'Piso/Dpto: '.$row_Recordset2['combinado_familiar_domicilio_piso'].' '.$row_Recordset2['combinado_familiar_domicilio_dpto']);
 					
-					$pdf->SetX($x + 95);
+					$pdf->SetX($x + 95 + 30);
 					$pdf->Write(5, 'Localidad: '.trimText($row_Recordset2['combinado_familiar_domicilio_localidad'], $pdf, 60));
 					$pdf->SetX($x + 180);
 					$pdf->Write(5, 'CP: '.trimText($row_Recordset2['combinado_familiar_domicilio_cp'], $pdf, 60));
@@ -1669,8 +1671,8 @@
 					}
 					if ($y > 260) {
 						newPage($pdf, false);
+						$y = 48;
 					}
-					$y = 48;
 					$pdf->SetFillColor(221,227,237);
 					$pdf->SetLineWidth(0.4);
 					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
@@ -1837,11 +1839,11 @@
 
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['combinado_familiar_domicilio_calle'], $pdf, 60).' '.$row_Recordset2['combinado_familiar_domicilio_nro']);
-					$pdf->SetX($x + 65);
+					$pdf->Write(5, 'Direccion: '.trimText($row_Recordset2['combinado_familiar_domicilio_calle'], $pdf, 70).' '.$row_Recordset2['combinado_familiar_domicilio_nro']);
+					$pdf->SetX($x + 65 + 30);
 					$pdf->Write(5, 'Piso/Dpto: '.$row_Recordset2['combinado_familiar_domicilio_piso'].' '.$row_Recordset2['combinado_familiar_domicilio_dpto']);
 					
-					$pdf->SetX($x + 95);
+					$pdf->SetX($x + 95 + 30);
 					$pdf->Write(5, 'Localidad: '.trimText($row_Recordset2['combinado_familiar_domicilio_localidad'], $pdf, 60));
 					$pdf->SetX($x + 180);
 					$pdf->Write(5, 'CP: '.trimText($row_Recordset2['combinado_familiar_domicilio_cp'], $pdf, 60));
@@ -2106,8 +2108,8 @@
 					
 					if ($y > 260) {
 						newPage($pdf, false);
+						$y = 48;
 					}
-					$y = 48;
 					$pdf->SetFillColor(221,227,237);
 					$pdf->SetLineWidth(0.4);
 					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
