@@ -30,11 +30,11 @@
 	while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)) {
 
 		// Determine correct state
-		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff']);
+		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff'], $row_Recordset1['poliza_estado_id']);
 
 		// If state is valid and has changed
 		if (!is_null($estado) && ($estado !== $row_Recordset1['poliza_estado_id'])) {
-		
+			
 			// Update
 			$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s WHERE poliza.poliza_id=%s LIMIT 1",
 							GetSQLValueString($estado, "int"),

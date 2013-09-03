@@ -243,9 +243,17 @@
 		/****************************************
 		 * UPDATE ORIGINAL
 		 ****************************************/
-		 
+		
+		// determine state
+		$sql = sprintf("SELECT DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza WHERE poliza_id = %s", $poliza_id);
+		$res = mysql_query($sql);
+		list($startdiff, $enddiff) = mysql_fetch_array($res);
+		$state = determineState($startdiff, $enddiff);
+		$new_state = $state==3?7:5; // si la poliza original estaba vigente, pasa a estar VIGENTE/RENOVADA. si no, directamente pasa a RENOVADA
+			
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=5 WHERE poliza.poliza_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s WHERE poliza.poliza_id=%s LIMIT 1",
+						$new_state,
 						$poliza_id);			
 		$Result1 = mysql_query($updateSQL, $connection) or die(mysql_die()); 
 

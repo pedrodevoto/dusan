@@ -67,18 +67,18 @@ class Encryption
 }
 
 // Processing
-function determineState($startdiff, $enddiff) {
+function determineState($startdiff, $enddiff, $original_state = NULL) {
 	$estado = NULL;
 	if ($startdiff > $enddiff) {
 		if ($startdiff < 0) {
 			$estado = 2; // PENDIENTE
 		} elseif ($enddiff > 0) {
-			$estado = 6; // FINALIZADA
+			$estado = $original_state==7?5:6; // FINALIZADA
 		} else {
 			if ($enddiff >= -30) {
-				$estado = 4; // A RENOVAR
+				$estado = $original_state==7?7:4; // A RENOVAR
 			} else {
-				$estado = 3; // VIGENTE
+				$estado = $original_state==7?7:3; // VIGENTE
 			}
 		}
 	}
