@@ -231,9 +231,9 @@
 		case 'combinado_familiar':
 			// ---------------------------------- COMBINADO FAMILIAR ---------------------------------- //
 
-			$upsertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_country, combinado_familiar_lote, combinado_familiar_valor_tasado, combinado_familiar_inc_edif, combinado_familiar_rc_inc,  combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag) 
-						          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s, %20$s, %21$s, %22$s, %23$s, %24$s, %25$s, %26$s, %27$s, %28$s, %29$s, %30$s) 
-							  ON DUPLICATE KEY UPDATE combinado_familiar_domicilio_calle=UPPER(TRIM(%2$s)), combinado_familiar_domicilio_nro=UPPER(TRIM(%3$s)), combinado_familiar_domicilio_piso=UPPER(TRIM(%4$s)), combinado_familiar_domicilio_dpto=UPPER(TRIM(%5$s)), combinado_familiar_domicilio_localidad=UPPER(TRIM(%6$s)), combinado_familiar_domicilio_cp=UPPER(TRIM(%7$s)), combinado_familiar_country=UPPER(TRIM(%8$s)), combinado_familiar_lote=UPPER(TRIM(%9$s)), combinado_familiar_valor_tasado=%10$s, combinado_familiar_inc_edif=%11$s, combinado_familiar_rc_inc=%12$s, combinado_familiar_cristales=%13$s, combinado_familiar_responsabilidad_civil=%14$s, combinado_familiar_danios_agua=%15$s, combinado_familiar_jugadores_golf=%16$s, combinado_familiar_inc_edif_flag=%17$s, combinado_familiar_rc_inc_flag=%18$s, combinado_familiar_tv_aud_vid_flag=%19$s, combinado_familiar_obj_esp_prorrata_flag=%20$s, combinado_familiar_equipos_computacion_flag=%21$s, combinado_familiar_cristales_flag=%22$s, combinado_familiar_responsabilidad_civil_flag=%23$s, combinado_familiar_danios_agua_flag=%24$s, combinado_familiar_jugadores_golf_flag=%25$s, combinado_familiar_film_foto_flag=%26$s, combinado_familiar_inc_mob=%27$s, combinado_familiar_inc_mob_flag=%28$s, combinado_familiar_ef_personales=%29$s, combinado_familiar_ef_personales_flag=%30$s, combinado_familiar_id=LAST_INSERT_ID(combinado_familiar_id)',
+			$upsertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_country, combinado_familiar_lote, combinado_familiar_valor_tasado, combinado_familiar_inc_edif, combinado_familiar_rc_inc,  combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag, combinado_familiar_inc_edif_rep) 
+						          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s, %20$s, %21$s, %22$s, %23$s, %24$s, %25$s, %26$s, %27$s, %28$s, %29$s, %30$s, %31$s) 
+							  ON DUPLICATE KEY UPDATE combinado_familiar_domicilio_calle=UPPER(TRIM(%2$s)), combinado_familiar_domicilio_nro=UPPER(TRIM(%3$s)), combinado_familiar_domicilio_piso=UPPER(TRIM(%4$s)), combinado_familiar_domicilio_dpto=UPPER(TRIM(%5$s)), combinado_familiar_domicilio_localidad=UPPER(TRIM(%6$s)), combinado_familiar_domicilio_cp=UPPER(TRIM(%7$s)), combinado_familiar_country=UPPER(TRIM(%8$s)), combinado_familiar_lote=UPPER(TRIM(%9$s)), combinado_familiar_valor_tasado=%10$s, combinado_familiar_inc_edif=%11$s, combinado_familiar_rc_inc=%12$s, combinado_familiar_cristales=%13$s, combinado_familiar_responsabilidad_civil=%14$s, combinado_familiar_danios_agua=%15$s, combinado_familiar_jugadores_golf=%16$s, combinado_familiar_inc_edif_flag=%17$s, combinado_familiar_rc_inc_flag=%18$s, combinado_familiar_tv_aud_vid_flag=%19$s, combinado_familiar_obj_esp_prorrata_flag=%20$s, combinado_familiar_equipos_computacion_flag=%21$s, combinado_familiar_cristales_flag=%22$s, combinado_familiar_responsabilidad_civil_flag=%23$s, combinado_familiar_danios_agua_flag=%24$s, combinado_familiar_jugadores_golf_flag=%25$s, combinado_familiar_film_foto_flag=%26$s, combinado_familiar_inc_mob=%27$s, combinado_familiar_inc_mob_flag=%28$s, combinado_familiar_ef_personales=%29$s, combinado_familiar_ef_personales_flag=%30$s, combinado_familiar_inc_edif_rep=%31$s, combinado_familiar_id=LAST_INSERT_ID(combinado_familiar_id)',
 									$poliza_id,												
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_calle'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_domicilio_nro'], 'text'),
@@ -263,9 +263,10 @@
 									GetSQLValueString($_POST['box-combinado_familiar_inc_mob'], 'double'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_inc_mob_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString($_POST['box-combinado_familiar_ef_personales'], 'double'),
-									GetSQLValueString(isset($_POST['box-combinado_familiar_ef_personales_flag']) ? 'true' : '', 'defined','1','0'));
+									GetSQLValueString(isset($_POST['box-combinado_familiar_ef_personales_flag']) ? 'true' : '', 'defined','1','0'),
+									GetSQLValueString(isset($_POST['box-combinado_familiar_inc_edif_rep']) ? 'true' : '', 'defined','1','0'));
 
-			$Result1 = mysql_query($upsertSQL, $connection);				
+			$Result1 = mysql_query($upsertSQL, $connection) or die(mysql_error());				
 			$combinado_familiar_id = mysql_insert_id();
 			
 			
@@ -276,11 +277,12 @@
 				mysql_query($deleteSQL);
 				if (isset($_POST['box-combinado_familiar_'.$object])) {
 					foreach ($_POST['box-combinado_familiar_'.$object] as $item) {
-						$insertSQL = sprintf('INSERT INTO combinado_familiar_%6$s (combinado_familiar_id, combinado_familiar_%6$s_cantidad, combinado_familiar_%6$s_producto, combinado_familiar_%6$s_marca, combinado_familiar_%6$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), %5$s) ',
+						$insertSQL = sprintf('INSERT INTO combinado_familiar_%7$s (combinado_familiar_id, combinado_familiar_%7$s_cantidad, combinado_familiar_%7$s_producto, combinado_familiar_%7$s_marca, combinado_familiar_%7$s_serial, combinado_familiar_%7$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), %6$s)',
 											$combinado_familiar_id,												
 											GetSQLValueString($item['cantidad'], 'int'),
 											GetSQLValueString($item['producto'], 'text'),
 											GetSQLValueString($item['marca'], 'text'),
+											GetSQLValueString($item['serial'], 'text'),
 											GetSQLValueString($item['valor'], 'double'),
 											$object);
 						mysql_query($insertSQL);					
@@ -293,9 +295,9 @@
 		case 'incendio_edificio':
 			// ---------------------------------- INCENDIO EDIFICIO ---------------------------------- //
 			
-			$upsertSQL = sprintf('INSERT INTO incendio_edificio (poliza_id, incendio_edificio_domicilio_calle, incendio_edificio_domicilio_nro, incendio_edificio_domicilio_piso, incendio_edificio_domicilio_dpto, incendio_edificio_domicilio_localidad, incendio_edificio_domicilio_cp, incendio_edificio_country, incendio_edificio_lote, incendio_edificio_valor_tasado, incendio_edificio_suma_asegurada, incendio_edificio_prorrata) 
-				VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s)
-				ON DUPLICATE KEY UPDATE incendio_edificio_domicilio_calle=UPPER(TRIM(%2$s)), incendio_edificio_domicilio_nro=UPPER(TRIM(%3$s)), incendio_edificio_domicilio_piso=UPPER(TRIM(%4$s)), incendio_edificio_domicilio_dpto=UPPER(TRIM(%5$s)), incendio_edificio_domicilio_localidad=UPPER(TRIM(%6$s)), incendio_edificio_domicilio_cp=UPPER(TRIM(%7$s)), incendio_edificio_country=UPPER(TRIM(%8$s)), incendio_edificio_lote=UPPER(TRIM(%9$s)), incendio_edificio_valor_tasado=%10$s, incendio_edificio_suma_asegurada=%11$s, incendio_edificio_prorrata=%12$s, incendio_edificio_id=LAST_INSERT_ID(incendio_edificio_id)',
+			$upsertSQL = sprintf('INSERT INTO incendio_edificio (poliza_id, incendio_edificio_domicilio_calle, incendio_edificio_domicilio_nro, incendio_edificio_domicilio_piso, incendio_edificio_domicilio_dpto, incendio_edificio_domicilio_localidad, incendio_edificio_domicilio_cp, incendio_edificio_country, incendio_edificio_lote, incendio_edificio_valor_tasado, incendio_edificio_inc_edif, incendio_edificio_inc_edif_rep, incendio_edificio_inc_mob, incendio_edificio_rc_inc) 
+				VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), UPPER(TRIM(%9$s)), %10$s, %11$s, %12$s, %13$s, %14$s)
+				ON DUPLICATE KEY UPDATE incendio_edificio_domicilio_calle=UPPER(TRIM(%2$s)), incendio_edificio_domicilio_nro=UPPER(TRIM(%3$s)), incendio_edificio_domicilio_piso=UPPER(TRIM(%4$s)), incendio_edificio_domicilio_dpto=UPPER(TRIM(%5$s)), incendio_edificio_domicilio_localidad=UPPER(TRIM(%6$s)), incendio_edificio_domicilio_cp=UPPER(TRIM(%7$s)), incendio_edificio_country=UPPER(TRIM(%8$s)), incendio_edificio_lote=UPPER(TRIM(%9$s)), incendio_edificio_valor_tasado=%10$s, incendio_edificio_inc_edif=%11$s, incendio_edificio_inc_edif_rep=%12$s, incendio_edificio_inc_mob=%13$s, incendio_edificio_rc_inc=%14$s, incendio_edificio_id=LAST_INSERT_ID(incendio_edificio_id)',
 				$poliza_id,												
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_calle'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_domicilio_nro'], 'text'),
@@ -306,8 +308,10 @@
 				GetSQLValueString($_POST['box-incendio_edificio_country'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_lote'], 'text'),
 				GetSQLValueString($_POST['box-incendio_edificio_valor_tasado'], 'double'),
-				GetSQLValueString($_POST['box-incendio_edificio_suma_asegurada'], 'double'),
-				GetSQLValueString($_POST['box-incendio_edificio_prorrata'], 'double'));
+				GetSQLValueString($_POST['box-incendio_edificio_inc_edif'], 'double'),
+				GetSQLValueString(isset($_POST['box-incendio_edificio_inc_edif_rep']) ? 'true' : '', 'defined','1','0'),
+				GetSQLValueString($_POST['box-incendio_edificio_inc_mob'], 'double'),
+				GetSQLValueString($_POST['box-incendio_edificio_rc_inc'], 'double'));
 				$Result1 = mysql_query($upsertSQL, $connection);				
 				$incendio_edificio_id = mysql_insert_id();
 				

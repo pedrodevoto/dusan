@@ -27,11 +27,7 @@
             <p>
                 <label for="box-subtipo_poliza_nombre">Sección ^</label>
                 <input type="text" name="box-subtipo_poliza_nombre" id="box-subtipo_poliza_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
-            </p>
-            <p>
-	            <label for="box-poliza_anulada">Anulada *</label>
-				<input type="checkbox" name="box-poliza_anulada" id="box-poliza_anulada" value="1" />            
-            </p>                                                             
+            </p>                                                  
             <p>
                 <label for="box-poliza_numero">Nº de Poliza</label>
                 <input type="text" name="box-poliza_numero" id="box-poliza_numero" maxlength="20" class="ui-widget-content" style="width:220px" />

@@ -37,13 +37,24 @@
 			<label for="box-incendio_edificio_valor_tasado" style="width:200px">Valor tasado de la propiedad</label>
 			<input type="number" name="box-incendio_edificio_valor_tasado" id="box-incendio_edificio_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
 		</p>
+	</fieldset>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Incendio Edificio Prorrata</legend> 
 		<p>
-			<label for="box-incendio_edificio_suma_asegurada" style="width:200px">Suma asegurada *</label>
-			<input type="number" name="box-incendio_edificio_suma_asegurada" id="box-incendio_edificio_suma_asegurada" maxlength="255" class="ui-widget-content required" style="width:200px" />
+			<label for="box-incendio_edificio_inc_edif">Valor *</label><input type="number" step="any" min="50000" max="5000000" name="box-incendio_edificio_inc_edif" id="box-incendio_edificio_inc_edif" class="ui-widget-content required" style="width:100px" /> <input type="checkbox" name="box-incendio_edificio_inc_edif_rep" id="box-incendio_edificio_inc_edif_rep">Con cláusula de Reposición a Nuevo</input>
 		</p>
+	</fieldset>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Incendio Mobiliario Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-incendio_edificio_prorrata" style="width:200px">Prorrata</label>
-			<input type="number" min="0" max="100" name="box-incendio_edificio_prorrata" id="box-incendio_edificio_prorrata" maxlength="10" class="ui-widget-content" style="width:50px" /> %
+			<label for="box-incendio_edificio_inc_mob">Valor</label><input type="number" step="any" min="10000" max="1000000" name="box-incendio_edificio_inc_mob" id="box-incendio_edificio_inc_mob" class="ui-widget-content" style="width:100px" />
 		</p>
+	</fieldset>
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto</legend> 
+		<p>
+			<label for="box-incendio_edificio_rc_inc">Valor</label><input type="number" step="any" min="1000" max="250000" name="box-incendio_edificio_rc_inc" id="box-incendio_edificio_rc_inc" class="ui-widget-content" style="width:100px" />
+		</p>
+
 	</fieldset>
 </form>

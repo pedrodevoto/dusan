@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}	
-	$query_Recordset1 = sprintf("SELECT combinado_familiar_obj_esp_prorrata_cantidad, combinado_familiar_obj_esp_prorrata_producto, combinado_familiar_obj_esp_prorrata_marca, combinado_familiar_obj_esp_prorrata_valor FROM combinado_familiar_obj_esp_prorrata JOIN combinado_familiar ON combinado_familiar.combinado_familiar_id = combinado_familiar_obj_esp_prorrata.combinado_familiar_id WHERE poliza_id=%s", GetSQLValueString($colname_Recordset1, "int"));
+	$query_Recordset1 = sprintf("SELECT combinado_familiar_obj_esp_prorrata_cantidad, combinado_familiar_obj_esp_prorrata_producto, combinado_familiar_obj_esp_prorrata_marca, combinado_familiar_obj_esp_prorrata_serial, combinado_familiar_obj_esp_prorrata_valor FROM combinado_familiar_obj_esp_prorrata JOIN combinado_familiar ON combinado_familiar.combinado_familiar_id = combinado_familiar_obj_esp_prorrata.combinado_familiar_id WHERE poliza_id=%s", GetSQLValueString($colname_Recordset1, "int"));
 			
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());

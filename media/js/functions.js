@@ -1239,12 +1239,12 @@ $(document).ready(function() {
 		})
 	}
 	
-	addTvAudVidItem = function(cantidad, producto, marca, valor) {
+	addTvAudVidItem = function(cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#tv_aud_vid p').each(function(i,e){
 			j = Math.max(Number($(e).attr('id')), j) + 1;
 		});
-		var tv_aud_vid = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][cantidad]" class="box-combinado_familiar_tv_aud_vid_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][valor]" class="box-combinado_familiar_tv_aud_vid_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_tv_aud_vid_remove" value="-" /></p>';
+		var tv_aud_vid = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][cantidad]" class="box-combinado_familiar_tv_aud_vid_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][serial]" placeholder="Nro Serie" value="'+(serial?serial:'')+'" /> <input type="number" name="box-combinado_familiar_tv_aud_vid['+j+'][valor]" class="box-combinado_familiar_tv_aud_vid_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_tv_aud_vid_remove" value="-" /></p>';
 		$('#tv_aud_vid').append(tv_aud_vid);
 		$('#tv_aud_vid p#'+j+' :nth-child(1)').focus();
 		$('.box-combinado_familiar_tv_aud_vid_remove').button().click(function() {
@@ -1253,12 +1253,12 @@ $(document).ready(function() {
 		})
 		$('.box-combinado_familiar_tv_aud_vid_valor, .box-combinado_familiar_tv_aud_vid_cant').change(function() {calculateTvAudVidTotal()});
 	}
-	addObjEspProrrataItem = function(cantidad, producto, marca, valor) {
+	addObjEspProrrataItem = function(cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#obj_esp_prorrata p').each(function(i,e){
 			j = Math.max(Number($(e).attr('id')), j) + 1;
 		});
-		var obj_esp_prorrata = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][cantidad]" class="combinado_familiar_obj_esp_prorrata_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_obj_esp_prorrata['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_obj_esp_prorrata['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][valor]" class="box-combinado_familiar_obj_esp_prorrata_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_obj_esp_prorrata_remove" value="-" /></p>';
+		var obj_esp_prorrata = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][cantidad]" class="combinado_familiar_obj_esp_prorrata_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_obj_esp_prorrata['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="text" name="box-combinado_familiar_tv_aud_vid['+j+'][serial]" placeholder="Nro Serie" value="'+(serial?serial:'')+'" /> <input type="number" name="box-combinado_familiar_obj_esp_prorrata['+j+'][valor]" class="box-combinado_familiar_obj_esp_prorrata_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_obj_esp_prorrata_remove" value="-" /></p>';
 		$('#obj_esp_prorrata').append(obj_esp_prorrata);
 		$('#obj_esp_prorrata p#'+j+' :nth-child(1)').focus();
 		$('.box-combinado_familiar_obj_esp_prorrata_remove').button().click(function() {
@@ -1267,12 +1267,12 @@ $(document).ready(function() {
 		})
 		$('.box-combinado_familiar_obj_esp_prorrata_valor, .combinado_familiar_obj_esp_prorrata_cant').change(function() {calculateObjEspProrrataTotal()});
 	}
-	addEquiposComputacionItem = function(cantidad, producto, marca, valor) {
+	addEquiposComputacionItem = function(cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#equipos_computacion p').each(function(i,e){
 			j = Math.max(Number($(e).attr('id')), j) + 1;
 		});
-		var equipos_computacion = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][cantidad]" class="box-combinado_familiar_equipos_computacion_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][valor]" class="box-combinado_familiar_equipos_computacion_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_equipos_computacion_remove" value="-" /></p>';
+		var equipos_computacion = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][cantidad]" class="box-combinado_familiar_equipos_computacion_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="text" name="box-combinado_familiar_equipos_computacion['+j+'][serial]" placeholder="Nro Serie" value="'+(serial?serial:'')+'" /> <input type="number" name="box-combinado_familiar_equipos_computacion['+j+'][valor]" class="box-combinado_familiar_equipos_computacion_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_equipos_computacion_remove" value="-" /></p>';
 		$('#equipos_computacion').append(equipos_computacion);
 		$('#equipos_computacion p#'+j+' :nth-child(1)').focus();
 		$('.box-combinado_familiar_equipos_computacion_remove').button().click(function() {
@@ -1281,12 +1281,12 @@ $(document).ready(function() {
 		})
 		$('.box-combinado_familiar_equipos_computacion_valor, .box-combinado_familiar_equipos_computacion_cant').change(function() {calculateEquiposComputacionTotal()});
 	}
-	addFilmFotoItem = function(cantidad, producto, marca, valor) {
+	addFilmFotoItem = function(cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#film_foto p').each(function(i,e){
 			j = Math.max(Number($(e).attr('id')), j) + 1;
 		});
-		var film_foto = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_film_foto['+j+'][cantidad]" class="box-combinado_familiar_film_foto_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_film_foto['+j+'][valor]" class="box-combinado_familiar_film_foto_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_film_foto_remove" value="-" /></p>';
+		var film_foto = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_film_foto['+j+'][cantidad]" class="box-combinado_familiar_film_foto_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][serial]" placeholder="Nro Serie" value="'+(serial?serial:'')+'" /> <input type="number" name="box-combinado_familiar_film_foto['+j+'][valor]" class="box-combinado_familiar_film_foto_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_film_foto_remove" value="-" /></p>';
 		$('#film_foto').append(film_foto);
 		$('#film_foto p#'+j+' :nth-child(1)').focus();
 		$('.box-combinado_familiar_film_foto_remove').button().click(function() {
@@ -1776,7 +1776,7 @@ $(document).ready(function() {
 			} else {		
 				$('#tv_aud_vid').empty();
 				$.each(j, function(i, object) {
-					addTvAudVidItem(object.combinado_familiar_tv_aud_vid_cantidad, object.combinado_familiar_tv_aud_vid_producto, object.combinado_familiar_tv_aud_vid_marca, object.combinado_familiar_tv_aud_vid_valor);
+					addTvAudVidItem(object.combinado_familiar_tv_aud_vid_cantidad, object.combinado_familiar_tv_aud_vid_producto, object.combinado_familiar_tv_aud_vid_marca, object.combinado_familiar_tv_aud_vid_serial, object.combinado_familiar_tv_aud_vid_valor);
 				});
 				calculateTvAudVidTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();
@@ -1790,7 +1790,7 @@ $(document).ready(function() {
 			} else {		
 				$('#obj_esp_prorrata').empty();
 				$.each(j, function(i, object) {
-					addObjEspProrrataItem(object.combinado_familiar_obj_esp_prorrata_cantidad, object.combinado_familiar_obj_esp_prorrata_producto, object.combinado_familiar_obj_esp_prorrata_marca, object.combinado_familiar_obj_esp_prorrata_valor);
+					addObjEspProrrataItem(object.combinado_familiar_obj_esp_prorrata_cantidad, object.combinado_familiar_obj_esp_prorrata_producto, object.combinado_familiar_obj_esp_prorrata_marca, object.combinado_familiar_obj_esp_prorrata_serial, object.combinado_familiar_obj_esp_prorrata_valor);
 				});
 				calculateObjEspProrrataTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();
@@ -1804,7 +1804,7 @@ $(document).ready(function() {
 			} else {		
 				$('#equipos_computacion').empty();
 				$.each(j, function(i, object) {
-					addEquiposComputacionItem(object.combinado_familiar_equipos_computacion_cantidad, object.combinado_familiar_equipos_computacion_producto, object.combinado_familiar_equipos_computacion_marca, object.combinado_familiar_equipos_computacion_valor);
+					addEquiposComputacionItem(object.combinado_familiar_equipos_computacion_cantidad, object.combinado_familiar_equipos_computacion_producto, object.combinado_familiar_equipos_computacion_marca, object.combinado_familiar_equipos_computacion_serial, object.combinado_familiar_equipos_computacion_valor);
 				});
 				calculateEquiposComputacionTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();
@@ -1818,7 +1818,7 @@ $(document).ready(function() {
 			} else {		
 				$('#film_foto').empty();
 				$.each(j, function(i, object) {
-					addFilmFotoItem(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_valor);
+					addFilmFotoItem(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_serial, object.combinado_familiar_film_foto_valor);
 				});
 				calculateFilmFotoTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();
@@ -3758,7 +3758,7 @@ $(document).ready(function() {
 		$.colorbox({
 			title:'Registro',
 			href:'box-polizadet.php?section=2&id='+id,												
-			width:'700px',
+			width:'750px',
 			height:'100%',
 			onComplete: function() {
 				

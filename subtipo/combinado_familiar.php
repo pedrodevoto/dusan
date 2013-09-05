@@ -36,25 +36,25 @@
 		</p>
 		<p>
 			<label for="box-combinado_familiar_valor_tasado" style="width:200px">Valor tasado de la propiedad</label>
-			<input type="number" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
+			<input type="number" step="any" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
 		</p>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_inc_edif_flag" id="box-combinado_familiar_inc_edif_flag" type="checkbox" /> Incendio Edificio Prorrata</legend> 
 		<p>
-			<label for="box-combinado_familiar_inc_edif">Valor</label><input type="number" min="0" name="box-combinado_familiar_inc_edif" id="box-combinado_familiar_inc_edif" class="ui-widget-content" style="width:100px" /> <input type="checkbox" name="box-combinado_familiar_inc_edif_rep" id="box-combinado_familiar_inc_edif_rep">Con cláusula de Reposición a Nuevo</input>
+			<label for="box-combinado_familiar_inc_edif">Valor</label><input type="number" step="any" min="50000" max="5000000" name="box-combinado_familiar_inc_edif" id="box-combinado_familiar_inc_edif" class="ui-widget-content" style="width:100px" /> <input type="checkbox" name="box-combinado_familiar_inc_edif_rep" id="box-combinado_familiar_inc_edif_rep">Con cláusula de Reposición a Nuevo</input>
 		</p>
 	</fieldset>
-	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
-	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_inc_mob_flag" id="box-combinado_familiar_inc_mob_flag" type="checkbox" /> Incendio Mobiliario Primer Riesgo Absoluto</legend> 
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Incendio Mobiliario Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_inc_mob">Valor</label><input type="number" min="0" name="box-combinado_familiar_inc_mob" id="box-combinado_familiar_inc_mob" class="ui-widget-content" style="width:100px" />
+			<label for="box-combinado_familiar_inc_mob">Valor *</label><input type="number" step="any" min="10000" max="1000000" name="box-combinado_familiar_inc_mob" id="box-combinado_familiar_inc_mob" class="ui-widget-content required" style="width:100px" />
 		</p>
 	</fieldset>
-	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
-	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_ef_personales_flag" id="box-combinado_familiar_ef_personales_flag" type="checkbox" /> Robo y/o Hurto Mobiliario y/o Efectos Personales Primer Riesgo Absoluto</legend> 
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Robo y/o Hurto Mobiliario y/o Efectos Personales Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_ef_personales">Valor</label><input type="number" min="0" name="box-combinado_familiar_ef_personales" id="box-combinado_familiar_ef_personales" class="ui-widget-content" style="width:100px" />
+			<label for="box-combinado_familiar_ef_personales">Valor *</label><input type="number" step="any" min="1000" max="100000" name="box-combinado_familiar_ef_personales" id="box-combinado_familiar_ef_personales" class="ui-widget-content required" style="width:100px" />
 		</p>
 	</fieldset>
 
@@ -98,35 +98,35 @@
 		</div>
 	</fieldset>
 	
-	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
-	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_cristales_flag" id="box-combinado_familiar_cristales_flag" type="checkbox" /> Cristales a Primer Riesgo Absoluto</legend> 
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Cristales a Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_cristales">Valor</label><input type="number" name="box-combinado_familiar_cristales" id="box-combinado_familiar_cristales" class="ui-widget-content" />
+			<label for="box-combinado_familiar_cristales">Valor *</label><input type="number" step="any" min="200" max="50000" name="box-combinado_familiar_cristales" id="box-combinado_familiar_cristales" class="ui-widget-content required" />
 		</p>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_responsabilidad_civil_flag" id="box-combinado_familiar_responsabilidad_civil_flag" type="checkbox" /> RC Hechos Privados a Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_responsabilidad_civil">Valor</label><input type="number" name="box-combinado_familiar_responsabilidad_civil" id="box-combinado_familiar_responsabilidad_civil" class="ui-widget-content" />
+			<label for="box-combinado_familiar_responsabilidad_civil">Valor</label><input type="number" step="any" min="10000" max="300000" name="box-combinado_familiar_responsabilidad_civil" id="box-combinado_familiar_responsabilidad_civil" class="ui-widget-content" />
 		</p>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_rc_inc_flag" id="box-combinado_familiar_rc_inc_flag" type="checkbox" /> RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_rc_inc">Valor</label><input type="number" min="0" name="box-combinado_familiar_rc_inc" id="box-combinado_familiar_rc_inc" class="ui-widget-content" style="width:100px" />
+			<label for="box-combinado_familiar_rc_inc">Valor</label><input type="number" step="any" min="1000" max="250000" name="box-combinado_familiar_rc_inc" id="box-combinado_familiar_rc_inc" class="ui-widget-content" style="width:100px" />
 		</p>
 
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_danios_agua_flag" id="box-combinado_familiar_danios_agua_flag" type="checkbox" /> Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_danios_agua">Valor</label><input type="number" name="box-combinado_familiar_danios_agua" id="box-combinado_familiar_danios_agua" class="ui-widget-content" />
+			<label for="box-combinado_familiar_danios_agua">Valor</label><input type="number" step="any" min="1000" max="25000" name="box-combinado_familiar_danios_agua" id="box-combinado_familiar_danios_agua" class="ui-widget-content" />
 		</p>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_jugadores_golf_flag" id="box-combinado_familiar_jugadores_golf_flag" type="checkbox" /> Jugadores de Golf a Primer Riesgo Absoluto</legend> 
 		<p>
-			<label for="box-combinado_familiar_jugadores_golf">Valor</label><input class="toggle-fieldset" type="number" name="box-combinado_familiar_jugadores_golf" id="box-combinado_familiar_jugadores_golf" class="ui-widget-content" />
+			<label for="box-combinado_familiar_jugadores_golf">Valor</label><input class="toggle-fieldset" type="number" step="any" min="200" max="5000" name="box-combinado_familiar_jugadores_golf" id="box-combinado_familiar_jugadores_golf" class="ui-widget-content" />
 		</p>
 	</fieldset>
 </form>
