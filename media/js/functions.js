@@ -1818,7 +1818,7 @@ $(document).ready(function() {
 			} else {		
 				$('#film_foto').empty();
 				$.each(j, function(i, object) {
-					addEquiposFilmFoto(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_valor);
+					addFilmFotoItem(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_valor);
 				});
 				calculateFilmFotoTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();

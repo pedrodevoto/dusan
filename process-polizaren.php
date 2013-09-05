@@ -197,13 +197,13 @@
 			break;
 			
 			case 'combinado_familiar':
-				$insertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_prorrata, combinado_familiar_inc_edif, combinado_familiar_rc_lind, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_lind_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag) 
-					(SELECT %s, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_prorrata, combinado_familiar_inc_edif, combinado_familiar_rc_lind, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_lind_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag FROM combinado_familiar WHERE poliza_id=%s)',
+				$insertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_inc_edif, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag) 
+					(SELECT %s, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_inc_edif, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag FROM combinado_familiar WHERE poliza_id=%s)',
 					$new_id,
 					$row_Recordset1['poliza_id']);
 				
 				
-				mysql_query($insertSQL);
+				mysql_query($insertSQL) or die(mysql_error());
 				
 				$combinado_familiar_id = mysql_insert_id();
 				if ($combinado_familiar_id > 0) {
@@ -211,24 +211,18 @@
 					$res = mysql_query($sql);
 					list($combinado_familiar_id_old) = mysql_fetch_array($res);
 					if ($combinado_familiar_id_old > 0) {
-						$insertSQL = sprintf("INSERT INTO combinado_familiar_tv_aud_vid (combinado_familiar_id, combinado_familiar_tv_aud_vid_cantidad, combinado_familiar_tv_aud_vid_producto, combinado_familiar_tv_aud_vid_marca, combinado_familiar_tv_aud_vid_valor)
-							 (SELECT %s, combinado_familiar_tv_aud_vid_cantidad, combinado_familiar_tv_aud_vid_producto, combinado_familiar_tv_aud_vid_marca, combinado_familiar_tv_aud_vid_valor FROM combinado_familiar_tv_aud_vid WHERE combinado_familiar_id=%s)",
-												$combinado_familiar_id,
-												$combinado_familiar_id_old);	
+						
+						$objects = array('tv_aud_vid', 'obj_esp_prorrata', 'equipos_computacion', 'film_foto');
+						
+						foreach ($objects as $object) {
+							$insertSQL = sprintf('INSERT INTO combinado_familiar_%3$s (combinado_familiar_id, combinado_familiar_%3$s_cantidad, combinado_familiar_%3$s_producto, combinado_familiar_%3$s_marca, combinado_familiar_%3$s_valor)
+								 (SELECT %1$s, combinado_familiar_%3$s_cantidad, combinado_familiar_%3$s_producto, combinado_familiar_%3$s_marca, combinado_familiar_%3$s_valor FROM combinado_familiar_%3$s WHERE combinado_familiar_id=%2$s)',
+													$combinado_familiar_id,
+													$combinado_familiar_id_old,
+													$object);	
 																						
-						mysql_query($insertSQL, $connection) or die(mysql_die());
-					
-						$insertSQL = sprintf("INSERT INTO combinado_familiar_obj_esp_prorrata (combinado_familiar_id, combinado_familiar_obj_esp_prorrata_cantidad, combinado_familiar_obj_esp_prorrata_producto, combinado_familiar_obj_esp_prorrata_marca, combinado_familiar_obj_esp_prorrata_valor)
-							 (SELECT %s, combinado_familiar_obj_esp_prorrata_cantidad, combinado_familiar_obj_esp_prorrata_producto, combinado_familiar_obj_esp_prorrata_marca, combinado_familiar_obj_esp_prorrata_valor FROM combinado_familiar_obj_esp_prorrata WHERE combinado_familiar_id=%s)",
-												$combinado_familiar_id,
-												$combinado_familiar_id_old);																		
-						mysql_query($insertSQL, $connection) or die(mysql_die());
-					
-						$insertSQL = sprintf("INSERT INTO combinado_familiar_equipos_computacion (combinado_familiar_id, combinado_familiar_equipos_computacion_cantidad, combinado_familiar_equipos_computacion_producto, combinado_familiar_equipos_computacion_marca, combinado_familiar_equipos_computacion_valor)
-							 (SELECT %s, combinado_familiar_equipos_computacion_cantidad, combinado_familiar_equipos_computacion_producto, combinado_familiar_equipos_computacion_marca, combinado_familiar_equipos_computacion_valor FROM combinado_familiar_equipos_computacion WHERE combinado_familiar_id=%s)",
-												$combinado_familiar_id,
-												$combinado_familiar_id_old);																		
-						mysql_query($insertSQL, $connection) or die(mysql_die());
+							mysql_query($insertSQL, $connection) or die(mysql_die());
+						}	
 					}
 				}
 				
