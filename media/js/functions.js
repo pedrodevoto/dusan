@@ -1121,17 +1121,20 @@ $(document).ready(function() {
 						yearRange: "-100:+0",
 						changeMonth: true										
 				});
-				
 				populateSectionAsegurado(id);
 				populateSectionClausula(id);
 				break;
 			case 'combinado_familiar':
-				$('#box-combinado_familiar_prorrata_obj_esp').change(function() {
-					calculateObjEspProrrataTotal();
+				$('fieldset.optional').each(function(i,e) {
+					$(e).prop('disabled', !$(e).children().first().children().first().prop('checked'));
+				});
+				$('.toggle-fieldset').change(function() {
+					$(this).parent().parent().prop('disabled', !$(this).prop('checked')).children('p').first().children().eq(1).focus();
 				})
 				populateSectionTvAudVid(id);
 				populateSectionObjEspProrrata(id);
 				populateSectionEquiposComputacion(id);
+				populateSectionFilmFoto(id);
 				
 				$("#box-combinado_familiar_domicilio_calle").focus();	
 				break;
@@ -1227,6 +1230,14 @@ $(document).ready(function() {
 			addEquiposComputacionItem();
 		})
 	}
+	populateSectionFilmFoto = function(id) {
+		populateDiv_FilmFoto(id);
+
+		calculateFilmFotoTotal();		
+		$('#box-combinado_familiar_film_foto_add').button().click(function() {
+			addFilmFotoItem();
+		})
+	}
 	
 	addTvAudVidItem = function(cantidad, producto, marca, valor) {
 		var j = 0;
@@ -1270,6 +1281,20 @@ $(document).ready(function() {
 		})
 		$('.box-combinado_familiar_equipos_computacion_valor, .box-combinado_familiar_equipos_computacion_cant').change(function() {calculateEquiposComputacionTotal()});
 	}
+	addFilmFotoItem = function(cantidad, producto, marca, valor) {
+		var j = 0;
+		$('#film_foto p').each(function(i,e){
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var film_foto = '<p id="'+j+'"><input type="number" name="box-combinado_familiar_film_foto['+j+'][cantidad]" class="box-combinado_familiar_film_foto_cant" placeholder="Cant" style="width:40px" value="'+(cantidad?cantidad:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][producto]" placeholder="Producto" value="'+(producto?producto:'')+'" /> <input type="text" name="box-combinado_familiar_film_foto['+j+'][marca]" placeholder="Marca" value="'+(marca?marca:'')+'" /> <input type="number" name="box-combinado_familiar_film_foto['+j+'][valor]" class="box-combinado_familiar_film_foto_valor" placeholder="Valor" style="width:80px" value="'+(valor?valor:'')+'" /> <input type="button" class="box-combinado_familiar_film_foto_remove" value="-" /></p>';
+		$('#film_foto').append(film_foto);
+		$('#film_foto p#'+j+' :nth-child(1)').focus();
+		$('.box-combinado_familiar_film_foto_remove').button().click(function() {
+			$(this).parent().remove();
+			calculateFilmFotoTotal()
+		})
+		$('.box-combinado_familiar_film_foto_valor, .box-combinado_familiar_film_foto_cant').change(function() {calculateFilmFotoTotal()});
+	}
 	calculateTvAudVidTotal = function() {
 		var total = 0;
 		$('.box-combinado_familiar_tv_aud_vid_valor').each(function(i,e){
@@ -1290,6 +1315,13 @@ $(document).ready(function() {
 			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
 		});
 		$("#equipos_computacion_total").html(total);
+	}
+	calculateFilmFotoTotal = function(id) {
+		var total = 0;
+		$('.box-combinado_familiar_film_foto_valor').each(function(i,e){
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
+		});
+		$("#film_foto_total").html(total);
 	}
 	populateFormBoxAsegurado = function(id){
 		var dfd = new $.Deferred();		
@@ -1775,6 +1807,20 @@ $(document).ready(function() {
 					addEquiposComputacionItem(object.combinado_familiar_equipos_computacion_cantidad, object.combinado_familiar_equipos_computacion_producto, object.combinado_familiar_equipos_computacion_marca, object.combinado_familiar_equipos_computacion_valor);
 				});
 				calculateEquiposComputacionTotal();
+				$("#box-combinado_familiar_domicilio_calle").focus();
+			}
+		})
+	}
+	populateDiv_FilmFoto = function(id) {
+		$.getJSON("get-json-fich_combinado_familiar_filmfoto.php?id=" + id, {}, function(j) {
+			if(j.error == 'expired'){
+				sessionExpire('box');
+			} else {		
+				$('#film_foto').empty();
+				$.each(j, function(i, object) {
+					addEquiposFilmFoto(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_valor);
+				});
+				calculateFilmFotoTotal();
 				$("#box-combinado_familiar_domicilio_calle").focus();
 			}
 		})
