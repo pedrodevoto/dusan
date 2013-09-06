@@ -1520,7 +1520,7 @@
 						$y += 4;
 					}
 					
-					if ($y > 260) {
+					if ($y > 255) {
 						newPage($pdf, false);
 						$y = 48;
 					}
@@ -1532,7 +1532,7 @@
 					$pdf->Write(5, 'Otros');
 					
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
 					
 					$y += 9.5;
 
@@ -1543,12 +1543,17 @@
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Responsabilidad Civil Hechos Privados a Primer Riesgo Absoluto con Franquicia: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
+					$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
 					
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, trimText('Daños por Agua al Mobiliario y/o Efectos Personales a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
+					
+					$y += 5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
 					
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
@@ -1811,7 +1816,7 @@
 						$y += 4;
 					}
 					
-					if ($y > 260) {
+					if ($y > 255) {
 						newPage($pdf, false);
 						$y = 48;
 					}
@@ -1823,7 +1828,7 @@
 					$pdf->Write(5, 'Otros');
 					
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
 					
 					$y += 9.5;
 
@@ -1834,12 +1839,17 @@
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Responsabilidad Civil Hechos Privados a Primer Riesgo Absoluto con Franquicia: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
+					$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
 					
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, trimText('Daños por Agua al Mobiliario y/o Efectos Personales a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
+					
+					$y += 5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->SetFont('Arial', '', 8);
+					$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
 					
 					$y += 5;
 					$pdf->SetXY($x + 2, $y);
