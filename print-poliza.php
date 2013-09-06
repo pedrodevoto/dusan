@@ -2038,7 +2038,7 @@
 					$pdf->Write(5, 'General');
 				
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 33, 1, '1234', 'D');
 				
 					$y += 9.5;
 
@@ -2062,13 +2062,19 @@
 				
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Incendio Edificio: $'.formatNumber($row_Recordset2['incendio_edificio_suma_asegurada'], 2));
-					$pdf->SetX($x + 65);
-					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['incendio_edificio_prorrata'], 2).'%');
-				
+					$pdf->Write(5, 'Incendio Edificio:                       $'.formatNumber($row_Recordset2['incendio_edificio_inc_edif'], 2));
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
+					$pdf->Write(5, 'Incendio Mobiliario:                   $'.formatNumber($row_Recordset2['incendio_edificio_inc_mob'], 2));
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'RC por Incendio:                       $'.formatNumber($row_Recordset2['incendio_edificio_rc_inc'], 2));
+					
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Valor tasado de la propiedad:   $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
+					
+					
 				
 					// Footer
 					if ($y > 200) {
@@ -2197,7 +2203,7 @@
 					$pdf->Write(5, 'General');
 				
 					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 195.5, 23, 1, '1234', 'D');
+					$pdf->RoundedRect($x - 0.5, $y + 7.5, 195.5, 33, 1, '1234', 'D');
 				
 					$y += 9.5;
 
@@ -2221,14 +2227,19 @@
 				
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Incendio Edificio: $'.formatNumber($row_Recordset2['incendio_edificio_suma_asegurada'], 2));
-					$pdf->SetX($x + 65);
-					$pdf->Write(5, 'Prorrata: '.number_format($row_Recordset2['incendio_edificio_prorrata'], 2).'%');
-				
+					$pdf->Write(5, 'Incendio Edificio:                       $'.formatNumber($row_Recordset2['incendio_edificio_inc_edif'], 2));
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
-				
+					$pdf->Write(5, 'Incendio Mobiliario:                   $'.formatNumber($row_Recordset2['incendio_edificio_inc_mob'], 2));
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'RC por Incendio:                       $'.formatNumber($row_Recordset2['incendio_edificio_rc_inc'], 2));
+					
+					$y +=5;
+					$pdf->SetXY($x + 2, $y);
+					$pdf->Write(5, 'Valor tasado de la propiedad:   $'.formatNumber($row_Recordset2['incendio_edificio_valor_tasado'], 2));
+					
+					
 	
 					
 					// Footer
