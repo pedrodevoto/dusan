@@ -1298,28 +1298,28 @@ $(document).ready(function() {
 	calculateTvAudVidTotal = function() {
 		var total = 0;
 		$('.box-combinado_familiar_tv_aud_vid_valor').each(function(i,e){
-			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#tv_aud_vid_total").html(total);
 	}
 	calculateObjEspProrrataTotal = function() {
 		var total = 0;
 		$('.box-combinado_familiar_obj_esp_prorrata_valor').each(function(i,e){
-			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#obj_esp_prorrata_total").html(total);
 	}
 	calculateEquiposComputacionTotal = function() {
 		var total = 0;
 		$('.box-combinado_familiar_equipos_computacion_valor').each(function(i,e){
-			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#equipos_computacion_total").html(total);
 	}
 	calculateFilmFotoTotal = function(id) {
 		var total = 0;
 		$('.box-combinado_familiar_film_foto_valor').each(function(i,e){
-			total += (Number($(e).val()) * Number($(e).prev().prev().prev().val()));
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#film_foto_total").html(total);
 	}
