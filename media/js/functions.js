@@ -43,6 +43,45 @@ $(document).ready(function() {
 		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
 	},'Por favor ingresar una fecha en formato dd/mm/aa.');
 	
+	customValidations = function() {
+		var objects = [
+			{
+				'name': 'tv_aud_vid_total', 
+				'desc': 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto',
+				'min': 100, 
+				'max': 30000
+			},
+			{
+				'name': 'obj_esp_prorrata_total', 
+				'desc': 'Robo y/o Hurto de Objetos Específicos y/o Aparatos Electrodomésticos a Prorrata',
+				'min': 100, 
+				'max': 20000
+			},
+			{
+				'name': 'equipos_computacion_total', 
+				'desc': 'Todo Riesgo Equipos de Computación en Domicilio a Primer Riesgo Absoluto',
+				'min': 1500, 
+				'max': 10000
+			},
+			{
+				'name': 'film_foto_total', 
+				'desc': 'Robo de Filmadoras y/o Cam. Fotográficas a Prorrata',
+				'min': 500, 
+				'max': 5000
+			},
+		];
+	
+		for (var i = 0; i < objects.length;i++) {
+			var obj = objects[i];
+			var value = Number($('#'+obj.name).text());
+			if (value != 0 && (value < obj.min || value > obj.max)) {
+				alert('El valor total asegurado de '+obj.desc+' debe ser mayor a '+obj.min+' y menor a '+obj.max);
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	<!-- List functions -->
 	sortListAlpha = function(field) {
 		$("select#"+field).html($("select#"+field+" option").sort(function (a, b) {
@@ -1135,6 +1174,25 @@ $(document).ready(function() {
 				populateSectionObjEspProrrata(id);
 				populateSectionEquiposComputacion(id);
 				populateSectionFilmFoto(id);
+				
+				$('#frmBox').submit(function() {
+					var objects = [
+						{'name': 'tv_aud_vid', 'min': 100, 'max': 30000},
+						{'name': 'obj_esp_prorrata', 'min': 100, 'max': 20000},
+						{'name': 'equipos_computacion', 'min': 1500, 'max': 10000},
+						{'name': 'film_foto_total', 'min': 500, 'max': 5000},
+					]
+					
+					$.each(objects, function(i,obj) {
+						var value = Number($('#'+obj.name+'_total').text());
+						if (value < obj.min || value > obj.max) {
+							alert('aa');
+							return false;
+						}
+						return true;
+					})
+					
+				})
 				
 				$("#box-combinado_familiar_domicilio_calle").focus();	
 				break;
@@ -3785,9 +3843,11 @@ $(document).ready(function() {
 							
 					// Button action	
 					$("#btnBox").click(function() {
-						if (validateForm.form()) {					
-							processFormPolizaDet(id, fromcreate);
-						}
+						// if (customValidations()) {
+							if (validateForm.form() && customValidations()) {					
+								processFormPolizaDet(id, fromcreate);
+							}
+						// }
 					});	
 					
 					// Enable form					
