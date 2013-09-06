@@ -255,13 +255,26 @@ CREATE TABLE `combinado_familiar` (
   `combinado_familiar_valor_tasado` decimal(10,2) DEFAULT NULL,
   `combinado_familiar_prorrata_obj_esp` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
-  `combinado_familiar_inc_edif_prorrata` decimal(10,2) unsigned DEFAULT NULL,
-  `combinado_familiar_rc_lind` decimal(10,2) unsigned DEFAULT NULL,
-  `combinado_familiar_rc_lind_prorrata` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif_rep` tinyint(3) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_mob` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_ef_personales` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_rc_inc` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_cristales` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_responsabilidad_civil` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
   `combinado_familiar_jugadores_golf` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_inc_mob_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_ef_personales_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_rc_inc_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_tv_aud_vid_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_equipos_computacion_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_film_foto_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_cristales_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_responsabilidad_civil_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_danios_agua_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_jugadores_golf_flag` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`combinado_familiar_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`),
   CONSTRAINT `combinado_familiar_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
@@ -275,10 +288,26 @@ CREATE TABLE `combinado_familiar_equipos_computacion` (
   `combinado_familiar_equipos_computacion_cantidad` int(11) NOT NULL,
   `combinado_familiar_equipos_computacion_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `combinado_familiar_equipos_computacion_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_equipos_computacion_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_equipos_computacion_valor` decimal(10,2) NOT NULL,
   PRIMARY KEY (`combinado_familiar_equipos_computacion_id`),
   KEY `combinado_familiar_id` (`combinado_familiar_id`),
   CONSTRAINT `combinado_familiar_equipos_computacion_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_film_foto`;
+CREATE TABLE `combinado_familiar_film_foto` (
+  `combinado_familiar_film_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_film_foto_cantidad` int(11) NOT NULL,
+  `combinado_familiar_film_foto_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_film_foto_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_film_foto_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_film_foto_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_film_foto_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_film_foto_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -289,6 +318,7 @@ CREATE TABLE `combinado_familiar_obj_esp_prorrata` (
   `combinado_familiar_obj_esp_prorrata_cantidad` int(11) NOT NULL,
   `combinado_familiar_obj_esp_prorrata_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `combinado_familiar_obj_esp_prorrata_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_obj_esp_prorrata_valor` decimal(10,2) NOT NULL,
   PRIMARY KEY (`combinado_familiar_obj_esp_prorrata_id`),
   KEY `combinado_familiar_id` (`combinado_familiar_id`),
@@ -303,6 +333,7 @@ CREATE TABLE `combinado_familiar_tv_aud_vid` (
   `combinado_familiar_tv_aud_vid_cantidad` int(11) NOT NULL,
   `combinado_familiar_tv_aud_vid_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `combinado_familiar_tv_aud_vid_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_tv_aud_vid_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `combinado_familiar_tv_aud_vid_valor` decimal(10,2) NOT NULL,
   PRIMARY KEY (`combinado_familiar_tv_aud_vid_id`),
   KEY `combinado_familiar_id` (`combinado_familiar_id`),
@@ -424,8 +455,10 @@ CREATE TABLE `incendio_edificio` (
   `incendio_edificio_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `incendio_edificio_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `incendio_edificio_valor_tasado` decimal(10,2) DEFAULT NULL,
-  `incendio_edificio_suma_asegurada` decimal(10,2) unsigned NOT NULL,
-  `incendio_edificio_prorrata` decimal(10,2) unsigned DEFAULT NULL,
+  `incendio_edificio_inc_edif` decimal(10,2) unsigned NOT NULL,
+  `incendio_edificio_inc_edif_rep` tinyint(3) unsigned NOT NULL,
+  `incendio_edificio_inc_mob` decimal(10,2) unsigned DEFAULT NULL,
+  `incendio_edificio_rc_inc` decimal(10,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`incendio_edificio_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`),
   CONSTRAINT `incendio_edificio_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
@@ -440,7 +473,6 @@ CREATE TABLE `poliza` (
   `subtipo_poliza_id` int(10) unsigned NOT NULL,
   `productor_seguro_id` int(10) unsigned NOT NULL,
   `poliza_estado_id` int(11) NOT NULL,
-  `poliza_anulada` tinyint(3) unsigned NOT NULL,
   `poliza_numero` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_renueva_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual','Otra') COLLATE utf8_unicode_ci NOT NULL,
@@ -619,4 +651,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-08-30 12:40:33
+-- 2013-09-06 13:03:40
