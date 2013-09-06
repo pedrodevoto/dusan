@@ -277,15 +277,17 @@
 				mysql_query($deleteSQL);
 				if (isset($_POST['box-combinado_familiar_'.$object])) {
 					foreach ($_POST['box-combinado_familiar_'.$object] as $item) {
-						$insertSQL = sprintf('INSERT INTO combinado_familiar_%7$s (combinado_familiar_id, combinado_familiar_%7$s_cantidad, combinado_familiar_%7$s_producto, combinado_familiar_%7$s_marca, combinado_familiar_%7$s_serial, combinado_familiar_%7$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), %6$s)',
-											$combinado_familiar_id,												
-											GetSQLValueString($item['cantidad'], 'int'),
-											GetSQLValueString($item['producto'], 'text'),
-											GetSQLValueString($item['marca'], 'text'),
-											GetSQLValueString($item['serial'], 'text'),
-											GetSQLValueString($item['valor'], 'double'),
-											$object);
-						mysql_query($insertSQL);					
+						if (isset($item['cantidad']) and isset($item['producto']) and isset($item['marca']) and isset($item['valor'])){
+							$insertSQL = sprintf('INSERT INTO combinado_familiar_%7$s (combinado_familiar_id, combinado_familiar_%7$s_cantidad, combinado_familiar_%7$s_producto, combinado_familiar_%7$s_marca, combinado_familiar_%7$s_serial, combinado_familiar_%7$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), %6$s)',
+												$combinado_familiar_id,												
+												GetSQLValueString($item['cantidad'], 'int'),
+												GetSQLValueString($item['producto'], 'text'),
+												GetSQLValueString($item['marca'], 'text'),
+												GetSQLValueString($item['serial'], 'text'),
+												GetSQLValueString($item['valor'], 'double'),
+												$object);
+							mysql_query($insertSQL);					
+						}
 					}
 				}
 			}
