@@ -194,10 +194,11 @@
 			
 			// Break
 			break;
+			// ---------------------------------- COMBINADO FAMILIAR ---------------------------------- //
 			
 			case 'combinado_familiar':
-				$insertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_inc_edif, combinado_familiar_inc_edif_rep, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag) 
-					(SELECT %s, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_inc_edif, combinado_familiar_inc_edif_rep, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag FROM combinado_familiar WHERE poliza_id=%s)',
+				$insertSQL = sprintf('INSERT INTO combinado_familiar (poliza_id, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_country, combinado_familiar_lote, combinado_familiar_valor_tasado, combinado_familiar_inc_edif, combinado_familiar_inc_edif_rep, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag) 
+					(SELECT %s, combinado_familiar_domicilio_calle, combinado_familiar_domicilio_nro, combinado_familiar_domicilio_piso, combinado_familiar_domicilio_dpto, combinado_familiar_domicilio_localidad, combinado_familiar_domicilio_cp, combinado_familiar_country, combinado_familiar_lote, combinado_familiar_valor_tasado, combinado_familiar_inc_edif, combinado_familiar_inc_edif_rep, combinado_familiar_rc_inc, combinado_familiar_cristales, combinado_familiar_responsabilidad_civil, combinado_familiar_danios_agua, combinado_familiar_jugadores_golf, combinado_familiar_inc_edif_flag, combinado_familiar_rc_inc_flag, combinado_familiar_tv_aud_vid_flag, combinado_familiar_obj_esp_prorrata_flag, combinado_familiar_equipos_computacion_flag, combinado_familiar_cristales_flag, combinado_familiar_responsabilidad_civil_flag, combinado_familiar_danios_agua_flag, combinado_familiar_jugadores_golf_flag, combinado_familiar_film_foto_flag, combinado_familiar_inc_mob, combinado_familiar_inc_mob_flag, combinado_familiar_ef_personales, combinado_familiar_ef_personales_flag FROM combinado_familiar WHERE poliza_id=%s)',
 					$new_id,
 					$row_Recordset1['poliza_id']);
 				
@@ -225,6 +226,16 @@
 					}
 				}
 				
+				break;
+			
+			case 'incendio_edificio':
+				// ---------------------------------- INCENDIO EDIFICIO ---------------------------------- //
+				
+				$insertSQL = sprintf('INSERT INTO incendio_edificio (poliza_id, incendio_edificio_domicilio_calle, incendio_edificio_domicilio_nro, incendio_edificio_domicilio_piso, incendio_edificio_domicilio_dpto, incendio_edificio_domicilio_localidad, incendio_edificio_domicilio_cp, incendio_edificio_country, incendio_edificio_lote, incendio_edificio_valor_tasado, incendio_edificio_inc_edif, incendio_edificio_inc_edif_rep, incendio_edificio_inc_mob, incendio_edificio_rc_inc) 
+					(SELECT %s, incendio_edificio_domicilio_calle, incendio_edificio_domicilio_nro, incendio_edificio_domicilio_piso, incendio_edificio_domicilio_dpto, incendio_edificio_domicilio_localidad, incendio_edificio_domicilio_cp, incendio_edificio_country, incendio_edificio_lote, incendio_edificio_valor_tasado, incendio_edificio_inc_edif, incendio_edificio_inc_edif_rep, incendio_edificio_inc_mob, incendio_edificio_rc_inc FROM incendio_edificio WHERE poliza_id=%s)',
+					$new_id,
+					$row_Recordset1['poliza_id']);
+					mysql_query($insertSQL) or die(mysql_error());
 				break;
 				
 			default:
