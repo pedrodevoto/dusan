@@ -39,7 +39,7 @@
                 <select name="box-endoso_tipo_id" id="box-endoso_tipo_id" class="ui-widget-content" style="width:180px"></select>
             </p>
 			<p>
-				<label for-"box-endoso_cuerpo">Cuerpo *</label>
+				<label for-"box-endoso_cuerpo">Detalle</label>
 				<textarea name="box-endoso_cuerpo" id="box-endoso_cuerpo" class="ui-widget-content" style="width:215px" rows="5"></textarea>
 			</p>
             <p>

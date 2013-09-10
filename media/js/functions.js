@@ -3969,7 +3969,6 @@ $(document).ready(function() {
 						rules: {
 							"box-endoso_fecha_pedido": {required: true, dateAR: true},
 							"box-endoso_tipo": {required: true},
-							"box-endoso_cuerpo": {required: true},
 							"box-endoso_fecha_compania": {dateAR: true},
 						},
 						errorPlacement: function(error, element) {
@@ -4061,7 +4060,6 @@ $(document).ready(function() {
 						rules: {
 							"box-endoso_fecha_pedido": {required: true, dateAR: true},
 							"box-endoso_tipo": {required: true},
-							"box-endoso_cuerpo": {required: true},
 							"box-endoso_fecha_compania": {dateAR: true},
 						},
 						errorPlacement: function(error, element) {

@@ -353,15 +353,31 @@
 						$pdf->RoundedRect($x - 0.5, $y, 195.5, 25, 1, '1234', 'D');
 					
 						$y += 26.5;
+						$pdf->SetFillColor(172,190,219);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 195.5, 6, 1, '1234', 'DF');
+						$pdf->SetXY(95, $y+0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'Endoso');
+												
+						$y += 7.5;
 						$pdf->RoundedRect($x - 0.5, $y, 195.5, 50, 1, '1234', 'D');
+						
 						
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre']));
+						$pdf->SetX($x + 60);
+						$pdf->Write(5, "CODIGO: ".$row_Recordset1['productor_seguro_codigo']);
+						$y += 7;
+
+						
+						$pdf->SetXY($x, $y);
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
-						$pdf->Write(5, 'Cuerpo del endoso: '.$endoso_cuerpo);
+						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 						
 					}
 					
@@ -417,23 +433,7 @@
 					printText($txt_patente, $pdf, 28, 0);
 					
 					if (isset($_GET['en']) && $_GET['en']==1) {
-						
-						
-						
-						$pdf->SetFillColor(229,233,253);
-						$pdf->SetDrawColor(138,162,234);
-						$pdf->SetLineWidth(0.6);
-						$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
-						$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
-						$pdf->SetFont('Arial','B',10);
-						$pdf->SetXY(65,242);
-						$pdf->Write(5, 'Forma de Pago');
-						$pdf->SetXY(168,242);
-						$pdf->Write(5, 'Importes');
-					
-						$pdf->SetLineWidth(0.4);
-						$pdf->SetDrawColor(0,0,0);
-						$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
+
 					}
 					else {
 						// Inspecciones (General)
@@ -550,46 +550,46 @@
 						$pdf->SetTextColor(0,0,0);								
 						$pdf->SetXY(12, 237);
 						printText($txt_observaciones, $pdf, 190, 0);				
-					}
-					// Forma de Pago					
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12.5, 250);
-					printText($txt_pago_c1, $pdf, 55, 3.8);
-					printText($txt_pago_c3, $pdf, 100, 3.8);	
-					$pdf->SetXY(70, 250);
-					$pdf->SetXY(102, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Misc
-					$txt_misc_c1 = array(
-						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
-					);
-					$txt_misc_c2 = array(
-						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
-						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
-					);											
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 263.7);
-					foreach ($txt_misc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(110, 263.7);
-					foreach ($txt_misc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}																																			
+					
+						// Forma de Pago					
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12.5, 250);
+						printText($txt_pago_c1, $pdf, 55, 3.8);
+						printText($txt_pago_c3, $pdf, 100, 3.8);	
+						$pdf->SetXY(70, 250);
+						$pdf->SetXY(102, 250);
+						printText($txt_pago_c2, $pdf, 30, 3.8);
+						// Importes
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Misc
+						$txt_misc_c1 = array(
+							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+						);
+						$txt_misc_c2 = array(
+							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+							array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+						);											
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 263.7);
+						foreach ($txt_misc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(110, 263.7);
+						foreach ($txt_misc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}																																				}
 					// OUTPUT
 					$pdf->Output();		
 				
@@ -1041,11 +1041,18 @@
 						
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre']));
+						$pdf->SetX($x + 60);
+						$pdf->Write(5, "CODIGO: ".$row_Recordset1['productor_seguro_codigo']);
+						$y += 7;
+						
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', '', 8);
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
-						$pdf->Write(5, 'Cuerpo del endoso: '.$endoso_cuerpo);
+						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 					}
 					else {
 						if (count($asegurados)){
@@ -1212,67 +1219,67 @@
 							}
 						
 						}
-					}
-					// Footer
-					if ($y > 238) {
-						newPage($pdf, false);
-					}
-					$pdf->SetFillColor(229,233,253);
-					$pdf->SetDrawColor(138,162,234);
-					$pdf->SetLineWidth(0.6);
-					$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
-					$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
-					$pdf->SetFont('Arial','B',10);
-					$pdf->SetXY(65,242);
-					$pdf->Write(5, 'Forma de Pago');
-					$pdf->SetXY(168,242);
-					$pdf->Write(5, 'Importes');
 					
-					$pdf->SetLineWidth(0.4);
-					$pdf->SetDrawColor(0,0,0);
-					$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
+						// Footer
+						if ($y > 238) {
+							newPage($pdf, false);
+						}
+						$pdf->SetFillColor(229,233,253);
+						$pdf->SetDrawColor(138,162,234);
+						$pdf->SetLineWidth(0.6);
+						$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
+						$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
+						$pdf->SetFont('Arial','B',10);
+						$pdf->SetXY(65,242);
+						$pdf->Write(5, 'Forma de Pago');
+						$pdf->SetXY(168,242);
+						$pdf->Write(5, 'Importes');
 					
-					// Forma de Pago					
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12.5, 250);
-					printText($txt_pago_c1, $pdf, 55, 3.8);
-					printText($txt_pago_c3, $pdf, 100, 3.8);	
-					$pdf->SetXY(70, 250);
-					$pdf->SetXY(102, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Misc
-					$txt_misc_c1 = array(
-						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
-					);
-					$txt_misc_c2 = array(
-						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
-						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
-					);											
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 263.7);
-					foreach ($txt_misc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(110, 263.7);
-					foreach ($txt_misc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}																		
+						$pdf->SetLineWidth(0.4);
+						$pdf->SetDrawColor(0,0,0);
+						$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
 					
+						// Forma de Pago					
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12.5, 250);
+						printText($txt_pago_c1, $pdf, 55, 3.8);
+						printText($txt_pago_c3, $pdf, 100, 3.8);	
+						$pdf->SetXY(70, 250);
+						$pdf->SetXY(102, 250);
+						printText($txt_pago_c2, $pdf, 30, 3.8);
+						// Importes
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Misc
+						$txt_misc_c1 = array(
+							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+						);
+						$txt_misc_c2 = array(
+							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+							array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+						);											
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 263.7);
+						foreach ($txt_misc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(110, 263.7);
+						foreach ($txt_misc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}																		
 					
+					}
 					break;
 				default:
 					die("Error: Tipo de documento no definido.");
@@ -1775,11 +1782,18 @@
 						
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre']));
+						$pdf->SetX($x + 60);
+						$pdf->Write(5, "CODIGO: ".$row_Recordset1['productor_seguro_codigo']);
+						$y += 7;
+						
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', '', 8);
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
-						$pdf->Write(5, 'Cuerpo del endoso: '.$endoso_cuerpo);
+						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 					}
 					else {	
 						foreach ($objects as $object) {
@@ -1911,66 +1925,66 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
 					
-						$y += 5;
-					}					
+						$y += 5;			
 					
-					// Footer
-					if ($y > 238) {
-						newPage($pdf, false);
-					}
-					$pdf->SetFillColor(229,233,253);
-					$pdf->SetDrawColor(138,162,234);
-					$pdf->SetLineWidth(0.6);
-					$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
-					$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
-					$pdf->SetFont('Arial','B',10);
-					$pdf->SetXY(65,242);
-					$pdf->Write(5, 'Forma de Pago');
-					$pdf->SetXY(168,242);
-					$pdf->Write(5, 'Importes');
+						// Footer
+						if ($y > 238) {
+							newPage($pdf, false);
+						}
+						$pdf->SetFillColor(229,233,253);
+						$pdf->SetDrawColor(138,162,234);
+						$pdf->SetLineWidth(0.6);
+						$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
+						$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
+						$pdf->SetFont('Arial','B',10);
+						$pdf->SetXY(65,242);
+						$pdf->Write(5, 'Forma de Pago');
+						$pdf->SetXY(168,242);
+						$pdf->Write(5, 'Importes');
 					
-					$pdf->SetLineWidth(0.4);
-					$pdf->SetDrawColor(0,0,0);
-					$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
+						$pdf->SetLineWidth(0.4);
+						$pdf->SetDrawColor(0,0,0);
+						$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
 					
-					// Forma de Pago					
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12.5, 250);
-					printText($txt_pago_c1, $pdf, 55, 3.8);
-					printText($txt_pago_c3, $pdf, 100, 3.8);	
-					$pdf->SetXY(70, 250);
-					$pdf->SetXY(102, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Misc
-					$txt_misc_c1 = array(
-						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
-					);
-					$txt_misc_c2 = array(
-						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
-						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
-					);											
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 263.7);
-					foreach ($txt_misc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(110, 263.7);
-					foreach ($txt_misc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						// Forma de Pago					
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12.5, 250);
+						printText($txt_pago_c1, $pdf, 55, 3.8);
+						printText($txt_pago_c3, $pdf, 100, 3.8);	
+						$pdf->SetXY(70, 250);
+						$pdf->SetXY(102, 250);
+						printText($txt_pago_c2, $pdf, 30, 3.8);
+						// Importes
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Misc
+						$txt_misc_c1 = array(
+							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+						);
+						$txt_misc_c2 = array(
+							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+							array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+						);											
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 263.7);
+						foreach ($txt_misc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(110, 263.7);
+						foreach ($txt_misc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
 					}
 					break;
 					default:
@@ -2317,74 +2331,79 @@
 						
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre']));
+						$pdf->SetX($x + 60);
+						$pdf->Write(5, "CODIGO: ".$row_Recordset1['productor_seguro_codigo']);
+						$y += 7;
+						
+						$pdf->SetXY($x, $y);
+						$pdf->SetFont('Arial', '', 8);
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
-						$pdf->Write(5, 'Cuerpo del endoso: '.$endoso_cuerpo);
+						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 					}
+					else {
+						// Footer
+						if ($y > 238) {
+							newPage($pdf, false);
+						}
+						$pdf->SetFillColor(229,233,253);
+						$pdf->SetDrawColor(138,162,234);
+						$pdf->SetLineWidth(0.6);
+						$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
+						$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
+						$pdf->SetFont('Arial','B',10);
+						$pdf->SetXY(65,242);
+						$pdf->Write(5, 'Forma de Pago');
+						$pdf->SetXY(168,242);
+						$pdf->Write(5, 'Importes');
 					
-	
+						$pdf->SetLineWidth(0.4);
+						$pdf->SetDrawColor(0,0,0);
+						$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
 					
-					// Footer
-					if ($y > 238) {
-						newPage($pdf, false);
+						// Forma de Pago					
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12.5, 250);
+						printText($txt_pago_c1, $pdf, 55, 3.8);
+						printText($txt_pago_c3, $pdf, 100, 3.8);	
+						$pdf->SetXY(70, 250);
+						$pdf->SetXY(102, 250);
+						printText($txt_pago_c2, $pdf, 30, 3.8);
+						// Importes
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(149, 250);
+						foreach ($txt_imp_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Misc
+						$txt_misc_c1 = array(
+							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+						);
+						$txt_misc_c2 = array(
+							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
+							array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
+						);											
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 263.7);
+						foreach ($txt_misc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(110, 263.7);
+						foreach ($txt_misc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
 					}
-					$pdf->SetFillColor(229,233,253);
-					$pdf->SetDrawColor(138,162,234);
-					$pdf->SetLineWidth(0.6);
-					$pdf->RoundedRect(10.5, 241, 135, 19, 1, '1234', 'DF');
-					$pdf->RoundedRect(146, 241, 60, 19, 1, '1234', 'DF');
-					$pdf->SetFont('Arial','B',10);
-					$pdf->SetXY(65,242);
-					$pdf->Write(5, 'Forma de Pago');
-					$pdf->SetXY(168,242);
-					$pdf->Write(5, 'Importes');
-					
-					$pdf->SetLineWidth(0.4);
-					$pdf->SetDrawColor(0,0,0);
-					$pdf->RoundedRect(10.5, 262, 195.5, 11, 1, '1234', 'D');
-					
-					// Forma de Pago					
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12.5, 250);
-					printText($txt_pago_c1, $pdf, 55, 3.8);
-					printText($txt_pago_c3, $pdf, 100, 3.8);	
-					$pdf->SetXY(70, 250);
-					$pdf->SetXY(102, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, 250);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Misc
-					$txt_misc_c1 = array(
-						array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-						array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
-					);
-					$txt_misc_c2 = array(
-						array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
-						array('maxwidth' => 95, 'text' => "CÓDIGO: ".$row_Recordset1['productor_seguro_codigo'])
-					);											
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 263.7);
-					foreach ($txt_misc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(110, 263.7);
-					foreach ($txt_misc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					
 					break;
 				default:
 					die ('Documento no definido');
