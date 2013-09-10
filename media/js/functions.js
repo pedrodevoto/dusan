@@ -860,6 +860,7 @@ $(document).ready(function() {
 			if ($(element).length>0) {
 				switch ($(element).attr('type')) {
 					case 'checkbox':
+					case 'radio':
 						if(value==1) {
 							$(element).attr('checked', true);
 						} else if (value==0) {
@@ -1210,8 +1211,8 @@ $(document).ready(function() {
 			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
 			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
 		});
-		$("#box-accidentes_asegurado_beneficiario").change(function() {
-			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', !($(this).prop('checked')));
+		$("#box-accidentes_asegurado_beneficiario_cargar").change(function() {
+			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento").prop('disabled', !($(this).prop('checked')));
 			$("#box-accidentes_asegurado_beneficiario_nombre").focus();
 		});
 		$("#btnBoxAsegurado, #btnBoxAseguradoReset").button();
@@ -1223,9 +1224,10 @@ $(document).ready(function() {
 				"box-accidentes_asegurado_actividad": {required: true},
 				"box-accidentes_asegurado_suma_asegurada": {required: true, number: true},
 				"box-accidentes_asegurado_gastos_medicos": {required: true, number: true},
-				"box-accidentes_asegurado_beneficiario_nombre": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
-				"box-accidentes_asegurado_beneficiario_documento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}},
-				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario").prop('checked')}, dateAR: true},
+				"box-accidentes_asegurado_beneficiario": {required: true},
+				"box-accidentes_asegurado_beneficiario_nombre": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}},
+				"box-accidentes_asegurado_beneficiario_documento": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}},
+				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}, dateAR: true},
 				
 			}
 		});		

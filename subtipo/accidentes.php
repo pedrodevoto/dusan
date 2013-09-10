@@ -37,9 +37,21 @@
 	        <input type="text" name="box-accidentes_asegurado_total" id="box-accidentes_asegurado_total" maxlength="12" class="ui-widget-content" style="width:200px" readonly />
 	    </p>
 		<p>
+			<label for="box-accidentes_asegurado_beneficiario" style="width:160px">Beneficiario legal</label>
+			<input type="radio" name="box-accidentes_asegurado_beneficiario" id="box-accidentes_asegurado_beneficiario_legal" value="1" checked />
+		</p>
+		<p>
+			<label for="box-accidentes_asegurado_beneficiario" style="width:160px">Beneficiario tomador</label>
+			<input type="radio" name="box-accidentes_asegurado_beneficiario" id="box-accidentes_asegurado_beneficiario_tomador" value="2" />
+		</p>
+		<p>
+			<label for="box-accidentes_asegurado_beneficiario" style="width:160px">Cargar beneficiario</label>
+			<input type="radio" name="box-accidentes_asegurado_beneficiario" id="box-accidentes_asegurado_beneficiario_cargar" value="3" />
+		</p>
+		<!-- <p>
 			<label for="box-accidentes_asegurado_beneficiario" style="width:160px">Cargar beneficiario</label>
 			<input type="checkbox" name="box-accidentes_asegurado_beneficiario" id="box-accidentes_asegurado_beneficiario" />
-		</p>
+		</p> -->
 		<p>
 	        <label for="box-accidentes_asegurado_beneficiario_nombre" style="width:160px">Nombre de beneficiario *</label>
 	        <input type="text" name="box-accidentes_asegurado_beneficiario_nombre" id="box-accidentes_asegurado_beneficiario_nombre" maxlength="50" class="ui-widget-content" style="width:200px" disabled />
@@ -52,10 +64,10 @@
 	        <label for="box-accidentes_asegurado_beneficiario_nacimiento" style="width:160px">Fecha de nacimiento de beneficiario *</label>
 	        <input type="text" name="box-accidentes_asegurado_beneficiario_nacimiento" id="box-accidentes_asegurado_beneficiario_nacimiento" maxlength="255" class="ui-widget-content box-date" style="width:200px" disabled />
 	    </p>
-		<p>
+		<!-- <p>
 			<label for="box-accidentes_asegurado_beneficiario_tomador" style="width:160px">Tomador</label>
 			<input type="checkbox" name="box-accidentes_asegurado_beneficiario_tomador" id="box-accidentes_asegurado_beneficiario_tomador" disabled />
-		</p>
+		</p> -->
 		<p align="center" style="margin-top:10px">
 			<input type="reset" name="btnBoxAseguradoReset" id="btnBoxAseguradoReset" value="Borrar" /> <input type="button" name="btnBoxAsegurado" id="btnBoxAsegurado" value="Agregar" />                                    
 	    </p>
