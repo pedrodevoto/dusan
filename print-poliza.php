@@ -619,7 +619,7 @@
 				die("Error: Detalle de Poliza no encontrado.");
 			}
 		
-			$query_Recordset3 = sprintf("SELECT accidentes_asegurado_nombre, accidentes_asegurado_documento, asegurado_actividad_nombre, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, IF(accidentes_asegurado_beneficiario=1, 'No', 'Si') AS accidentes_asegurado_legal, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento, IF(accidentes_asegurado_beneficiario_tomador=1, 'Tomador', 'No tomador') AS accidentes_asegurado_beneficiario_tomador FROM accidentes_asegurado JOIN asegurado_actividad ON asegurado_actividad.asegurado_actividad_id = accidentes_asegurado_actividad WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset3 = sprintf("SELECT accidentes_asegurado_nombre, accidentes_asegurado_documento, asegurado_actividad_nombre, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, IF(accidentes_asegurado_beneficiario<3, 'Si', 'No') AS accidentes_asegurado_legal, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento, IF(accidentes_asegurado_beneficiario=2, 'Tomador', '') AS accidentes_asegurado_beneficiario_tomador FROM accidentes_asegurado JOIN asegurado_actividad ON asegurado_actividad.asegurado_actividad_id = accidentes_asegurado_actividad WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
 			$asegurados = array();
 			while($row = mysql_fetch_assoc($Recordset3)) {
@@ -802,7 +802,7 @@
 								$pdf->SetX($x + 70);
 								$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
 								$pdf->SetX($x + 125);
-								$pdf->Write(5, $asegurado['accidentes_asegurado_legal']);
+								$pdf->Write(5, $asegurado['accidentes_asegurado_legal'] . ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? ' (' . $asegurado['accidentes_asegurado_beneficiario_tomador'] . ')' : ''));
 								$pdf->SetX($x + 145);
 								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 								$pdf->SetX($x + 170);
@@ -821,8 +821,6 @@
 									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_documento']);
 									$pdf->SetX($x + 70);
 									$pdf->Write(5, '(Beneficiario)');
-									$pdf->SetX($x + 125);
-									$pdf->Write(5, $asegurado['accidentes_asegurado_beneficiario_tomador']);
 									$count_asegurados++;
 									$count_asegurados_per_page++;
 								}
