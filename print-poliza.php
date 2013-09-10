@@ -107,8 +107,7 @@
 				array('maxwidth' => 67, 'text' => "Importado: ".formatCB($row_Recordset2['importado'],'W')),
 				array('maxwidth' => 67, 'text' => "Accesorios: ".formatCB($row_Recordset2['accesorios'],'W')),
 				array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo']),
-				array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No")),
-				array('maxwidth' => 67, 'text' => "Tarifa Infoauto: ".formatCB($row_Recordset2['infoauto'],'W'))
+				array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
 			);
 			$txt_patente = "Patente: ".$row_Recordset2['patente'];
 			$txt_gnc_c1 = array(
