@@ -38,8 +38,8 @@
 			// If record exists
 			if ($totalRows_Recordset2 === 0) {				
 				// Insert
-				$insertSQL = sprintf("INSERT INTO automotor (poliza_id, automotor_marca_id, modelo, castigado, patente, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, accesorios, zona_riesgo, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo_id, micro_grabado, cupon_vintrak, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, cobertura_tipo_id, franquicia, limite_rc, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total) 
-							          VALUES (%s, %s, UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s)",
+				$insertSQL = sprintf("INSERT INTO automotor (poliza_id, automotor_marca_id, modelo, castigado, patente, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, accesorios, zona_riesgo, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo_id, micro_grabado, cupon_vintrak, cupon_vintrak_fecha, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, cobertura_tipo_id, franquicia, limite_rc, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total) 
+							          VALUES (%s, %s, UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s)",
 										$poliza_id,												
 										GetSQLValueString($_POST['box-automotor_marca_id'], 'int'),
 										GetSQLValueString($_POST['box-modelo'], 'text'),
@@ -76,6 +76,7 @@
 											GetSQLValueString($_POST['box-equipo_rastreo_id'], 'int'),
 										GetSQLValueString(isset($_POST['box-micro_grabado']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-cupon_vintrak'], 'text'),
+										GetSQLValueString($_POST['box-cupon_vintrak_fecha'], 'date'),
 										GetSQLValueString(isset($_POST['box-antena']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString(isset($_POST['box-estereo']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString(isset($_POST['box-parlantes']) ? 'true' : '', 'defined','1','0'),
@@ -116,7 +117,7 @@
 			} else {
 				// Update
 				$updateSQL = sprintf("UPDATE automotor 
-										SET automotor_marca_id=%s, modelo=UPPER(TRIM(%s)), castigado=%s, patente=UPPER(TRIM(%s)), automotor_tipo_id=%s, uso=%s, ano=%s, automotor_carroceria_id=%s, combustible=%s, 0km=%s, importado=%s, nro_motor=UPPER(TRIM(%s)), nro_chasis=UPPER(TRIM(%s)), chapa=%s, pintura=%s, tipo_pintura=%s, tapizado=%s, color=UPPER(TRIM(%s)), accesorios=%s, zona_riesgo=%s, prendado=%s, acreedor_rs=UPPER(TRIM(%s)), acreedor_cuit=UPPER(TRIM(%s)), infoauto=%s, observaciones=%s, alarma=%s, corta_corriente=%s, corta_nafta=%s, traba_volante=%s, matafuego=%s, tuercas=%s, equipo_rastreo_id=%s, micro_grabado=%s, cupon_vintrak=%s, antena=%s, estereo=%s, parlantes=%s, aire=%s, cristales_electricos=%s, faros_adicionales=%s, cierre_sincro=%s, techo_corredizo=%s, direccion_hidraulica=%s, frenos_abs=%s, airbag=%s, cristales_tonalizados=%s, gps=%s, 
+										SET automotor_marca_id=%s, modelo=UPPER(TRIM(%s)), castigado=%s, patente=UPPER(TRIM(%s)), automotor_tipo_id=%s, uso=%s, ano=%s, automotor_carroceria_id=%s, combustible=%s, 0km=%s, importado=%s, nro_motor=UPPER(TRIM(%s)), nro_chasis=UPPER(TRIM(%s)), chapa=%s, pintura=%s, tipo_pintura=%s, tapizado=%s, color=UPPER(TRIM(%s)), accesorios=%s, zona_riesgo=%s, prendado=%s, acreedor_rs=UPPER(TRIM(%s)), acreedor_cuit=UPPER(TRIM(%s)), infoauto=%s, observaciones=%s, alarma=%s, corta_corriente=%s, corta_nafta=%s, traba_volante=%s, matafuego=%s, tuercas=%s, equipo_rastreo_id=%s, micro_grabado=%s, cupon_vintrak=%s, cupon_vintrak_fecha=%s, antena=%s, estereo=%s, parlantes=%s, aire=%s, cristales_electricos=%s, faros_adicionales=%s, cierre_sincro=%s, techo_corredizo=%s, direccion_hidraulica=%s, frenos_abs=%s, airbag=%s, cristales_tonalizados=%s, gps=%s, 
 											cubiertas_medidas=UPPER(TRIM(%s)), cubiertas_marca=UPPER(TRIM(%s)), cubiertas_desgaste_di=%s, cubiertas_desgaste_dd=%s, cubiertas_desgaste_ti=%s, cubiertas_desgaste_td=%s, cubiertas_desgaste_1ei=%s, cubiertas_desgaste_1ed=%s, cubiertas_desgaste_auxilio=%s, nro_oblea=UPPER(TRIM(%s)), nro_regulador=UPPER(TRIM(%s)), marca_regulador=UPPER(TRIM(%s)), marca_cilindro=UPPER(TRIM(%s)), venc_oblea=%s, nro_tubo=UPPER(TRIM(%s)), cobertura_tipo_id=%s, franquicia=%s, limite_rc=%s, servicio_grua=%s, valor_vehiculo=%s, valor_gnc=%s, valor_accesorios=%s, valor_total=%s 
 										WHERE automotor.automotor_id=%s",
 										GetSQLValueString($_POST['box-automotor_marca_id'], 'int'),
@@ -154,6 +155,7 @@
 											GetSQLValueString($_POST['box-equipo_rastreo_id'], 'int'),
 										GetSQLValueString(isset($_POST['box-micro_grabado']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-cupon_vintrak'], 'text'),
+										GetSQLValueString($_POST['box-cupon_vintrak_fecha'], 'date'),
 										GetSQLValueString(isset($_POST['box-antena']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString(isset($_POST['box-estereo']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString(isset($_POST['box-parlantes']) ? 'true' : '', 'defined','1','0'),
@@ -197,14 +199,16 @@
 			// Close Recordset: Automotor
 			mysql_free_result($Recordset2);									
 		
-			// Foto micrograbado
-			if ($_FILES['box-micrograbado_foto']['error'] == 0) {
-				if ($micrograbado_foto = processFoto($_FILES['box-micrograbado_foto'], $poliza_id)){
-					$sql = sprintf("INSERT INTO automotor_micrograbado_foto (poliza_id, automotor_micrograbado_foto_url, automotor_micrograbado_foto_thumb_url, automotor_micrograbado_foto_width, automotor_micrograbado_foto_height) VALUES (%s, '%s', '%s', %s, %s)", $poliza_id, $micrograbado_foto['filename'], $micrograbado_foto['thumb_filename'], $micrograbado_foto['width'], $micrograbado_foto['height']);
-					mysql_query($sql, $connection) or die(mysql_error());
+			// Fotos
+			$types = array('micrograbado', 'gnc');
+			foreach ($types as $type) {
+				if ($_FILES['box-'.$type.'_foto']['error'] == 0) {
+					if ($photo = processFoto($_FILES['box-'.$type.'_foto'], $poliza_id.$type)){
+						$sql = sprintf('INSERT INTO automotor_%1$s_foto (poliza_id, automotor_%1$s_foto_url, automotor_%1$s_foto_thumb_url, automotor_%1$s_foto_width, automotor_%1$s_foto_height) VALUES (%2$s, \'%3$s\', \'%4$s\', %5$s, %6$s)', $type, $poliza_id, $photo['filename'], $photo['thumb_filename'], $photo['width'], $photo['height']);
+						mysql_query($sql, $connection) or die(mysql_error());
+					}
 				}
 			}
-		
 			// Break
 			break;
 		case 'accidentes':

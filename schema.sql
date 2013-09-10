@@ -96,6 +96,7 @@ CREATE TABLE `automotor` (
   `equipo_rastreo_id` int(11) unsigned DEFAULT NULL,
   `micro_grabado` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `cupon_vintrak` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cupon_vintrak_fecha` date DEFAULT NULL,
   `antena` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `estereo` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `parlantes` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -150,6 +151,19 @@ CREATE TABLE `automotor_carroceria` (
   `automotor_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
   `automotor_carroceria_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`automotor_carroceria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_gnc_foto`;
+CREATE TABLE `automotor_gnc_foto` (
+  `automotor_gnc_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_gnc_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_gnc_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_gnc_foto_width` int(11) NOT NULL,
+  `automotor_gnc_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_gnc_foto_id`),
+  KEY `poliza_id` (`poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -388,7 +402,7 @@ CREATE TABLE `endoso` (
   `poliza_id` int(10) unsigned NOT NULL,
   `endoso_fecha_pedido` date NOT NULL,
   `endoso_tipo_id` int(11) NOT NULL,
-  `endoso_cuerpo` text COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_cuerpo` text COLLATE utf8_unicode_ci,
   `endoso_numero` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `endoso_fecha_compania` date DEFAULT NULL,
   `endoso_completo` tinyint(1) NOT NULL,
@@ -650,4 +664,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-09-10 10:17:24
+-- 2013-09-10 17:32:38

@@ -1133,6 +1133,7 @@ $(document).ready(function() {
 				// Populate DIVs
 				populateDiv_Fotos('poliza', id);
 				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
+				populateDiv_Fotos('automotor_gnc', id, 'GNC');
 				
 				// AJAX file form
 				$("#fileForm").ajaxForm({
@@ -3838,6 +3839,9 @@ $(document).ready(function() {
 				// Populate form, then initialize
 				$.when(populateFormBoxPolizaDet(id)).then(function(){				
 					
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+				
 					$('#box-suma_asegurada').val($('#box-valor_total').val());
 					
 					// Validate form
@@ -3847,6 +3851,7 @@ $(document).ready(function() {
 					$("#btnBox").click(function() {
 						// if (customValidations()) {
 							if (validateForm.form() && customValidations()) {					
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								processFormPolizaDet(id, fromcreate);
 							}
 						// }

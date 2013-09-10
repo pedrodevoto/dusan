@@ -280,6 +280,10 @@
         <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
         <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:220px" />
     </p>
+	<p>
+		<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
+        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
+	</p>
     <p>
         <label for="box-micrograbado_foto">Imagen</label>
         <input type="file" name="box-micrograbado_foto" id="box-micrograbado_foto" class="ui-widget-content" style="width:220px" />
@@ -408,6 +412,12 @@
         <label for="box-nro_tubo">Nº Tubo</label>
         <input type="text" name="box-nro_tubo" id="box-nro_tubo" maxlength="50" class="ui-widget-content" style="width:220px" />
     </p>                        
+    <p>
+        <label for="box-gnc_foto">Imagen</label>
+        <input type="file" name="box-gnc_foto" id="box-gnc_foto" class="ui-widget-content" style="width:220px" />
+    </p>
+	<div id="divBoxFotosGNC" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
+	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
