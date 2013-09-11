@@ -149,39 +149,57 @@
                 <form id="frmFiltro" name="frmFiltro">
                     <table cellpadding="5" cellspacing="0" border="0" width="100%">
                         <tr>                   
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="poliza_numero">Poliza N°</label>                                
                                 <input type="text" name="poliza_numero" id="poliza_numero" maxlength="20" />
                             </td>
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="seguro_nombre">Compañía</label>                                
                                 <input type="text" name="seguro_nombre" id="seguro_nombre" maxlength="255" />
                             </td>
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="sucursal_nombre">Sucursal</label>                                
                                 <input type="text" name="sucursal_nombre" id="sucursal_nombre" maxlength="255" />
                             </td>
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="productor_nombre">Productor</label>                                
                                 <input type="text" name="productor_nombre" id="productor_nombre" maxlength="255" />
                             </td>
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="cliente_nombre">Cliente</label>                                
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
-                            <td width="16%">
+                            <td width="12%">
                                 <label for="poliza_estado_id">Estado</label>                                
                                 <select name="poliza_estado_id" id="poliza_estado_id">
 								</select>
                             </td>
+                            <td width="12%">
+                                <label for="poliza_medio_pago">Forma de pago</label>                                
+                                <select name="poliza_medio_pago" id="poliza_medio_pago">
+									<option value="">Todos</option>
+									<option value="Tarjeta de Crédito">TC</option>
+									<option value="Débito Bancario">Débito Bancario</option>
+									<option value="Cuponera">Cup</option>
+									<option value="Directo">Directo</option>
+								</select>
+                            </td>
+                            <td width="12%">
+                                <label for="poliza_al_dia">Al día</label>                                
+                                <select name="poliza_al_dia" id="poliza_al_dia">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+                            </td>
                         </tr>
                         <tr>                                
-                            <td colspan="6" align="center">
+                            <td colspan="8" align="center">
                             	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
                             </td>  
                         </tr>                                 
                         <tr>                                
-                            <td colspan="6" align="center">
+                            <td colspan="8" align="center">
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    

@@ -25,7 +25,8 @@
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
 				populateListPlizaEstado('poliza_estado_id', 'main');
-							
+				populateListCoberturaTipo('cobertura_tipo_id', 'main');
+				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
 
@@ -177,6 +178,58 @@
                                 <label for="poliza_estado_id">Estado</label>                                
                                 <select name="poliza_estado_id" id="poliza_estado_id">
 								</select>
+                            </td>
+                        </tr>
+                        <tr>                   
+                            <td width="14%">
+                                <label for="poliza_medio_pago">Forma de pago</label>                                
+                                <select name="poliza_medio_pago" id="poliza_medio_pago">
+									<option value="">Todos</option>
+									<option value="Tarjeta de Crédito">TC</option>
+									<option value="Débito Bancario">Débito Bancario</option>
+									<option value="Cuponera">Cup</option>
+									<option value="Directo">Directo</option>
+								</select>
+                            </td>
+                            <td width="14%">
+                                <label for="fotos">Fotos</label>                                
+                                <select name="fotos" id="fotos">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+                            </td>
+                            <td width="14%">
+                                <label for="castigado">Castigado</label>                                
+                                <select name="castigado" id="castigado">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+                            </td>
+                            <td width="14%">
+                                <label for="micro_grabado">Micrograbado</label>                                
+                                <select name="micro_grabado" id="micro_grabado">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+                            </td>
+                            <td width="14%">
+                                <label for="cobertura_tipo_id">Cobertura</label>                                
+                                <select name="cobertura_tipo_id" id="cobertura_tipo_id">
+								</select>
+                            </td>
+                            <td width="14%">
+                                <label for="poliza_al_dia">Al día</label>                                
+                                <select name="poliza_al_dia" id="poliza_al_dia">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+                            </td>
+                            <td width="14%">
+
                             </td>
                         </tr>
                         <tr>                                

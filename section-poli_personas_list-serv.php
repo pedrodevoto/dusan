@@ -20,6 +20,7 @@
 			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
 	}
 	$query_Recordset1_group = " GROUP BY poliza.poliza_id";
+	$query_Recordset1_having = " HAVING 1";
 	
 	// Filter by: poliza_numero
 	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
@@ -45,7 +46,14 @@
 	if(isset($_GET['poliza_estado_id']) && $_GET['poliza_estado_id']!=""){	
 		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id = %s",GetSQLValueString($_GET['poliza_estado_id'], "int"));
 	}
-	
+	// Filter by: poliza_medio_pago
+	if(isset($_GET['poliza_medio_pago']) && $_GET['poliza_medio_pago']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza.poliza_medio_pago = %s",GetSQLValueString($_GET['poliza_medio_pago'], "text"));
+	}
+	// Filter by: poliza_al_dia
+	if(isset($_GET['poliza_al_dia']) && $_GET['poliza_al_dia']!=""){	
+		$query_Recordset1_having .= sprintf(" AND poliza_al_dia = %s", GetSQLValueString($_GET['poliza_al_dia']=='1'?'Sí':'No', "text"));
+	}
 ?>
 <?php
 
@@ -113,7 +121,7 @@
 			}			
 		
 			/* SQL queries: Get data to display */			
-			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $query_Recordset1_group $sOrder $sLimit";
+			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $query_Recordset1_group $query_Recordset1_having $sOrder $sLimit";
 			$Recordset1 = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());	
 		
 			/* Data set length after filtering */
