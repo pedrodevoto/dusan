@@ -12,6 +12,7 @@
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.dialog.min.js"></script>
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.mouse.min.js"></script>        
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.draggable.min.js"></script>
+		<script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.slider.min.js"></script>
         
 		<!-- Set datepicker defaults -->
 		<script type="text/javascript" language="javascript" src="media/js/datepicker.setdefault.js"></script> 
@@ -50,7 +51,8 @@
         <script type="text/javascript" language="javascript" src="media/js/functions.js"></script>
         	
 		<!-- Date functions -->
-		<script type="text/javascript" language="javascript" src="media/js/date.js"></script>         	
+		<script type="text/javascript" language="javascript" src="media/js/date.js"></script>        
+		<script type="text/javascript" language="javascript" src="media/js/jquery.datetimepicker.js"></script>    	
         
         <!-- Base Style -->                     
         <link rel="stylesheet" href="media/css/base.css" />

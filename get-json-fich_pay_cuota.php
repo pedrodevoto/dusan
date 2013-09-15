@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cuota.cuota_id, cuota_nro, DATE_FORMAT(cuota_periodo,'%%Y-%%m') AS cuota_periodo, cuota_monto, DATE_FORMAT(cuota_vencimiento, '%%d/%%m/%%y') as cuota_vencimiento, cuota_estado, DATE_FORMAT(cuota_fe_pago, '%%d/%%m/%%y %%H:%%i') as cuota_fe_pago, cuota_recibo, cuota_pfc FROM cuota WHERE cuota.poliza_id=%s",
+	$query_Recordset1 = sprintf("SELECT poliza_id, cuota.cuota_id, cuota_nro, cuota_monto, cuota_fe_pago FROM cuota WHERE cuota_id=%s",
 							GetSQLValueString($colname_Recordset1, "int"));
 							
 	// Recordset: Main
@@ -24,12 +24,16 @@
 
 	// Output
 	$output = array();
-	for ($i=0; $i<$totalRows_Recordset1; $i++) {
-		foreach ($row_Recordset1 as $key=>$value) {
-			$output[$i][$key] = strip_tags($value);
-		}		
-		$row_Recordset1 = mysql_fetch_assoc($Recordset1);		
-	}
+	foreach ($row_Recordset1 as $key=>$value) {
+			$output[$key] = strip_tags($value);
+	}		
+	
+	$sql = sprintf("SELECT cuota_vencimiento FROM cuota WHERE poliza_id=%s AND cuota_nro=%s + 1",
+							$output['poliza_id'],
+							$output['cuota_nro']);
+	$res = mysql_query($sql);
+	list($output['cuota_vencimiento']) = mysql_fetch_array($res);
+	
 	echo json_encode($output);
 
 	// Close Recordset: Main	

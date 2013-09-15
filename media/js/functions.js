@@ -42,6 +42,9 @@ $(document).ready(function() {
 	$.validator.addMethod("dateAR", function(value, element) {
 		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
 	},'Por favor ingresar una fecha en formato dd/mm/aa.');
+	$.validator.addMethod("datetime", function(value, element) {
+		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)? \d\d:\d\d$/);
+	}, 'Por favor ingrese una fecha en formato dd/mm/aa hh:mm');
 	
 	customValidations = function() {
 		var objects = [
@@ -152,6 +155,17 @@ $(document).ready(function() {
 				}
             }
 		});
+	}
+	initDateTimePicker = function(clase) {
+		$("."+clase).each(function() {
+			var date = $(this).datetimepicker({
+				currentText: 'Ahora',
+				closeText: 'Listo',
+				timeText: 'Horario',
+				hourText: 'Hora',
+				minuteText: 'Minuto',
+			})
+		})
 	}
 	
 	<!-- Filter functions -->
@@ -1430,6 +1444,28 @@ $(document).ready(function() {
 		});	
 		return dfd.promise();				
 	}
+	populateFormBoxPayCuota = function(id) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-fich_pay_cuota.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');				
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");															
+					// Resolve
+					dfd.resolve();														
+				}
+			}
+		});	
+		return dfd.promise();	
+	}
 	
 	<!-- Other form functions -->
 	assignClientToPoliza = function(id){
@@ -1700,13 +1736,8 @@ $(document).ready(function() {
 					result += '<tr><td><strong>Cliente:</strong> ' + j.cliente_nombre + '</td></tr>';
 					result += '<tr><td><strong>Compañía:</strong> ' + j.seguro_nombre + '</td></tr>';
 					result += '<tr><td><strong>Productor:</strong> ' + j.productor_nombre + '</td></tr>';
-					result += '<tr><td><strong>Poliza Nº:</strong> ';
-					if (j.poliza_numero == '') {
-						result += '-';
-					} else {
-						result += j.poliza_numero;
-					}
-					result += '</td></tr>';					
+					result += '<tr><td><strong>Poliza Nº:</strong> ' + (j.poliza_numero==''?'-':j.poliza_numero) + '</td></tr>';
+					result += '<tr><td><strong>Detalle de póliza: </strong> ' + j.detalle_poliza + '</td></tr>';
 					// Close Row and Table
 					result += '</tr>';											
 					result += '</table>';
@@ -1970,9 +2001,9 @@ $(document).ready(function() {
 						result += '<tr>';
 						result += '<td height="21">' + object.cuota_nro + '</td>';
 						result += '<td>' + object.cuota_periodo + '</td>';	
-						result += '<td><span class="jeditrow1" id="monto_'+object.cuota_id+'">'+object.cuota_monto+'</span></td>';
+						result += '<td>'+object.cuota_monto+'</td>';
 						result += '<td><span class="jeditrow2" id="vencimiento_'+object.cuota_id+'">'+object.cuota_vencimiento+'</span></td>';
-						result += '<td><span class="jeditrow3" id="estado_' + object.cuota_id + '">' + object.cuota_estado + '</span></td>';
+						result += '<td>' + object.cuota_estado + '</td>';
 						result += '<td>' + object.cuota_fe_pago + '</td>';	
 						result += '<td>' + object.cuota_recibo + '</td>';
 						result += '<td>';
@@ -1988,10 +2019,11 @@ $(document).ready(function() {
 						result += '</td>';
 						result += '<td>';						
 						if (object.cuota_estado === '2 - Pagado') {
+							result += '<span onclick="editCuotaObservacion('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-comment" title="Observación"></span>';
 							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
 							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Digital"></span>';
 						} else {
-							result += '&nbsp;';
+							result += '<span onclick="openBoxPayCuota('+id+', '+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
 						}
 						result += '</td>';						
 						result += '</tr>';
@@ -2001,27 +2033,12 @@ $(document).ready(function() {
 					// Populate DIV					
 					$('#divBoxList').html(result);
 					// Initialize JEditable
-					$('.jeditrow1').editable('update-cuota_monto.php', { 
-						indicator: 'Guardando...',
-						tooltip: 'Click para editar...',
-						width: '70',
-						height: '10'
-					});	
 					$('.jeditrow2').editable('update-cuota_venc.php', { 
 						indicator: 'Guardando...',
 						tooltip: 'Click para editar...',
 						width: '80',
 						height: '10'
-					});										
-					$('.jeditrow3').editable('update-cuota_estado.php', { 
-						indicator: 'Guardando...',
-						tooltip: 'Click para editar...',
-						type: 'select',
-     					loadurl: 'get-json-cuota_estado.php',
-						callback: function(value, settings) {
-							populateDiv_Cuotas(id);
-						}
-					});					
+					});														
 				}
 			}
 		});						
@@ -2087,6 +2104,16 @@ $(document).ready(function() {
 				}
 				// Populate DIV					
 				$('#divBoxList').html(result);					
+			}
+		});
+	}
+	
+	editCuotaObservacion = function(id) {
+		$.getJSON("get-json-cuota_observacion.php?id="+id, {}, function(j) {
+			var comment = prompt('Ingrese las observaciones', j);
+			if (comment) {
+				var data = {'id': id, 'comment': comment};
+				$.post('update-cuota_observacion.php', data);
 			}
 		});
 	}
@@ -2654,6 +2681,26 @@ $(document).ready(function() {
 			}
 		});		
 	}			
+	processFormPayCuota = function(poliza_id, cuota_id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);		
+		// Post				
+		$.post("process-paycuota.php", $("#frmBox").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function(){					
+					openBoxCuota(poliza_id);
+					window.open('print-cuota.php?id='+cuota_id);
+				});
+			}
+		});	
+	}
 	
 	<!-- Delete via Link functions -->
 	deleteProdSeg = function (id, productor_id) {		
@@ -4126,6 +4173,59 @@ $(document).ready(function() {
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
 				populateDiv_Endosos(id);													
+			}
+		});	
+	}
+	openBoxPayCuota = function(poliza_id, cuota_id) {
+		$.colorbox({
+			title:'Pagar Cuota',
+			href:'box-pay_cuota.php',
+			width:'900px',
+			height:'100%',
+			onComplete: function() {
+				
+				$("#btnBox").button();
+				$("#btnCancel").button().click(function() {
+					openBoxCuota(poliza_id);
+					return false;
+				});
+				
+				formDisable('frmBox','ui',true);
+				
+				// Populate DIVs
+				populateDiv_Poliza_Info(poliza_id);
+				
+				$.when(
+					populateFormBoxPayCuota(cuota_id)
+				).then(function() {
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					initDateTimePicker('box-datetime');
+					$('#box-cuota_fe_pago').val(Date.now().toString("dd/MM/yyyy HH:mm"));
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-cuota_fe_pago": {required: true, datetime: true},
+							"box-cuota_monto": {required: true},
+							"box-cuota_vencimiento": {dateAR: true},
+						},
+						errorPlacement: function(error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					// Button action	
+					$("#btnBox").click(function() {
+						if (validateForm.form()) {
+							$('.box-date, .box-datetime').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							processFormPayCuota(poliza_id, cuota_id);
+						}
+					});
+					// Enable form							
+					formDisable('frmBox','ui',false);
+					
+				});								
+								
 			}
 		});	
 	}

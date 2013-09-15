@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cliente_nombre, seguro_nombre, productor_nombre, poliza_numero FROM poliza JOIN (cliente, productor_seguro, seguro, productor) ON (poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id) WHERE poliza.poliza_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT cliente_nombre, seguro_nombre, productor_nombre, poliza_numero, CONCAT('Patente: ', patente, ', Marca: ', automotor_marca_nombre, ', Modelo: ', modelo) as detalle_poliza FROM poliza JOIN (cliente, productor_seguro, seguro, productor) ON (poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id) LEFT JOIN (automotor, automotor_marca) ON automotor.poliza_id = poliza.poliza_id AND automotor.automotor_marca_id = automotor_marca.automotor_marca_id WHERE poliza.poliza_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
