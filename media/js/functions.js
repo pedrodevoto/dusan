@@ -2027,7 +2027,7 @@ $(document).ready(function() {
 								result += '<span onclick="openBoxPayCuota('+id+', '+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
 							}
 							if (object.master) {
-								result += '<sapn onclick="updateCuotaAnular('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
+								result += '<sapn onclick="updateCuotaAnular('+object.cuota_id+', '+id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
 							}
 						}
 						result += '</td>';						
@@ -2607,10 +2607,10 @@ $(document).ready(function() {
 			}
 		});
 	}	
-	updateCuotaAnular = function(id) {
+	updateCuotaAnular = function(cuota_id, poliza_id) {
 		if (confirm('Seguro desea anular la cuota? Esta operación no puede ser revertida')) {
-			$.post('update-cuota_anular.php', {'id': id}, function(data) {
-				alert(data);
+			$.post('update-cuota_anular.php', {'id': cuota_id}, function(data) {
+				openBoxCuota(poliza_id);
 			});
 		}
 	}
