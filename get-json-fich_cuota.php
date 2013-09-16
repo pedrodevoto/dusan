@@ -27,6 +27,7 @@
 	for ($i=0; $i<$totalRows_Recordset1; $i++) {
 		foreach ($row_Recordset1 as $key=>$value) {
 			$output[$i][$key] = strip_tags($value);
+			$output[$i]['master'] = $_SESSION['ADM_UserGroup'] == 'master';
 		}		
 		$row_Recordset1 = mysql_fetch_assoc($Recordset1);		
 	}

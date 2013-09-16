@@ -2018,12 +2018,17 @@ $(document).ready(function() {
 						}
 						result += '</td>';
 						result += '<td>';						
-						if (object.cuota_estado === '2 - Pagado') {
-							result += '<span onclick="editCuotaObservacion('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-comment" title="Observación"></span>';
-							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
-							result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Digital"></span>';
-						} else {
-							result += '<span onclick="openBoxPayCuota('+id+', '+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+						if (object.cuota_estado != '3 - Anulado') {
+							if (object.cuota_estado === '2 - Pagado') {
+								result += '<span onclick="editCuotaObservacion('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-comment" title="Observación"></span>';
+								result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
+								result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Digital"></span>';
+							} else {
+								result += '<span onclick="openBoxPayCuota('+id+', '+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+							}
+							if (object.master) {
+								result += '<sapn onclick="updateCuotaAnular('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
+							}
 						}
 						result += '</td>';						
 						result += '</tr>';
@@ -2602,6 +2607,13 @@ $(document).ready(function() {
 			}
 		});
 	}	
+	updateCuotaAnular = function(id) {
+		if (confirm('Seguro desea anular la cuota? Esta operación no puede ser revertida')) {
+			$.post('update-cuota_anular.php', {'id': id}, function(data) {
+				alert(data);
+			});
+		}
+	}
 	
 	<!-- Process via form functions -->	
 	processFormPolizaDet = function(id, fromcreate){													
