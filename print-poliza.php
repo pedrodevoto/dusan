@@ -79,8 +79,8 @@
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
 			$txt_titular_c2 = array(
-				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
-				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => ""),
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),								
 				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
 				array('maxwidth' => 47, 'text' => ""),																
 				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
@@ -89,7 +89,6 @@
 			$txt_poliza = array(
 				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
 				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
-				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
 				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
@@ -649,8 +648,8 @@
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
 			$txt_titular_c2 = array(
-				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
 				array('maxwidth' => 47, 'text' => ""),																
 				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
@@ -659,7 +658,6 @@
 			$txt_poliza = array(
 				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
 				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
-				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
 				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
@@ -1335,8 +1333,8 @@
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
 			$txt_titular_c2 = array(
-				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
 				array('maxwidth' => 47, 'text' => ""),																
 				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
@@ -1345,7 +1343,6 @@
 			$txt_poliza = array(
 				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
 				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
-				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
 				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
@@ -2014,8 +2011,8 @@
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
 			$txt_titular_c2 = array(
-				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => ""),								
+				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
 				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['contacto_cp']),
 				array('maxwidth' => 47, 'text' => ""),																
 				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit']),
@@ -2024,7 +2021,6 @@
 			$txt_poliza = array(
 				array('maxwidth' => 55, 'text' => "Tipo de Seguro: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),			
 				array('maxwidth' => 55, 'text' => "PÓLIZA Nº: ".$row_Recordset1['poliza_numero']),
-				array('maxwidth' => 55, 'text' => "Renueva Póliza Nº: ".$row_Recordset1['poliza_renueva_num']),
 				array('maxwidth' => 55, 'text' => "Fecha Solicitud: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_fecha_solicitud']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
