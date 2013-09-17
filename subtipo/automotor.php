@@ -164,11 +164,11 @@
         </select>
     </p>
     <p>
-        <label for="box-0km">0 KM *</label>
+        <label for="box-0km">0 KM</label>
         <input type="checkbox" name="box-0km" id="box-0km" value="1" />
     </p>
     <p>
-        <label for="box-importado">Importado *</label>
+        <label for="box-importado">Importado</label>
         <input type="checkbox" name="box-importado" id="box-importado" value="1" />
     </p>
     <p>
