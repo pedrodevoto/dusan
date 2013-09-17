@@ -11,10 +11,10 @@ $(document).ready(function() {
 			case 'box':
 				$.colorbox.close();
 				document.location.href='index.php';
-				break;	
+				break;
 		}
 	}
-	
+
 	<!-- Formatting functions -->
 	nullToSpace = function(value) {
 		if (value==null) {
@@ -33,11 +33,11 @@ $(document).ready(function() {
 
 		while ( startYear <= currentYear ) {
 			years.push(startYear++);
-		} 
+		}
 
 		return years;
 	}
-		
+
 	<!-- Custom date validation -->
 	$.validator.addMethod("dateAR", function(value, element) {
 		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
@@ -45,35 +45,35 @@ $(document).ready(function() {
 	$.validator.addMethod("datetime", function(value, element) {
 		return value=='' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)? \d\d:\d\d$/);
 	}, 'Por favor ingrese una fecha en formato dd/mm/aa hh:mm');
-	
+
 	customValidations = function() {
 		var objects = [
 			{
-				'name': 'tv_aud_vid_total', 
+				'name': 'tv_aud_vid_total',
 				'desc': 'Todo Riesgo Equipos de TV - Audio y Video en Domicilio a Primer Riesgo Absoluto',
-				'min': 100, 
+				'min': 100,
 				'max': 30000
 			},
 			{
-				'name': 'obj_esp_prorrata_total', 
+				'name': 'obj_esp_prorrata_total',
 				'desc': 'Robo y/o Hurto de Objetos Específicos y/o Aparatos Electrodomésticos a Prorrata',
-				'min': 100, 
+				'min': 100,
 				'max': 20000
 			},
 			{
-				'name': 'equipos_computacion_total', 
+				'name': 'equipos_computacion_total',
 				'desc': 'Todo Riesgo Equipos de Computación en Domicilio a Primer Riesgo Absoluto',
-				'min': 1500, 
+				'min': 1500,
 				'max': 10000
 			},
 			{
-				'name': 'film_foto_total', 
+				'name': 'film_foto_total',
 				'desc': 'Robo de Filmadoras y/o Cam. Fotográficas a Prorrata',
-				'min': 500, 
+				'min': 500,
 				'max': 5000
 			},
 		];
-	
+
 		for (var i = 0; i < objects.length;i++) {
 			var obj = objects[i];
 			var value = Number($('#'+obj.name).text());
@@ -84,12 +84,12 @@ $(document).ready(function() {
 		}
 		return true;
 	}
-	
+
 	<!-- List functions -->
 	sortListAlpha = function(field) {
 		$("select#"+field).html($("select#"+field+" option").sort(function (a, b) {
 			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-		}));			
+		}));
 	}
 	sortListValue = function (field) {
 		$("#"+field).html($("#"+field+" option").sort(function (a, b) {
@@ -102,23 +102,23 @@ $(document).ready(function() {
 		$("select#"+field).prepend($('<option />').attr('value', optionvalue).text(optiontext));
 	}
 	selectFirstItem = function (field) {
-		$("select#"+field).val($("select#"+field+" option:first").val());		
+		$("select#"+field).val($("select#"+field+" option:first").val());
 	}
-	
+
 	<!-- Initialize Special Field functions -->
 	initDatePickersDaily = function (clase, clear, maxdate) {
 		$("."+clase).each(function() {
 			var date = $(this).datepicker({
-				dateFormat: 'yy-mm-dd'					
-			});	
-			if (clear==true) {				
+				dateFormat: 'yy-mm-dd'
+			});
+			if (clear==true) {
 				date.click(function () {
 					$(this).val("");
 				});
 			}
-			if (maxdate!=null) {				
-				date.datepicker("option", "maxDate", maxdate);			
-			}			
+			if (maxdate!=null) {
+				date.datepicker("option", "maxDate", maxdate);
+			}
 		});
 	}
 	initDatePickersWeekly = function (clase, clear, weekday) {
@@ -126,12 +126,12 @@ $(document).ready(function() {
 			var date = $(this).datepicker({
 				dateFormat: 'yy-mm-dd',
 				beforeShowDay: function(date){ return [date.getDay() == weekday,""]}
-			});					
-			if (clear==true) {				
+			});
+			if (clear==true) {
 				date.click(function () {
 					$(this).val("");
 				});
-			}			
+			}
 		});
 	}
 	initAutocompleteCliente = function (field, context) {
@@ -167,24 +167,24 @@ $(document).ready(function() {
 			})
 		})
 	}
-	
+
 	<!-- Filter functions -->
-	disableFilters = function(disabled) {					
+	disableFilters = function(disabled) {
 		$(".tobedisabled").each(function() {
 			if (disabled==true) {
-				$(this).attr("disabled","disabled");			
+				$(this).attr("disabled","disabled");
 			} else {
 				$(this).removeAttr('disabled');
 			}
-		}); 					
-	}									
+		});
+	}
 	checkIfDateFieldIsEmpty = function() {
 		var validate = true;
 		$(".datedisabler").each(function() {
 			if ($(this).val() != "") {
 				validate = false;
 			}
-		}); 
+		});
 		return validate;
 	}
 	checkIfTextFieldIsEmpty = function() {
@@ -193,33 +193,33 @@ $(document).ready(function() {
 			if ($(this).val() != "") {
 				validate = false;
 			}
-		}); 
+		});
 		return validate;
-	}				
+	}
 	checkFilters = function() {
 		if (checkIfDateFieldIsEmpty() && checkIfTextFieldIsEmpty()) {
 			disableFilters(false);
 		} else {
 			disableFilters(true);
 		}
-	}	
-	listenToTxtForDisable = function() {
-		$(".txtdisabler").each(function() {							
-			$(this).keyup(function () {
-				checkFilters();				
-			});					
-		}); 
 	}
-	listenToDateForDisable = function() {	
+	listenToTxtForDisable = function() {
+		$(".txtdisabler").each(function() {
+			$(this).keyup(function () {
+				checkFilters();
+			});
+		});
+	}
+	listenToDateForDisable = function() {
 		$(".datedisabler").each(function() {
 			$(this).click(function () {
 				checkFilters();
-			});		
+			});
 			$(this).change(function() {
 				checkFilters();
 			});
-		});	
-	}	
+		});
+	}
 	listenToTxtForSubmit = function () {
 		$("form#frmFiltro :input[type=text]").each(function() {
 			$(this).keypress(function(e) {
@@ -228,32 +228,32 @@ $(document).ready(function() {
 					return false;
 				}
 			});
-		});		
+		});
 	}
-	
+
 	<!-- Form Disable/Enable/Clear functions -->
 	formDisable = function (form, type, disabled) {
 		// Enable-disable general inputs
-        $("#"+form+" textarea").attr("disabled", disabled);		
-        $("#"+form+" select").attr("disabled", disabled);		
+        $("#"+form+" textarea").attr("disabled", disabled);
+        $("#"+form+" select").attr("disabled", disabled);
         $("#"+form+" input[type='text']").attr("disabled", disabled);
-        $("#"+form+" input[type='password']").attr("disabled", disabled);		
+        $("#"+form+" input[type='password']").attr("disabled", disabled);
         $("#"+form+" input[type='radio']").attr("disabled", disabled);
-        $("#"+form+" input[type='checkbox']").attr("disabled", disabled);	
+        $("#"+form+" input[type='checkbox']").attr("disabled", disabled);
 		$("#"+form+" input[type='number']").attr("disabled", disabled);
 		// Enable-disable buttons
 		if (type=='ui') {
-			$("#"+form+" input[type='button']").button("option", "disabled", disabled);	
-			$("#"+form+" input[type='submit']").button("option", "disabled", disabled);						
+			$("#"+form+" input[type='button']").button("option", "disabled", disabled);
+			$("#"+form+" input[type='submit']").button("option", "disabled", disabled);
 		} else {
 			$("#"+form+" input[type='button']").attr("disabled", disabled);
-			$("#"+form+" input[type='submit']").attr("disabled", disabled);			
+			$("#"+form+" input[type='submit']").attr("disabled", disabled);
 		}
 	}
-	
+
 	<!-- Populate List functions -->
 	populateListUsuario_Acceso = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-usr_acceso.php",
 			dataType: 'json',
@@ -264,25 +264,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options by index value
 					sortListValue(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListUsuario_Sucursal = function(field, context, all){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-suc.php",
 			dataType: 'json',
@@ -293,25 +293,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options by index value
 					sortListValue(field);
 					// Append option: "all"
 					if (all) appendListItem(field, '', 'Todos');
 					// Select first item
-					// selectFirstItem(field);	
-					dfd.resolve();								
+					// selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListProductor_IVA = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-pro_iva.php",
 			dataType: 'json',
@@ -322,26 +322,26 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
-	
+
 	populateListSuc = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-suc.php",
 			dataType: 'json',
@@ -352,26 +352,26 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
-	
+
 	populateListSeguro = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-seguro.php",
 			dataType: 'json',
@@ -382,25 +382,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListCliente_Sexo = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-clie_sexo.php",
 			dataType: 'json',
@@ -411,25 +411,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListCliente_TipoDoc = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-clie_tipodoc.php",
 			dataType: 'json',
@@ -440,25 +440,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListCliente_RegTipo = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-clie_regtipo.php",
 			dataType: 'json',
@@ -469,25 +469,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListCliente_CF = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-clie_cf.php",
 			dataType: 'json',
@@ -498,25 +498,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListContacto_Tipo = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-contacto_tipo.php",
 			dataType: 'json',
@@ -527,25 +527,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListTipoPoliza = function(field, context, include){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-tipopoliza.php?include="+include,
 			dataType: 'json',
@@ -556,49 +556,49 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListSubtipoPoliza = function(parent_id, field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-subtipopoliza.php?id="+parent_id,
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key, value) { 
+				} else {
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
-	}	
+		});
+		return dfd.promise();
+	}
 	populateListPoliza_Vigencia = function(field, context, tipo_poliza){
 		var vigencia;
 		var options = '<option value=\'\'>Todos</option>';
@@ -620,7 +620,7 @@ $(document).ready(function() {
 		$('#'+field).html(options);
 	}
 	populateListPoliza_Cuotas = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-poliza_cuotas.php",
 			dataType: 'json',
@@ -631,25 +631,25 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListPoliza_MP = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-poliza_mp.php",
 			dataType: 'json',
@@ -660,179 +660,179 @@ $(document).ready(function() {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					var options = ''; 
-					$.each(j, function(key, value) { 
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListProductorSeguro_Productor = function(seguro_id, sucursal_id, field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-productorseguro_productor.php?id="+seguro_id+'&id2='+sucursal_id,
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key, value) { 
+				} else {
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
-	}												
+		});
+		return dfd.promise();
+	}
 	populateListAseguradoActividad = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-asegurado_actividad.php",
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key, value) { 
+				} else {
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListPlizaEstado = function(field, context){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-poliza_estado.php",
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key, value) { 
+				} else {
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListEndosoTipo = function(field, context) {
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-endoso_tipo.php",
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key0, value0) { 
+				} else {
+					var options = '';
+					$.each(j, function(key0, value0) {
 						options += '<optgroup label="'+key0+'">';
 						$.each(value0, function(key, value) {
 							options += '<option value="' + key + '">' + value + '</option>';
 						})
 						options += '</optgroup>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Append option: "all"
 					appendListItem(field, '', 'Seleccionar');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
 	populateListCoberturaTipo = function(field, context) {
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-cobertura_tipo.php",
 			dataType: 'json',
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire(context);
-				} else {				
-					var options = ''; 
-					$.each(j, function(key, value) { 
+				} else {
+					var options = '';
+					$.each(j, function(key, value) {
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Append option: "all"
 					appendListItem(field, '', 'Todos');
 					// Select first item
-					selectFirstItem(field);	
-					dfd.resolve();								
+					selectFirstItem(field);
+					dfd.resolve();
 				}
 			}
-		});			
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
-	
-	<!-- Delete via Link functions -->	
-	deleteViaLink = function(section, id){	
-		var dfd = new $.Deferred();						
+
+	<!-- Delete via Link functions -->
+	deleteViaLink = function(section, id){
+		var dfd = new $.Deferred();
 		if (confirm('Está seguro que desea eliminar el registro?\n\nEsta acción no puede deshacerse.')) {
 			$.post('delete-'+section+'.php', {id: id}, function(data){
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}		
+					oTable.fnStandingRedraw();
+				}
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				}
-				dfd.resolve();				
+				dfd.resolve();
 			});
 		} else {
-			dfd.resolve();			
+			dfd.resolve();
 		}
-		return dfd.promise();		
-	}		
-	
+		return dfd.promise();
+	}
+
 	/* ---------------------------- DIALOG FUNCTIONS ----------------------------------- */
-	
-	// Use this space for dialog related functions			
-	
-	/* --------------------------------- BOX FUNCTIONS --------------------------------- */	
-	
+
+	// Use this space for dialog related functions
+
+	/* --------------------------------- BOX FUNCTIONS --------------------------------- */
+
 	<!-- General functions -->
 	showBoxConf = function(data, autoscroll, hide, delay, callback){
 		// Hide previous message before showing new one
@@ -851,46 +851,46 @@ $(document).ready(function() {
 		$("#spnBoxMessage").html(data);
 		// Show DIV
 		$("#divBoxMessage").show("fast", function(){
-			// If autoscroll was set, scroll to bottom			
-			if (autoscroll == true) {				
-				$("#cboxLoadedContent").scrollTop($("#cboxLoadedContent")[0].scrollHeight);				
+			// If autoscroll was set, scroll to bottom
+			if (autoscroll == true) {
+				$("#cboxLoadedContent").scrollTop($("#cboxLoadedContent")[0].scrollHeight);
 			}
-		});		
+		});
 		// Determine hide method
 		switch (hide) {
 			case 'always':
-				// Delay and hide			
+				// Delay and hide
 				$("#divBoxMessage").delay(delay).hide("fast", function(){
 					// If no error ocurred, execute callback function
 					if (ok) { callback(ok); }
 					// Enable button
 					$('#btnBox').button("option", "disabled", false);
-				});								
+				});
 				break;
 			case 'onerror':
 				// If an error occurred
 				if (!ok) {
-					// Delay and hide			
+					// Delay and hide
 					$("#divBoxMessage").delay(delay).hide("fast", function(){
 						// Enable button
-						$('#btnBox').button("option", "disabled", false);						
+						$('#btnBox').button("option", "disabled", false);
 					});
 				} else {
 					// Execute callback
-					callback(ok);					
+					callback(ok);
 					// Enable button
-					$('#btnBox').button("option", "disabled", false);					
+					$('#btnBox').button("option", "disabled", false);
 				}
 				break;
 			case 'never':
 				// If no error ocurred, execute callback function
 				if (ok) { callback(ok); }
 				// Enable button
-				$('#btnBox').button("option", "disabled", false);				
+				$('#btnBox').button("option", "disabled", false);
 				break;
 		}
-	}	
-		
+	}
+
 	<!-- Populate form functions -->
 	populateFormGeneric = function (j, target) {
 		$.each(j, function(key, value) {
@@ -911,16 +911,16 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}		
+	}
 	populateFormBoxUsuario = function(id){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-fich_usr.php?id="+id,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired'){
 					// Session expired
-					sessionExpire('box');				
+					sessionExpire('box');
 				} else if (j.empty == true) {
 					// Record not found
 					$.colorbox.close();
@@ -929,250 +929,26 @@ $(document).ready(function() {
 					$.when(
 						populateListUsuario_Acceso('box-usuario_acceso','box'),
 						populateListUsuario_Sucursal('box-usuario_sucursal','box')
-					).then(function(){						
-						// Populate Form
-						populateFormGeneric(j, "box");															
-						// Resolve
-						dfd.resolve();														
-					});
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	populateFormBoxSeguro = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_seguro.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate Form
-					populateFormGeneric(j, "box");																
-					// Resolve
-					dfd.resolve();														
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	populateFormBoxProd = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_prod.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate drop-downs, then form
-					$.when(
-						populateListProductor_IVA('box-productor_iva','box')
-					).then(function(){						
-						// Populate Form
-						populateFormGeneric(j, "box");															
-						// Resolve
-						dfd.resolve();														
-					});													
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	
-	populateFormBoxSuc = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_suc.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate Form
-					populateFormGeneric(j, "box");																
-					// Resolve
-					dfd.resolve();														
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	
-	populateFormBoxCliente = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_cliente.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate drop-downs, then form
-					$.when(
-						populateListCliente_Sexo('box-cliente_sexo', 'box'),
-						populateListCliente_CF('box-cliente_cf', 'box'),
-						populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
-						populateListCliente_RegTipo('box-cliente_reg_tipo', 'box')
-					).then(function(){	
-						// Populate Form
-						populateFormGeneric(j, "box");																
-						// Resolve
-						dfd.resolve();														
-					});
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	populateFormBoxPoliza = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_poliza.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate drop-downs, then form
-					$.when(
-						populateListSeguro('box-seguro_id', 'box'),
-						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
-						populateListPoliza_MP('box-poliza_medio_pago', 'box')
-					).then(function(){	
+					).then(function(){
 						// Populate Form
 						populateFormGeneric(j, "box");
-						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');						
-						// Si la poliza no es Automotor, ocultar campo ajuste
-						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').parent().hide();
-						}
 						// Resolve
-						dfd.resolve();														
-					});
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	populateFormBoxPolizaRen = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_polizaren.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate drop-downs, then form
-					$.when(
-						populateListSeguro('box-seguro_id', 'box'),
-						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
-						populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
-						populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),						
-						populateListPoliza_MP('box-poliza_medio_pago', 'box')
-					).then(function(){	
-						// Populate Form
-						populateFormGeneric(j, "box");																
-						// Si la poliza no es Automotor, ocultar campo ajuste
-						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').parent().hide();
-						}
-						// Resolve
-						dfd.resolve();														
-					});
-				}
-			}
-		});	
-		return dfd.promise();				
-	}		
-	populateFormBoxPolizaDet = function(id){
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_polizadet.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else {
-					// Populate Form
-					populateFormGeneric(j, "box");
-					// Call post function
-					if (typeof(polDetInit) == "function") {
-						polDetInit();
-					}
-					populatePolizaDet(j.subtipo_poliza, id);
-					// Resolve
-					dfd.resolve();														
-				}
-			}
-		});	
-		return dfd.promise();				
-	}
-	populateFormBoxEndoso = function(id) {
-		var dfd = new $.Deferred();		
-		$.ajax({
-			url: "get-json-fich_endoso.php?id="+id,
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired'){
-					// Session expired
-					sessionExpire('box');				
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					// Populate drop-downs, then form
-					$.when(
-						populateListEndosoTipo('box-endoso_tipo_id', 'box')
-					).then(function(){	
-						// Populate Form
-						populateFormGeneric(j, "box");
-						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-						// Resolve
-						dfd.resolve();														
+						dfd.resolve();
 					});
 				}
 			}
 		});
 		return dfd.promise();
 	}
-	populateFormBoxPolizaObservaciones = function(id) {
-		var dfd = new $.Deferred();		
+	populateFormBoxSeguro = function(id){
+		var dfd = new $.Deferred();
 		$.ajax({
-			url: "get-json-fich_poliza_observaciones.php?id="+id,
+			url: "get-json-fich_seguro.php?id="+id,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired'){
 					// Session expired
-					sessionExpire('box');				
+					sessionExpire('box');
 				} else if (j.empty == true) {
 					// Record not found
 					$.colorbox.close();
@@ -1186,7 +962,231 @@ $(document).ready(function() {
 		});
 		return dfd.promise();
 	}
-	
+	populateFormBoxProd = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_prod.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListProductor_IVA('box-productor_iva','box')
+					).then(function(){
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+
+	populateFormBoxSuc = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_suc.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+
+	populateFormBoxCliente = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_cliente.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListCliente_Sexo('box-cliente_sexo', 'box'),
+						populateListCliente_CF('box-cliente_cf', 'box'),
+						populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
+						populateListCliente_RegTipo('box-cliente_reg_tipo', 'box')
+					).then(function(){
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxPoliza = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_poliza.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListSeguro('box-seguro_id', 'box'),
+						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
+						populateListPoliza_MP('box-poliza_medio_pago', 'box')
+					).then(function(){
+						// Populate Form
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						// Si la poliza no es Automotor, ocultar campo ajuste
+						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
+							$('#box-poliza_ajuste').parent().hide();
+						}
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxPolizaRen = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_polizaren.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListSeguro('box-seguro_id', 'box'),
+						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
+						populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
+						populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),
+						populateListPoliza_MP('box-poliza_medio_pago', 'box')
+					).then(function(){
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Si la poliza no es Automotor, ocultar campo ajuste
+						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
+							$('#box-poliza_ajuste').parent().hide();
+						}
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxPolizaDet = function(id){
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_polizadet.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Call post function
+					if (typeof(polDetInit) == "function") {
+						polDetInit();
+					}
+					populatePolizaDet(j.subtipo_poliza, id);
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxEndoso = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_endoso.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListEndosoTipo('box-endoso_tipo_id', 'box')
+					).then(function(){
+						// Populate Form
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxPolizaObservaciones = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_poliza_observaciones.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+
 	populatePolizaDet = function(subtipo_poliza, id) {
 		switch (subtipo_poliza) {
 			case 'automotor':
@@ -1194,14 +1194,14 @@ $(document).ready(function() {
 				populateDiv_Fotos('poliza', id);
 				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 				populateDiv_Fotos('automotor_gnc', id, 'GNC');
-				
+
 				// AJAX file form
 				$("#fileForm").ajaxForm({
 					beforeSend: function() {
 				    	$("#fotosLoading").show();
 					},
 					uploadProgress: function(event, position, total, percentComplete) {
-				       
+
 					},
 					complete: function(xhr) {
 						if (xhr.responseText.indexOf('Error:')!=-1) {
@@ -1218,9 +1218,9 @@ $(document).ready(function() {
 				// Agregar asegurado
 				$(".box-date").datepicker({
 						dateFormat: 'dd/mm/yy',
-						changeYear: true,									
+						changeYear: true,
 						yearRange: "-100:+0",
-						changeMonth: true										
+						changeMonth: true
 				});
 				populateSectionAsegurado(id);
 				populateSectionClausula(id);
@@ -1236,7 +1236,7 @@ $(document).ready(function() {
 				populateSectionObjEspProrrata(id);
 				populateSectionEquiposComputacion(id);
 				populateSectionFilmFoto(id);
-				
+
 				$('#frmBox').submit(function() {
 					var objects = [
 						{'name': 'tv_aud_vid', 'min': 100, 'max': 30000},
@@ -1244,7 +1244,7 @@ $(document).ready(function() {
 						{'name': 'equipos_computacion', 'min': 1500, 'max': 10000},
 						{'name': 'film_foto_total', 'min': 500, 'max': 5000},
 					]
-					
+
 					$.each(objects, function(i,obj) {
 						var value = Number($('#'+obj.name+'_total').text());
 						if (value < obj.min || value > obj.max) {
@@ -1253,17 +1253,17 @@ $(document).ready(function() {
 						}
 						return true;
 					})
-					
+
 				})
-				
-				$("#box-combinado_familiar_domicilio_calle").focus();	
+
+				$("#box-combinado_familiar_domicilio_calle").focus();
 				break;
 		}
 	}
 	populateSectionAsegurado = function(id) {
 		populateListAseguradoActividad('box-accidentes_asegurado_actividad');
 		populateDiv_Asegurado(id);
-		
+
 		$("#box-accidentes_asegurado_suma_asegurada, #box-accidentes_asegurado_gastos_medicos").change(function() {
 			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
 			if ($(this).prop('id')=='box-accidentes_asegurado_suma_asegurada' && $("#box-accidentes_asegurado_gastos_medicos").val() == '') {
@@ -1278,7 +1278,7 @@ $(document).ready(function() {
 		});
 		$("#btnBoxAsegurado, #btnBoxAseguradoReset").button();
 		var validateForm = $("#frmBoxAsegurado").validate({
-			rules: {							
+			rules: {
 				"box-accidentes_asegurado_nombre": {required: true},
 				"box-accidentes_asegurado_documento": {required: true},
 				"box-accidentes_asegurado_nacimiento": {required: true, dateAR: true},
@@ -1289,9 +1289,9 @@ $(document).ready(function() {
 				"box-accidentes_asegurado_beneficiario_nombre": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}},
 				"box-accidentes_asegurado_beneficiario_documento": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}},
 				"box-accidentes_asegurado_beneficiario_nacimiento": {required: function() {return $("#box-accidentes_asegurado_beneficiario_cargar").prop('checked')}, dateAR: true},
-				
+
 			}
-		});		
+		});
 		$("#btnBoxAsegurado").click(function() {
 			if (validateForm.form()) {
 				$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
@@ -1303,19 +1303,19 @@ $(document).ready(function() {
 				}
 			};
 			$('#frmBoxAsegurado .box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-		});	
+		});
 	}
 	populateSectionClausula = function(id) {
 		populateDiv_Clausula(id);
-		
+
 		$("#btnBoxClausula, #btnBoxClausulaReset").button();
 		var validateForm = $("#frmBoxClausula").validate({
-			rules: {							
+			rules: {
 				"box-accidentes_clausula_nombre": {required: true},
 				"box-accidentes_clausula_cuit": {required: true},
 				"box-accidentes_clausula_domicilio": {required: true}
 			}
-		});		
+		});
 		$("#btnBoxClausula").click(function() {
 			if (validateForm.form()) {
 				if ($("#box-action").val() == 'insert') {
@@ -1325,20 +1325,20 @@ $(document).ready(function() {
 					updateFormClausula(id);
 				}
 			};
-		});	
+		});
 	}
 	populateSectionTvAudVid = function(id) {
 		populateDiv_TvAudVid(id);
 
-		calculateTvAudVidTotal();		
+		calculateTvAudVidTotal();
 		$('#box-combinado_familiar_tv_aud_vid_add').button().click(function() {
 			addTvAudVidItem();
 		})
-	}	
+	}
 	populateSectionObjEspProrrata = function(id) {
 		populateDiv_ObjEspProrrata(id);
 
-		calculateObjEspProrrataTotal();		
+		calculateObjEspProrrataTotal();
 		$('#box-combinado_familiar_obj_esp_prorrata_add').button().click(function() {
 			addObjEspProrrataItem();
 		})
@@ -1346,7 +1346,7 @@ $(document).ready(function() {
 	populateSectionEquiposComputacion = function(id) {
 		populateDiv_EquiposComputacion(id);
 
-		calculateEquiposComputacionTotal();		
+		calculateEquiposComputacionTotal();
 		$('#box-combinado_familiar_equipos_computacion_add').button().click(function() {
 			addEquiposComputacionItem();
 		})
@@ -1354,12 +1354,12 @@ $(document).ready(function() {
 	populateSectionFilmFoto = function(id) {
 		populateDiv_FilmFoto(id);
 
-		calculateFilmFotoTotal();		
+		calculateFilmFotoTotal();
 		$('#box-combinado_familiar_film_foto_add').button().click(function() {
 			addFilmFotoItem();
 		})
 	}
-	
+
 	addTvAudVidItem = function(cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#tv_aud_vid p').each(function(i,e){
@@ -1445,50 +1445,50 @@ $(document).ready(function() {
 		$("#film_foto_total").html(total);
 	}
 	populateFormBoxAsegurado = function(id){
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-fich_accidentes_asegurado.php?id="+id,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired'){
 					// Session expired
-					sessionExpire('box');				
+					sessionExpire('box');
 				} else if (j.empty == true) {
 					// Record not found
 					$.colorbox.close();
 				} else {
 					// Populate Form
-					populateFormGeneric(j, "box");															
+					populateFormGeneric(j, "box");
 					// Resolve
-					dfd.resolve();														
+					dfd.resolve();
 				}
 			}
-		});	
-		return dfd.promise();				
+		});
+		return dfd.promise();
 	}
 	populateFormBoxPayCuota = function(id) {
-		var dfd = new $.Deferred();		
+		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-fich_pay_cuota.php?id="+id,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired'){
 					// Session expired
-					sessionExpire('box');				
+					sessionExpire('box');
 				} else if (j.empty == true) {
 					// Record not found
 					$.colorbox.close();
 				} else {
 					// Populate Form
-					populateFormGeneric(j, "box");															
+					populateFormGeneric(j, "box");
 					// Resolve
-					dfd.resolve();														
+					dfd.resolve();
 				}
 			}
-		});	
-		return dfd.promise();	
+		});
+		return dfd.promise();
 	}
-	
+
 	<!-- Other form functions -->
 	assignClientToPoliza = function(id){
 		$.ajax({
@@ -1497,21 +1497,21 @@ $(document).ready(function() {
 			success: function (j) {
 				if(j.error == 'expired'){
 					sessionExpire('box');
-				} else {		
-					if (j.empty != true) {				
+				} else {
+					if (j.empty != true) {
 						// Populate main form
 						$('#box-cliente_nombre').val(j.cliente_nombre);
 						$('#box-cliente_id').val(j.cliente_id);
 						// Clear search form
 						$('#frmSelectClient').each(function(){
 							this.reset();
-						});						
+						});
 						// Clear search results
-						$('#divBoxClienteSearchResults').html('');						
+						$('#divBoxClienteSearchResults').html('');
 						// Enable main form
 						formDisable('frmBox','ui',false);
 						// Set focus
-						$("#box-tipo_poliza_id").focus();															
+						$("#box-tipo_poliza_id").focus();
 					}
 				}
 			}
@@ -1520,126 +1520,126 @@ $(document).ready(function() {
 	assignPolizaToEndoso = function(id, poliza_numero){
 		$("#box-poliza_numero").val(poliza_numero);
 		$("#box-poliza_id").val(id);
-		
+
 		// Clear search form
 		$('#frmSelectPoliza').each(function(){
 			this.reset();
-		});						
+		});
 		// Clear search results
-		$('#divBoxPolizaSearchResults').html('');						
+		$('#divBoxPolizaSearchResults').html('');
 		// Enable main form
 		formDisable('frmBox','ui',false);
 		// Set focus
-		$("#box-endoso_tipo").focus();		
+		$("#box-endoso_tipo").focus();
 	}
-	
+
 	<!-- Populate DIV functions -->
 	populateDiv_Prod_Info = function(id){
 		$.getJSON("get-json-prod_info.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
-				// Session expired				
+				// Session expired
 				sessionExpire('box');
-			} else {			
-				if (j.empty == true) {			
+			} else {
+				if (j.empty == true) {
 					// Record not found
-					$.colorbox.close();													
+					$.colorbox.close();
 				} else {
 					var result = '';
 					// Open Table and Row
-					result += '<table class="tblBox">';			
-					result += '<tr>';							
+					result += '<table class="tblBox">';
+					result += '<tr>';
 					// Table Data
 					result += '<td><strong>Nombre:</strong> ' + j.productor_nombre + '</td>';
 					result += '<td><strong>CUIT:</strong> ' + j.productor_cuit + '</td>';
 					result += '<td><strong>Matrícula:</strong> ' + j.productor_matricula + '</td>';
 					// Close Row and Table
-					result += '</tr>';											
+					result += '</tr>';
 					result += '</table>';
-					// Populate DIV					
-					$('#divBoxInfo').html(result);						
+					// Populate DIV
+					$('#divBoxInfo').html(result);
 				}
 			}
-		});						
+		});
 	}
-	populateDiv_ProdSeg = function(id){		
+	populateDiv_ProdSeg = function(id){
 		$.getJSON("get-json-fich_prodseg.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
 					// Sort data
-					j.sort(function(a,b) { return a.seguro_nombre == b.seguro_nombre ? 0 : a.seguro_nombre < b.seguro_nombre ? -1 : 1; } );						
+					j.sort(function(a,b) { return a.seguro_nombre == b.seguro_nombre ? 0 : a.seguro_nombre < b.seguro_nombre ? -1 : 1; } );
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
 					result += '<th width="30%">Seguro</th>';
 					result += '<th width="30%">Sucursal</th>';
 					result += '<th width="30%">Código</th>';
-					result += '<th width="10%">Acciones</th>';					
-					result += '</tr>';					
+					result += '<th width="10%">Acciones</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
 						result += '<td>'+object.seguro_nombre+'</td>';
 						result += '<td>'+object.sucursal_nombre+'</td>';
-						result += '<td><span class="jeditrow1" id="prodseg_'+object.productor_seguro_id+'">'+object.productor_seguro_codigo+'</span></td>';														
+						result += '<td><span class="jeditrow1" id="prodseg_'+object.productor_seguro_id+'">'+object.productor_seguro_codigo+'</span></td>';
 						result += '<td><span onClick="javascript:deleteProdSeg('+object.productor_seguro_id+', '+id+')" style="cursor: pointer;" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
-						result += '</tr>';									
+						result += '</tr>';
 					});
 					// Close Table
 					result += '</table>';
 				} else {
 					result += 'El Productor no posee Seguros asignados.';
 				}
-				// Populate DIV					
+				// Populate DIV
 				$('#divBoxList').html(result);
-				// Make rows editable	
-				$('.jeditrow1').editable('update-prodseg_code.php', { 
+				// Make rows editable
+				$('.jeditrow1').editable('update-prodseg_code.php', {
 					indicator: 'Guardando...',
          			tooltip: 'Click para editar...',
 				    width: '200',
 					height: '10'
-				});								
+				});
 			}
-		});						
+		});
 	}
 	populateDiv_Cliente_Info = function(id){
 		$.getJSON("get-json-cliente_info.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
-				// Session expired				
+				// Session expired
 				sessionExpire('box');
-			} else {			
-				if (j.empty == true) {			
+			} else {
+				if (j.empty == true) {
 					// Record not found
-					$.colorbox.close();													
+					$.colorbox.close();
 				} else {
 					var result = '';
 					// Open Table and Row
-					result += '<table class="tblBox">';			
-					result += '<tr>';							
+					result += '<table class="tblBox">';
+					result += '<tr>';
 					// Table Data
 					result += '<td><strong>Nombre:</strong> <a title="Ir a Cliente" href="#" onclick="openBoxModCliente(\''+j.cliente_id+'\')">' + j.cliente_nombre + '</a></td>';
 					result += '<td><strong>Tipo Doc:</strong> ' + j.cliente_tipo_doc + '</td>';
 					result += '<td><strong>Nº Doc:</strong> ' + j.cliente_nro_doc + '</td>';
 					// Close Row and Table
-					result += '</tr>';											
+					result += '</tr>';
 					result += '</table>';
-					// Populate DIV					
-					$('#divBoxInfo').html(result);						
+					// Populate DIV
+					$('#divBoxInfo').html(result);
 				}
 			}
-		});						
+		});
 	}
-	
-	populateDiv_Contacto = function(id){		
+
+	populateDiv_Contacto = function(id){
 		$.getJSON("get-json-fich_contacto.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
 					// Sort data
@@ -1647,12 +1647,12 @@ $(document).ready(function() {
 						var aValue = parseInt(a.contacto_id);
 						var bValue = parseInt(b.contacto_id);
 						return aValue == bValue ? 0 : aValue < bValue ? -1 : 1;
-					});					
+					});
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
-					result += '<th height="22">Prim.</th>';					
+					result += '<th height="22">Prim.</th>';
 					result += '<th>Tipo</th>';
 					result += '<th>Dirección</th>';
 					result += '<th>Nro.</th>';
@@ -1664,8 +1664,8 @@ $(document).ready(function() {
 					result += '<th>CP</th>';
 					result += '<th>Teléfono 1</th>';
 					result += '<th>Teléfono 2</th>';
-					result += '<th>Acción</th>';																				
-					result += '</tr>';					
+					result += '<th>Acción</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
@@ -1690,70 +1690,70 @@ $(document).ready(function() {
 						if (object.contacto_default == 0) {
 							result += '<li title="Establecer por defecto" onClick="javascript:updateLinkContacto_Default('+object.contacto_id+', '+id+');"><span class="ui-icon ui-icon-star"></span></li>';
 						}
-						result += '</ul></td>';						
-						result += '</tr>';									
+						result += '</ul></td>';
+						result += '</tr>';
 					});
 					// Close Table
 					result += '</table>';
 				} else {
 					result += 'El Cliente no posee Contactos asignados.';
 				}
-				// Populate DIV					
-				$('#divBoxList').html(result);								
+				// Populate DIV
+				$('#divBoxList').html(result);
 			}
-		});						
+		});
 	}
-	populateDiv_Polizas = function(id){		
+	populateDiv_Polizas = function(id){
 		$.getJSON("get-json-fich_cliepoli.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
-					
+
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
 					result += '<th width="25%">Póliza N˚</th>';
 					result += '<th width="25%">Tipo</th>';
-					result += '<th width="25%">Al día</th>';	
-					result += '<th width="25%">Acciones</th>';									
-					result += '</tr>';					
+					result += '<th width="25%">Al día</th>';
+					result += '<th width="25%">Acciones</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
 						result += '<td>'+object.poliza_numero+'</td>';
-						result += '<td>'+object.subtipo_poliza_nombre+'</td>';	
-						result += '<td><span title="'+object.poliza_al_dia_detalle+'">'+object.poliza_al_dia+'</span></td>';														
+						result += '<td>'+object.subtipo_poliza_nombre+'</td>';
+						result += '<td><span title="'+object.poliza_al_dia_detalle+'">'+object.poliza_al_dia+'</span></td>';
 						result += '<td><span onClick="openBoxPolizaDet('+object.poliza_id+')" style="cursor: pointer;" class="ui-icon ui-icon-extlink" title="Ir a Póliza"></span></td>';
-						result += '</tr>';									
+						result += '</tr>';
 					});
 					// Close Table
 					result += '</table>';
 				} else {
 					result += 'El cliente no posee Pólizas.';
 				}
-				// Populate DIV					
-				$('#divBoxList').html(result);					
+				// Populate DIV
+				$('#divBoxList').html(result);
 			}
-		});			
+		});
 	}
 	populateDiv_Poliza_Info = function(id){
 		$.getJSON("get-json-poliza_info.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
-				// Session expired				
+				// Session expired
 				sessionExpire('box');
-			} else {			
-				if (j.empty == true) {			
+			} else {
+				if (j.empty == true) {
 					// Record not found
-					$.colorbox.close();													
+					$.colorbox.close();
 				} else {
 					var result = '';
 					// Open Table and Row
-					result += '<table class="tblBox">';			
-					result += '<tr>';							
+					result += '<table class="tblBox">';
+					result += '<tr>';
 					// Table Data
 					result += '<tr><td><strong>Cliente:</strong> ' + j.cliente_nombre + '</td></tr>';
 					result += '<tr><td><strong>Compañía:</strong> ' + j.seguro_nombre + '</td></tr>';
@@ -1761,13 +1761,13 @@ $(document).ready(function() {
 					result += '<tr><td><strong>Poliza Nº:</strong> ' + (j.poliza_numero==''?'-':j.poliza_numero) + '</td></tr>';
 					result += '<tr><td><strong>Detalle de póliza: </strong> ' + j.detalle_poliza + '</td></tr>';
 					// Close Row and Table
-					result += '</tr>';											
+					result += '</tr>';
 					result += '</table>';
-					// Populate DIV					
-					$('#divBoxInfo').html(result);						
+					// Populate DIV
+					$('#divBoxInfo').html(result);
 				}
 			}
-		});						
+		});
 	}
 	populateDiv_Fotos = function(section, id, divsuffix){
 		divsuffix = divsuffix || '';
@@ -1781,20 +1781,20 @@ $(document).ready(function() {
 					$.colorbox.close();
 				} else {
 					// General variables
-					var result = '';			
-					result += "<table><tbody><tr>";		
+					var result = '';
+					result += "<table><tbody><tr>";
 					// Table Data
 					$.each(j, function(i, object) {
-						
-						
-						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.foto_thumb_url + '" /></a>';	
+
+
+						result += '<td align="center" class="ui-state-default ui-corner-all" style="width:100px;height:115px;overflow: hidden;white-space: nowrap"><a href="'+object.foto_url+'" target="_blank"><img width="100" height="100" style="vertical-align:middle;" src="' + object.foto_thumb_url + '" /></a>';
 						result += '<br />';
-						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\''+section+'_foto\', \''+object.foto_id+'\');$(\'#divShowFoto'+divsuffix+'\').hide();populateDiv_Fotos(\''+section+'\', '+id+', \''+divsuffix+'\');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';				
+						result += '<span style="float:right"><ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Abrir en nueva ventana" onclick="window.open(\''+object.foto_url+'\');"><span class="ui-icon ui-icon-newwin"></span></li><li title="Eliminar" onclick="deleteViaLink(\''+section+'_foto\', \''+object.foto_id+'\');$(\'#divShowFoto'+divsuffix+'\').hide();populateDiv_Fotos(\''+section+'\', '+id+', \''+divsuffix+'\');"><span class="ui-icon ui-icon-trash"></span></li></ul></span>';
 						result += '</td>';
 					});
-					// Close Table									
+					// Close Table
 					result += '</tr></tbody></table>';
-					// Populate DIV					
+					// Populate DIV
 					$('#divBoxFotos'+divsuffix).html(result);
 					if (j != '') {
 						$('#divBoxFotos'+divsuffix).show();
@@ -1804,25 +1804,25 @@ $(document).ready(function() {
 					}
 				}
 			}
-		});							
+		});
 	}
 	populateDiv_Asegurado = function(id) {
 		$.getJSON("get-json-fich_accidentes_asegurados.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
 					// Sort data
 					j.sort(function (a, b) {
 						return 1;
-					});					
+					});
 					var totalsuma = 0;
 					var totalmed = 0;
 					var count = 0;
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
 					result += '<th>Nombre</th>';
@@ -1831,13 +1831,13 @@ $(document).ready(function() {
 					result += '<th>Legal</th>';
 					result += '<th>Asegurado</th>';
 					result += '<th>Gastos Farm.</th>';
-					result += '<th>Acción</th>';																				
-					result += '</tr>';					
+					result += '<th>Acción</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
-						totalsuma += Number(object.accidentes_asegurado_suma_asegurada);	
-						totalmed += Number(object.accidentes_asegurado_gastos_medicos);	
-						count++;	
+						totalsuma += Number(object.accidentes_asegurado_suma_asegurada);
+						totalmed += Number(object.accidentes_asegurado_gastos_medicos);
+						count++;
 						result += '<tr>';
 						result += '<td>'+object.accidentes_asegurado_nombre+'</td>';
 						result += '<td>'+object.accidentes_asegurado_documento+'</td>';
@@ -1848,8 +1848,8 @@ $(document).ready(function() {
 						result += '<td><ul class="listInlineIcons">';
 						result += '<li title="Editar Asegurado" onClick="javascript:editInBoxAsegurado('+object.accidentes_asegurado_id+');"><span class="ui-icon ui-icon-search"></span></li>';
 						result += '<li title="Eliminar Asegurado" onClick="javascript:deleteAccidentesAsegurado('+object.accidentes_asegurado_id+', '+id+');"><span class="ui-icon ui-icon-trash"></span></li>';
-						result += '</ul></td>';						
-						result += '</tr>';		
+						result += '</ul></td>';
+						result += '</tr>';
 					});
 					result += '<tr><td><strong>Total ('+count+')</strong></td><td></td><td></td><td></td><td><strong>'+formatNumber(Number(totalsuma).toFixed(2))+'</strong></td><td><strong>'+formatNumber(Number(totalmed).toFixed(2))+'</strong></td><td></td></tr>';
 					// Close Table
@@ -1857,33 +1857,33 @@ $(document).ready(function() {
 				} else {
 					result += 'La póliza no contiene datos de asegurados.';
 				}
-				// Populate DIV					
-				$('#divBoxListAsegurado').html(result);								
+				// Populate DIV
+				$('#divBoxListAsegurado').html(result);
 			}
-		});				
+		});
 	}
 	populateDiv_Clausula = function(id) {
 		$.getJSON("get-json-fich_accidentes_clausulas.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
 					// Sort data
 					j.sort(function (a, b) {
 						return 1;
-					});					
+					});
 					var count = 0;
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
 					result += '<th>Nombre</th>';
 					result += '<th>CUIT</th>';
 					result += '<th>Domicilio</th>';
-					result += '<th>Acción</th>';																				
-					result += '</tr>';					
+					result += '<th>Acción</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
@@ -1892,7 +1892,7 @@ $(document).ready(function() {
 						result += '<td>'+object.accidentes_clausula_domicilio+'</td>';
 						result += '<td><ul class="listInlineIcons">';
 						result += '<li title="Eliminar Asegurado" onClick="javascript:deleteAccidentesClausula('+object.accidentes_clausula_id+', '+id+');"><span class="ui-icon ui-icon-trash"></span></li>';
-						result += '</ul></td>';						
+						result += '</ul></td>';
 						result += '</tr>';
 						count++;
 					});
@@ -1902,16 +1902,16 @@ $(document).ready(function() {
 				} else {
 					result += 'La póliza no contiene cláusulas de no repetición.';
 				}
-				// Populate DIV					
-				$('#divBoxListClausula').html(result);								
+				// Populate DIV
+				$('#divBoxListClausula').html(result);
 			}
-		});				
+		});
 	}
 	populateDiv_TvAudVid = function(id) {
 		$.getJSON("get-json-fich_combinado_familiar_tvaudvid.php?id=" + id, {}, function(j) {
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
+			} else {
 				$('#tv_aud_vid').empty();
 				$.each(j, function(i, object) {
 					addTvAudVidItem(object.combinado_familiar_tv_aud_vid_cantidad, object.combinado_familiar_tv_aud_vid_producto, object.combinado_familiar_tv_aud_vid_marca, object.combinado_familiar_tv_aud_vid_serial, object.combinado_familiar_tv_aud_vid_valor);
@@ -1925,7 +1925,7 @@ $(document).ready(function() {
 		$.getJSON("get-json-fich_combinado_familiar_objespprorrata.php?id=" + id, {}, function(j) {
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
+			} else {
 				$('#obj_esp_prorrata').empty();
 				$.each(j, function(i, object) {
 					addObjEspProrrataItem(object.combinado_familiar_obj_esp_prorrata_cantidad, object.combinado_familiar_obj_esp_prorrata_producto, object.combinado_familiar_obj_esp_prorrata_marca, object.combinado_familiar_obj_esp_prorrata_serial, object.combinado_familiar_obj_esp_prorrata_valor);
@@ -1939,7 +1939,7 @@ $(document).ready(function() {
 		$.getJSON("get-json-fich_combinado_familiar_equiposcomputacion.php?id=" + id, {}, function(j) {
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
+			} else {
 				$('#equipos_computacion').empty();
 				$.each(j, function(i, object) {
 					addEquiposComputacionItem(object.combinado_familiar_equipos_computacion_cantidad, object.combinado_familiar_equipos_computacion_producto, object.combinado_familiar_equipos_computacion_marca, object.combinado_familiar_equipos_computacion_serial, object.combinado_familiar_equipos_computacion_valor);
@@ -1953,7 +1953,7 @@ $(document).ready(function() {
 		$.getJSON("get-json-fich_combinado_familiar_filmfoto.php?id=" + id, {}, function(j) {
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
+			} else {
 				$('#film_foto').empty();
 				$.each(j, function(i, object) {
 					addFilmFotoItem(object.combinado_familiar_film_foto_cantidad, object.combinado_familiar_film_foto_producto, object.combinado_familiar_film_foto_marca, object.combinado_familiar_film_foto_serial, object.combinado_familiar_film_foto_valor);
@@ -1967,7 +1967,7 @@ $(document).ready(function() {
 		$.getJSON("get-json-fich_poliza-cliente_search.php", $("#frmSelectClient").serialize(), function(j) {
 			if(j.error == 'expired') {
 				sessionExpire('box');
-			} else {			
+			} else {
 				if (j.empty == true) {
 					$('#divBoxClienteSearchResults').html('Cliente no encontrado. Intente nuevamente.');
 				} else {
@@ -1984,8 +1984,8 @@ $(document).ready(function() {
 					result += '</table>';
 					$('#divBoxClienteSearchResults').html(result);
 				}
-			}			
-		});		
+			}
+		});
 	}
 	populateDiv_Cuotas = function(id){
 		$.getJSON("get-json-fich_cuota.php?id="+id, {}, function(j){
@@ -2004,29 +2004,29 @@ $(document).ready(function() {
 						return aValue == bValue ? 0 : aValue < bValue ? -1 : 1;
 					});
 					// General variables
-					var result = '';					
+					var result = '';
 					// Open Table and Headers
 					result += '<table class="tblBox">';
 					result += '<tr>';
 					result += '<th height="21">Cuota</th>';
 					result += '<th>Período</th>';
 					result += '<th width="85">Monto</th>';
-					result += '<th width="95">F. Venc.</th>';					
+					result += '<th width="95">F. Venc.</th>';
 					result += '<th width="160">Estado</th>';
 					result += '<th>F. de Pago</th>';
 					result += '<th>Recibo</th>';
-					result += '<th>PFC</th>';					
-					result += '<th>Acc.</th>';					
+					result += '<th>PFC</th>';
+					result += '<th>Acc.</th>';
 					result += '</tr>';
 					// Table Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
 						result += '<td height="21">' + object.cuota_nro + '</td>';
-						result += '<td>' + object.cuota_periodo + '</td>';	
+						result += '<td>' + object.cuota_periodo + '</td>';
 						result += '<td>'+object.cuota_monto+'</td>';
 						result += '<td><span class="jeditrow2" id="vencimiento_'+object.cuota_id+'">'+object.cuota_vencimiento+'</span></td>';
 						result += '<td>' + object.cuota_estado + '</td>';
-						result += '<td>' + object.cuota_fe_pago + '</td>';	
+						result += '<td>' + object.cuota_fe_pago + '</td>';
 						result += '<td>' + object.cuota_recibo + '</td>';
 						result += '<td>';
 						if (object.cuota_nro == 1) {
@@ -2039,7 +2039,7 @@ $(document).ready(function() {
 							result += '&nbsp;';
 						}
 						result += '</td>';
-						result += '<td>';						
+						result += '<td>';
 						if (object.cuota_estado != '3 - Anulado') {
 							if (object.cuota_estado === '2 - Pagado') {
 								result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
@@ -2051,29 +2051,29 @@ $(document).ready(function() {
 								result += '<sapn onclick="updateCuotaAnular('+object.cuota_id+', '+id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
 							}
 						}
-						result += '</td>';						
+						result += '</td>';
 						result += '</tr>';
 					});
-					// Close Table									
+					// Close Table
 					result += '</table>';
-					// Populate DIV					
+					// Populate DIV
 					$('#divBoxList').html(result);
 					// Initialize JEditable
-					$('.jeditrow2').editable('update-cuota_venc.php', { 
+					$('.jeditrow2').editable('update-cuota_venc.php', {
 						indicator: 'Guardando...',
 						tooltip: 'Click para editar...',
 						width: '80',
 						height: '10'
-					});														
+					});
 				}
 			}
-		});						
-	}	
+		});
+	}
 	populateDiv_Poliza_Results = function() {
 		$.getJSON("get-json-fich_poliza_search.php", $("#frmSelectPoliza").serialize(), function(j) {
 			if(j.error == 'expired') {
 				sessionExpire('box');
-			} else {			
+			} else {
 				if (j.empty == true) {
 					$('#divBoxPolizaSearchResults').html('Póliza no encontrada. Intente nuevamente.');
 				} else {
@@ -2092,49 +2092,49 @@ $(document).ready(function() {
 					result += '</table>';
 					$('#divBoxPolizaSearchResults').html(result);
 				}
-			}			
-		});		
+			}
+		});
 	}
 	populateDiv_Endosos = function(id) {
 		$.getJSON("get-json-fich_poliendosos.php?id="+id, {}, function(j){
 			if(j.error == 'expired'){
 				sessionExpire('box');
-			} else {		
-				var result = '';			
+			} else {
+				var result = '';
 				// Check if empty
 				if (j.length>0) {
-					
+
 					// Open Table
-					result += '<table class="tblBox">';			
+					result += '<table class="tblBox">';
 					// Table Head
 					result += '<tr>';
 					result += '<th width="10%">Pedido</th>';
 					result += '<th width="10%">Aceptado</th>';
-					result += '<th width="60%">Motivo</th>';	
-					result += '<th width="10%">Completo</th>';	
-					result += '<th width="10%">Acciones</th>';								
-					result += '</tr>';					
+					result += '<th width="60%">Motivo</th>';
+					result += '<th width="10%">Completo</th>';
+					result += '<th width="10%">Acciones</th>';
+					result += '</tr>';
 					// Data
 					$.each(j, function(i, object) {
 						result += '<tr>';
 						result += '<td>'+object.endoso_fecha_pedido+'</td>';
-						result += '<td>'+object.endoso_fecha_compania+'</td>';	
-						result += '<td><span title="'+object.endoso_tipo+'">'+object.endoso_tipo+'</span></td>';	
+						result += '<td>'+object.endoso_fecha_compania+'</td>';
+						result += '<td><span title="'+object.endoso_tipo+'">'+object.endoso_tipo+'</span></td>';
 						result += '<td>'+object.endoso_completo+'</td>';
 						result += '<td><span onClick="openBoxModEndoso('+object.endoso_id+')" style="cursor: pointer;" class="ui-icon ui-icon-extlink" title="Ir al endoso"></span></td>';
-						result += '</tr>';									
+						result += '</tr>';
 					});
 					// Close Table
 					result += '</table>';
 				} else {
 					result += 'La póliza no posee endosos.';
 				}
-				// Populate DIV					
-				$('#divBoxList').html(result);					
+				// Populate DIV
+				$('#divBoxList').html(result);
 			}
 		});
 	}
-	
+
 	editCuotaObservacion = function(id) {
 		$.getJSON("get-json-cuota_observacion.php?id="+id, {}, function(j) {
 			var comment = prompt('Ingrese las observaciones', j);
@@ -2144,20 +2144,20 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+
 	<!-- Insert via form functions -->
-	insertFormUsuario = function(){													
+	insertFormUsuario = function(){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("insert-usuario.php", $("#frmBox").serialize(), function(data){		
+		// Post
+		$.post("insert-usuario.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}				
+					oTable.fnStandingRedraw();
+				}
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function(){
 					// Clear form
@@ -2166,42 +2166,42 @@ $(document).ready(function() {
 					});
 				});
 			}
-		});		
-	}		
-	insertFormSeguro = function(){													
-		// Disable button
-		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("insert-seguro.php", $("#frmBox").serialize(), function(data){		
-			if (data=='Session expired') {
-				sessionExpire('box');
-			} else {
-				// Table standing redraw
-				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}				
-				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){
-					// Clear form
-					$('#frmBox').each(function(){
-						this.reset();
-					});
-				});
-			}
-		});		
+		});
 	}
-	insertFormProd = function(){													
+	insertFormSeguro = function(){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("insert-prod.php", $("#frmBox").serialize(), function(data){		
+		// Post
+		$.post("insert-seguro.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}				
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function(){
+					// Clear form
+					$('#frmBox').each(function(){
+						this.reset();
+					});
+				});
+			}
+		});
+	}
+	insertFormProd = function(){
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-prod.php", $("#frmBox").serialize(), function(data){
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
 				// Show message
 				showBoxConf(data, false, 'onerror', 3000, function(){
 					// Clear form
@@ -2210,45 +2210,45 @@ $(document).ready(function() {
 					});
 				});
 			}
-		});		
+		});
 	}
-	insertFormProdSeg = function(id){	
+	insertFormProdSeg = function(id){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		// Set form parameters
-		var param = $("#frmBox").serializeArray();	
-		param.push({ name: "box-productor_id", value: id });		
-		// Post				
-		$.post("insert-prodseg.php", param, function(data){		
+		var param = $("#frmBox").serializeArray();
+		param.push({ name: "box-productor_id", value: id });
+		// Post
+		$.post("insert-prodseg.php", param, function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				} else {
 					// Clear form
-					$('#box-productor_seguro_codigo').val('');					
+					$('#box-productor_seguro_codigo').val('');
 					// Refresh DIVs
-					populateDiv_ProdSeg(id);					
+					populateDiv_ProdSeg(id);
 				}
 				// Enable button
-				$('#btnBox').button("option", "disabled", false);				
+				$('#btnBox').button("option", "disabled", false);
 			}
 		});
 	}
-	insertFormSuc = function(){													
+	insertFormSuc = function(){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("insert-suc.php", $("#frmBox").serialize(), function(data){		
+		// Post
+		$.post("insert-suc.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}				
+					oTable.fnStandingRedraw();
+				}
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function(){
 					// Clear form
@@ -2257,20 +2257,20 @@ $(document).ready(function() {
 					});
 				});
 			}
-		});		
+		});
 	}
-	insertFormCliente = function(){													
+	insertFormCliente = function(){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("insert-cliente.php", $("#frmBox").serialize(), function(data){		
+		// Post
+		$.post("insert-cliente.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}				
+					oTable.fnStandingRedraw();
+				}
 				// Show message
 				showBoxConf(data, true, 'onerror', 3000, function(){
 					// Clear form
@@ -2279,46 +2279,46 @@ $(document).ready(function() {
 					});
 				});
 			}
-		});		
+		});
 	}
-	insertFormContacto = function(id){	
+	insertFormContacto = function(id){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		// Set form parameters
-		var param = $("#frmBox").serializeArray();	
-		param.push({ name: "box-cliente_id", value: id });		
-		// Post				
-		$.post("insert-contacto.php", param, function(data){		
+		var param = $("#frmBox").serializeArray();
+		param.push({ name: "box-cliente_id", value: id });
+		// Post
+		$.post("insert-contacto.php", param, function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				} else {
 					// Clear form
 					$('#frmBox').each(function(){
 						this.reset();
-					});					
+					});
 					// Refresh DIVs
-					populateDiv_Contacto(id);					
+					populateDiv_Contacto(id);
 				}
 				// Enable button
-				$('#btnBox').button("option", "disabled", false);				
+				$('#btnBox').button("option", "disabled", false);
 			}
 		});
 	}
-	insertFormPoliza = function(){	
+	insertFormPoliza = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);			
-		// Post				
-		$.post("insert-poliza.php", $("#frmBox").serializeArray(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-poliza.php", $("#frmBox").serializeArray(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
@@ -2329,73 +2329,73 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}							
-	insertFormAsegurado = function(id){	
+	}
+	insertFormAsegurado = function(id){
 		// Disable button
 		$('#btnBoxAsegurado').button("option", "disabled", true);
 		// Set form parameters
-		var param = $("#frmBoxAsegurado").serializeArray();	
-		param.push({ name: "box-poliza_id", value: id });		
-		// Post				
-		$.post("insert-accidentes_asegurado.php", param, function(data){		
+		var param = $("#frmBoxAsegurado").serializeArray();
+		param.push({ name: "box-poliza_id", value: id });
+		// Post
+		$.post("insert-accidentes_asegurado.php", param, function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				} else {
 					// Clear form
 					$('#frmBoxAsegurado').each(function(){
 						this.reset();
-					});					
+					});
 					$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
 					// Refresh DIVs
-					populateDiv_Asegurado(id);					
+					populateDiv_Asegurado(id);
 				}
 				// Enable button
-				$('#btnBoxAsegurado').button("option", "disabled", false);				
+				$('#btnBoxAsegurado').button("option", "disabled", false);
 			}
 		});
 	}
-	insertFormClausula = function(id){	
+	insertFormClausula = function(id){
 		// Disable button
 		$('#btnBoxClausula').button("option", "disabled", true);
 		// Set form parameters
-		var param = $("#frmBoxClausula").serializeArray();	
-		param.push({ name: "box-poliza_id", value: id });		
-		// Post				
-		$.post("insert-accidentes_clausula.php", param, function(data){		
+		var param = $("#frmBoxClausula").serializeArray();
+		param.push({ name: "box-poliza_id", value: id });
+		// Post
+		$.post("insert-accidentes_clausula.php", param, function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				} else {
 					// Clear form
 					$('#frmBoxClausula').each(function(){
 						this.reset();
-					});					
+					});
 					// Refresh DIVs
-					populateDiv_Clausula(id);					
+					populateDiv_Clausula(id);
 				}
 				// Enable button
-				$('#btnBoxClausula').button("option", "disabled", false);				
+				$('#btnBoxClausula').button("option", "disabled", false);
 			}
 		});
 	}
 	insertFormEndoso = function(id){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);			
-		// Post				
-		$.post("insert-endoso.php", $("#frmBox").serializeArray(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-endoso.php", $("#frmBox").serializeArray(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
@@ -2407,147 +2407,147 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
-	<!-- Update via form functions -->	
+
+	<!-- Update via form functions -->
 	updateFormUsuario = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-usuario.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-usuario.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					// Clear password fields
 					$("#box-usuario_clave").val('');
 					$("#box-usuario_clave2").val('');
 					// Repopulate form
-					populateFormBoxUsuario($('#box-usuario_id').val());					
+					populateFormBoxUsuario($('#box-usuario_id').val());
 				});
 			}
-		});									
+		});
 	}
 	updateFormSeguro = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-seguro.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-seguro.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxSeguro($('#box-seguro_id').val());					
+					populateFormBoxSeguro($('#box-seguro_id').val());
 				});
 			}
-		});									
+		});
 	}
 	updateFormProd = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-prod.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-prod.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxProd($('#box-productor_id').val());					
+					populateFormBoxProd($('#box-productor_id').val());
 				});
 			}
-		});									
+		});
 	}
 	updateFormSuc = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-suc.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-suc.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxSuc($('#box-sucursal_id').val());					
+					populateFormBoxSuc($('#box-sucursal_id').val());
 				});
 			}
-		});									
+		});
 	}
 	updateFormCliente = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-cliente.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-cliente.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, true, 'always', 3000, function(){					
+				showBoxConf(data, true, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxCliente($('#box-cliente_id').val());					
+					populateFormBoxCliente($('#box-cliente_id').val());
 				});
 			}
 		});
 	}
 	updateFormPoliza = function(){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-poliza.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-poliza.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, true, 'always', 3000, function(){					
+				showBoxConf(data, true, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxPoliza($('#box-poliza_id').val());					
+					populateFormBoxPoliza($('#box-poliza_id').val());
 				});
 			}
 		});
 	}
-	updateFormAsegurado = function(id){	
+	updateFormAsegurado = function(id){
 		// Disable button
 		$('#btnBoxAsegurado').button("option", "disabled", true);
-		// Post				
-		$.post("update-accidentes_asegurado.php", $("#frmBoxAsegurado").serialize(), function(data){		
+		// Post
+		$.post("update-accidentes_asegurado.php", $("#frmBoxAsegurado").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));						
+					alert($.trim(data));
 				} else {
 					// Clear form
 					$('#frmBoxAsegurado').each(function(){
 						this.reset();
-					});					
+					});
 					$("#box-accidentes_asegurado_id").remove();
 					$("#box-action").val('insert');
 					$("#btnBoxAseguradoReset").button('option', 'label', 'Borrar');
@@ -2556,38 +2556,38 @@ $(document).ready(function() {
 					$("#box-accidentes_asegurado_beneficiario").prop('checked', false);
 					$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', true);
 					// Refresh DIVs
-					populateDiv_Asegurado(id);					
+					populateDiv_Asegurado(id);
 				}
 				// Enable button
-				$('#btnBoxAsegurado').button("option", "disabled", false);				
+				$('#btnBoxAsegurado').button("option", "disabled", false);
 			}
 		});
 	}
-	updateFormClausula = function(id){	
-		
+	updateFormClausula = function(id){
+
 	}
 	updateFormEndoso = function(id) {
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-endoso.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-endoso.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, true, 'always', 3000, function(){					
+				showBoxConf(data, true, 'always', 3000, function(){
 					// Repopulate form
-					populateFormBoxEndoso($('#box-endoso_id').val());					
+					populateFormBoxEndoso($('#box-endoso_id').val());
 				});
 			}
 		});
 	}
 	<!-- Update via Link functions -->
-	updateLinkContacto_Default = function(id, cliente_id){	
+	updateLinkContacto_Default = function(id, cliente_id){
 		if (confirm('Está seguro que desea establecer este contacto como primario?')) {
 			$.post("update-contacto_default.php", {id: id}, function(data){
 				if (data=='Session expired') {
@@ -2595,10 +2595,10 @@ $(document).ready(function() {
 				} else {
 					// Table standing redraw
 					if (typeof oTable != 'undefined') {
-						oTable.fnStandingRedraw();									
+						oTable.fnStandingRedraw();
 					}
 					// Refresh DIV
-					populateDiv_Contacto(cliente_id);					
+					populateDiv_Contacto(cliente_id);
 					// Check for errors
 					var ok = (data.toLowerCase().indexOf("error") == -1);
 					// If error ocurred, alert
@@ -2608,15 +2608,15 @@ $(document).ready(function() {
 				}
 			});
 		}
-	}				
-	updateLinkCuota_PFC = function(id, poliza_id){	
+	}
+	updateLinkCuota_PFC = function(id, poliza_id){
 		$.post("update-cuota_pfc.php", {id: id}, function(data){
 			if (data=='Session expired') {
 				sessionExpire('main');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Refresh DIV
 				populateDiv_Cuotas(poliza_id);
@@ -2628,7 +2628,7 @@ $(document).ready(function() {
 				}
 			}
 		});
-	}	
+	}
 	updateCuotaAnular = function(cuota_id, poliza_id) {
 		if (confirm('Seguro desea anular la cuota? Esta operación no puede ser revertida')) {
 			$.post('update-cuota_anular.php', {'id': cuota_id}, function(data) {
@@ -2638,40 +2638,40 @@ $(document).ready(function() {
 	}
 	updateFormPolizaObservaciones = function(id){
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("update-poliza_observaciones.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-poliza_observaciones.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					// Repopulate form
 					populateFormBoxPolizaObservaciones(id);
 				});
 			}
-		});	
+		});
 	}
-	
-	<!-- Process via form functions -->	
-	processFormPolizaDet = function(id, fromcreate){													
+
+	<!-- Process via form functions -->
+	processFormPolizaDet = function(id, fromcreate){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		
+
 		// AJAXize form
 		$("#frmBox").ajaxSubmit({
 			url: 'process-polizadet.php',
 			type: 'POST',
 			data: { 'box-poliza_id': id },
 			beforeSend: function() {
-		    	
+
 			},
 			uploadProgress: function(event, position, total, percentComplete) {
-		       
+
 			},
 			success: function(responseText, statusText, xhr) {
 				data = responseText;
@@ -2680,133 +2680,133 @@ $(document).ready(function() {
 				} else {
 					// Table standing redraw
 					if (typeof oTable != 'undefined') {
-						oTable.fnStandingRedraw();									
-					}								
+						oTable.fnStandingRedraw();
+					}
 					// If no error ocurred
 					if ((data.toLowerCase().indexOf("error") === -1)) {
 						// If user comes from creation process
 						if (fromcreate === true) {
 							// Open next box
-							openBoxPolizaCert(id);						
+							openBoxPolizaCert(id);
 						} else {
 							// Show message
-							showBoxConf(data, true, 'always', 3000, function(){						
+							showBoxConf(data, true, 'always', 3000, function(){
 								// Populate form
 								populateFormBoxPolizaDet(id);
 								// Enable button
-								$('#btnBox').button("option", "disabled", false);						
+								$('#btnBox').button("option", "disabled", false);
 							});
-						}					
+						}
 					} else {
 						// Show message
 						showBoxConf(data, true, 'always', 3000, function(){
 							// Enable button
-							$('#btnBox').button("option", "disabled", false);						
-						});					
-					}				
+							$('#btnBox').button("option", "disabled", false);
+						});
+					}
 				}
 			}
 		});
 	}
-	processFormPolizaRen = function(){													
+	processFormPolizaRen = function(){
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post				
-		$.post("process-polizaren.php", $("#frmBox").serializeArray(), function(data){		
+		// Post
+		$.post("process-polizaren.php", $("#frmBox").serializeArray(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
-				}								
+					oTable.fnStandingRedraw();
+				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
 					// Open next box
-					var newid = parseInt(data);					
-					openBoxPolizaDet(newid, true);						
+					var newid = parseInt(data);
+					openBoxPolizaDet(newid, true);
 				} else {
 					// Show message
 					showBoxConf(data, true, 'always', 3000, function(){
 						// Enable button
-						$('#btnBox').button("option", "disabled", false);						
-					});					
-				}				
+						$('#btnBox').button("option", "disabled", false);
+					});
+				}
 			}
-		});		
-	}			
+		});
+	}
 	processFormPayCuota = function(poliza_id, cuota_id) {
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);		
-		// Post				
-		$.post("process-paycuota.php", $("#frmBox").serialize(), function(data){		
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("process-paycuota.php", $("#frmBox").serialize(), function(data){
 			if (data=='Session expired') {
 				sessionExpire('box');
 			} else {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();									
+					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function(){					
+				showBoxConf(data, false, 'always', 3000, function(){
 					openBoxCuota(poliza_id);
 					window.open('print-cuota.php?print&id='+cuota_id);
 				});
 			}
-		});	
+		});
 	}
-	
+
 	<!-- Delete via Link functions -->
-	deleteProdSeg = function (id, productor_id) {		
+	deleteProdSeg = function (id, productor_id) {
 		$.when(
 			deleteViaLink('prodseg', id)
 		).then(function(){
-			populateDiv_ProdSeg(productor_id);	
+			populateDiv_ProdSeg(productor_id);
 		})
 	}
-	deleteContacto = function (id, cliente_id) {		
+	deleteContacto = function (id, cliente_id) {
 		$.when(
 			deleteViaLink('contacto', id)
 		).then(function(){
-			populateDiv_Contacto(cliente_id);	
+			populateDiv_Contacto(cliente_id);
 		})
-	}			
-	deleteAccidentesAsegurado = function (id, poliza_id) {		
+	}
+	deleteAccidentesAsegurado = function (id, poliza_id) {
 		$.when(
 			deleteViaLink('accidentes_asegurado', id)
 		).then(function(){
-			populateDiv_Asegurado(poliza_id);	
+			populateDiv_Asegurado(poliza_id);
 		})
-	}			
-	deleteAccidentesClausula = function (id, poliza_id) {		
+	}
+	deleteAccidentesClausula = function (id, poliza_id) {
 		$.when(
 			deleteViaLink('accidentes_clausula', id)
 		).then(function(){
-			populateDiv_Clausula(poliza_id);	
+			populateDiv_Clausula(poliza_id);
 		})
-	}		
-	
+	}
+
 	<!-- Box functions -->
 	openBoxAltaUsuario = function () {
 		$.colorbox({
 			title:'Registro',
-			href:'box-usuario_alta.php',												
+			href:'box-usuario_alta.php',
 			width:'700px',
 			height:'450px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate selects, then initialize
 				$.when(
 					populateListUsuario_Acceso('box-usuario_acceso','box'),
 					populateListUsuario_Sucursal('box-usuario_sucursal','box')
-				).then(function(){	
-								
+				).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -2814,49 +2814,49 @@ $(document).ready(function() {
 							"box-usuario_email": {required: true, email: true},
 							"box-usuario_usuario": {required: true, minlength: 6},
 							"box-usuario_clave": {required: true, minlength: 8},
-							"box-usuario_clave2": {required: true, equalTo: "#box-usuario_clave"},														
+							"box-usuario_clave2": {required: true, equalTo: "#box-usuario_clave"},
 							"box-usuario_acceso": {required: true},
 							"box-usuario_sucursal[]": {required: function() { return $("#box-usuario_acceso").val()=="administrativo"; } }
 						}
-					});		
-							
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?')) {
 								insertFormUsuario();
 							}
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);	
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
 					$("#box-usuario_sucursal").prop("disabled", true);
-					$("#box-usuario_acceso").change(function() { 
-						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
-					});				
+					$("#box-usuario_acceso").change(function() {
+						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo"));
+					});
 				});
-				
+
 			}
-		});		
-	}		
+		});
+	}
 	openBoxModUsuario = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-usuario_mod.php',												
+			href:'box-usuario_mod.php',
 			width:'700px',
 			height:'500px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxUsuario(id)).then(function(){	
-																						
+				$.when(populateFormBoxUsuario(id)).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -2864,45 +2864,45 @@ $(document).ready(function() {
 							"box-usuario_email": {required: true, email: true},
 							"box-usuario_usuario": {required: true, minlength: 6},
 							"box-usuario_clave": {minlength: 8},
-							"box-usuario_clave2": {equalTo: "#box-usuario_clave"},														
+							"box-usuario_clave2": {equalTo: "#box-usuario_clave"},
 							"box-usuario_acceso": {required: true},
 							"box-usuario_sucursal[]": {required: function() { return $("#box-usuario_acceso").val()=="administrativo"; } }
 						}
-					});	
-								
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea modificar el registro?')) {
 								updateFormUsuario();
 							}
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);					
-					$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
-					$("#box-usuario_acceso").change(function() { 
-						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo")); 
-					});				
-				});		
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+					$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo"));
+					$("#box-usuario_acceso").change(function() {
+						$("#box-usuario_sucursal").prop("disabled", !($("#box-usuario_acceso").val() == "administrativo"));
+					});
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxAltaSeguro = function () {
 		$.colorbox({
 			title:'Registro',
-			href:'box-seguro_alta.php',												
+			href:'box-seguro_alta.php',
 			width:'700px',
 			height:'450px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Validate form
 				var validateForm = $("#frmBox").validate({
@@ -2911,40 +2911,40 @@ $(document).ready(function() {
 						"box-seguro_email_siniestro": {email: true},
 						"box-seguro_email_emision": {email: true}
 					}
-				});		
-						
-				// Button action	
+				});
+
+				// Button action
 				$("#btnBox").click(function() {
 					if (validateForm.form()) {
 						if (confirm('Está seguro que desea crear el registro?')) {
 							insertFormSeguro();
 						}
 					};
-				});	
-				
-				// Enable form							
-				formDisable('frmBox','ui',false);					
-				
+				});
+
+				// Enable form
+				formDisable('frmBox','ui',false);
+
 			}
-		});		
-	}		
+		});
+	}
 	openBoxModSeguro = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-seguro_mod.php',												
+			href:'box-seguro_mod.php',
 			width:'700px',
 			height:'500px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxSeguro(id)).then(function(){	
-																						
+				$.when(populateFormBoxSeguro(id)).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -2952,9 +2952,9 @@ $(document).ready(function() {
 							"box-seguro_email_siniestro": {email: true},
 							"box-seguro_email_emision": {email: true}
 						}
-					});		
-							
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea modificar el registro?')) {
@@ -2962,173 +2962,173 @@ $(document).ready(function() {
 							}
 						};
 					});
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);						
-								
-				});		
-				
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxAltaProd = function () {
 		$.colorbox({
 			title:'Registro',
-			href:'box-prod_alta.php',												
+			href:'box-prod_alta.php',
 			width:'700px',
 			height:'520px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
 				formDisable('frmBox','ui',true);
-				
+
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListProductor_IVA('box-productor_iva', 'box')
 				).then(function(){
-					
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-productor_nombre": {required: true},
 							"box-productor_iva": {required: true},
-							"box-productor_cuit": {required: true},							
-							"box-productor_matricula": {required: true},														
+							"box-productor_cuit": {required: true},
+							"box-productor_matricula": {required: true},
 							"box-productor_email": {email: true}
 						}
-					});	
-								
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?')) {
 								insertFormProd();
 							}
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);										
-					
-				});					
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxModProd = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-prod_mod.php',												
+			href:'box-prod_mod.php',
 			width:'700px',
 			height:'520px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
 				$.when(populateFormBoxProd(id)).then(function(){
-																								
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-productor_nombre": {required: true},
 							"box-productor_iva": {required: true},
-							"box-productor_cuit": {required: true},							
-							"box-productor_matricula": {required: true},														
+							"box-productor_cuit": {required: true},
+							"box-productor_matricula": {required: true},
 							"box-productor_email": {email: true}
 						}
-					});		
-							
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea modificar el registro?')) {
 								updateFormProd();
 							}
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);					
-								
-				});		
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxProdSeg = function (id) {
 		$.colorbox({
 			title:'Productor/Seguros',
-			href:'box-prodseg.php',												
+			href:'box-prodseg.php',
 			width:'700px',
 			height:'600px',
-			onComplete: function() {	
-			
-				// -------------------- GENERAL ---------------------				
-							
+			onComplete: function() {
+
+				// -------------------- GENERAL ---------------------
+
 				// Initialize buttons
-				$("#btnBox").button();		
-				
+				$("#btnBox").button();
+
 				// Disable forms
-				formDisable('frmBox','ui',true);					
-				
+				formDisable('frmBox','ui',true);
+
 				// Populate DIVs
-				populateDiv_Prod_Info(id);		
-				populateDiv_ProdSeg(id);													
-					
+				populateDiv_Prod_Info(id);
+				populateDiv_ProdSeg(id);
+
 				// -------------------- FORM 1 ----------------------
 
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListSeguro('box-seguro_id', 'box'),
 					populateListUsuario_Sucursal('box-sucursal_id', 'box', true	)
-				).then(function(){							
-								
+				).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-seguro_id": {required: true},
 							"box-sucursal_id": {required: true},
 							"box-productor_seguro_codigo": {required: true}
 						}
-					});																	
-					
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							insertFormProdSeg(id);
 						};
-					});		
-										
-					// Enable form					
+					});
+
+					// Enable form
 					formDisable('frmBox','ui',false);
-					
+
 				});
-																						
+
 			}
-		});	
+		});
 	}
-	
+
 	openBoxAltaSuc = function () {
 		$.colorbox({
 			title:'Registro',
-			href:'box-suc_alta.php',												
+			href:'box-suc_alta.php',
 			width:'700px',
 			height:'450px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Validate form
 				var validateForm = $("#frmBox").validate({
@@ -3136,50 +3136,50 @@ $(document).ready(function() {
 						"box-sucursal_nombre": {required: true},
 						"box-sucursal_email": {email: true}
 					}
-				});		
-						
-				// Button action	
+				});
+
+				// Button action
 				$("#btnBox").click(function() {
 					if (validateForm.form()) {
 						if (confirm('Está seguro que desea crear el registro?')) {
 							insertFormSuc();
 						}
 					};
-				});	
-				
-				// Enable form							
-				formDisable('frmBox','ui',false);					
-				
+				});
+
+				// Enable form
+				formDisable('frmBox','ui',false);
+
 			}
-		});		
-	}		
+		});
+	}
 
 	openBoxModSuc = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-suc_mod.php',												
+			href:'box-suc_mod.php',
 			width:'700px',
 			height:'500px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxSuc(id)).then(function(){	
-																						
+				$.when(populateFormBoxSuc(id)).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-sucursal_nombre": {required: true},
 							"box-sucursal_email": {email: true}
 						}
-					});		
-							
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea modificar el registro?')) {
@@ -3187,31 +3187,31 @@ $(document).ready(function() {
 							}
 						};
 					});
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);						
-								
-				});		
-				
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 
-	
+
 	openBoxAltaCliente = function () {
 		$.colorbox({
 			title:'Registro',
-			href:'box-cliente_alta.php',												
+			href:'box-cliente_alta.php',
 			width:'700px',
 			height:'600px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
 				formDisable('frmBox','ui',true);
-				
+
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListCliente_Sexo('box-cliente_sexo', 'box'),
@@ -3219,33 +3219,33 @@ $(document).ready(function() {
 					populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
 					populateListCliente_RegTipo('box-cliente_reg_tipo', 'box')
 				).then(function(){
-					
+
 					// Init Datepickers
 					$("#box-cliente_nacimiento").datepicker({
 						dateFormat: 'dd/mm/yy',
-						changeYear: true,									
+						changeYear: true,
 						yearRange: "-100:+0",
-						changeMonth: true										
+						changeMonth: true
 					});
 					$("#box-cliente_reg_vencimiento").datepicker({
 						dateFormat: 'dd/mm/yy',
-						changeYear: true,									
+						changeYear: true,
 						yearRange: "c-10:c+10",
-						changeMonth: true										
-					});						
+						changeMonth: true
+					});
 
 					// Set default values
 					$("#box-cliente_sexo").val('M');
 					$("#box-cliente_nacionalidad").val('Argentino');
-					$("#box-cliente_cf").val('Consumidor Final');					
+					$("#box-cliente_cf").val('Consumidor Final');
 					$("#box-cliente_tipo_doc").val('DNI');
 				    $("#box-cliente_reg_tipo").val('B1');
-					
+
 					// On Change: Input text
 					$("#box-cliente_nro_doc").keyup(function(){
 						$('#box-cliente_registro').val($(this).val());
-					});	
-										
+					});
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -3259,9 +3259,9 @@ $(document).ready(function() {
 							"box-cliente_reg_vencimiento": {dateAR: true},
 							"box-cliente_email": {email: true}
 						}
-					});		
-							
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							if (confirm('Está seguro que desea crear el registro?')) {
@@ -3269,49 +3269,49 @@ $(document).ready(function() {
 								insertFormCliente();
 							}
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);										
-					
-				});					
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxModCliente = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-cliente_mod.php',												
+			href:'box-cliente_mod.php',
 			width:'700px',
 			height:'600px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Init Datepickers
 				$("#box-cliente_nacimiento").datepicker({
 					dateFormat: 'yy-mm-dd',
-					changeYear: true,									
+					changeYear: true,
 					yearRange: "-100:+0",
-					changeMonth: true										
+					changeMonth: true
 				});
 				$("#box-cliente_reg_vencimiento").datepicker({
 					dateFormat: 'yy-mm-dd',
-					changeYear: true,									
+					changeYear: true,
 					yearRange: "c-10:c+10",
-					changeMonth: true										
-				});					
-				
+					changeMonth: true
+				});
+
 				// Disable form
-				formDisable('frmBox','ui',true);				
+				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
 				$.when(populateFormBoxCliente(id)).then(function(){
-					
+
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-					
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -3326,58 +3326,58 @@ $(document).ready(function() {
 							"box-cliente_email": {email: true}
 						}
 					});
-			
-					// Button action	
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							updateFormCliente();
 						};
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);					
-								
-				});		
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxContacto = function (id) {
 		$.colorbox({
 			title:'Cliente/Contactos',
-			href:'box-contacto.php',												
+			href:'box-contacto.php',
 			width:'950px',
 			height:'100%',
-			onComplete: function() {	
-			
-				// -------------------- GENERAL ---------------------				
-							
+			onComplete: function() {
+
+				// -------------------- GENERAL ---------------------
+
 				// Initialize buttons
-				$("#btnBox").button();		
-				
+				$("#btnBox").button();
+
 				// Disable forms
-				formDisable('frmBox','ui',true);					
-				
+				formDisable('frmBox','ui',true);
+
 				// Populate DIVs
-				populateDiv_Cliente_Info(id);			
-				populateDiv_Contacto(id);													
+				populateDiv_Cliente_Info(id);
+				populateDiv_Contacto(id);
 				populateDiv_Fotos('cliente', id);
-				
+
 				// Append hidden input to AJAX file form
 				$('<input>').prop({
 				    type: 'hidden',
 				    id: 'cliente_id',
 				    name: 'cliente_id'
 				}).val(id).appendTo($('#fileForm'));
-				
+
 				// AJAX file form
 				$("#fileForm").ajaxForm({
 					beforeSend: function() {
 				    	$("#fotosLoading").show();
 					},
 					uploadProgress: function(event, position, total, percentComplete) {
-					       
+
 					},
 					complete: function(xhr) {
 						if (xhr.responseText.indexOf('Error:')!=-1) {
@@ -3389,106 +3389,106 @@ $(document).ready(function() {
 						populateDiv_Fotos('cliente', id);
 					}
 				});
-					
+
 				// -------------------- FORM 1 ----------------------
 
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListContacto_Tipo('box-contacto_tipo', 'box')
-				).then(function(){							
-							
+				).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-contacto_tipo": {required: true},
 							"box-contacto_domicilio": {required: true},
 							"box-contacto_nro": {required: true},
 							"box-contacto_localidad": {required: true},
 							"box-contacto_cp": {required: true}
 						}
-					});																	
-					
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							insertFormContacto(id);
 						};
-					});		
-										
-					// Enable form					
+					});
+
+					// Enable form
 					formDisable('frmBox','ui',false);
-					
+
 				});
-																						
+
 			}
-		});	
+		});
 	}
 	openBoxPolizas = function (id) {
 		$.colorbox({
 			title:'Cliente/Pólizas',
-			href:'box-cliepoli.php',												
+			href:'box-cliepoli.php',
 			width:'700px',
 			height:'600px',
-			onComplete: function() {	
-			
-				// -------------------- GENERAL ---------------------				
-							
+			onComplete: function() {
+
+				// -------------------- GENERAL ---------------------
+
 				// Initialize buttons
-				$("#btnBox").button();		
-				
+				$("#btnBox").button();
+
 				// Disable forms
-				formDisable('frmBox','ui',true);					
-				
+				formDisable('frmBox','ui',true);
+
 				// Populate DIVs
 				populateDiv_Cliente_Info(id);
-				populateDiv_Polizas(id);													
-					
+				populateDiv_Polizas(id);
+
 				// -------------------- FORM 1 ----------------------
 
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListSeguro('box-seguro_id', 'box')
-				).then(function(){							
-								
+				).then(function(){
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_codigo": {required: true}
 						}
-					});																	
-					
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							insertFormProdSeg(id);
 						};
-					});		
-										
-					// Enable form					
+					});
+
+					// Enable form
 					formDisable('frmBox','ui',false);
-					
+
 				});
-																						
+
 			}
-		});	
-		
+		});
+
 	}
 	openBoxAltaPoliza = function (tipo) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-poliza_alta.php?section=1',												
+			href:'box-poliza_alta.php?section=1',
 			width:'700px',
 			height:'100%',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable forms
-				formDisable('frmSelectClient','normal',true);				
+				formDisable('frmSelectClient','normal',true);
 				formDisable('frmBox','ui',true);
-			
+
 				// FORM INSERT POLIZA
 				// Populate drop-downs, then initialize
 				$.when(
@@ -3498,7 +3498,7 @@ $(document).ready(function() {
 					populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
 					populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),
 					populateListPoliza_MP('box-poliza_medio_pago', 'box')
-				).then(function(){					
+				).then(function(){
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
@@ -3518,7 +3518,7 @@ $(document).ready(function() {
 								break;
 						}
 						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $(this).val());
-					});	
+					});
 					$("#box-subtipo_poliza_id").change(function(){
 						// Si el subtipo de poliza es Automotor habilitar campo AJUSTE
 						switch($(this).val()) {
@@ -3532,13 +3532,13 @@ $(document).ready(function() {
 
 					})
 					$('#box-sucursal_id').change(function(){
-						$('#box-productor_seguro_id').html(loading);						
+						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
 					})
 					$("#box-seguro_id").change(function(){
-						$('#box-productor_seguro_id').html(loading);						
+						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
-					});	
+					});
 					$("#box-poliza_vigencia").change(function(){
 						var months;
 						switch ($(this).val()) {
@@ -3546,7 +3546,7 @@ $(document).ready(function() {
 								months = 12;
 								break;
 							case 'Semestral':
-								months = 6;							
+								months = 6;
 								break;
 							case 'Cuatrimestral':
 								months = 4;
@@ -3555,11 +3555,11 @@ $(document).ready(function() {
 								months = 3;
 								break;
 							case 'Bimestral':
-								months = 2;															
+								months = 2;
 								break;
 							case 'Mensual':
 								months = 1;
-								break;					
+								break;
 						}
 						if ($(this).val() !== '') {
 							if ($(this).val() == 'Otra') {
@@ -3581,7 +3581,7 @@ $(document).ready(function() {
 								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 							}
 						} else {
-							$('#box-poliza_validez_hasta').val('');							
+							$('#box-poliza_validez_hasta').val('');
 						}
 					});
 					$("#box-poliza_vigencia_dias").change(function() {
@@ -3597,7 +3597,7 @@ $(document).ready(function() {
 								}
 							}
 						} else {
-							$('#box-poliza_validez_hasta').val('');							
+							$('#box-poliza_validez_hasta').val('');
 						}
 						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
@@ -3607,14 +3607,14 @@ $(document).ready(function() {
 						switch ($('#box-poliza_cuotas').val()) {
 							case 'Total':
 								cuotas = 1;
-								break;							
+								break;
 							case 'Mensual':
 								switch ($('#box-poliza_vigencia').val()) {
 									case 'Anual':
 										cuotas = 12;
 										break;
 									case 'Semestral':
-										cuotas = 6;							
+										cuotas = 6;
 										break;
 									case 'Cuatrimestral':
 										cuotas = 4;
@@ -3623,23 +3623,23 @@ $(document).ready(function() {
 										cuotas = 3;
 										break;
 									case 'Bimestral':
-										cuotas = 2;															
-										break;				
+										cuotas = 2;
+										break;
 									case 'Mensual':
 										cuotas = 1;
-										break;			
+										break;
 								}
 								break;
 						}
-						$('#box-poliza_cant_cuotas').val(cuotas);							
-					});																
+						$('#box-poliza_cant_cuotas').val(cuotas);
+					});
 					// Set default values
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
-					$('#box-poliza_medio_pago').val('Directo');				
+					$('#box-poliza_medio_pago').val('Directo');
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-tipo_poliza_id": {required: true},
 							"box-sucursal_id": {required: true},
 							"box-subtipo_poliza_id": {required: true},
@@ -3661,19 +3661,19 @@ $(document).ready(function() {
 						},
 						errorPlacement: function(error, element) {
 							error.insertAfter(element.parent("p").children().last());
-						}						
-					});												
-					// Button action	
+						}
+					});
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
-							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {
 								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								insertFormPoliza();
 							}
 						}
 					});
 				});
-				
+
 				// FORM SELECT CLIENT
 				// Initialize special fields
 				initAutocompleteCliente('box0-cliente_nombre', 'box');
@@ -3693,46 +3693,46 @@ $(document).ready(function() {
 							$("#BtnSearchCliente").click();
 						}
 					});
-				});													
-				// Enable form					
+				});
+				// Enable form
 				formDisable('frmSelectClient','normal',false);
 				// Set focus on search
-				$("#box0-cliente_nombre").focus();						
-				
+				$("#box0-cliente_nombre").focus();
+
 			}
-		});		
+		});
 	}
 	openBoxModPoliza = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-poliza_mod.php?section=1',												
+			href:'box-poliza_mod.php?section=1',
 			width:'700px',
 			height:'100%',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
 				formDisable('frmBox','ui',true);
 
 				// Populate form, then initialize
 				$.when(populateFormBoxPoliza(id)).then(function(){
-					
+
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					// On Change: Selects
-					var loading = '<option value="">Cargando...</option>';	
+					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function(){
-						$('#box-productor_seguro_id').html(loading);						
+						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
-					});		
-					
-					
+					});
+
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_fecha_solicitud": {dateAR: true},
@@ -3741,50 +3741,50 @@ $(document).ready(function() {
 							"box-poliza_fecha_entrega": {dateAR: true},
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
-							"box-poliza_recargo": {min:0, max:100}							
+							"box-poliza_recargo": {min:0, max:100}
 						},
 						errorPlacement: function(error, element) {
 							error.insertAfter(element.parent("p").children().last());
 						}
-					});	
-			
-					// Button action	
+					});
+
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							updateFormPoliza();
 						}
-					});	
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);					
-								
-				});			
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
+				});
+
 			}
-		});		
+		});
 	}
 	openBoxPolizaRen = function (id) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-poliza_ren.php?section=1&ren=1',												
+			href:'box-poliza_ren.php?section=1&ren=1',
 			width:'700px',
 			height:'100%',
 			onComplete: function() {
-				
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
 				formDisable('frmBox','ui',true);
-								
+
 				// Populate form, then initialize
 				$.when(populateFormBoxPolizaRen(id)).then(function(){
-					
+
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-					
+
 					// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
 					switch ($("#box-tipo_poliza_nombre").val()) {
 						case 'Personas':
@@ -3795,13 +3795,13 @@ $(document).ready(function() {
 							break;
 					}
 					populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $("#box-tipo_poliza_nombre").val());
-					
+
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function(){
-						$('#box-productor_seguro_id').html(loading);						
+						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
-					});	
+					});
 					$("#box-poliza_vigencia").change(function(){
 						var months;
 						switch ($(this).val()) {
@@ -3809,7 +3809,7 @@ $(document).ready(function() {
 								months = 12;
 								break;
 							case 'Semestral':
-								months = 6;							
+								months = 6;
 								break;
 							case 'Cuatrimestral':
 								months = 4;
@@ -3818,13 +3818,13 @@ $(document).ready(function() {
 								months = 3;
 								break;
 							case 'Bimestral':
-								months = 2;															
+								months = 2;
 								break;
 							case 'Mensual':
 								months = 1;
-								break;							
+								break;
 						}
-						
+
 						if ($(this).val() !== '') {
 							if ($(this).val() == 'Otra') {
 								$("#box-poliza_vigencia_dias").attr('readonly', false);
@@ -3845,7 +3845,7 @@ $(document).ready(function() {
 								$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 							}
 						} else {
-							$('#box-poliza_validez_hasta').val('');							
+							$('#box-poliza_validez_hasta').val('');
 						}
 					});
 					$("#box-poliza_vigencia_dias").change(function() {
@@ -3861,7 +3861,7 @@ $(document).ready(function() {
 								}
 							}
 						} else {
-							$('#box-poliza_validez_hasta').val('');							
+							$('#box-poliza_validez_hasta').val('');
 						}
 						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
@@ -3871,14 +3871,14 @@ $(document).ready(function() {
 						switch ($('#box-poliza_cuotas').val()) {
 							case 'Total':
 								cuotas = 1;
-								break;							
+								break;
 							case 'Mensual':
 								switch ($('#box-poliza_vigencia').val()) {
 									case 'Anual':
 										cuotas = 12;
 										break;
 									case 'Semestral':
-										cuotas = 6;							
+										cuotas = 6;
 										break;
 									case 'Cuatrimestral':
 										cuotas = 4;
@@ -3887,21 +3887,21 @@ $(document).ready(function() {
 										cuotas = 3;
 										break;
 									case 'Bimestral':
-										cuotas = 2;															
-										break;				
+										cuotas = 2;
+										break;
 									case 'Mensual':
 										cuotas = 1;
-										break;			
+										break;
 								}
 								break;
 						}
-						$('#box-poliza_cant_cuotas').val(cuotas);							
-					});																
+						$('#box-poliza_cant_cuotas').val(cuotas);
+					});
 					// Set default values
-					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));				
+					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
 					// Validate form
 					var validateForm = $("#frmBox").validate({
-						rules: {							
+						rules: {
 							"box-seguro_id": {required: true},
 							"box-productor_seguro_id": {required: true},
 							"box-poliza_vigencia": {required: true},
@@ -3916,79 +3916,79 @@ $(document).ready(function() {
 							"box-poliza_prima": {min:0, max: 99999999.99},
 							"box-poliza_premio": {required: true, min:0, max: 99999999.99},
 							"box-poliza_medio_pago": {required: true},
-							"box-poliza_recargo": {min:0, max:100}							
+							"box-poliza_recargo": {min:0, max:100}
 						},
 						errorPlacement: function(error, element) {
 							error.insertAfter(element.parent("p").children().last());
 						}
-					});												
-					// Button action	
+					});
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
-							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {
 								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								processFormPolizaRen(id);
 							}
 						}
-					});				
-					
-					// Enable form							
-					formDisable('frmBox','ui',false);										
-								
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
 				});
-				
+
 			}
-		});		
-	}		
+		});
+	}
 	openBoxPolizaDet = function (id, fromcreate) {
 		$.colorbox({
 			title:'Registro',
-			href:'box-polizadet.php?section=2&id='+id,												
+			href:'box-polizadet.php?section=2&id='+id,
 			width:'750px',
 			height:'100%',
 			onComplete: function() {
-				
+
 				// Set button text
 				if (fromcreate === true) {
 					$("#btnBox").val('Siguiente');
 				} else {
 					$("#btnBox").val('Aceptar');
 				}
-			
+
 				// Initialize buttons
 				$("#btnBox").button();
-				
+
 				// Disable form
 				formDisable('frmBox','ui',true);
-								
+
 				// Populate form, then initialize
-				$.when(populateFormBoxPolizaDet(id)).then(function(){				
-					
+				$.when(populateFormBoxPolizaDet(id)).then(function(){
+
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-				
+
 					$('#box-suma_asegurada').val($('#box-valor_total').val());
-					
+
 					// Validate form
-					var validateForm = $("#frmBox").validate();				
-							
-					// Button action	
+					var validateForm = $("#frmBox").validate();
+
+					// Button action
 					$("#btnBox").click(function() {
 						// if (customValidations()) {
-							if (validateForm.form() && customValidations()) {					
+							if (validateForm.form() && customValidations()) {
 								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								processFormPolizaDet(id, fromcreate);
 							}
 						// }
-					});	
-					
-					// Enable form					
-					formDisable('frmBox','ui',false);				
-				
+					});
+
+					// Enable form
+					formDisable('frmBox','ui',false);
+
 				});
-				
+
 			}
-		});		
+		});
 	}
 	openBoxPolizaCert = function (id) {
 		$.colorbox({
@@ -3996,16 +3996,16 @@ $(document).ready(function() {
 			href:'box-polizacert.php?section=3&id='+id,
 			width:'700px',
 			height:'300px',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				// Initialize buttons
 				$("#btnCCp").button();
 				$("#btnCCd").button();
 				$("#btnPE").button();
 				$("#btnPEMC").button();
 				$("#btnPR").button();
-				
-				// Button action	
+
+				// Button action
 				$("#btnCCp").click(function() {
 					window.open('print-poliza.php?type=cc&id='+id+'&print');
 				});
@@ -4017,13 +4017,13 @@ $(document).ready(function() {
 				});
 				$("#btnPEMC").click(function() {
 					window.open('print-poliza.php?type=pe&mc=1&id='+id);
-				});								
+				});
 				$("#btnPR").click(function() {
 					window.open('print-poliza.php?type=pe&re=1&id='+id);
 				});
 			}
-		});		
-	}		
+		});
+	}
 	openBoxCuota = function (id) {
 		$.colorbox({
 			title:'Registro',
@@ -4031,15 +4031,15 @@ $(document).ready(function() {
 			width:'900px',
 			height:'100%',
 			onComplete: function() {
-							
+
 				$('#btnBox').button();
-				
+
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
-				populateDiv_Cuotas(id);								
-				
+				populateDiv_Cuotas(id);
+
 				formDisable('frmBox','ui',true);
-				
+
 				$.when(
 					populateFormBoxPolizaObservaciones(id)
 				).then(function() {
@@ -4049,18 +4049,18 @@ $(document).ready(function() {
 					formDisable('frmBox','ui',false);
 				});
 			}
-		});		
+		});
 	}
 	editInBoxAsegurado = function(id) {
 		// Disable form
 		formDisable('frmBoxAsegurado','ui',true);
-		$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');	
+		$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 		$.when(populateFormBoxAsegurado(id)).then(function() {
 			$("#box-accidentes_asegurado_beneficiario_nombre, #box-accidentes_asegurado_beneficiario_documento, #box-accidentes_asegurado_beneficiario_nacimiento, #box-accidentes_asegurado_beneficiario_tomador").prop('disabled', !($("#box-accidentes_asegurado_beneficiario").prop('checked')));
 			var suma_asegurada = isNaN($("#box-accidentes_asegurado_suma_asegurada").val())?0:$("#box-accidentes_asegurado_suma_asegurada").val();
 			var gastos_medicos = isNaN($("#box-accidentes_asegurado_gastos_medicos").val())?0:$("#box-accidentes_asegurado_gastos_medicos").val();
 			$("#box-accidentes_asegurado_total").val(Number(suma_asegurada) + Number(gastos_medicos));
-			
+
 			// Append hidden input to form
 			$('<input>').prop({
 			    type: 'hidden',
@@ -4072,7 +4072,7 @@ $(document).ready(function() {
 				// Clear form
 				$('#frmBoxAsegurado').each(function(){
 					this.reset();
-				});					
+				});
 				$("#box-accidentes_asegurado_id").remove();
 				$("#box-action").val('insert');
 				$("#btnBoxAseguradoReset").button('option', 'label', 'Borrar');
@@ -4084,28 +4084,28 @@ $(document).ready(function() {
 			formDisable('frmBoxAsegurado','ui',false);
 			$("#box-accidentes_asegurado_nombre").focus();
 		});
-	}	
+	}
 	openBoxAltaEndoso = function() {
 		$.colorbox({
 			title:'Endoso',
-			href:'box-endoso_alta.php',												
+			href:'box-endoso_alta.php',
 			width:'700px',
 			height:'100%',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				$("#btnBox").button();
-			
-			
+
+
 				formDisable('frmSelectPoliza','normal',false);
 				formDisable('frmBox','ui',true);
-				
+
 				$.when(
 					populateListEndosoTipo('box-endoso_tipo_id', 'box')
 				).then(function() {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					$('#box-endoso_fecha_pedido').val(Date.today().clearTime().toString("dd/MM/yy"));
-					
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4117,17 +4117,17 @@ $(document).ready(function() {
 							error.insertAfter(element.parent("p").children().last());
 						}
 					});
-					// Button action	
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
-							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {												
+							if (confirm('Está seguro que desea crear el registro?\n\nEsta acción no puede deshacerse.')) {
 								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 								insertFormEndoso();
 							}
 						}
 					});
 				});
-				
+
 				// FORM SELECT POLIZA
 				// Initialize special fields
 				initAutocompletePoliza('box0-poliza_numero', 'box');
@@ -4147,29 +4147,29 @@ $(document).ready(function() {
 							$("#BtnSearchPoliza").click();
 						}
 					});
-				});													
-				// Enable form					
+				});
+				// Enable form
 				formDisable('frmSelectPoliza','normal',false);
 				// Set focus on search
-				$("#box0-poliza_numero").focus();		
-			
+				$("#box0-poliza_numero").focus();
+
 			}
-			
+
 		});
 	}
 	openBoxModEndoso = function(id) {
 		$.colorbox({
 			title:'Endoso',
-			href:'box-endoso_mod.php',												
+			href:'box-endoso_mod.php',
 			width:'700px',
 			height:'100%',
-			onComplete: function() {			
-			
+			onComplete: function() {
+
 				$("#btnBox").button();
 				$("#btnBoxExport").button();
-			
+
 				formDisable('frmBox','ui',true);
-				
+
 				populateDiv_Fotos('endoso', id);
 				$("#endoso_id").val(id);
 				// AJAX file form
@@ -4178,7 +4178,7 @@ $(document).ready(function() {
 				    	$("#fotosLoading").show();
 					},
 					uploadProgress: function(event, position, total, percentComplete) {
-					       
+
 					},
 					complete: function(xhr) {
 						if (xhr.responseText.indexOf('Error:')!=-1) {
@@ -4190,13 +4190,13 @@ $(document).ready(function() {
 						populateDiv_Fotos('endoso', id);
 					}
 				});
-				
+
 				$.when(
 					populateFormBoxEndoso(id)
 				).then(function() {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-					
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4208,7 +4208,7 @@ $(document).ready(function() {
 							error.insertAfter(element.parent("p").children().last());
 						}
 					});
-					// Button action	
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
@@ -4219,28 +4219,28 @@ $(document).ready(function() {
 						var poliza_id = $('#box-poliza_id').val();
 						window.open('print-poliza.php?type=pe&en=1&id='+poliza_id+'&endoso_id='+id);
 					})
-					// Enable form							
+					// Enable form
 					formDisable('frmBox','ui',false);
 				});
 			}
-			
+
 		});
 	}
 	openBoxEndosos = function(id) {
 		$.colorbox({
 			title:'Póliza/Endosos',
-			href:'box-poliendosos.php',												
+			href:'box-poliendosos.php',
 			width:'700px',
 			height:'600px',
-			onComplete: function() {	
-			
+			onComplete: function() {
+
 				// -------------------- GENERAL ---------------------
-				
+
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
-				populateDiv_Endosos(id);													
+				populateDiv_Endosos(id);
 			}
-		});	
+		});
 	}
 	openBoxPayCuota = function(poliza_id, cuota_id) {
 		$.colorbox({
@@ -4249,18 +4249,18 @@ $(document).ready(function() {
 			width:'900px',
 			height:'100%',
 			onComplete: function() {
-				
+
 				$("#btnBox").button();
 				$("#btnCancel").button().click(function() {
 					openBoxCuota(poliza_id);
 					return false;
 				});
-				
+
 				formDisable('frmBox','ui',true);
-				
+
 				// Populate DIVs
 				populateDiv_Poliza_Info(poliza_id);
-				
+
 				$.when(
 					populateFormBoxPayCuota(cuota_id)
 				).then(function() {
@@ -4268,7 +4268,7 @@ $(document).ready(function() {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					initDateTimePicker('box-datetime');
 					$('#box-cuota_fe_pago').val(Date.now().toString("dd/MM/yyyy HH:mm"));
-					
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4280,19 +4280,19 @@ $(document).ready(function() {
 							error.insertAfter(element.parent("p").children().last());
 						}
 					});
-					// Button action	
+					// Button action
 					$("#btnBox").click(function() {
 						if (validateForm.form()) {
 							$('.box-date, .box-datetime').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							processFormPayCuota(poliza_id, cuota_id);
 						}
 					});
-					// Enable form							
+					// Enable form
 					formDisable('frmBox','ui',false);
-					
-				});								
-								
+
+				});
+
 			}
-		});	
+		});
 	}
 });
