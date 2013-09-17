@@ -2,7 +2,7 @@ $(document).ready(function () {
 
 	/* ---------------------------- FILTER AND REUSABLE FUNCTIONS ---------------------------- */
 
-	<!-- Session functions -->
+	/* Session functions */
 	sessionExpire = function (type) {
 		switch (type) {
 		case 'main':
@@ -15,7 +15,7 @@ $(document).ready(function () {
 		}
 	}
 
-	<!-- Formatting functions -->
+	/* Formatting functions */
 	nullToSpace = function (value) {
 		if (value == null) {
 			return '&nbsp;';
@@ -39,7 +39,7 @@ $(document).ready(function () {
 		return years;
 	}
 
-	<!-- Custom date validation -->
+	/* Custom date validation */
 	$.validator.addMethod("dateAR", function (value, element) {
 		return value == '' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
 	}, 'Por favor ingresar una fecha en formato dd/mm/aa.');
@@ -81,7 +81,7 @@ $(document).ready(function () {
 		return true;
 	}
 
-	<!-- List functions -->
+	/* List functions */
 	sortListAlpha = function (field) {
 		$("select#" + field).html($("select#" + field + " option").sort(function (a, b) {
 			return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
@@ -101,7 +101,7 @@ $(document).ready(function () {
 		$("select#" + field).val($("select#" + field + " option:first").val());
 	}
 
-	<!-- Initialize Special Field functions -->
+	/* Initialize Special Field functions */
 	initDatePickersDaily = function (clase, clear, maxdate) {
 		$("." + clase).each(function () {
 			var date = $(this).datepicker({
@@ -166,7 +166,7 @@ $(document).ready(function () {
 		})
 	}
 
-	<!-- Filter functions -->
+	/* Filter functions */
 	disableFilters = function (disabled) {
 		$(".tobedisabled").each(function () {
 			if (disabled == true) {
@@ -229,7 +229,7 @@ $(document).ready(function () {
 		});
 	}
 
-	<!-- Form Disable/Enable/Clear functions -->
+	/* Form Disable/Enable/Clear functions */
 	formDisable = function (form, type, disabled) {
 		// Enable-disable general inputs
 		$("#" + form + " textarea").attr("disabled", disabled);
@@ -249,7 +249,7 @@ $(document).ready(function () {
 		}
 	}
 
-	<!-- Populate List functions -->
+	/* Populate List functions */
 	populateListUsuario_Acceso = function (field, context) {
 		var dfd = new $.Deferred();
 		$.ajax({
@@ -804,7 +804,7 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
-	<!-- Delete via Link functions -->
+	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();
 		if (confirm('Está seguro que desea eliminar el registro?\n\nEsta acción no puede deshacerse.')) {
@@ -833,7 +833,7 @@ $(document).ready(function () {
 
 	/* --------------------------------- BOX FUNCTIONS --------------------------------- */
 
-	<!-- General functions -->
+	/* General functions */
 	showBoxConf = function (data, autoscroll, hide, delay, callback) {
 		// Hide previous message before showing new one
 		$("#divBoxMessage").hide();
@@ -895,7 +895,7 @@ $(document).ready(function () {
 		}
 	}
 
-	<!-- Populate form functions -->
+	/* Populate form functions */
 	populateFormGeneric = function (j, target) {
 		$.each(j, function (key, value) {
 			var element = '#' + target + '-' + key;
@@ -1545,7 +1545,7 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
-	<!-- Other form functions -->
+	/* Other form functions */
 	assignClientToPoliza = function (id) {
 		$.ajax({
 			url: "get-json-fich_poliza-cliente_nombre.php?id=" + id,
@@ -1589,7 +1589,7 @@ $(document).ready(function () {
 		$("#box-endoso_tipo").focus();
 	}
 
-	<!-- Populate DIV functions -->
+	/* Populate DIV functions */
 	populateDiv_Prod_Info = function (id) {
 		$.getJSON("get-json-prod_info.php?id=" + id, {}, function (j) {
 			if (j.error == 'expired') {
@@ -2029,14 +2029,14 @@ $(document).ready(function () {
 					$('#divBoxClienteSearchResults').html('Cliente no encontrado. Intente nuevamente.');
 				} else {
 					var result = '';
-					<!-- Open Table and Row -->
+					/* Open Table and Row */
 					result += '<table class="tblBox2">';
 					result += '<tr>';
-					<!-- Table Data -->
+					/* Table Data */
 					result += '<td>' + j.cliente_nombre + '</td>';
 					result += '<td><strong>Documento:</strong> ' + j.cliente_tipo_doc + ' ' + j.cliente_nro_doc + '</td>';
 					result += '<td><a href="javascript:assignClientToPoliza(' + j.cliente_id + ')">SELECCIONAR</a></td>';
-					<!-- Close Row and Table -->
+					/* Close Row and Table */
 					result += '</tr>';
 					result += '</table>';
 					$('#divBoxClienteSearchResults').html(result);
@@ -2135,7 +2135,7 @@ $(document).ready(function () {
 					$('#divBoxPolizaSearchResults').html('Póliza no encontrada. Intente nuevamente.');
 				} else {
 					var result = '';
-					<!-- Open Table and Row -->
+					/* Open Table and Row */
 					result += '<table class="tblBox2">';
 					$.each(j, function (i, object) {
 						result += '<tr>';
@@ -2205,7 +2205,7 @@ $(document).ready(function () {
 		});
 	}
 
-	<!-- Insert via form functions -->
+	/* Insert via form functions */
 	insertFormUsuario = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
@@ -2480,7 +2480,7 @@ $(document).ready(function () {
 		});
 	}
 
-	<!-- Update via form functions -->
+	/* Update via form functions */
 	updateFormUsuario = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
@@ -2658,7 +2658,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	<!-- Update via Link functions -->
+	/* Update via Link functions */
 	updateLinkContacto_Default = function (id, cliente_id) {
 		if (confirm('Está seguro que desea establecer este contacto como primario?')) {
 			$.post("update-contacto_default.php", {
@@ -2735,7 +2735,7 @@ $(document).ready(function () {
 		});
 	}
 
-	<!-- Process via form functions -->
+	/* Process via form functions */
 	processFormPolizaDet = function (id, fromcreate) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
@@ -2836,7 +2836,7 @@ $(document).ready(function () {
 		});
 	}
 
-	<!-- Delete via Link functions -->
+	/* Delete via Link functions */
 	deleteProdSeg = function (id, productor_id) {
 		$.when(
 			deleteViaLink('prodseg', id)
@@ -2866,7 +2866,7 @@ $(document).ready(function () {
 		})
 	}
 
-	<!-- Box functions -->
+	/* Box functions */
 	openBoxAltaUsuario = function () {
 		$.colorbox({
 			title: 'Registro',
