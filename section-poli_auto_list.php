@@ -26,6 +26,7 @@
 			$(document).ready(function() {	            
 				populateListPlizaEstado('poliza_estado_id', 'main');
 				populateListCoberturaTipo('cobertura_tipo_id', 'main');
+				populateListSuc('sucursal_id', 'main');
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -164,7 +165,8 @@
                             </td>
                             <td width="14%">
                                 <label for="sucursal_nombre">Sucursal</label>                                
-                                <input type="text" name="sucursal_nombre" id="sucursal_nombre" maxlength="255" />
+                                <select name="sucursal_id" id="sucursal_id">
+								</select>
                             </td>
                             <td width="14%">
                                 <label for="productor_nombre">Productor</label>                                

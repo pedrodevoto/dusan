@@ -33,9 +33,9 @@
 	if(isset($_GET['seguro_nombre']) && $_GET['seguro_nombre']!=""){	
 		$query_Recordset1_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
 	}
-	// Filter by: sucursal_nombre
-	if(isset($_GET['sucursal_nombre']) && $_GET['sucursal_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND sucursal_nombre LIKE %s",GetSQLValueString('%' . $_GET['sucursal_nombre'] . '%', "text"));
+	// Filter by: sucursal_id
+	if(isset($_GET['sucursal_id']) && $_GET['sucursal_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
 	}
 	// Filter by: productor_nombre
 	if(isset($_GET['productor_nombre']) && $_GET['productor_nombre']!=""){	
