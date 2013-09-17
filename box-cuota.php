@@ -20,6 +20,22 @@
                     Cargando...
                 </div>
             </fieldset>
+	        <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
+	            <fieldset class="ui-widget ui-widget-content ui-corner-all">
+	                <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Observaciones</legend> 
+					<p>
+						<textarea name="box-poliza_observaciones" id="box-poliza_observaciones" class="ui-widget-content" style="width:100%" rows="5" placeholder="Observaciones"></textarea>
+					</p>
+	            	<p align="center" style="margin-top:10px">
+						<input type="hidden" name="box-poliza_id" id="box-poliza_id" />
+						<input type="submit" name="btnBox" id="btnBox" value="Guardar observaciones" />
+					</p>
+	            </fieldset>
+			</form>
+		    <div id="divBoxMessage" class="ui-state-highlight ui-corner-all divBoxMessage"> 
+		        <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
+		        <span id="spnBoxMessage"></span></p>
+		    </div>
         </div>
 
 </div>

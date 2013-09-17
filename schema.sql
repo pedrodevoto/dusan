@@ -385,7 +385,7 @@ CREATE TABLE `cuota` (
   `cuota_monto` decimal(10,2) unsigned NOT NULL,
   `cuota_vencimiento` date NOT NULL,
   `cuota_estado` enum('1 - No Pagado','2 - Pagado','3 - Anulado') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1 - No Pagado',
-  `cuota_fe_pago` date DEFAULT NULL,
+  `cuota_fe_pago` datetime DEFAULT NULL,
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`cuota_id`),
@@ -506,6 +506,7 @@ CREATE TABLE `poliza` (
   `poliza_pago_detalle` blob,
   `poliza_ajuste` tinyint(3) unsigned DEFAULT NULL,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
+  `poliza_observaciones` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
@@ -664,4 +665,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-09-10 17:32:38
+-- 2013-09-17 10:50:28

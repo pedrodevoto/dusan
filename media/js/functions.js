@@ -1164,6 +1164,28 @@ $(document).ready(function() {
 		});
 		return dfd.promise();
 	}
+	populateFormBoxPolizaObservaciones = function(id) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-fich_poliza_observaciones.php?id="+id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired'){
+					// Session expired
+					sessionExpire('box');				
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	
 	populatePolizaDet = function(subtipo_poliza, id) {
 		switch (subtipo_poliza) {
@@ -2020,7 +2042,6 @@ $(document).ready(function() {
 						result += '<td>';						
 						if (object.cuota_estado != '3 - Anulado') {
 							if (object.cuota_estado === '2 - Pagado') {
-								result += '<span onclick="editCuotaObservacion('+object.cuota_id+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-comment" title="Observación"></span>';
 								result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
 								result += '<span onClick="javascript:window.open(\'print-cuota.php?id='+object.cuota_id+'\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Digital"></span>';
 							} else {
@@ -2615,6 +2636,26 @@ $(document).ready(function() {
 			});
 		}
 	}
+	updateFormPolizaObservaciones = function(id){
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);		
+		// Post				
+		$.post("update-poliza_observaciones.php", $("#frmBox").serialize(), function(data){		
+			if (data=='Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();									
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function(){					
+					// Repopulate form
+					populateFormBoxPolizaObservaciones(id);
+				});
+			}
+		});	
+	}
 	
 	<!-- Process via form functions -->	
 	processFormPolizaDet = function(id, fromcreate){													
@@ -2709,7 +2750,7 @@ $(document).ready(function() {
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function(){					
 					openBoxCuota(poliza_id);
-					window.open('print-cuota.php?id='+cuota_id);
+					window.open('print-cuota.php?print&id='+cuota_id);
 				});
 			}
 		});	
@@ -3991,10 +4032,22 @@ $(document).ready(function() {
 			height:'100%',
 			onComplete: function() {
 							
+				$('#btnBox').button();
+				
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
 				populateDiv_Cuotas(id);								
-								
+				
+				formDisable('frmBox','ui',true);
+				
+				$.when(
+					populateFormBoxPolizaObservaciones(id)
+				).then(function() {
+					$('#btnBox').click(function(){
+						updateFormPolizaObservaciones(id);
+					})
+					formDisable('frmBox','ui',false);
+				});
 			}
 		});		
 	}
