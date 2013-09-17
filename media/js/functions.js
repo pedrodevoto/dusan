@@ -2061,6 +2061,7 @@ $(document).ready(function() {
 					result += '<table class="tblBox2">';
 					$.each(j, function(i, object) {
 						result += '<tr>';
+						result += '<td>' + object.cliente_nombre + '</td>';
 						result += '<td>' + object.poliza_numero + '</td>';
 						result += '<td>' + object.validez + '</td>';
 						result += '<td>' + object.seguro_nombre + '</td>';
@@ -4080,7 +4081,7 @@ $(document).ready(function() {
 				// Assign functions to buttons
 				$("#BtnSearchPoliza").click(function() {
 					// If a field was completed
-					if ($('#box0-poliza_numero').val() != '') {
+					if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_nombre').val() != '') {
 						populateDiv_Poliza_Results();
 					} else {
 						$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');

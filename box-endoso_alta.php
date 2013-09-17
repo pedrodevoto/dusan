@@ -12,8 +12,8 @@
             <div id="divBoxPolizaSearch" style="min-height:30px">
             	<div style="padding:5px">
                 	<div style="float:left">   	                        
-                        <label for="box0-poliza_numero">Número póliza</label> <input type="text" name="box0-poliza_numero" id="box0-poliza_numero" maxlength="255" class="ui-widget-content" style="width:200px" />
-                        <!--<label for="box0-cliente_nro_doc">Nº Doc.</label> <input type="text" id="box0-cliente_nro_doc" name="box0-cliente_nro_doc" maxlength="15" class="ui-widget-content" style="width:100px" />     -->        
+                        <label for="box0-poliza_numero">Número póliza</label> <input type="text" name="box0-poliza_numero" id="box0-poliza_numero" maxlength="255" class="ui-widget-content" style="width:100px" />
+                        <label for="box0-cliente_nombre">Nombre</label> <input type="text" id="box0-cliente_nombre" name="box0-cliente_nombre" maxlength="15" class="ui-widget-content" style="width:200px" />
 					</div>
                     <div style="float:right">                        
                         <input type="button" name="BtnSearchPoliza" id="BtnSearchPoliza" value="BUSCAR" />
