@@ -3816,34 +3816,22 @@ $(document).ready(function () {
 						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 					})
-					$("#box-poliza_cuotas").change(function () {
+					$("#box-poliza_medio_pago, #box-poliza_cuotas").change(function() {
 						var cuotas = '';
-						switch ($('#box-poliza_cuotas').val()) {
-						case 'Total':
+						if ($('#box-poliza_cuotas').val()=='Total') {
 							cuotas = 1;
-							break;
-						case 'Mensual':
-							switch ($('#box-poliza_vigencia').val()) {
-							case 'Anual':
-								cuotas = 12;
-								break;
-							case 'Semestral':
-								cuotas = 6;
-								break;
-							case 'Cuatrimestral':
-								cuotas = 4;
-								break;
-							case 'Trimestral':
-								cuotas = 3;
-								break;
-							case 'Bimestral':
-								cuotas = 2;
-								break;
-							case 'Mensual':
-								cuotas = 1;
-								break;
+						}
+						else {
+							switch ($("#box-poliza_medio_pago").val()) {
+								case 'Débito Bancario':
+								case 'Cuponera':
+								case 'Tarjeta de Crédito':
+									cuotas = 5;
+									break;
+								case 'Directo':
+									cuotas = 6;
+									break;
 							}
-							break;
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 					});
@@ -4145,34 +4133,22 @@ $(document).ready(function () {
 						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'dd/mm/y');
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 					})
-					$("#box-poliza_cuotas").change(function () {
+					$("#box-poliza_medio_pago, #box-poliza_cuotas").change(function() {
 						var cuotas = '';
-						switch ($('#box-poliza_cuotas').val()) {
-						case 'Total':
+						if ($('#box-poliza_cuotas').val()=='Total') {
 							cuotas = 1;
-							break;
-						case 'Mensual':
-							switch ($('#box-poliza_vigencia').val()) {
-							case 'Anual':
-								cuotas = 12;
-								break;
-							case 'Semestral':
-								cuotas = 6;
-								break;
-							case 'Cuatrimestral':
-								cuotas = 4;
-								break;
-							case 'Trimestral':
-								cuotas = 3;
-								break;
-							case 'Bimestral':
-								cuotas = 2;
-								break;
-							case 'Mensual':
-								cuotas = 1;
-								break;
+						}
+						else {
+							switch ($("#box-poliza_medio_pago").val()) {
+								case 'Débito Bancario':
+								case 'Cuponera':
+								case 'Tarjeta de Crédito':
+									cuotas = 5;
+									break;
+								case 'Directo':
+									cuotas = 6;
+									break;
 							}
-							break;
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 					});

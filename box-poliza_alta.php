@@ -86,10 +86,6 @@
                 <select name="box-poliza_cuotas" id="box-poliza_cuotas" class="ui-widget-content" style="width:130px"></select>
             </p> 
             <p>
-                <label for="box-poliza_cant_cuotas">Cant. Cuotas *</label>
-                <input type="text" name="box-poliza_cant_cuotas" id="box-poliza_cant_cuotas" maxlength="3" class="ui-widget-content" style="width:80px" />
-            </p> 
-            <p>
                 <label for="box-poliza_fecha_solicitud">Fecha Solicitud</label>
                 <input type="text" name="box-poliza_fecha_solicitud" id="box-poliza_fecha_solicitud" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
             </p>
@@ -117,7 +113,9 @@
             <p>
                 <label for="box-poliza_medio_pago">Medio de Pago *</label>
                 <select name="box-poliza_medio_pago" id="box-poliza_medio_pago" class="ui-widget-content" style="width:180px"></select>
-            </p>
+                Cant. Cuotas * 
+                <input type="text" name="box-poliza_cant_cuotas" id="box-poliza_cant_cuotas" maxlength="3" class="ui-widget-content" style="width:80px" />
+			</p>
             <p>
                 <label for="box-poliza_pago_detalle">Det. de Pago</label>
 				<textarea name="box-poliza_pago_detalle" id="box-poliza_pago_detalle" rows="5" class="ui-widget-content" style="width:220px"></textarea>
