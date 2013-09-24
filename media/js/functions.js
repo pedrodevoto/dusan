@@ -4340,6 +4340,7 @@ $(document).ready(function () {
 				).then(function () {
 					$('#btnBox').click(function () {
 						updateFormPolizaObservaciones(id);
+						return false;
 					})
 					formDisable('frmBox', 'ui', false);
 				});
