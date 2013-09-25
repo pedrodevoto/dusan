@@ -535,14 +535,14 @@ DROP TABLE IF EXISTS `automotor`;
 CREATE TABLE `automotor` (
   `automotor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `poliza_id` int(10) unsigned NOT NULL,
-  `marca` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_marca_id` int(11) NOT NULL,
   `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `castigado` tinyint(1) NOT NULL DEFAULT '0',
   `patente` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `tipo` enum('Automotor','Pickup A','Pickup B','Moto','Acoplado','Batán') COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_tipo_id` int(11) NOT NULL,
   `uso` enum('Particular','Comercial','Comercial / Particular') COLLATE utf8_unicode_ci NOT NULL,
   `ano` smallint(5) unsigned NOT NULL,
-  `carroceria` enum('Sedan 2 puertas','Sedan 3 puertas','Sedan 4 puertas','Sedan 5 puertas','Rural 3 puertas','Rural 5 puertas','Berlina 3 puertas','Berlina 5 puertas','Break') COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_carroceria_id` int(11) NOT NULL,
   `combustible` enum('Nafta','Diesel') COLLATE utf8_unicode_ci NOT NULL,
   `0km` tinyint(3) unsigned NOT NULL,
   `importado` tinyint(3) unsigned NOT NULL,
@@ -566,8 +566,10 @@ CREATE TABLE `automotor` (
   `traba_volante` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `matafuego` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `tuercas` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `equipo_rastreo` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `equipo_rastreo_id` int(11) unsigned DEFAULT NULL,
   `micro_grabado` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `cupon_vintrak` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cupon_vintrak_fecha` date DEFAULT NULL,
   `antena` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `estereo` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `parlantes` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -596,7 +598,7 @@ CREATE TABLE `automotor` (
   `marca_cilindro` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `venc_oblea` date DEFAULT NULL,
   `nro_tubo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cobertura_tipo` enum('A','B','B1','C','C1','D','Selecta','Plata','Oro') COLLATE utf8_unicode_ci NOT NULL,
+  `cobertura_tipo_id` int(11) NOT NULL,
   `franquicia` mediumint(8) unsigned DEFAULT NULL,
   `limite_rc` enum('$500.000','$3.000.000','$10.000.000') COLLATE utf8_unicode_ci NOT NULL,
   `servicio_grua` tinyint(3) unsigned DEFAULT NULL,
@@ -606,9 +608,203 @@ CREATE TABLE `automotor` (
   `valor_total` int(10) unsigned NOT NULL,
   PRIMARY KEY (`automotor_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`) USING BTREE,
-  CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+  KEY `cobertura_tipo_id` (`cobertura_tipo_id`),
+  KEY `automotor_tipo_id` (`automotor_tipo_id`),
+  KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
+  KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
+  CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
+  CONSTRAINT `automotor_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`),
+  CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
+  CONSTRAINT `automotor_ibfk_4` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `automotor_carroceria`;
+CREATE TABLE `automotor_carroceria` (
+  `automotor_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_carroceria_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_carroceria_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `automotor_carroceria` (`automotor_carroceria_id`, `automotor_carroceria_nombre`) VALUES
+(1,	'SEDAN 2 PUERTAS'),
+(2,	'SEDAN 3 PUERTAS'),
+(3,	'SEDAN 4 PUERTAS'),
+(4,	'SEDAN 5 PUERTAS'),
+(5,	'RURAL 3 PUERTAS'),
+(6,	'RURAL 5 PUERTAS'),
+(7,	'BERLINA 3 PUERTAS'),
+(8,	'BERLINA 5 PUERTAS'),
+(9,	'MAS DE 50CC'),
+(10,	'MENOS DE  50CC'),
+(11,	'BREAK 5 PTAS'),
+(12,	'CUOPE'),
+(13,	'CABRIOLET'),
+(14,	'4X4'),
+(15,	'4X2'),
+(16,	'TODO TERRENO'),
+(17,	'TRAILER');
+
+DROP TABLE IF EXISTS `automotor_gnc_foto`;
+CREATE TABLE `automotor_gnc_foto` (
+  `automotor_gnc_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_gnc_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_gnc_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_gnc_foto_width` int(11) NOT NULL,
+  `automotor_gnc_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_gnc_foto_id`),
+  KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_marca`;
+CREATE TABLE `automotor_marca` (
+  `automotor_marca_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_marca_nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_marca_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `automotor_marca` (`automotor_marca_id`, `automotor_marca_nombre`) VALUES
+(1,	'CHEVROLET'),
+(2,	'CITROEN'),
+(3,	'FIAT'),
+(4,	'FORD'),
+(5,	'PEUGEOT'),
+(6,	'RENAULT'),
+(7,	'VOLKSWAGEN'),
+(8,	'ACURA'),
+(9,	'ALEKO'),
+(10,	'ALFA ROMEO'),
+(11,	'ARO'),
+(12,	'ASIA'),
+(13,	'AUDI'),
+(14,	'AUSTIN'),
+(15,	'AUTOBIANCHI'),
+(16,	'BERTONE'),
+(17,	'BMW'),
+(18,	'CHERY'),
+(19,	'CHRYSLER'),
+(20,	'DACIA'),
+(21,	'DAEWOO'),
+(22,	'DAIHATSU'),
+(23,	'ENIAK'),
+(24,	'FERRARI'),
+(25,	'G.A.Z.'),
+(26,	'GROSSPAL'),
+(27,	'HAM-JIANG'),
+(28,	'HEIBAO'),
+(29,	'HONDA'),
+(30,	'HUMMER'),
+(31,	'HYUNDAI'),
+(32,	'ISUZU'),
+(33,	'IVECO'),
+(34,	'IZH'),
+(35,	'JAC'),
+(36,	'JAGUAR'),
+(37,	'KIA'),
+(38,	'KIA CAMION'),
+(39,	'LADA'),
+(40,	'LANCIA'),
+(41,	'MAHINDRA'),
+(42,	'MASERATI'),
+(43,	'MAZDA'),
+(44,	'MERCEDES BENZ'),
+(45,	'MINI COOPER'),
+(46,	'MITSUBISHI'),
+(47,	'NAKAI (CHANGAN)'),
+(48,	'NISSAN'),
+(49,	'OPEL'),
+(50,	'PIAGGIO'),
+(51,	'POLONEZ'),
+(52,	'PORSCHE'),
+(53,	'PROTON'),
+(54,	'RANQUEL'),
+(55,	'ROLLS ROYCE'),
+(56,	'ROVER-LAND ROV.'),
+(57,	'SAAB'),
+(58,	'SANTANA'),
+(59,	'SEAT'),
+(60,	'SKODA'),
+(61,	'SMART'),
+(62,	'SUBARU'),
+(63,	'SUZUKI'),
+(64,	'TATA'),
+(65,	'TOYOTA'),
+(66,	'UAZ'),
+(67,	'VOLVO'),
+(68,	'WULING MOTORS'),
+(69,	'YANTAI'),
+(70,	'YUEJIN'),
+(71,	'DATSUN'),
+(72,	'KIWI'),
+(73,	'LEGNANO'),
+(74,	'YAMAHA'),
+(75,	'OTROS'),
+(76,	'GILERA');
+
+DROP TABLE IF EXISTS `automotor_micrograbado_foto`;
+CREATE TABLE `automotor_micrograbado_foto` (
+  `automotor_micrograbado_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_micrograbado_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_micrograbado_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_micrograbado_foto_width` int(11) NOT NULL,
+  `automotor_micrograbado_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_micrograbado_foto_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `automotor_micrograbado_foto_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_tipo`;
+CREATE TABLE `automotor_tipo` (
+  `automotor_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_tipo_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `automotor_tipo` (`automotor_tipo_id`, `automotor_tipo_nombre`) VALUES
+(1,	'Automotor'),
+(2,	'Pickup A'),
+(3,	'Pickup B'),
+(4,	'Moto'),
+(5,	'Acoplado'),
+(6,	'Bantam');
+
+DROP TABLE IF EXISTS `automotor_tipo_carroceria`;
+CREATE TABLE `automotor_tipo_carroceria` (
+  `automotor_tipo_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_tipo_id` int(11) NOT NULL,
+  `automotor_carroceria_id` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_tipo_carroceria_id`),
+  KEY `automotor_tipo_id` (`automotor_tipo_id`),
+  KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
+  CONSTRAINT `automotor_tipo_carroceria_ibfk_1` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`) ON DELETE CASCADE,
+  CONSTRAINT `automotor_tipo_carroceria_ibfk_2` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `automotor_tipo_carroceria` (`automotor_tipo_carroceria_id`, `automotor_tipo_id`, `automotor_carroceria_id`) VALUES
+(1,	1,	1),
+(2,	1,	2),
+(3,	1,	3),
+(4,	1,	4),
+(5,	1,	5),
+(6,	1,	6),
+(7,	1,	7),
+(8,	1,	8),
+(9,	1,	11),
+(10,	1,	12),
+(11,	1,	13),
+(12,	2,	14),
+(13,	2,	15),
+(14,	2,	16),
+(15,	3,	14),
+(16,	3,	15),
+(17,	3,	16),
+(18,	4,	9),
+(19,	4,	10),
+(20,	6,	17);
 
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
@@ -645,6 +841,135 @@ CREATE TABLE `cliente_foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `cobertura_tipo`;
+CREATE TABLE `cobertura_tipo` (
+  `cobertura_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cobertura_tipo_nombre` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cobertura_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `cobertura_tipo` (`cobertura_tipo_id`, `cobertura_tipo_nombre`) VALUES
+(1,	'A'),
+(2,	'A2'),
+(3,	'AE'),
+(4,	'B'),
+(5,	'B1'),
+(6,	'C'),
+(7,	'C ANIVERSARIO 0km'),
+(8,	'C FULL'),
+(9,	'C PREMIUM'),
+(10,	'C1'),
+(11,	'C4'),
+(12,	'CE EJECUTIVO'),
+(13,	'CU USADOS'),
+(14,	'D'),
+(15,	'DB (TRCF) ANIVERSARIO 0km'),
+(16,	'DF (TRCF) USADOS'),
+(17,	'ORO C5'),
+(18,	'PLATA C7'),
+(19,	'SELECTA 8');
+
+DROP TABLE IF EXISTS `combinado_familiar`;
+CREATE TABLE `combinado_familiar` (
+  `combinado_familiar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `combinado_familiar_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `combinado_familiar_prorrata_obj_esp` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif_rep` tinyint(3) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_mob` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_ef_personales` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_rc_inc` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_cristales` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_responsabilidad_civil` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_jugadores_golf` decimal(10,2) unsigned DEFAULT NULL,
+  `combinado_familiar_inc_edif_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_inc_mob_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_ef_personales_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_rc_inc_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_tv_aud_vid_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_equipos_computacion_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_film_foto_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_cristales_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_responsabilidad_civil_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_danios_agua_flag` tinyint(3) unsigned NOT NULL,
+  `combinado_familiar_jugadores_golf_flag` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`combinado_familiar_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `combinado_familiar_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_equipos_computacion`;
+CREATE TABLE `combinado_familiar_equipos_computacion` (
+  `combinado_familiar_equipos_computacion_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_equipos_computacion_cantidad` int(11) NOT NULL,
+  `combinado_familiar_equipos_computacion_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_equipos_computacion_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_equipos_computacion_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_equipos_computacion_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_equipos_computacion_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_equipos_computacion_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_film_foto`;
+CREATE TABLE `combinado_familiar_film_foto` (
+  `combinado_familiar_film_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_film_foto_cantidad` int(11) NOT NULL,
+  `combinado_familiar_film_foto_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_film_foto_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_film_foto_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_film_foto_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_film_foto_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_film_foto_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_obj_esp_prorrata`;
+CREATE TABLE `combinado_familiar_obj_esp_prorrata` (
+  `combinado_familiar_obj_esp_prorrata_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_cantidad` int(11) NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_obj_esp_prorrata_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_obj_esp_prorrata_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_obj_esp_prorrata_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_obj_esp_prorrata_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `combinado_familiar_tv_aud_vid`;
+CREATE TABLE `combinado_familiar_tv_aud_vid` (
+  `combinado_familiar_tv_aud_vid_id` int(11) NOT NULL AUTO_INCREMENT,
+  `combinado_familiar_id` int(11) NOT NULL,
+  `combinado_familiar_tv_aud_vid_cantidad` int(11) NOT NULL,
+  `combinado_familiar_tv_aud_vid_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_tv_aud_vid_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `combinado_familiar_tv_aud_vid_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `combinado_familiar_tv_aud_vid_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`combinado_familiar_tv_aud_vid_id`),
+  KEY `combinado_familiar_id` (`combinado_familiar_id`),
+  CONSTRAINT `combinado_familiar_tv_aud_vid_ibfk_1` FOREIGN KEY (`combinado_familiar_id`) REFERENCES `combinado_familiar` (`combinado_familiar_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `contacto`;
 CREATE TABLE `contacto` (
   `contacto_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -656,6 +981,8 @@ CREATE TABLE `contacto` (
   `contacto_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT '0',
   `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contacto_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_default` tinyint(3) unsigned NOT NULL,
@@ -674,7 +1001,7 @@ CREATE TABLE `cuota` (
   `cuota_monto` decimal(10,2) unsigned NOT NULL,
   `cuota_vencimiento` date NOT NULL,
   `cuota_estado` enum('1 - No Pagado','2 - Pagado','3 - Anulado') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1 - No Pagado',
-  `cuota_fe_pago` date DEFAULT NULL,
+  `cuota_fe_pago` datetime DEFAULT NULL,
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`cuota_id`),
@@ -685,6 +1012,133 @@ CREATE TABLE `cuota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `endoso`;
+CREATE TABLE `endoso` (
+  `endoso_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `endoso_fecha_pedido` date NOT NULL,
+  `endoso_tipo_id` int(11) NOT NULL,
+  `endoso_cuerpo` text COLLATE utf8_unicode_ci,
+  `endoso_numero` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `endoso_fecha_compania` date DEFAULT NULL,
+  `endoso_completo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`endoso_id`),
+  KEY `poliza_id` (`poliza_id`),
+  KEY `endoso_tipo_id` (`endoso_tipo_id`),
+  CONSTRAINT `endoso_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  CONSTRAINT `endoso_ibfk_2` FOREIGN KEY (`endoso_tipo_id`) REFERENCES `endoso_tipo` (`endoso_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `endoso_foto`;
+CREATE TABLE `endoso_foto` (
+  `endoso_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_id` int(11) NOT NULL,
+  `endoso_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `endoso_foto_width` int(11) NOT NULL,
+  `endoso_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`endoso_foto_id`),
+  KEY `endoso_id` (`endoso_id`),
+  CONSTRAINT `endoso_foto_ibfk_1` FOREIGN KEY (`endoso_id`) REFERENCES `endoso` (`endoso_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `endoso_tipo`;
+CREATE TABLE `endoso_tipo` (
+  `endoso_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_tipo_grupo_id` int(11) NOT NULL,
+  `endoso_tipo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`endoso_tipo_id`),
+  KEY `endoso_tipo_grupo_id` (`endoso_tipo_grupo_id`),
+  CONSTRAINT `endoso_tipo_ibfk_1` FOREIGN KEY (`endoso_tipo_grupo_id`) REFERENCES `endoso_tipo_grupo` (`endoso_tipo_grupo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `endoso_tipo` (`endoso_tipo_id`, `endoso_tipo_grupo_id`, `endoso_tipo_nombre`) VALUES
+(1,	2,	'CAMBIA SUMA ASEGURADA'),
+(2,	2,	'CORRIGE MARCA/MODELO'),
+(3,	2,	'CAMBIA TIPO DE VEHÍCULO'),
+(4,	2,	'CORRIGE PATENTE'),
+(5,	2,	'CORRIGE MOTOR'),
+(6,	2,	'CORRIGE CHASIS'),
+(7,	2,	'CORRIGE ACCESORIOS'),
+(8,	2,	'CORRIGE DATOS DE INSPECCIÓN PREVIA'),
+(9,	2,	'CORRIGE COLOR'),
+(10,	2,	'CORRIGE AÑO'),
+(11,	2,	'CORRIGE DATOS DEL ACREEDOR PRENDARIO'),
+(12,	2,	'CAMBIO/CORRECCIÓN DE TITULAR'),
+(13,	2,	'CORRIGE DOMICILIO DEL ASEGURADO'),
+(14,	2,	'AJUSTA CUOTA'),
+(15,	2,	'INCLUYE ACREEDOR PRENDARIO'),
+(16,	2,	'EXCLUYE ACREEDOR PRENDARIO'),
+(17,	2,	'CORRIGE LÍMITE DE RESPONSABILIDAD CIVIL'),
+(18,	2,	'CORRIGE COBRADOR Y/O COMISIÓN'),
+(19,	2,	'CORRIGE TIPO Y NÚMERO DE DOCUMENTO'),
+(20,	2,	'CORRIGE RECARGOS Y DESCUENTOS'),
+(21,	2,	'AJUSTA COSTOS DE COMPAÑÍA'),
+(22,	2,	'VARIOS'),
+(23,	2,	'CAMBIO DE UNIDAD'),
+(24,	2,	'DISMINUYE COBERTURA'),
+(25,	2,	'AUMENTA COBERTURA'),
+(26,	2,	'CAMBIA USO'),
+(27,	2,	'CAMBIO DE CONDICIÓN FISCAL DEL ASEGURADO'),
+(28,	2,	'INCLUYE ACREEDOR HIPOTECARIO'),
+(29,	2,	'EXCLUYE ACREEDOR HIPOTECARIO'),
+(30,	1,	'DESESTIMIENTO'),
+(31,	1,	'FALTA DE PAGO'),
+(32,	1,	'INICIO'),
+(33,	1,	'RENOVACIÓN'),
+(34,	1,	'ROBO'),
+(35,	1,	'SINIESTROS'),
+(36,	1,	'VARIOS'),
+(37,	1,	'VENTA');
+
+DROP TABLE IF EXISTS `endoso_tipo_grupo`;
+CREATE TABLE `endoso_tipo_grupo` (
+  `endoso_tipo_grupo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `endoso_tipo_grupo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`endoso_tipo_grupo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `endoso_tipo_grupo` (`endoso_tipo_grupo_id`, `endoso_tipo_grupo_nombre`) VALUES
+(1,	'Anulación'),
+(2,	'General');
+
+DROP TABLE IF EXISTS `equipo_rastreo`;
+CREATE TABLE `equipo_rastreo` (
+  `equipo_rastreo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `equipo_rastreo_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`equipo_rastreo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `equipo_rastreo` (`equipo_rastreo_id`, `equipo_rastreo_nombre`) VALUES
+(1,	'LO JACK'),
+(2,	'TRACER'),
+(3,	'ITURAN');
+
+DROP TABLE IF EXISTS `incendio_edificio`;
+CREATE TABLE `incendio_edificio` (
+  `incendio_edificio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `incendio_edificio_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `incendio_edificio_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `incendio_edificio_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `incendio_edificio_inc_edif` decimal(10,2) unsigned NOT NULL,
+  `incendio_edificio_inc_edif_rep` tinyint(3) unsigned NOT NULL,
+  `incendio_edificio_inc_mob` decimal(10,2) unsigned DEFAULT NULL,
+  `incendio_edificio_rc_inc` decimal(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`incendio_edificio_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `incendio_edificio_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -692,11 +1146,11 @@ CREATE TABLE `poliza` (
   `cliente_id` int(10) unsigned NOT NULL,
   `subtipo_poliza_id` int(10) unsigned NOT NULL,
   `productor_seguro_id` int(10) unsigned NOT NULL,
-  `poliza_estado` enum('M/C','PENDIENTE','VIGENTE','A RENOVAR','RENOVADA','FINALIZADA') COLLATE utf8_unicode_ci NOT NULL,
-  `poliza_anulada` tinyint(3) unsigned NOT NULL,
+  `poliza_estado_id` int(11) NOT NULL,
   `poliza_numero` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `poliza_renueva_num` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_vigencia` enum('Mensual','Bimestral','Trimestral','Cuatrimestral','Semestral','Anual','Otra') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_vigencia_dias` int(11) DEFAULT NULL,
   `poliza_validez_desde` date NOT NULL,
   `poliza_validez_hasta` date NOT NULL,
   `poliza_cuotas` enum('Mensual','Total') COLLATE utf8_unicode_ci NOT NULL,
@@ -713,15 +1167,33 @@ CREATE TABLE `poliza` (
   `poliza_pago_detalle` blob,
   `poliza_ajuste` tinyint(3) unsigned DEFAULT NULL,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
+  `poliza_observaciones` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
+  KEY `poliza_estado_id` (`poliza_estado_id`),
   CONSTRAINT `poliza_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
   CONSTRAINT `poliza_ibfk_4` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
-  CONSTRAINT `poliza_ibfk_5` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`)
+  CONSTRAINT `poliza_ibfk_5` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`),
+  CONSTRAINT `poliza_ibfk_6` FOREIGN KEY (`poliza_estado_id`) REFERENCES `poliza_estado` (`poliza_estado_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+DROP TABLE IF EXISTS `poliza_estado`;
+CREATE TABLE `poliza_estado` (
+  `poliza_estado_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_estado_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`poliza_estado_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `poliza_estado` (`poliza_estado_id`, `poliza_estado_nombre`) VALUES
+(1,	'M/C'),
+(2,	'PENDIENTE'),
+(3,	'VIGENTE'),
+(4,	'VIGENTE/A RENOVAR'),
+(5,	'CUMPLIDA RENOVADA'),
+(6,	'CUMPLIDA');
 
 DROP TABLE IF EXISTS `poliza_foto`;
 CREATE TABLE `poliza_foto` (
@@ -755,13 +1227,16 @@ CREATE TABLE `productor_seguro` (
   `productor_seguro_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `productor_id` int(10) unsigned NOT NULL,
   `seguro_id` int(10) unsigned NOT NULL,
+  `sucursal_id` int(11) NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`productor_seguro_id`),
   UNIQUE KEY `code` (`productor_id`,`seguro_id`,`productor_seguro_codigo`) USING BTREE,
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
+  KEY `sucursal_id` (`sucursal_id`),
   CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
-  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`)
+  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`),
+  CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -771,8 +1246,25 @@ CREATE TABLE `seguro` (
   `seguro_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seguro_email_siniestro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_email_emision` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_direccion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_cp` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`seguro_id`),
   UNIQUE KEY `seguro_nombre` (`seguro_nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `seguro_cobertura_tipo`;
+CREATE TABLE `seguro_cobertura_tipo` (
+  `seguro_cobertura_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `seguro_id` int(10) unsigned NOT NULL,
+  `cobertura_tipo_id` int(11) NOT NULL,
+  PRIMARY KEY (`seguro_cobertura_tipo_id`),
+  KEY `seguro_id` (`seguro_id`),
+  KEY `cobertura_tipo_id` (`cobertura_tipo_id`),
+  CONSTRAINT `seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE,
+  CONSTRAINT `seguro_cobertura_tipo_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -782,12 +1274,18 @@ CREATE TABLE `subtipo_poliza` (
   `tipo_poliza_id` int(10) unsigned NOT NULL,
   `subtipo_poliza_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `subtipo_poliza_tabla` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `subtipo_poliza_polizadet_auto` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`subtipo_poliza_id`),
   UNIQUE KEY `subtipo_poliza_tabla` (`subtipo_poliza_tabla`),
   KEY `tipo_poliza_id` (`tipo_poliza_id`),
   CONSTRAINT `subtipo_poliza_ibfk_1` FOREIGN KEY (`tipo_poliza_id`) REFERENCES `tipo_poliza` (`tipo_poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `subtipo_poliza` (`subtipo_poliza_id`, `tipo_poliza_id`, `subtipo_poliza_nombre`, `subtipo_poliza_tabla`, `subtipo_poliza_polizadet_auto`) VALUES
+(6,	2,	'Automotor',	'automotor',	0),
+(14,	3,	'ACCIDENTES PERSONALES',	'accidentes',	1),
+(15,	2,	'COMBINADO FAMILIAR',	'combinado_familiar',	0),
+(16,	2,	'INCENDIO EDIFICIO',	'incendio_edificio',	0);
 
 DROP TABLE IF EXISTS `sucursal`;
 CREATE TABLE `sucursal` (
@@ -807,6 +1305,9 @@ CREATE TABLE `tipo_poliza` (
   PRIMARY KEY (`tipo_poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `tipo_poliza` (`tipo_poliza_id`, `tipo_poliza_nombre`) VALUES
+(2,	'Patrimoniales'),
+(3,	'Personas');
 
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
@@ -840,4 +1341,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-07-24 17:44:12
+-- 2013-09-25 10:00:28
