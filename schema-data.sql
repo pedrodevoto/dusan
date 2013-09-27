@@ -1193,7 +1193,8 @@ INSERT INTO `poliza_estado` (`poliza_estado_id`, `poliza_estado_nombre`) VALUES
 (3,	'VIGENTE'),
 (4,	'VIGENTE/A RENOVAR'),
 (5,	'CUMPLIDA RENOVADA'),
-(6,	'CUMPLIDA');
+(6,	'CUMPLIDA'),
+(7,	'VIGENTE/RENOVADA');
 
 DROP TABLE IF EXISTS `poliza_foto`;
 CREATE TABLE `poliza_foto` (
@@ -1341,4 +1342,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-09-25 10:00:28
+-- 2013-09-27 10:34:06
