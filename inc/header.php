@@ -26,6 +26,7 @@
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
                     <ul>
+						<li><a href="section-endosos_list.php">Endosos</a></li>
                         <li><a href="section-seg_list.php">Compañías de Seguros</a></li>
                         <li><a href="section-pro_list.php">Productores</a></li>                        
                     </ul>
