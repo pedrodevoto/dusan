@@ -20,6 +20,7 @@
 	require_once('Classes/fpdf/fpdi.php');
 	// Require PDF functions
 	require_once('inc/pdf_functions.php');	
+	require_once('inc/mail_functions.php');
 ?>
 <?php
 	// Obtain URL parameter
@@ -150,7 +151,7 @@
 			);						
 			
 			// Determine document type
-			switch($_GET['type']) {
+			switch(substr($_GET['type'], 0, 2)) {
 				case 'cc':
 				
 					/****************************************
@@ -280,8 +281,18 @@
 						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
 					}																									
 					// OUTPUT
-					$pdf->Output();
-				
+					if (isset($_GET['email'])) {
+						$cc = explode(',', urldecode($_GET['email']));
+						$to = $row_Recordset1['cliente_email'];
+						$filename = 'temp/'.md5(microtime()).'.pdf';
+						$pdf->Output($filename, 'F');
+						$attachments = array();
+						$attachments[] = array('file'=>$filename, 'name'=>'Constancia de cobertura.pdf', 'type'=>'application/pdf');
+						echo send_mail(1, $poliza_id, $to, 'Constancia de cobertura', '<p>Adjunta está su constancia de cobertura</p>', $attachments, $cc);
+					}
+					else {
+						$pdf->Output();
+					}
 					break;
 				case 'pe':
 				
@@ -309,10 +320,10 @@
 					}
 					// Emitir
 					$size_emitir = 44;
-					if (isset($_GET['mc']) && $_GET['mc'] === "1") {
+					if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
 						$txt_emitir = "MC";
 					} 
-					elseif (isset($_GET['re']) && $_GET['re'] === "1") {
+					elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
 						$txt_emitir = "RENOVACIÓN";
 					}
 					elseif (isset($_GET['en']) && $_GET['en']==1) {
@@ -589,7 +600,46 @@
 							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
 						}																																				}
 					// OUTPUT
-					$pdf->Output();		
+					if (isset($_GET['email'])) {
+						$cc = explode(',', urldecode($_GET['email']));
+						$to = $row_Recordset1['seguro_email_emision'];
+						$type = 0;
+						switch(substr($_GET['type'], 2)) {
+							case '':
+								$file_name = 'Pedido de emision.pdf';
+								$subject = 'Pedido de emisión';
+								$body = '<p>Adjunto está el pedido de emisión</p>';
+								$type = 2;
+							break;
+							case 'mc':
+								$file_name = 'Pedido MC.pdf';
+								$subject = 'Pedido de M/C';
+								$body = '<p>Adjunto está el pedido de M/C</p>';
+								$type = 3;
+							break;
+							case 're':
+								$file_name = 'Pedido renovacion.pdf';
+								$subject = 'Pedido de renovación';
+								$body = '<p>Adjunto está el pedido de renovación</p>';
+								$type = 4;
+							break;
+							case 'en':
+								$file_name = "Endoso.pdf";
+								$subject = "Pedido de endoso";
+								$body = '<p>Adjunto está el pedido de endoso</p>';
+								$type = 5;
+							break;
+						}
+						$filename = 'temp/'.md5(microtime()).'.pdf';
+						$pdf->Output($filename, 'F');
+						$attachments = array();
+						$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
+						echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
+					}
+					else {
+						$pdf->Output();
+					}
+					
 				
 					break;
 				default:
@@ -675,7 +725,7 @@
 			);						
 			
 			// Determine document type
-			switch($_GET['type']) {
+			switch(substr($_GET['type'], 0, 2)) {
 				case 'cc':
 					/****************************************
 					* CONSTANCIA DE COBERTURA
@@ -971,10 +1021,10 @@
 						}
 						// Emitir
 						$size_emitir = 44;
-						if (isset($_GET['mc']) && $_GET['mc'] === "1") {
+						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
 							$txt_emitir = "MC";
 						} 
-						elseif (isset($_GET['re']) && $_GET['re'] === "1") {
+						elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
 							$txt_emitir = "RENOVACIÓN";
 						}
 						elseif (isset($_GET['en']) && $_GET['en']==1) {
@@ -1283,7 +1333,59 @@
 					break;
 			}
 			// OUTPUT
-			$pdf->Output();	
+			if (isset($_GET['email'])) {
+				$cc = explode(',', urldecode($_GET['email']));
+				$type = 0;
+				switch(substr($_GET['type'], 0, 2)) {
+					case 'cc':
+						$to = $row_Recordset1['cliente_email'];
+						$file_name = 'Constancia de cobertura.pdf';
+						$subject = 'Constancia de cobertura';
+						$body = '<p>Adjunta está su constancia de cobertura</p>';
+						$type = 1;
+						break;
+					case 'pe':
+						$to = $row_Recordset1['seguro_email_emision'];
+						switch(substr($_GET['type'], 2)) {
+							case '':
+								$file_name = 'Pedido de emision.pdf';
+								$subject = 'Pedido de emisión';
+								$body = '<p>Adjunto está el pedido de emisión</p>';
+								$type = 2;
+							break;
+							case 'mc':
+								$file_name = 'Pedido MC.pdf';
+								$subject = 'Pedido de M/C';
+								$body = '<p>Adjunto está el pedido de M/C</p>';
+								$type = 3;
+							break;
+							case 're':
+								$file_name = 'Pedido renovacion.pdf';
+								$subject = 'Pedido de renovación';
+								$body = '<p>Adjunto está el pedido de renovación</p>';
+								$type = 4;
+							break;
+							case 'en':
+								$file_name = "Endoso.pdf";
+								$subject = "Pedido de endoso";
+								$body = '<p>Adjunto está el pedido de endoso</p>';
+								$type = 5;
+							break;
+						}
+						break;
+					default:
+						$to = '';
+						break;
+				}
+				$filename = 'temp/'.md5(microtime()).'.pdf';
+				$pdf->Output($filename, 'F');
+				$attachments = array();
+				$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
+				echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
+			}
+			else {
+				$pdf->Output();
+			}
 			break;
 			
 		case 'combinado_familiar':
@@ -1359,7 +1461,7 @@
 				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_premio'])." ")
 			);
 			
-			switch($_GET['type']) {
+			switch(substr($_GET['type'], 0, 2)) {
 				case 'cc':
 					/****************************************
 					* CONSTANCIA DE COBERTURA
@@ -1665,10 +1767,10 @@
 						}
 						// Emitir
 						$size_emitir = 44;
-						if (isset($_GET['mc']) && $_GET['mc'] === "1") {
+						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
 							$txt_emitir = "MC";
 						} 
-						elseif (isset($_GET['re']) && $_GET['re'] === "1") {
+						elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
 							$txt_emitir = "RENOVACIÓN";
 						}
 						elseif (isset($_GET['en']) && $_GET['en']==1) {
@@ -1986,7 +2088,59 @@
 					default:
 					die('Certificado no habilitado.');
 				}
-				$pdf->Output();
+				if (isset($_GET['email'])) {
+					$cc = explode(',', urldecode($_GET['email']));
+					$type = 0;
+					switch(substr($_GET['type'], 0, 2)) {
+						case 'cc':
+							$to = $row_Recordset1['cliente_email'];
+							$file_name = 'Constancia de cobertura.pdf';
+							$subject = 'Constancia de cobertura';
+							$body = '<p>Adjunta está su constancia de cobertura</p>';
+							$type = 1;
+							break;
+						case 'pe':
+							$to = $row_Recordset1['seguro_email_emision'];
+							switch(substr($_GET['type'], 2)) {
+								case '':
+									$file_name = 'Pedido de emision.pdf';
+									$subject = 'Pedido de emisión';
+									$body = '<p>Adjunto está el pedido de emisión</p>';
+									$type = 2;
+								break;
+								case 'mc':
+									$file_name = 'Pedido MC.pdf';
+									$subject = 'Pedido de M/C';
+									$body = '<p>Adjunto está el pedido de M/C</p>';
+									$type = 3;
+								break;
+								case 're':
+									$file_name = 'Pedido renovacion.pdf';
+									$subject = 'Pedido de renovación';
+									$body = '<p>Adjunto está el pedido de renovación</p>';
+									$type = 4;
+								break;
+								case 'en':
+									$file_name = "Endoso.pdf";
+									$subject = "Pedido de endoso";
+									$body = '<p>Adjunto está el pedido de endoso</p>';
+									$type = 5;
+								break;
+							}
+							break;
+						default:
+							$to = '';
+							break;
+					}
+					$filename = 'temp/'.md5(microtime()).'.pdf';
+					$pdf->Output($filename, 'F');
+					$attachments = array();
+					$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
+					echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
+				}
+				else {
+					$pdf->Output();
+				}
 			
 			break;
 		case 'incendio_edificio':
@@ -2037,7 +2191,7 @@
 				array('maxwidth' => 95, 'text' => "$ ".formatNumber($row_Recordset1['poliza_premio'])." ")
 			);
 			
-			switch($_GET['type']) {
+			switch(substr($_GET['type'], 0, 2)) {
 				case 'cc':
 					/****************************************
 					* CONSTANCIA DE COBERTURA
@@ -2213,10 +2367,10 @@
 						}
 						// Emitir
 						$size_emitir = 44;
-						if (isset($_GET['mc']) && $_GET['mc'] === "1") {
+						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
 							$txt_emitir = "MC";
 						} 
-						elseif (isset($_GET['re']) && $_GET['re'] === "1") {
+						elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
 							$txt_emitir = "RENOVACIÓN";
 						}
 						elseif (isset($_GET['en']) && $_GET['en']==1) {
@@ -2404,7 +2558,60 @@
 					die ('Documento no definido');
 					break;
 			}
-			$pdf->Output();
+			if (isset($_GET['email'])) {
+				$cc = explode(',', urldecode($_GET['email']));
+				$type = 0;
+				switch(substr($_GET['type'], 0, 2)) {
+					case 'cc':
+						$to = $row_Recordset1['cliente_email'];
+						$file_name = 'Constancia de cobertura.pdf';
+						$subject = 'Constancia de cobertura';
+						$body = '<p>Adjunta está su constancia de cobertura</p>';
+						$type = 1;
+						break;
+					case 'pe':
+						$to = $row_Recordset1['seguro_email_emision'];
+						switch(substr($_GET['type'], 2)) {
+							case '':
+								$file_name = 'Pedido de emision.pdf';
+								$subject = 'Pedido de emisión';
+								$body = '<p>Adjunto está el pedido de emisión</p>';
+								$type = 2;
+							break;
+							case 'mc':
+								$file_name = 'Pedido MC.pdf';
+								$subject = 'Pedido de M/C';
+								$body = '<p>Adjunto está el pedido de M/C</p>';
+								$type = 3;
+							break;
+							case 're':
+								$file_name = 'Pedido renovacion.pdf';
+								$subject = 'Pedido de renovación';
+								$body = '<p>Adjunto está el pedido de renovación</p>';
+								$type = 4;
+							break;
+							case 'en':
+								$file_name = "Endoso.pdf";
+								$subject = "Pedido de endoso";
+								$body = '<p>Adjunto está el pedido de endoso</p>';
+								$type = 5;
+							break;
+						}
+						break;
+					default:
+						$to = '';
+						break;
+				}
+
+				$filename = 'temp/'.md5(microtime()).'.pdf';
+				$pdf->Output($filename, 'F');
+				$attachments = array();
+				$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
+				echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
+			}
+			else {
+				$pdf->Output();
+			}
 			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		

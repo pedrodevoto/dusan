@@ -17,6 +17,7 @@
 	require_once('Classes/fpdf/fpdi.php');
 	// Require PDF functions
 	require_once('inc/pdf_functions.php');
+	require_once('inc/mail_functions.php');
 ?>
 <?php
 	// Obtain URL parameter
@@ -39,6 +40,20 @@
 		die("Error: El cliente no tiene un contacto primario asignado.");
 	}	
 
+	$offset = 0;
+	// New document
+	if (isset($_GET['print'])) {
+		$pdf = new FPDI('L','mm',array(297,210));
+		$pdf->AddPage();
+		$pdf->setSourceFile('pdf/cuota.pdf');
+	}
+	else {
+		$pdf = new FPDI('L','mm',array(350,210));
+		$pdf->AddPage();
+		$pdf->setSourceFile('pdf/cuota_digital.pdf');
+		$offset = 5;
+	}
+	
 	// Determine subtype
 	switch($row_Recordset1['subtipo_poliza_tabla']) {
 			
@@ -59,20 +74,7 @@
 			// General variables
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
-			$offset = 0;
-			// New document
-			if (isset($_GET['print'])) {
-				$pdf = new FPDI('L','mm',array(297,210));
-				$pdf->AddPage();
-				$pdf->setSourceFile('pdf/cuota.pdf');
-			}
-			else {
-				$pdf = new FPDI('L','mm',array(350,210));
-				$pdf->AddPage();
-				$pdf->setSourceFile('pdf/cuota_digital.pdf');
-				$offset = 5;
-			}
-			
+
 			$tplIdx = $pdf->importPage(1);
 			$pdf->useTemplate($tplIdx);
 			$pdf->SetFont('Arial', '', 8);
@@ -173,9 +175,7 @@
 				$pdf->SetFont('Arial', 'B', 12);
 				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
 			}
-			// Output
-			$pdf->Output();								
-			
+
 			// Close Recordset: Automotor
 			mysql_free_result($Recordset2);									
 		
@@ -207,20 +207,7 @@
 			// General variables
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
-			$offset = 0;
-			// New document
-			if (isset($_GET['print'])) {
-				$pdf = new FPDI('L','mm',array(297,210));
-				$pdf->AddPage();
-				$pdf->setSourceFile('pdf/cuota.pdf');
-			}
-			else {
-				$pdf = new FPDI('L','mm',array(350,210));
-				$pdf->AddPage();
-				$pdf->setSourceFile('pdf/cuota_digital.pdf');
-				$offset = 5;
-			}
-		
+
 			$tplIdx = $pdf->importPage(1);
 			$pdf->useTemplate($tplIdx);
 			$pdf->SetFont('Arial', '', 8);
@@ -315,13 +302,26 @@
 				$pdf->SetFont('Arial', 'B', 12);
 				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
 			}
-			$pdf->Output();
 			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
 			break;
 	}
+	// OUTPUT
+	if (isset($_GET['email'])) {
+		$cc = explode(',', urldecode($_GET['email']));
+		$to = $row_Recordset1['cliente_email'];
+		$filename = 'temp/'.md5(microtime()).'.pdf';
+		$pdf->Output($filename, 'F');
+		$attachments = array();
+		$attachments[] = array('file'=>$filename, 'name'=>'Recibo electronico.pdf', 'type'=>'application/pdf');
+		echo send_mail(6, $cuota_id, $to, 'JARVIS - Recibo electronico', '<p>Adjunto está su recibo electrónico</p>', $attachments, $cc);
+	}
+	else {
+		$pdf->Output();
+	}
+	
 	
 	// Free Recordset: Main
 	mysql_free_result($Recordset1);			

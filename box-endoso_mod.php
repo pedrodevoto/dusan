@@ -2,7 +2,13 @@
 	$MM_authorizedUsers = "administrativo,master";	
 ?>
 <?php require_once('inc/security-colorbox.php'); ?>
-
+<?php
+require_once('Connections/connection.php');
+$endoso_id = intval(mysql_real_escape_string($_GET['id']));
+$sql = 'SELECT seguro_email_emision FROM endoso JOIN (poliza, productor_seguro, seguro) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE endoso_id='.$endoso_id;
+$res = mysql_query($sql, $connection);
+list($seguro_email_emision) = mysql_fetch_array($res);
+?>
 <div class="divBoxContainer" style="width:94%">  
 	
 	<!-- Fotos -->	
@@ -68,5 +74,19 @@
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>
     </div>
+    <form name="frmBox1" id="frmBox1" class="frmBoxMain" style="margin-top:20px">
+        <fieldset class="ui-widget ui-widget-content ui-corner-all">
+            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
+			<p>
+				Para: <span id="default-email"><?=$seguro_email_emision?></span>
+			</p>	
+			<p>
+				<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
+			</p>
+        	<p align="center" style="margin-top:10px">
+				<input type="submit" name="btnBox1" id="btnBox1" value="Enviar email" />
+			</p>
+		</fieldset>
+	</form>
 </div>
 	
