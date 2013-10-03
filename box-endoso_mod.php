@@ -79,7 +79,10 @@ list($seguro_email_emision) = mysql_fetch_array($res);
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
 			<p>
 				Para: <span id="default-email"><?=$seguro_email_emision?></span>
-			</p>	
+			</p>
+			<p>
+				<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='Pedido de Endoso' placeholder="Asunto" />
+			</p>
 			<p>
 				<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
 			</p>
@@ -88,5 +91,13 @@ list($seguro_email_emision) = mysql_fetch_array($res);
 			</p>
 		</fieldset>
 	</form>
+    <div style="margin-top:10px">
+        <fieldset class="ui-widget ui-widget-content ui-corner-all">
+            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Registro de envíos</legend> 
+            <div id="divBoxList" style="min-height:30px">
+                Cargando...
+            </div>
+        </fieldset>
+	</div>
 </div>
 	

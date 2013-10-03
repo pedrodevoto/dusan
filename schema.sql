@@ -396,6 +396,30 @@ CREATE TABLE `cuota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `email_log`;
+CREATE TABLE `email_log` (
+  `email_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email_type_id` int(11) NOT NULL,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
+  `email_log_to` text COLLATE utf8_unicode_ci NOT NULL,
+  `email_log_timestamp` datetime NOT NULL,
+  PRIMARY KEY (`email_log_id`),
+  KEY `usuario_id` (`usuario_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `email_type`;
+CREATE TABLE `email_type` (
+  `email_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email_type_name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`email_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `endoso`;
 CREATE TABLE `endoso` (
   `endoso_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -665,4 +689,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-09-17 10:50:28
+-- 2013-10-03 12:08:41

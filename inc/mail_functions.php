@@ -41,7 +41,7 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		
 		// $mail->AddAttachment('images/phpmailer.gif');      // default image
 		// $mail->Send();
-		$sql = sprintf('INSERT INTO email_log (email_type_id, object_id, usuario_id, email_log_to, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients));
+		$sql = sprintf('INSERT INTO email_log (email_type_id, poliza_id, usuario_id, email_log_to, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients));
 		mysql_query($sql, $connection) or die(mysql_error());
 		return "Email enviado satisfactoriamente.";
 	} 

@@ -30,14 +30,17 @@ list($state, $cliente_email, $seguro_email_emision) = mysql_fetch_array($res);
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
 			<p>
 				<div id="doc">
-					<input type="radio" id="doc1" name="type" value="cc" /><label for="doc1">CC</label>
-					<input type="radio" id="doc2" name="type" value="pe" /><label for="doc2">Pedido de Emisión</label>
-					<input type="radio" id="doc3" name="type" value="pemc" /><label for="doc3">Pedido de M/C</label>
-					<?php if($state==4):?><input type="radio" id="doc4" name="type" value="pere" /><label for="doc4">Pedido de Renovación</label><?php endif;?>
+					<input type="radio" id="doc1" name="type" value="cc" subject='Constancia de Cobertura' /><label for="doc1">CC</label>
+					<input type="radio" id="doc2" name="type" value="pe" subject='Pedido de Emisión' /><label for="doc2">Pedido de Emisión</label>
+					<input type="radio" id="doc3" name="type" value="pemc" subject='Pedido de M/C' /><label for="doc3">Pedido de M/C</label>
+					<?php if($state==4):?><input type="radio" id="doc4" name="type" value="pere" subject="Pedido de Renovación" /><label for="doc4">Pedido de Renovación</label><?php endif;?>
 				</div>
 			</p>
 			<p>
 				Para: <span id="default-email"></span>
+			</p>
+			<p>
+				<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" placeholder="Asunto" />
 			</p>	
 			<p>
 				<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
@@ -52,16 +55,26 @@ list($state, $cliente_email, $seguro_email_emision) = mysql_fetch_array($res);
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>
     </div>
+    <div style="margin-top:10px">
+        <fieldset class="ui-widget ui-widget-content ui-corner-all">
+            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Registro de envíos</legend> 
+            <div id="divBoxList" style="min-height:30px">
+                Cargando...
+            </div>
+        </fieldset>
+	</div>
 </div>
 <script>
 $('#doc1').change(function() {
 	if ($(this).prop('checked')) {
 		$('#default-email').text('<?=$cliente_email?>');
+		$('#mail-subject').val($(this).attr('subject'));
 	}
 });
 $('#doc2, #doc3, #doc4').change(function() {
 	if ($(this).prop('checked')) {
 		$('#default-email').text('<?=$seguro_email_emision?>');
+		$('#mail-subject').val($(this).attr('subject'));
 	}
 });
 $('#doc1').click();

@@ -53,12 +53,24 @@ list($cliente_email) = mysql_fetch_array($res);
 					Recibo: <span id="recibo-id"></span>
 				</p>
 				<p>
+					<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='JARVIS - Recibo electronico' placeholder="Asunto" />
+				</p>
+				<p>
 					<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
 				</p>
 	        	<p align="center" style="margin-top:10px">
 					<input type="hidden" name="cuota-id" id="cuota-id" value="" />
 					<input type="submit" name="btnBox1" id="btnBox1" value="Enviar email" disabled />
+					<button id="btnVerPDF" disabled>Ver PDF</button>
 				</p>
 			</fieldset>
 		</form>
+	    <div style="margin-top:10px">
+	        <fieldset class="ui-widget ui-widget-content ui-corner-all">
+	            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Registro de envíos</legend> 
+	            <div id="divBoxList1" style="min-height:30px">
+	                Cargando...
+	            </div>
+	        </fieldset>
+		</div>
 </div>

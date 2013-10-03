@@ -312,11 +312,12 @@
 	if (isset($_GET['email'])) {
 		$cc = explode(',', urldecode($_GET['email']));
 		$to = $row_Recordset1['cliente_email'];
+		$subject = $_GET['mail-subject'];
 		$filename = 'temp/'.md5(microtime()).'.pdf';
 		$pdf->Output($filename, 'F');
 		$attachments = array();
 		$attachments[] = array('file'=>$filename, 'name'=>'Recibo electronico.pdf', 'type'=>'application/pdf');
-		echo send_mail(6, $cuota_id, $to, 'JARVIS - Recibo electronico', '<p>Adjunto está su recibo electrónico</p>', $attachments, $cc);
+		echo send_mail(6, $row_Recordset1['poliza_id'], $to, $subject, '<p>Adjunto está su recibo electrónico</p>', $attachments, $cc);
 	}
 	else {
 		$pdf->Output();

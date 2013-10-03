@@ -603,29 +603,26 @@
 					if (isset($_GET['email'])) {
 						$cc = explode(',', urldecode($_GET['email']));
 						$to = $row_Recordset1['seguro_email_emision'];
+						$subject = $_GET['mail-subject'];
 						$type = 0;
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$subject = 'Pedido de emisión';
 								$body = '<p>Adjunto está el pedido de emisión</p>';
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$subject = 'Pedido de M/C';
 								$body = '<p>Adjunto está el pedido de M/C</p>';
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$subject = 'Pedido de renovación';
 								$body = '<p>Adjunto está el pedido de renovación</p>';
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$subject = "Pedido de endoso";
 								$body = '<p>Adjunto está el pedido de endoso</p>';
 								$type = 5;
 							break;
@@ -1335,12 +1332,12 @@
 			// OUTPUT
 			if (isset($_GET['email'])) {
 				$cc = explode(',', urldecode($_GET['email']));
+				$subject = $_GET['mail-subject'];
 				$type = 0;
 				switch(substr($_GET['type'], 0, 2)) {
 					case 'cc':
 						$to = $row_Recordset1['cliente_email'];
 						$file_name = 'Constancia de cobertura.pdf';
-						$subject = 'Constancia de cobertura';
 						$body = '<p>Adjunta está su constancia de cobertura</p>';
 						$type = 1;
 						break;
@@ -1349,25 +1346,21 @@
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$subject = 'Pedido de emisión';
 								$body = '<p>Adjunto está el pedido de emisión</p>';
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$subject = 'Pedido de M/C';
 								$body = '<p>Adjunto está el pedido de M/C</p>';
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$subject = 'Pedido de renovación';
 								$body = '<p>Adjunto está el pedido de renovación</p>';
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$subject = "Pedido de endoso";
 								$body = '<p>Adjunto está el pedido de endoso</p>';
 								$type = 5;
 							break;
@@ -2090,12 +2083,12 @@
 				}
 				if (isset($_GET['email'])) {
 					$cc = explode(',', urldecode($_GET['email']));
+					$subject = $_GET['mail-subject'];
 					$type = 0;
 					switch(substr($_GET['type'], 0, 2)) {
 						case 'cc':
 							$to = $row_Recordset1['cliente_email'];
 							$file_name = 'Constancia de cobertura.pdf';
-							$subject = 'Constancia de cobertura';
 							$body = '<p>Adjunta está su constancia de cobertura</p>';
 							$type = 1;
 							break;
@@ -2104,25 +2097,21 @@
 							switch(substr($_GET['type'], 2)) {
 								case '':
 									$file_name = 'Pedido de emision.pdf';
-									$subject = 'Pedido de emisión';
 									$body = '<p>Adjunto está el pedido de emisión</p>';
 									$type = 2;
 								break;
 								case 'mc':
 									$file_name = 'Pedido MC.pdf';
-									$subject = 'Pedido de M/C';
 									$body = '<p>Adjunto está el pedido de M/C</p>';
 									$type = 3;
 								break;
 								case 're':
 									$file_name = 'Pedido renovacion.pdf';
-									$subject = 'Pedido de renovación';
 									$body = '<p>Adjunto está el pedido de renovación</p>';
 									$type = 4;
 								break;
 								case 'en':
 									$file_name = "Endoso.pdf";
-									$subject = "Pedido de endoso";
 									$body = '<p>Adjunto está el pedido de endoso</p>';
 									$type = 5;
 								break;
@@ -2560,12 +2549,12 @@
 			}
 			if (isset($_GET['email'])) {
 				$cc = explode(',', urldecode($_GET['email']));
+				$subject = $_GET['mail-subject'];
 				$type = 0;
 				switch(substr($_GET['type'], 0, 2)) {
 					case 'cc':
 						$to = $row_Recordset1['cliente_email'];
 						$file_name = 'Constancia de cobertura.pdf';
-						$subject = 'Constancia de cobertura';
 						$body = '<p>Adjunta está su constancia de cobertura</p>';
 						$type = 1;
 						break;
@@ -2574,25 +2563,21 @@
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$subject = 'Pedido de emisión';
 								$body = '<p>Adjunto está el pedido de emisión</p>';
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$subject = 'Pedido de M/C';
 								$body = '<p>Adjunto está el pedido de M/C</p>';
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$subject = 'Pedido de renovación';
 								$body = '<p>Adjunto está el pedido de renovación</p>';
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$subject = "Pedido de endoso";
 								$body = '<p>Adjunto está el pedido de endoso</p>';
 								$type = 5;
 							break;

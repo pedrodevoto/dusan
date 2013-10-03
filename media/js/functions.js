@@ -1549,7 +1549,7 @@ $(document).ready(function () {
 		$('#recibo-id').text(recibo);
 		$('#cuota-id').val(cuota);
 		$('#email').focus();
-		$('#btnBox1').button('option', 'disabled', false);
+		$('#btnBox1, #btnVerPDF').button('option', 'disabled', false);
 	}
 	/* Other form functions */
 	assignClientToPoliza = function (id) {
@@ -2196,6 +2196,65 @@ $(document).ready(function () {
 				$('#divBoxList').html(result);
 			}
 		});
+	}
+	populateDiv_Envios = function(type, id, suffix) {
+		suffix = suffix || '';
+		$.getJSON("get-json-fich_envios.php?type="+encodeURIComponent(type)+"&id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Sort data
+					j.sort(function (a, b) {
+						var aValue = parseInt(a.cuota_nro);
+						var bValue = parseInt(b.cuota_nro);
+						return aValue == bValue ? 0 : aValue < bValue ? -1 : 1;
+					});
+					// General variables
+					var result = '';
+					// Open Table and Headers
+					result += '<table class="tblBox">';
+					result += '<tr>';
+					result += '<th>Fecha</th>';
+					result += '<th>Usuario</th>';
+					result += '<th>Destino emails</th>';
+					result += '<th>Tipo</th>';
+					result += '</tr>';
+					// Table Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td>' + object.email_log_timestamp + '</td>';
+						result += '<td>' + object.usuario_usuario + '</td>';
+						result += '<td><span title="'+object.email_log_to+'">' + object.email_log_to.slice(0, 50) + (object.email_log_to.length>50?'...':'') + '</span></td>';
+						result += '<td>' + object.email_type_name + '</td>';
+						result += '<td>';
+						if (object.cuota_nro == 1) {
+							if (object.cuota_pfc == 1) {
+								result += '<span onClick="javascript:updateLinkCuota_PFC(' + object.cuota_id + ', ' + id + ');" style="cursor: pointer;" class="ui-icon ui-icon-circle-check" title="Cambiar"></span>';
+							} else {
+								result += '<span onClick="javascript:updateLinkCuota_PFC(' + object.cuota_id + ', ' + id + ');" style="cursor: pointer;" class="ui-icon ui-icon-circle-close" title="Cambiar"></span>';
+							}
+						} else {
+							result += '&nbsp;';
+						}
+						result += '</td>';
+						result += '<td>';
+
+						result += '</td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+					// Populate DIV
+					$('#divBoxList'+suffix).html(result);
+				}
+			}
+		});
+		
 	}
 
 	editCuotaObservacion = function (id) {
@@ -4296,8 +4355,10 @@ $(document).ready(function () {
 			title: 'Registro',
 			href: 'box-polizacert.php?section=3&id=' + id,
 			width: '700px',
-			height: '450px',
+			height: '600px',
 			onComplete: function () {
+
+				populateDiv_Envios('1,2,3,4', id);
 
 				// Button action
 				$("#btnCCp").button().click(function () {
@@ -4326,6 +4387,7 @@ $(document).ready(function () {
 						success: function(data) {
 							showBoxConf(data, false, 'always', 3000, function () {
 								$('#btnBox1').button("option", "disabled", false);
+								populateDiv_Envios('1,2,3,4', id);
 							});
 						},
 						error: function() {
@@ -4352,6 +4414,7 @@ $(document).ready(function () {
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
 				populateDiv_Cuotas(id);
+				populateDiv_Envios('6', id, '1');
 
 				formDisable('frmBox', 'ui', true);
 
@@ -4374,6 +4437,7 @@ $(document).ready(function () {
 							success: function(data) {
 								alert(data);
 								$('#btnBox1').button("option", "disabled", false);
+								populateDiv_Envios('6', id, '1');
 							},
 							error: function() {
 								alert('Error. Intente nuevamente.');
@@ -4382,7 +4446,9 @@ $(document).ready(function () {
 						});
 						return false;
 					});
-					
+					$("#btnVerPDF").button().click(function() {
+						window.open('print-cuota.php?id='+$('#cuota-id').val());
+					})
 					formDisable('frmBox', 'ui', false);
 				});
 			}
@@ -4537,6 +4603,8 @@ $(document).ready(function () {
 				$.when(
 					populateFormBoxEndoso(id)
 				).then(function () {
+					var poliza_id = $('#box-poliza_id').val();
+					
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
@@ -4566,9 +4634,10 @@ $(document).ready(function () {
 						}
 					});
 					$("#btnBoxExport").click(function () {
-						var poliza_id = $('#box-poliza_id').val();
 						window.open('print-poliza.php?type=pe&en=1&id=' + poliza_id + '&endoso_id=' + id);
 					})
+					
+					populateDiv_Envios('5', poliza_id);
 					
 					// Email form
 					$("#btnBox1").button().click(function () {
@@ -4584,6 +4653,7 @@ $(document).ready(function () {
 							success: function(data) {
 								alert(data);
 								$('#btnBox1').button("option", "disabled", false);
+								populateDiv_Envios('5', poliza_id);
 							},
 							error: function() {
 								alert('Error. Intente nuevamente.');
