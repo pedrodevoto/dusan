@@ -33,14 +33,20 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		// $mail->SetFrom('pedrodevoto@gmail.com', 'Pedro Devoto');
 		
 		$mail->Subject = $subject;
-		$mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; 
-		$mail->MsgHTML($body);
 		foreach ($attachments as $attachment) {
 			$mail->AddAttachment($attachment['file'], $attachment['name'], 'base64', $attachment['type']);
 		}
 		
-		// $mail->AddAttachment('images/phpmailer.gif');      // default image
-		// $mail->Send();
+		if ($body) {
+			$mail->AltBody = 'Estimado asegurado, le agradecemos por elegir DUSAN ASESORES DE SEGUROS. De forma adjunta le enviamos la informacion solicitada. Muchas gracias.'; 
+			$mail->MsgHTML('<img src="cid:saludo_dusan" />');
+			$mail->AddEmbeddedImage('media/images/mail-body.jpg', 'saludo_dusan', '', 'base64', 'image/jpeg');
+		}
+		else {
+			$mail->AltBody = ''; 
+			$mail->MsgHTML('');
+		}
+		$mail->Send();
 		$sql = sprintf('INSERT INTO email_log (email_type_id, poliza_id, usuario_id, email_log_to, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients));
 		mysql_query($sql, $connection) or die(mysql_error());
 		return "Email enviado satisfactoriamente.";

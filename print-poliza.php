@@ -288,7 +288,7 @@
 						$pdf->Output($filename, 'F');
 						$attachments = array();
 						$attachments[] = array('file'=>$filename, 'name'=>'Constancia de cobertura.pdf', 'type'=>'application/pdf');
-						echo send_mail(1, $poliza_id, $to, 'Constancia de cobertura', '<p>Adjunta está su constancia de cobertura</p>', $attachments, $cc);
+						echo send_mail(1, $poliza_id, $to, 'Constancia de cobertura', TRUE, $attachments, $cc);
 					}
 					else {
 						$pdf->Output();
@@ -608,22 +608,18 @@
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$body = '<p>Adjunto está el pedido de emisión</p>';
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$body = '<p>Adjunto está el pedido de M/C</p>';
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$body = '<p>Adjunto está el pedido de renovación</p>';
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$body = '<p>Adjunto está el pedido de endoso</p>';
 								$type = 5;
 							break;
 						}
@@ -631,7 +627,7 @@
 						$pdf->Output($filename, 'F');
 						$attachments = array();
 						$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
-						echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
+						echo send_mail($type, $poliza_id, $to, $subject, FALSE, $attachments, $cc);
 					}
 					else {
 						$pdf->Output();
@@ -1338,7 +1334,7 @@
 					case 'cc':
 						$to = $row_Recordset1['cliente_email'];
 						$file_name = 'Constancia de cobertura.pdf';
-						$body = '<p>Adjunta está su constancia de cobertura</p>';
+						$body = TRUE;
 						$type = 1;
 						break;
 					case 'pe':
@@ -1346,22 +1342,22 @@
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$body = '<p>Adjunto está el pedido de emisión</p>';
+								$body = FALSE;
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$body = '<p>Adjunto está el pedido de M/C</p>';
+								$body = FALSE;
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$body = '<p>Adjunto está el pedido de renovación</p>';
+								$body = FALSE;
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$body = '<p>Adjunto está el pedido de endoso</p>';
+								$body = FALSE;
 								$type = 5;
 							break;
 						}
@@ -2089,7 +2085,7 @@
 						case 'cc':
 							$to = $row_Recordset1['cliente_email'];
 							$file_name = 'Constancia de cobertura.pdf';
-							$body = '<p>Adjunta está su constancia de cobertura</p>';
+							$body = TRUE;
 							$type = 1;
 							break;
 						case 'pe':
@@ -2097,22 +2093,22 @@
 							switch(substr($_GET['type'], 2)) {
 								case '':
 									$file_name = 'Pedido de emision.pdf';
-									$body = '<p>Adjunto está el pedido de emisión</p>';
+									$body = FALSE;
 									$type = 2;
 								break;
 								case 'mc':
 									$file_name = 'Pedido MC.pdf';
-									$body = '<p>Adjunto está el pedido de M/C</p>';
+									$body = FALSE;
 									$type = 3;
 								break;
 								case 're':
 									$file_name = 'Pedido renovacion.pdf';
-									$body = '<p>Adjunto está el pedido de renovación</p>';
+									$body = FALSE;
 									$type = 4;
 								break;
 								case 'en':
 									$file_name = "Endoso.pdf";
-									$body = '<p>Adjunto está el pedido de endoso</p>';
+									$body = FALSE;
 									$type = 5;
 								break;
 							}
@@ -2555,7 +2551,7 @@
 					case 'cc':
 						$to = $row_Recordset1['cliente_email'];
 						$file_name = 'Constancia de cobertura.pdf';
-						$body = '<p>Adjunta está su constancia de cobertura</p>';
+						$body = TRUE;
 						$type = 1;
 						break;
 					case 'pe':
@@ -2563,22 +2559,22 @@
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = 'Pedido de emision.pdf';
-								$body = '<p>Adjunto está el pedido de emisión</p>';
+								$body = FALSE;
 								$type = 2;
 							break;
 							case 'mc':
 								$file_name = 'Pedido MC.pdf';
-								$body = '<p>Adjunto está el pedido de M/C</p>';
+								$body = FALSE;
 								$type = 3;
 							break;
 							case 're':
 								$file_name = 'Pedido renovacion.pdf';
-								$body = '<p>Adjunto está el pedido de renovación</p>';
+								$body = FALSE;
 								$type = 4;
 							break;
 							case 'en':
 								$file_name = "Endoso.pdf";
-								$body = '<p>Adjunto está el pedido de endoso</p>';
+								$body = FALSE;
 								$type = 5;
 							break;
 						}
