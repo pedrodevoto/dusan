@@ -43,8 +43,8 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 			$mail->AddEmbeddedImage('media/images/mail-body.jpg', 'saludo_dusan', '', 'base64', 'image/jpeg');
 		}
 		else {
-			$mail->AltBody = ''; 
-			$mail->MsgHTML('');
+			$mail->AltBody = ' '; 
+			$mail->MsgHTML(' ');
 		}
 		$mail->Send();
 		$sql = sprintf('INSERT INTO email_log (email_type_id, poliza_id, usuario_id, email_log_to, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients));

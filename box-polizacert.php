@@ -5,9 +5,9 @@
 <?php
 require_once('Connections/connection.php');
 $poliza_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = 'SELECT poliza_estado_id, cliente_email, seguro_email_emision FROM poliza JOIN (cliente, productor_seguro, seguro) ON poliza.cliente_id = cliente.cliente_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE poliza_id='.$poliza_id;
+$sql = 'SELECT poliza_estado_id, cliente_email, seguro_email_emision, subtipo_poliza_id, patente, IF(COUNT(poliza_foto_id) > 0, 1, 0) as poliza_fotos FROM poliza JOIN (cliente, productor_seguro, seguro) ON poliza.cliente_id = cliente.cliente_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id LEFT JOIN automotor ON poliza.poliza_id = automotor.poliza_id LEFT JOIN poliza_foto ON poliza.poliza_id = poliza_foto.poliza_id WHERE poliza.poliza_id='.$poliza_id;
 $res = mysql_query($sql);
-list($state, $cliente_email, $seguro_email_emision) = mysql_fetch_array($res);
+list($state, $cliente_email, $seguro_email_emision, $subtipo_poliza_id, $patente, $fotos) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
 
@@ -30,10 +30,11 @@ list($state, $cliente_email, $seguro_email_emision) = mysql_fetch_array($res);
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
 			<p>
 				<div id="doc">
-					<input type="radio" id="doc1" name="type" value="cc" subject='Constancia de Cobertura' /><label for="doc1">CC</label>
-					<input type="radio" id="doc2" name="type" value="pe" subject='Pedido de Emisión' /><label for="doc2">Pedido de Emisión</label>
-					<input type="radio" id="doc3" name="type" value="pemc" subject='Pedido de M/C' /><label for="doc3">Pedido de M/C</label>
-					<?php if($state==4):?><input type="radio" id="doc4" name="type" value="pere" subject="Pedido de Renovación" /><label for="doc4">Pedido de Renovación</label><?php endif;?>
+					<input type="radio" id="doc1" name="type" value="cc" subject='DUSAN ASESORES DE SEGUROS' /><label for="doc1">CC</label>
+					<input type="radio" id="doc2" name="type" value="pe" subject='EMITIR <?=$patente?>' /><label for="doc2">Pedido de Emisión</label>
+					<input type="radio" id="doc3" name="type" value="pemc" subject='M/C <?=$patente?>' /><label for="doc3">Pedido de M/C</label>
+					<?php if($state==4):?><input type="radio" id="doc4" name="type" value="pere" subject="RENOVACION <?=$patente?>" /><label for="doc4">Pedido de Renovación</label><?php endif;?>
+					<?php if($fotos):?><input type="radio" id="doc5" name="type" value="fotos" subject="FOTOS <?=$patente?>" /><label for="doc5">Fotos</label><?php endif; ?>
 				</div>
 			</p>
 			<p>
@@ -71,7 +72,7 @@ $('#doc1').change(function() {
 		$('#mail-subject').val($(this).attr('subject'));
 	}
 });
-$('#doc2, #doc3, #doc4').change(function() {
+$('#doc2, #doc3, #doc4, #doc5').change(function() {
 	if ($(this).prop('checked')) {
 		$('#default-email').text('<?=$seguro_email_emision?>');
 		$('#mail-subject').val($(this).attr('subject'));

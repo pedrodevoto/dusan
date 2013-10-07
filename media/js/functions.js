@@ -4358,7 +4358,7 @@ $(document).ready(function () {
 			height: '600px',
 			onComplete: function () {
 
-				populateDiv_Envios('1,2,3,4', id);
+				populateDiv_Envios('1,2,3,4,7', id);
 
 				// Button action
 				$("#btnCCp").button().click(function () {
@@ -4381,13 +4381,17 @@ $(document).ready(function () {
 				$('#doc').buttonset();
 				$("#btnBox1").button().click(function () {
 					$('#btnBox1').button("option", "disabled", true);
+					var url = 'print-poliza.php';
+					if ($('input[name="type"]:checked', '#frmBox1').val()=='fotos') {
+						url = 'send-fotos.php';
+					}
 					$.ajax({
-						url: 'print-poliza.php',
+						url: url,
 						data: $('#frmBox1').serializeArray(),
 						success: function(data) {
 							showBoxConf(data, false, 'always', 3000, function () {
 								$('#btnBox1').button("option", "disabled", false);
-								populateDiv_Envios('1,2,3,4', id);
+								populateDiv_Envios('1,2,3,4,7', id);
 							});
 						},
 						error: function() {
