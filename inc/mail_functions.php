@@ -3,7 +3,7 @@ require_once 'Classes/PHPMailer/class.phpmailer.php';
 require_once('Connections/connection.php');
 require_once('inc/credentials.php');
 
-function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Dusan Asegurador', 'email'=>'noreply@dusanasegurador.com.ar')) {
+function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Dusan Asesor de Seguros', 'email'=>'noreply@dusanasegurador.com.ar')) {
 	global $connection, $mail_username, $mail_password;
 	$mail = new PHPMailer(true); 
 	$recipients = array();
