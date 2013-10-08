@@ -607,19 +607,19 @@
 						$type = 0;
 						switch(substr($_GET['type'], 2)) {
 							case '':
-								$file_name = 'Pedido de emision.pdf';
+								$file_name = $row_Recordset2['patente'].'.pdf';
 								$type = 2;
 							break;
 							case 'mc':
-								$file_name = 'Pedido MC.pdf';
+								$file_name = $row_Recordset2['patente'].'.pdf';
 								$type = 3;
 							break;
 							case 're':
-								$file_name = 'Pedido renovacion.pdf';
+								$file_name = 'Renovacion '.$row_Recordset2['patente'].'.pdf';
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = "Endoso.pdf";
+								$file_name = "Endoso ".$row_Recordset2['patente'].".pdf";
 								$type = 5;
 							break;
 						}
@@ -1341,22 +1341,22 @@
 						$to = $row_Recordset1['seguro_email_emision'];
 						switch(substr($_GET['type'], 2)) {
 							case '':
-								$file_name = 'Pedido de emision.pdf';
+								$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 2;
 							break;
 							case 'mc':
-								$file_name = 'Pedido MC.pdf';
+								$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 3;
 							break;
 							case 're':
-								$file_name = 'Pedido renovacion.pdf';
+								$file_name = 'Renovacion '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = "Endoso.pdf";
+								$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 5;
 							break;
@@ -2092,22 +2092,22 @@
 							$to = $row_Recordset1['seguro_email_emision'];
 							switch(substr($_GET['type'], 2)) {
 								case '':
-									$file_name = 'Pedido de emision.pdf';
+									$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 									$body = FALSE;
 									$type = 2;
 								break;
 								case 'mc':
-									$file_name = 'Pedido MC.pdf';
+									$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 									$body = FALSE;
 									$type = 3;
 								break;
 								case 're':
-									$file_name = 'Pedido renovacion.pdf';
+									$file_name = 'Renovacion '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 									$body = FALSE;
 									$type = 4;
 								break;
 								case 'en':
-									$file_name = "Endoso.pdf";
+									$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 									$body = FALSE;
 									$type = 5;
 								break;
@@ -2558,22 +2558,22 @@
 						$to = $row_Recordset1['seguro_email_emision'];
 						switch(substr($_GET['type'], 2)) {
 							case '':
-								$file_name = 'Pedido de emision.pdf';
+								$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 2;
 							break;
 							case 'mc':
-								$file_name = 'Pedido MC.pdf';
+								$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 3;
 							break;
 							case 're':
-								$file_name = 'Pedido renovacion.pdf';
+								$file_name = 'Renovacion '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = "Endoso.pdf";
+								$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
 								$body = FALSE;
 								$type = 5;
 							break;
