@@ -3,3 +3,4 @@ fotos/
 git-ftp
 .gitftpignore
 temp/
+inc/credentials.php
