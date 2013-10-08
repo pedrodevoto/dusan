@@ -1,6 +1,7 @@
 <?php
 require_once 'Classes/PHPMailer/class.phpmailer.php';
 require_once('Connections/connection.php');
+require_once('inc/credentials.php');
 
 function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Default From', 'email'=>'default@email.com')) {
 	global $connection;
@@ -14,8 +15,8 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		$mail->SMTPSecure = "ssl"; 
 		$mail->Host = "smtp.googlemail.com";
 		$mail->Port = 465;
-		$mail->Username = "";
-		$mail->Password = '';
+		$mail->Username = $mail_username;
+		$mail->Password = $mail_password;
 		
 		$mail->SMTPDebug = 1;
 		
