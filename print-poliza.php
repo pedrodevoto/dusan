@@ -619,7 +619,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = "Endoso ".$row_Recordset2['patente'].".pdf";
+								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset2['poliza_numero'].".pdf";
 								$type = 5;
 							break;
 						}
@@ -1356,7 +1356,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
+								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset2['poliza_numero'].".pdf";
 								$body = FALSE;
 								$type = 5;
 							break;
@@ -2107,7 +2107,7 @@
 									$type = 4;
 								break;
 								case 'en':
-									$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
+									$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset2['poliza_numero'].".pdf";
 									$body = FALSE;
 									$type = 5;
 								break;
@@ -2573,7 +2573,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$file_name = 'Endoso '.$row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
+								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset2['poliza_numero'].".pdf";
 								$body = FALSE;
 								$type = 5;
 							break;
