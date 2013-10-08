@@ -3,7 +3,7 @@ require_once 'Classes/PHPMailer/class.phpmailer.php';
 require_once('Connections/connection.php');
 require_once('inc/credentials.php');
 
-function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Default From', 'email'=>'default@email.com')) {
+function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Dusan Asegurador', 'email'=>'noreply@dusanasegurador.com.ar')) {
 	global $connection;
 	$mail = new PHPMailer(true); 
 	$recipients = array();
@@ -20,8 +20,8 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		
 		$mail->SMTPDebug = 1;
 		
-		$mail->AddAddress($to);
-		// $mail->AddAddress('pedro.devoto@gmail.com');
+		// $mail->AddAddress($to);
+		$mail->AddAddress('juanignacio@dusanasegurador.com.ar');
 		
 		foreach ($cc as $addr) {
 			if (preg_match('/^[a-zA-Z0-9\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $addr)) {
@@ -31,7 +31,6 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		}
 		
 		$mail->SetFrom($from['email'], $from['name']);
-		// $mail->SetFrom('pedrodevoto@gmail.com', 'Pedro Devoto');
 		
 		$mail->Subject = $subject;
 		foreach ($attachments as $attachment) {
