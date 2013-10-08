@@ -4,7 +4,7 @@ require_once('Connections/connection.php');
 require_once('inc/credentials.php');
 
 function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=array('name'=>'Dusan Asegurador', 'email'=>'noreply@dusanasegurador.com.ar')) {
-	global $connection;
+	global $connection, $mail_username, $mail_password;
 	$mail = new PHPMailer(true); 
 	$recipients = array();
 	$recipients[] = $to;
@@ -17,7 +17,7 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		$mail->Port = 465;
 		$mail->Username = $mail_username;
 		$mail->Password = $mail_password;
-		
+		 
 		$mail->SMTPDebug = 1;
 		
 		// $mail->AddAddress($to);
