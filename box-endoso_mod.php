@@ -5,9 +5,9 @@
 <?php
 require_once('Connections/connection.php');
 $endoso_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = 'SELECT seguro_email_emision FROM endoso JOIN (poliza, productor_seguro, seguro) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE endoso_id='.$endoso_id;
+$sql = 'SELECT seguro_email_endoso FROM endoso JOIN (poliza, productor_seguro, seguro) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE endoso_id='.$endoso_id;
 $res = mysql_query($sql, $connection);
-list($seguro_email_emision) = mysql_fetch_array($res);
+list($seguro_email_endoso) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">  
 	
@@ -78,7 +78,7 @@ list($seguro_email_emision) = mysql_fetch_array($res);
         <fieldset class="ui-widget ui-widget-content ui-corner-all">
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
 			<p>
-				Para: <span id="default-email"><?=$seguro_email_emision?></span>
+				Para: <span id="default-email"><?=$seguro_email_endoso?></span>
 			</p>
 			<p>
 				<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='Pedido de Endoso' placeholder="Asunto" />

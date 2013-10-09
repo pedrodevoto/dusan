@@ -3098,6 +3098,15 @@ $(document).ready(function () {
 						},
 						"box-seguro_email_emision": {
 							email: true
+						},
+						"box-seguro_email_endosos": {
+							email: true
+						},
+						"box-seguro_email_rastreador": {
+							email: true
+						},
+						"box-seguro_email_fotos": {
+							email: true
 						}
 					}
 				});
@@ -3144,6 +3153,15 @@ $(document).ready(function () {
 								email: true
 							},
 							"box-seguro_email_emision": {
+								email: true
+							},
+							"box-seguro_email_endosos": {
+								email: true
+							},
+							"box-seguro_email_rastreador": {
+								email: true
+							},
+							"box-seguro_email_fotos": {
 								email: true
 							}
 						}

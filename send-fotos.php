@@ -14,7 +14,7 @@
 		$poliza_id = intval(mysql_real_escape_string($_GET['id']));
 		$sql = sprintf('SELECT * FROM poliza_foto WHERE poliza_id = %s', $poliza_id);
 		$res = mysql_query($sql) or die(mysql_error());
-		$sql = sprintf('select seguro_email_emision from poliza join (productor_seguro, seguro) on productor_seguro.productor_seguro_id = poliza.productor_seguro_id and seguro.seguro_id = productor_seguro.seguro_id where poliza_id = %s', $poliza_id);
+		$sql = sprintf('select seguro_email_fotos from poliza join (productor_seguro, seguro) on productor_seguro.productor_seguro_id = poliza.productor_seguro_id and seguro.seguro_id = productor_seguro.seguro_id where poliza_id = %s', $poliza_id);
 		$email = mysql_query($sql);
 		list($email) = mysql_fetch_array($email);
 		$count = mysql_num_rows($res);

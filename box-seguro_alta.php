@@ -18,8 +18,20 @@
                 <input type="text" name="box-seguro_email_siniestro" id="box-seguro_email_siniestro" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>            
             <p>
-                <label for="box-seguro_email_emision">E-mail Emisión</label>
+                <label for="box-seguro_email_emision">E-mail Emisión/MC</label>
                 <input type="text" name="box-seguro_email_emision" id="box-seguro_email_emision" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_email_endosos">E-mail Endosos</label>
+                <input type="text" name="box-seguro_email_endosos" id="box-seguro_email_endosos" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_email_rastreador">E-mail Rastreador</label>
+                <input type="text" name="box-seguro_email_rastreador" id="box-seguro_email_rastreador" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p>
+                <label for="box-seguro_email_fotos">E-mail Fotos</label>
+                <input type="text" name="box-seguro_email_fotos" id="box-seguro_email_fotos" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
             <p>
                 <label for="box-seguro_cuit">CUIT</label>
