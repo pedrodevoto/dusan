@@ -7,7 +7,6 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 	global $connection, $mail_username, $mail_password;
 	$mail = new PHPMailer(true); 
 	$recipients = array();
-	$recipients[] = $to;
 	
 	try {
 		$mail->IsSMTP();
@@ -22,6 +21,13 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		
 		// $mail->AddAddress($to);
 		$mail->AddAddress('juanignacio@dusanasegurador.com.ar');
+		
+		foreach (explode(',', $to) as $addr) {
+			if (preg_match('/^[a-zA-Z0-9\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $addr)) {
+				$mail->AddAddress($addr);
+				$recipients[] = $addr;
+			}
+		}
 		
 		foreach ($cc as $addr) {
 			if (preg_match('/^[a-zA-Z0-9\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $addr)) {

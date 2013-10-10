@@ -407,8 +407,8 @@ CREATE TABLE `email_log` (
   PRIMARY KEY (`email_log_id`),
   KEY `usuario_id` (`usuario_id`),
   KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
-  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION
+  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION,
+  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -600,8 +600,11 @@ DROP TABLE IF EXISTS `seguro`;
 CREATE TABLE `seguro` (
   `seguro_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `seguro_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `seguro_email_siniestro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `seguro_email_emision` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_email_siniestro` text COLLATE utf8_unicode_ci,
+  `seguro_email_emision` text COLLATE utf8_unicode_ci,
+  `seguro_email_endosos` text COLLATE utf8_unicode_ci,
+  `seguro_email_rastreador` text COLLATE utf8_unicode_ci,
+  `seguro_email_fotos` text COLLATE utf8_unicode_ci,
   `seguro_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_direccion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -689,4 +692,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-10-03 12:08:41
+-- 2013-10-10 13:02:11

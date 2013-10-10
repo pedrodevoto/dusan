@@ -39,13 +39,16 @@ $(document).ready(function () {
 		return years;
 	}
 
-	/* Custom date validation */
+	/* Custom validations */
 	$.validator.addMethod("dateAR", function (value, element) {
 		return value == '' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
 	}, 'Por favor ingresar una fecha en formato dd/mm/aa.');
 	$.validator.addMethod("datetime", function (value, element) {
 		return value == '' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)? \d\d:\d\d$/);
 	}, 'Por favor ingrese una fecha en formato dd/mm/aa hh:mm');
+	$.validator.addMethod("csemails", function (value, element) {
+		return value == '' || value.match(/^(([\w\+\-\.]+)@([\w\-]+\.[\w\-\.]+)(\s*,\s*)?)*$/);
+	}, 'Por favor ingrese direcciones de mail separadas por coma (\',\')');
 
 	customValidations = function () {
 		var objects = [{
@@ -3094,19 +3097,19 @@ $(document).ready(function () {
 							required: true
 						},
 						"box-seguro_email_siniestro": {
-							email: true
+							csemails: true
 						},
 						"box-seguro_email_emision": {
-							email: true
+							csemails: true
 						},
 						"box-seguro_email_endosos": {
-							email: true
+							csemails: true
 						},
 						"box-seguro_email_rastreador": {
-							email: true
+							csemails: true
 						},
 						"box-seguro_email_fotos": {
-							email: true
+							csemails: true
 						}
 					}
 				});
@@ -3150,19 +3153,19 @@ $(document).ready(function () {
 								required: true
 							},
 							"box-seguro_email_siniestro": {
-								email: true
+								csemails: true
 							},
 							"box-seguro_email_emision": {
-								email: true
+								csemails: true
 							},
 							"box-seguro_email_endosos": {
-								email: true
+								csemails: true
 							},
 							"box-seguro_email_rastreador": {
-								email: true
+								csemails: true
 							},
 							"box-seguro_email_fotos": {
-								email: true
+								csemails: true
 							}
 						}
 					});
