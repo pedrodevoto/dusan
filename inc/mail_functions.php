@@ -19,8 +19,7 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $from=ar
 		 
 		$mail->SMTPDebug = 1;
 		
-		// $mail->AddAddress($to);
-		$mail->AddAddress('juanignacio@dusanasegurador.com.ar');
+		// $mail->AddAddress('juanignacio@dusanasegurador.com.ar');
 		
 		foreach (explode(',', $to) as $addr) {
 			if (preg_match('/^[a-zA-Z0-9\._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/', $addr)) {

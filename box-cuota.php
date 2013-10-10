@@ -53,7 +53,7 @@ list($cliente_email) = mysql_fetch_array($res);
 					Recibo: <span id="recibo-id"></span>
 				</p>
 				<p>
-					<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='DUSAN ASESORES DE SEGUROS' placeholder="Asunto" />
+					<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='DUSAN ASESOR DE SEGUROS' placeholder="Asunto" />
 				</p>
 				<p>
 					<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
