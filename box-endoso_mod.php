@@ -6,7 +6,7 @@
 require_once('Connections/connection.php');
 $endoso_id = intval(mysql_real_escape_string($_GET['id']));
 $sql = 'SELECT seguro_email_endoso FROM endoso JOIN (poliza, productor_seguro, seguro) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE endoso_id='.$endoso_id;
-$res = mysql_query($sql, $connection);
+$res = mysql_query($sql, $connection) or die(mysql_error());
 list($seguro_email_endoso) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">  
