@@ -15,11 +15,38 @@
 	// Require PDF libraries
 	require_once('Classes/fpdf/fpdf.php');
 	require_once('Classes/fpdf/fpdi.php');
+	require_once('Classes/fpdf/rotation.php');
 	// Require PDF functions
 	require_once('inc/pdf_functions.php');
 	require_once('inc/mail_functions.php');
+	class PDF extends PDF_Rotate
+	{
+		var $rotation = 0;
+		function RotatedText($x, $y, $txt, $maxlength)
+		{
+			$text = iconv('UTF-8', 'windows-1252', $txt);
+			$length = $this->GetStringWidth($text);
+			while ($length > $maxlength) {
+				$text = substr($text, 0, -1);
+				$length = $this->GetStringWidth($text);					
+			}
+		    //Text rotated around its origin
+		    $this->Rotate($this->rotation, $x, $y);
+		    $this->Text($x, $y, $text);
+		    $this->Rotate(0);
+		}
+
+		function RotatedImage($file, $x, $y, $w, $h, $angle)
+		{
+		    //Image rotated around its upper-left corner
+		    $this->Rotate($angle, $x, $y);
+		    $this->Image($file, $x, $y, $w, $h);
+		    $this->Rotate(0);
+		}
+	}
 ?>
 <?php
+
 	// Obtain URL parameter
 	$cuota_id = intval($_GET['id']);
 	
@@ -43,15 +70,20 @@
 	$offset = 0;
 	// New document
 	if (isset($_GET['print'])) {
-		$pdf = new FPDI('L','mm',array(297,210));
+		$pdf = new PDF('P','mm',array(210,297));
 		$pdf->AddPage();
 		$pdf->setSourceFile('pdf/cuota.pdf');
+		$tplIdx = $pdf->importPage(1);
+		$pdf->useTemplate($tplIdx);
+		$pdf->rotation = -90;
 	}
 	else {
-		$pdf = new FPDI('L','mm',array(350,210));
+		$pdf = new PDF('L','mm',array(350,210));
 		$pdf->AddPage();
 		$pdf->setSourceFile('pdf/cuota_digital.pdf');
 		$offset = 5;
+		$tplIdx = $pdf->importPage(1);
+		$pdf->useTemplate($tplIdx);
 	}
 	
 	// Determine subtype
@@ -75,16 +107,6 @@
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
 
-			$tplIdx = $pdf->importPage(1);
-			$pdf->useTemplate($tplIdx);
-			$pdf->SetFont('Arial', '', 8);
-			$pdf->SetTextColor(0,0,0);
-			// Header
-			$txthead = date("d/m/Y")."\n".
-					   $row_Recordset1['cuota_recibo'];
-			$txthead = iconv('UTF-8', 'windows-1252', $txthead);
-			$pdf->SetXY(160 + $offset, 53);
-			$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
 
 			// Text 1
 			$contacto_piso = is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso'];
@@ -98,10 +120,7 @@
 						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']." - ".$row_Recordset1['contacto_cp']),
 						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
 					);
-			$pdf->SetXY(92.5, 87.5);
-			foreach ($txt1 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+
 
 			// Text 2
 			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
@@ -115,10 +134,7 @@
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 					);						
-			$pdf->SetXY(140.5, 87.5);
-			foreach ($txt2 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+			
 			
 			// Text 3
 			$cuota_ssn = $row_Recordset1['cuota_monto'] - ($row_Recordset1['cuota_monto'] * $percent_serv);
@@ -128,11 +144,7 @@
 						array('maxwidth' => 47, 'text' => "Tipo: ".strtoupper($row_Recordset2['tipo'])),
 						array('maxwidth' => 47, 'text' => "Uso: ".$row_Recordset2['uso']),
 						array('maxwidth' => 47, 'text' => "SSN: ".formatNumber($cuota_ssn)." Servicios: ".formatNumber($cuota_servicios))
-			);																			
-			$pdf->SetXY(92.5, 116.5);
-			foreach ($txt3 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+			);
 			
 			// Text 4
 			$txt4 = array(
@@ -140,32 +152,79 @@
 						array('maxwidth' => 47, 'text' => "Año: ".formatNumber($row_Recordset2['ano'],0)." Patente: ".$row_Recordset2['patente']),
 						array('maxwidth' => 47, 'text' => "Cobertura: ".$row_Recordset2['cobertura_tipo']),
 						array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
-			);			
-			$pdf->SetXY(140.5, 116.5);
-			foreach ($txt4 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
+			);
 			
 			
 			if (isset($_GET['print'])) {
-				$pdf->SetXY(276, 53);
-				$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
+				$pdf->SetFont('Arial', '', 8);
+				$pdf->SetTextColor(0,0,0);
 				
-				$pdf->SetXY(194, 87.5);			
+				// Header
+				$txthead = array(
+					array('text'=>iconv('UTF-8', 'windows-1252', date("d/m/Y")."\n")),
+					array('text'=>iconv('UTF-8', 'windows-1252', $row_Recordset1['cuota_recibo']))
+				);
+				
+				$y = 154;
+				foreach ($txthead as $array) {
+					$pdf->RotatedText($y, 161, $array['text'], 50);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
 				foreach ($txt1 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 93, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(241.5, 87.5);
+				
+				$y = 120;
 				foreach ($txt2 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 142, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(194, 116.5);
+				
+				$y = 91;
 				foreach ($txt3 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 93, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(241.5, 116.5);
+				
+				$y = 91;
 				foreach ($txt4 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 142, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				// Duplicado
+				
+				$y = 154;
+				foreach ($txthead as $array) {
+					$pdf->RotatedText($y, 161 + 116, $array['text'], 50);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
+				foreach ($txt1 as $array) {
+					$pdf->RotatedText($y, 93 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
+				foreach ($txt2 as $array) {
+					$pdf->RotatedText($y, 142 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 91;
+				foreach ($txt3 as $array) {
+					$pdf->RotatedText($y, 93 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 91;
+				foreach ($txt4 as $array) {
+					$pdf->RotatedText($y, 142 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
 			}
 			else {
@@ -174,6 +233,29 @@
 				$pdf->SetXY(160, 142);
 				$pdf->SetFont('Arial', 'B', 12);
 				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
+				
+				$pdf->SetFont('Arial', '', 8);
+				$pdf->SetTextColor(0,0,0);
+				
+				$pdf->SetXY(92.5, 87.5);
+				foreach ($txt1 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(140.5, 87.5);
+				foreach ($txt2 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(92.5, 116.5);
+				foreach ($txt3 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(140.5, 116.5);
+				foreach ($txt4 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
 			}
 
 			// Close Recordset: Automotor
@@ -208,17 +290,6 @@
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
 
-			$tplIdx = $pdf->importPage(1);
-			$pdf->useTemplate($tplIdx);
-			$pdf->SetFont('Arial', '', 8);
-			$pdf->SetTextColor(0,0,0);
-			// Header
-			$txthead = date("d/m/Y")."\n".
-					   $row_Recordset1['cuota_recibo'];
-			$txthead = iconv('UTF-8', 'windows-1252', $txthead);
-			$pdf->SetXY(160 + $offset, 53);
-			$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
-
 			// Text 1
 			$contacto_piso = is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso'];
 			$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
@@ -231,10 +302,6 @@
 						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['contacto_localidad']." - ".$row_Recordset1['contacto_cp']),
 						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
 					);
-			$pdf->SetXY(92.5, 87.5);
-			foreach ($txt1 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
 
 			// Text 2
 			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
@@ -248,10 +315,6 @@
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 					);						
-			$pdf->SetXY(140.5, 87.5);
-			foreach ($txt2 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
 		
 			// Text 3
 			$txt3 = array(
@@ -259,40 +322,84 @@
 						array('maxwidth' => 47, 'text' => "Suma asegurada: $".formatNumber($asegurados['suma_asegurada'], 2)),
 						array('maxwidth' => 47, 'text' => "Gastos médicos: $".formatNumber($asegurados['gastos_medicos'], 2)),
 			);																			
-			$pdf->SetXY(92.5, 116.5);
-			foreach ($txt3 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
 			
 			// Text 4
 			$txt4 = array(
 						array('maxwidth' => 47, 'text' => "Clausulas de No Repeticion: ".$clausulas['cantidad'])
 			);			
-			$pdf->SetXY(140.5, 116.5);
-			foreach ($txt4 as $array) {
-				printText($array['text'], $pdf, $array['maxwidth'], 4.4);
-			}
 			
 		
 			if (isset($_GET['print'])) {
-				$pdf->SetXY(276, 53);
-				$pdf->MultiCell(34, 4.1, $txthead, 0, 'L');
 				
-				$pdf->SetXY(194, 87.5);			
+				$pdf->SetFont('Arial', '', 8);
+				$pdf->SetTextColor(0,0,0);
+				
+				// Header
+				$txthead = array(
+					array('text'=>iconv('UTF-8', 'windows-1252', date("d/m/Y")."\n")),
+					array('text'=>iconv('UTF-8', 'windows-1252', $row_Recordset1['cuota_recibo']))
+				);
+				
+				$y = 154;
+				foreach ($txthead as $array) {
+					$pdf->RotatedText($y, 161, $array['text'], 50);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
 				foreach ($txt1 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 93, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(241.5, 87.5);
+				
+				$y = 120;
 				foreach ($txt2 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 142, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(194, 116.5);
+				
+				$y = 91;
 				foreach ($txt3 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 93, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
-				$pdf->SetXY(241.5, 116.5);
+				
+				$y = 91;
 				foreach ($txt4 as $array) {
-					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+					$pdf->RotatedText($y, 142, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				// Duplicado
+				
+				$y = 154;
+				foreach ($txthead as $array) {
+					$pdf->RotatedText($y, 161 + 116, $array['text'], 50);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
+				foreach ($txt1 as $array) {
+					$pdf->RotatedText($y, 93 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 120;
+				foreach ($txt2 as $array) {
+					$pdf->RotatedText($y, 142 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 91;
+				foreach ($txt3 as $array) {
+					$pdf->RotatedText($y, 93 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
+				}
+				
+				$y = 91;
+				foreach ($txt4 as $array) {
+					$pdf->RotatedText($y, 142 + 101, $array['text'], $array['maxwidth']);
+					$y -= 4.5;
 				}
 			}
 			else {
@@ -301,6 +408,29 @@
 				$pdf->SetXY(160, 142);
 				$pdf->SetFont('Arial', 'B', 12);
 				$pdf->MultiCell(34, 4.1, $date, 0, 'L');
+				
+				$pdf->SetFont('Arial', '', 8);
+				$pdf->SetTextColor(0,0,0);
+				
+				$pdf->SetXY(92.5, 87.5);
+				foreach ($txt1 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(140.5, 87.5);
+				foreach ($txt2 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(92.5, 116.5);
+				foreach ($txt3 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
+				
+				$pdf->SetXY(140.5, 116.5);
+				foreach ($txt4 as $array) {
+					printText($array['text'], $pdf, $array['maxwidth'], 4.4);
+				}
 			}
 			break;
 		default:
