@@ -11,7 +11,7 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " endoso_id, poliza_numero, CONCAT(endoso_tipo_nombre, ' (', endoso_tipo_grupo_nombre, ')') as endoso_tipo, DATE_FORMAT(endoso_fecha_pedido, '%d/%m/%y') as endoso_fecha_pedido, IF(endoso_completo = 1, 'SÍ', 'NO') as endoso_completo";
+	$query_Recordset1_fields = " endoso_id, poliza_numero, CONCAT(endoso_tipo_grupo_nombre, ' (', endoso_tipo_nombre, ')') as endoso_tipo, DATE_FORMAT(endoso_fecha_pedido, '%d/%m/%y') as endoso_fecha_pedido, IF(endoso_completo = 1, 'SÍ', 'NO') as endoso_completo";
 	$query_Recordset1_tables = " FROM endoso JOIN (poliza, endoso_tipo, endoso_tipo_grupo) ON (poliza.poliza_id = endoso.poliza_id AND endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id AND endoso_tipo.endoso_tipo_grupo_id = endoso_tipo_grupo.endoso_tipo_grupo_id) ";
 	
 	$query_Recordset1_where = " WHERE 1";
