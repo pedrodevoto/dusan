@@ -74,6 +74,8 @@
 						// Visible fields (data and actions)						
 						{"sWidth": "10%"},					
 						null,
+						null,
+						null,
 						{"sWidth": "10%"},
 						{"sWidth": "8%", "bSearchable": false},
 						{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
@@ -172,6 +174,8 @@
                             <th>Endoso ID (Hide)</th>
                             <th>Póliza</th>
                             <th>Tipo</th> 
+							<th>Nombre del Asegurado</th>
+							<th>Sucursal</th>
 							<th>Fecha de pedido</th>
                             <th>Completo</th>
                             <th>Acc.</th>                                                        
