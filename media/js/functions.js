@@ -1823,6 +1823,8 @@ $(document).ready(function () {
 					result += '<tr>';
 					// Table Data
 					result += '<tr><td><strong>Cliente:</strong> ' + j.cliente_nombre + '</td></tr>';
+					result += '<tr><td><strong>Teléfonos:</strong> ' + j.cliente_telefonos + '</td></tr>';
+					result += '<tr><td><strong>Domicilio:</strong> ' + j.cliente_domicilio + '</td></tr>';
 					result += '<tr><td><strong>Compañía:</strong> ' + j.seguro_nombre + '</td></tr>';
 					result += '<tr><td><strong>Productor:</strong> ' + j.productor_nombre + '</td></tr>';
 					result += '<tr><td><strong>Poliza Nº:</strong> ' + (j.poliza_numero == '' ? '-' : j.poliza_numero) + '</td></tr>';
