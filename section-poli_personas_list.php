@@ -72,6 +72,7 @@
 					"aoColumns": [
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
+						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
 						{"sWidth": "8%"},
 						{"sWidth": "7%"},
@@ -85,7 +86,7 @@
 						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "8%"},
 						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
-								return '<span title="'+oObj.aData[13]+'">'+oObj.aData[12]+'</span>';
+								return '<span title="'+oObj.aData[14]+'">'+oObj.aData[13]+'</span>';
 							}
 						},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
@@ -98,6 +99,7 @@
 							returnval += '<li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
 							<?php } ?>
 							returnval += '<li title="Endosos" onclick="openBoxEndosos('+oObj.aData[0]+');"><span class="ui-icon ui-icon-folder-collapsed"></span></li>';
+							returnval += '<li title="Ver detalle de cliente" onclick="openBoxModCliente('+oObj.aData[1]+');"><span class="ui-icon ui-icon-person"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
 							<? } ?>
@@ -215,6 +217,7 @@
                     <thead>
                         <tr>                        
                             <th>Poliza ID (Hide)</th>
+							<th>Cliente ID (Hide)</th>
                             <th>Póliza N°</th>                            
                             <th>Tipo</th> 
                             <th>Compañía</th>

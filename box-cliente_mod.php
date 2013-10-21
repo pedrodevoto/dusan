@@ -62,6 +62,7 @@
         <p align="center" style="margin-top:20px">     
             <input type="hidden" name="box-cliente_id" id="box-cliente_id" />            
             <input type="button" name="btnBox" id="btnBox" value="Aceptar" />
+			<button name="btnContact" id="btnContact">Ver contactos</button>
         </p>
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio</p>

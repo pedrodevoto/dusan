@@ -71,6 +71,7 @@
 					"aoColumns": [	
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
+						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)						
 						{"sWidth": "10%"},					
 						null,
@@ -84,6 +85,7 @@
 							returnval += '<li title="Editar" onclick="openBoxModEndoso('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
 							// returnval += '<li title="Certificados" onclick="openBoxEndosoCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li>';
 							
+							returnval += '<li title="Ver detalle de cliente" onclick="openBoxModCliente('+oObj.aData[1]+');"><span class="ui-icon ui-icon-person"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'endoso\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
 							<? } ?>
@@ -172,6 +174,7 @@
                     <thead>
                         <tr>                        
                             <th>Endoso ID (Hide)</th>
+							<th>Cliente ID (Hide)</th>
                             <th>Póliza</th>
                             <th>Tipo</th> 
 							<th>Nombre del Asegurado</th>

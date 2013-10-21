@@ -3623,6 +3623,11 @@ $(document).ready(function () {
 						};
 					});
 
+					$('#btnContact').button().click(function() {
+						openBoxContacto(id);
+						return false;
+					})
+					
 					// Enable form
 					formDisable('frmBox', 'ui', false);
 
