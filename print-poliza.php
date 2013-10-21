@@ -661,7 +661,7 @@
 				die("Error: Detalle de Poliza no encontrado.");
 			}
 		
-			$query_Recordset3 = sprintf("SELECT accidentes_asegurado_nombre, accidentes_asegurado_documento, asegurado_actividad_nombre, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, IF(accidentes_asegurado_beneficiario<3, 'Si', 'No') AS accidentes_asegurado_legal, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento, IF(accidentes_asegurado_beneficiario=2, 'Tomador', '') AS accidentes_asegurado_beneficiario_tomador FROM accidentes_asegurado JOIN asegurado_actividad ON asegurado_actividad.asegurado_actividad_id = accidentes_asegurado_actividad WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset3 = sprintf("SELECT accidentes_asegurado_nombre, accidentes_asegurado_documento, DATE_FORMAT(accidentes_asegurado_nacimiento, '%%d/%%m/%%y') as accidentes_asegurado_nacimiento, asegurado_actividad_nombre, accidentes_asegurado_suma_asegurada, accidentes_asegurado_gastos_medicos, IF(accidentes_asegurado_beneficiario<3, 'Si', 'No') AS accidentes_asegurado_legal, accidentes_asegurado_beneficiario_nombre, accidentes_asegurado_beneficiario_documento, accidentes_asegurado_beneficiario_nacimiento, IF(accidentes_asegurado_beneficiario=2, 'Tomador', '') AS accidentes_asegurado_beneficiario_tomador FROM accidentes_asegurado JOIN asegurado_actividad ON asegurado_actividad.asegurado_actividad_id = accidentes_asegurado_actividad WHERE poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
 			$asegurados = array();
 			while($row = mysql_fetch_assoc($Recordset3)) {
@@ -795,11 +795,13 @@
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', 'B', 8);
 						$pdf->Write(5, 'Nombre');
-						$pdf->SetX($x + 50);
+						$pdf->SetX($x + 45);
 						$pdf->Write(5, 'DNI');
-						$pdf->SetX($x + 70);
+						$pdf->SetX($x + 63);
+						$pdf->Write(5, 'Nac.');
+						$pdf->SetX($x + 79);
 						$pdf->Write(5, 'Actividad');
-						$pdf->SetX($x + 125);
+						$pdf->SetX($x + 132);
 						$pdf->Write(5, 'Legal');
 						$pdf->SetX($x + 145);
 						$pdf->Write(5, 'Asegurado');
@@ -838,11 +840,13 @@
 								$pdf->SetXY($x, $y);
 								$pdf->SetFont('Arial', '', 7);
 								$pdf->Write(5, trimText($asegurado['accidentes_asegurado_nombre'], $pdf, 48));
-								$pdf->SetX($x + 48);
+								$pdf->SetX($x + 43);
 								$pdf->Write(5, $asegurado['accidentes_asegurado_documento']);
-								$pdf->SetX($x + 70);
+								$pdf->SetX($x + 63);
+								$pdf->Write(5, $asegurado['accidentes_asegurado_nacimiento']);
+								$pdf->SetX($x + 79);
 								$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
-								$pdf->SetX($x + 125);
+								$pdf->SetX($x + 132);
 								$pdf->Write(5, $asegurado['accidentes_asegurado_legal'] . ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? ' (' . $asegurado['accidentes_asegurado_beneficiario_tomador'] . ')' : ''));
 								$pdf->SetX($x + 145);
 								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
@@ -1115,11 +1119,13 @@
 							$pdf->SetXY($x, $y);
 							$pdf->SetFont('Arial', 'B', 8);
 							$pdf->Write(5, 'Nombre');
-							$pdf->SetX($x + 50);
+							$pdf->SetX($x + 45);
 							$pdf->Write(5, 'DNI');
-							$pdf->SetX($x + 70);
+							$pdf->SetX($x + 63);
+							$pdf->Write(5, 'Nac.');
+							$pdf->SetX($x + 79);
 							$pdf->Write(5, 'Actividad');
-							$pdf->SetX($x + 125);
+							$pdf->SetX($x + 132);
 							$pdf->Write(5, 'Legal');
 							$pdf->SetX($x + 145);
 							$pdf->Write(5, 'Asegurado');
@@ -1158,12 +1164,14 @@
 									$pdf->SetXY($x, $y);
 									$pdf->SetFont('Arial', '', 7);
 									$pdf->Write(5, trimText($asegurado['accidentes_asegurado_nombre'], $pdf, 48));
-									$pdf->SetX($x + 48);
+									$pdf->SetX($x + 43);
 									$pdf->Write(5, $asegurado['accidentes_asegurado_documento']);
-									$pdf->SetX($x + 70);
+									$pdf->SetX($x + 63);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_nacimiento']);
+									$pdf->SetX($x + 79);
 									$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
-									$pdf->SetX($x + 125);
-									$pdf->Write(5, $asegurado['accidentes_asegurado_legal']);
+									$pdf->SetX($x + 132);
+									$pdf->Write(5, $asegurado['accidentes_asegurado_legal'] . ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? ' (' . $asegurado['accidentes_asegurado_beneficiario_tomador'] . ')' : ''));
 									$pdf->SetX($x + 145);
 									$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 									$pdf->SetX($x + 170);
