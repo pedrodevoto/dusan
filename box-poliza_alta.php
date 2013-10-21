@@ -121,12 +121,12 @@
 				<textarea name="box-poliza_pago_detalle" id="box-poliza_pago_detalle" rows="5" class="ui-widget-content" style="width:220px"></textarea>
             </p>
             <p>
-                <label for="box-poliza_recargo">Recargo (%)</label>
+                <label for="box-poliza_recargo">Recargo (%) *</label>
 				<input type="text" name="box-poliza_recargo" id="box-poliza_recargo" maxlength="5" class="ui-widget-content" style="width:45px" />
             </p>
             <p>
-                <label for="box-poliza_ajuste">Ajuste</label>
-                <select name="box-poliza_ajuste" id="box-poliza_ajuste" class="ui-widget-content" style="width:130px">
+                <label for="box-poliza_ajuste">Ajuste <?=($_GET['tipo']=='Patrimoniales'?'*':'')?></label>
+                <select name="box-poliza_ajuste" id="box-poliza_ajuste" class="ui-widget-content <?=($_GET['tipo']=='Patrimoniales'?'required':'')?>" style="width:130px">
                     <option value="">Seleccione</option>                
                     <option value="0">0%</option>
                     <option value="10" selected>10%</option>

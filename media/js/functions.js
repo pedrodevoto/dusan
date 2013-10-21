@@ -3783,7 +3783,7 @@ $(document).ready(function () {
 	openBoxAltaPoliza = function (tipo) {
 		$.colorbox({
 			title: 'Registro',
-			href: 'box-poliza_alta.php?section=1',
+			href: 'box-poliza_alta.php?section=1&tipo='+tipo,
 			width: '700px',
 			height: '100%',
 			onComplete: function () {
@@ -3994,6 +3994,7 @@ $(document).ready(function () {
 								required: true
 							},
 							"box-poliza_recargo": {
+								required: true,
 								min: 0,
 								max: 100
 							}
@@ -4041,10 +4042,10 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxModPoliza = function (id) {
+	openBoxModPoliza = function (id, tipo) {
 		$.colorbox({
 			title: 'Registro',
-			href: 'box-poliza_mod.php?section=1',
+			href: 'box-poliza_mod.php?section=1&tipo='+tipo,
 			width: '700px',
 			height: '100%',
 			onComplete: function () {
@@ -4098,6 +4099,7 @@ $(document).ready(function () {
 								required: true
 							},
 							"box-poliza_recargo": {
+								required: true,
 								min: 0,
 								max: 100
 							}
