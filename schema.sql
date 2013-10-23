@@ -93,7 +93,9 @@ CREATE TABLE `automotor` (
   `traba_volante` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `matafuego` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `tuercas` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `equipo_rastreo` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `equipo_rastreo_id` int(11) unsigned DEFAULT NULL,
+  `equipo_rastreo_pedido_id` int(11) DEFAULT NULL,
   `micro_grabado` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `cupon_vintrak` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cupon_vintrak_fecha` date DEFAULT NULL,
@@ -139,6 +141,8 @@ CREATE TABLE `automotor` (
   KEY `automotor_tipo_id` (`automotor_tipo_id`),
   KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
   KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
+  KEY `equipo_rastreo_pedido_id` (`equipo_rastreo_pedido_id`),
+  CONSTRAINT `automotor_ibfk_5` FOREIGN KEY (`equipo_rastreo_pedido_id`) REFERENCES `equipo_rastreo_pedido` (`equipo_rastreo_pedido_id`),
   CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
   CONSTRAINT `automotor_ibfk_2` FOREIGN KEY (`cobertura_tipo_id`) REFERENCES `cobertura_tipo` (`cobertura_tipo_id`),
   CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
@@ -479,6 +483,14 @@ CREATE TABLE `equipo_rastreo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `equipo_rastreo_pedido`;
+CREATE TABLE `equipo_rastreo_pedido` (
+  `equipo_rastreo_pedido_id` int(11) NOT NULL AUTO_INCREMENT,
+  `equipo_rastreo_pedido_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`equipo_rastreo_pedido_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `incendio_edificio`;
 CREATE TABLE `incendio_edificio` (
   `incendio_edificio_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -687,9 +699,9 @@ CREATE TABLE `usuario_sucursal` (
   PRIMARY KEY (`usuario_sucursal_id`),
   UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_2` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
+  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-10-10 13:02:11
+-- 2013-10-23 18:32:10

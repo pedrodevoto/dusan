@@ -30,6 +30,15 @@ function showAutomotorTipo() {
 		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
 	}
 }
+function showEquipoRastreoPedido() {
+	$query_Recordset1 = sprintf("SELECT equipo_rastreo_pedido_id, equipo_rastreo_pedido_nombre FROM equipo_rastreo_pedido");
+
+	// Recordset: Main
+	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
+	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
+		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
+	}
+}
 
 function showEquipoRastreo() {
 	$query_Recordset1 = sprintf("SELECT equipo_rastreo_id, equipo_rastreo_nombre FROM equipo_rastreo");
