@@ -208,8 +208,8 @@
         </select>
     </p>
     <p>
-        <label for="box-color">Color</label>
-        <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content" style="width:220px" />
+        <label for="box-color">Color *</label>
+        <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content required" style="width:220px" />
     </p>    
     <p>
         <label for="box-accesorios">Accesorios *</label>
