@@ -427,6 +427,15 @@
 	<div id="divBoxFotosGNC" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
 	</div>
 </fieldset>
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
+    <legend class="ui-widget ui-widget-header ui-corner-all">Accesorios</legend> 
+	<p>
+		<input type="button" id="box-automotor_accesorios_add" value="Agregar" /> 
+		Suma asegurada total: <span id="automotor_accesorios_total"></span>
+	</p>
+	<div id="automotor_accesorios">
+	</div>
+</fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
     <p>
@@ -461,7 +470,7 @@
     </p>
     <p>
         <label for="box-valor_accesorios">Valor Accesorios *</label>
-        <input type="text" name="box-valor_accesorios" id="box-valor_accesorios" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" />
+        <input type="number" name="box-valor_accesorios" id="box-valor_accesorios" class="ui-widget-content required calculator" style="width:120px" min="0" max="16777215" value="0" readonly />
     </p>
     <p>
         <label for="box-valor_total">Valor Total ^</label>

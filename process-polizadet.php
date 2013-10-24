@@ -117,6 +117,7 @@
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
 										GetSQLValueString($_POST['box-valor_total'], 'int'));																		
 				$Result1 = mysql_query($insertSQL, $connection);														
+				$automotor_id = mysql_insert_id();
 			} else {
 				// Update
 				$updateSQL = sprintf("UPDATE automotor 
@@ -199,7 +200,8 @@
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
 										GetSQLValueString($_POST['box-valor_total'], 'int'),										
 										$row_Recordset2['automotor_id']);								
-				$Result1 = mysql_query($updateSQL, $connection);				
+				$Result1 = mysql_query($updateSQL, $connection);	
+				$automotor_id = $row_Recordset2['automotor_id'];	
 			}		
 			
 			// Close Recordset: Automotor
@@ -215,6 +217,27 @@
 					}
 				}
 			}
+			
+			$objects = array('accesorio');
+
+			foreach ($objects as $object) {
+				$deleteSQL = "DELETE FROM automotor_".$object." WHERE automotor_id = ".$automotor_id;
+				mysql_query($deleteSQL);
+				if (isset($_POST['box-automotor_'.$object])) {
+					foreach ($_POST['box-automotor_'.$object] as $item) {
+						if (isset($item['cantidad']) and isset($item['detalle']) and isset($item['valor'])){
+							$insertSQL = sprintf('INSERT INTO automotor_%5$s (automotor_id, automotor_%5$s_cantidad, automotor_%5$s_detalle, automotor_%5$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), %4$s)',
+												$automotor_id,												
+												GetSQLValueString($item['cantidad'], 'int'),
+												GetSQLValueString($item['detalle'], 'text'),
+												GetSQLValueString($item['valor'], 'double'),
+												$object);
+							mysql_query($insertSQL);					
+						}
+					}
+				}
+			}
+			
 			// Break
 			break;
 		case 'accidentes':

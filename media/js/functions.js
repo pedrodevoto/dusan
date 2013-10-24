@@ -1203,6 +1203,8 @@ $(document).ready(function () {
 			populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 			populateDiv_Fotos('automotor_gnc', id, 'GNC');
 
+			populateSectionAutomotorAccesorios(id);
+
 			// AJAX file form
 			$("#fileForm").ajaxForm({
 				beforeSend: function () {
@@ -1411,6 +1413,14 @@ $(document).ready(function () {
 			addFilmFotoItem();
 		})
 	}
+	populateSectionAutomotorAccesorios = function (id) {
+		populateDiv_AutomotorAccesorios(id);
+
+		calculateAutomotorAccesoriosTotal();
+		$('#box-automotor_accesorios_add').button().click(function () {
+			addAutomotorAccesorios();
+		})
+	}
 
 	addTvAudVidItem = function (cantidad, producto, marca, serial, valor) {
 		var j = 0;
@@ -1476,6 +1486,27 @@ $(document).ready(function () {
 			calculateFilmFotoTotal()
 		});
 	}
+	addAutomotorAccesorios = function (cantidad, detalle, valor, focus) {
+		if (focus == undefined) {
+			focus = true;
+		}
+		var j = 0;
+		$('#automotor_accesorios p').each(function (i, e) {
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var automotor_accesorio = '<p id="' + j + '"><input type="number" name="box-automotor_accesorio[' + j + '][cantidad]" class="box-automotor_accesorio_cant" placeholder="Cant" style="width:40px" value="' + (cantidad ? cantidad : '') + '" /> <input type="text" name="box-automotor_accesorio[' + j + '][detalle]" placeholder="Detalle" value="' + (detalle ? detalle : '') + '" style="width:230px" /> <input type="number" name="box-automotor_accesorio[' + j + '][valor]" class="box-automotor_accesorio_valor" placeholder="Valor" style="width:80px" value="' + (valor ? valor : '') + '" step="any" /> <input type="button" class="box-automotor_accesorio_remove" value="-" /></p>';
+		$('#automotor_accesorios').append(automotor_accesorio);
+		if (focus == true) {
+			$('#automotor_accesorios p#' + j + ' :nth-child(1)').focus();
+		}
+		$('.box-automotor_accesorio_remove').button().click(function () {
+			$(this).parent().remove();
+			calculateAutomotorAccesoriosTotal()
+		})
+		$('.box-automotor_accesorio_valor, .box-automotor_accesorio_cant').change(function () {
+			calculateAutomotorAccesoriosTotal()
+		});
+	}
 	calculateTvAudVidTotal = function () {
 		var total = 0;
 		$('.box-combinado_familiar_tv_aud_vid_valor').each(function (i, e) {
@@ -1503,6 +1534,14 @@ $(document).ready(function () {
 			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#film_foto_total").html(total);
+	}
+	calculateAutomotorAccesoriosTotal = function () {
+		var total = 0;
+		$('.box-automotor_accesorio_valor').each(function (i, e) {
+			total += (Number($(e).val()) * Number($(e).prev().prev().val()));
+		});
+		$("#automotor_accesorios_total").html(total);
+		$("#box-valor_accesorios").val(total);
 	}
 	populateFormBoxAsegurado = function (id) {
 		var dfd = new $.Deferred();
@@ -2260,6 +2299,19 @@ $(document).ready(function () {
 			}
 		});
 		
+	}
+	populateDiv_AutomotorAccesorios = function (id) {
+		$.getJSON("get-json-automotor_accesorios.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				$('#automotor_accesorios').empty();
+				$.each(j, function (i, object) {
+					addAutomotorAccesorios(object.cantidad, object.detalle, object.valor, false);
+				});
+				calculateAutomotorAccesoriosTotal();
+			}
+		})
 	}
 
 	editCuotaObservacion = function (id) {

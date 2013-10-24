@@ -150,6 +150,18 @@ CREATE TABLE `automotor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `automotor_accesorio`;
+CREATE TABLE `automotor_accesorio` (
+  `automotor_accesorio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_id` int(10) unsigned NOT NULL,
+  `automotor_accesorio_cantidad` int(11) NOT NULL,
+  `automotor_accesorio_detalle` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_accesorio_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`automotor_accesorio_id`),
+  KEY `automotor_id` (`automotor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `automotor_carroceria`;
 CREATE TABLE `automotor_carroceria` (
   `automotor_carroceria_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -411,8 +423,8 @@ CREATE TABLE `email_log` (
   PRIMARY KEY (`email_log_id`),
   KEY `usuario_id` (`usuario_id`),
   KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION,
-  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -699,9 +711,9 @@ CREATE TABLE `usuario_sucursal` (
   PRIMARY KEY (`usuario_sucursal_id`),
   UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
+  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`),
+  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-10-23 18:32:10
+-- 2013-10-24 19:19:23s
