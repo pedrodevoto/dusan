@@ -70,10 +70,9 @@
 	});	
 	$('#box-cobertura_tipo_id').change(function(){
 		if ($(this).find(':selected').text() === 'D') {
-			$('#box-franquicia').attr("readonly", false);
+			$('#box-franquicia').attr("readonly", false).addClass('required');
 		} else {
-			$('#box-franquicia').val('');
-			$('#box-franquicia').attr("readonly", true);			
+			$('#box-franquicia').val('').attr("readonly", true).removeClass('required');			
 		}
 	});
 	$('#box-automotor_tipo_id').change(function(){
