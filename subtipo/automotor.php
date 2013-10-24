@@ -117,26 +117,6 @@
 	        <label for="box-infoauto">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
 	    </p>
 	</fieldset>
-	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
-	    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
-	    <p>
-	        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
-		</p>
-		<p>
-			<label for="box-equipo_rastreo_pedido_id">Pedir</label>
-			<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
-				<option value="">Ninguno</option>
-				<?php showEquipoRastreoPedido(); ?>
-			</select>
-		<p>
-	        <label for="box-equipo_rastreo_id">Marca</label>
-	        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
-	            <option value="">Ninguno</option>    
-	            <?php showEquipoRastreo(); ?>
-	        </select>
-	    </p>
-	    
-	</fieldset>	
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">General</legend>      
     <p>
@@ -280,6 +260,26 @@
             </tr>
         </table>
 </fieldset>
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
+    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
+    <p>
+        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
+	</p>
+	<p>
+		<label for="box-equipo_rastreo_pedido_id">Pedir</label>
+		<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
+			<option value="">Ninguno</option>
+			<?php showEquipoRastreoPedido(); ?>
+		</select>
+	<p>
+        <label for="box-equipo_rastreo_id">Marca</label>
+        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
+            <option value="">Ninguno</option>    
+            <?php showEquipoRastreo(); ?>
+        </select>
+    </p>
+    
+</fieldset>	
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
     <p>
