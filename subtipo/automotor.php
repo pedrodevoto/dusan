@@ -414,7 +414,7 @@
     </p>
     <p>
         <label for="box-venc_oblea">Vencimiento Oblea</label>
-        <input type="text" name="box-venc_oblea" id="box-venc_oblea" maxlength="10" class="ui-widget-content dateISO" style="width:80px" />
+        <input type="text" name="box-venc_oblea" id="box-venc_oblea" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
     </p>
     <p>
         <label for="box-nro_tubo">Nº Tubo</label>
