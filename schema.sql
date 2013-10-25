@@ -626,6 +626,7 @@ CREATE TABLE `seguro` (
   `seguro_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seguro_email_siniestro` text COLLATE utf8_unicode_ci,
   `seguro_email_emision` text COLLATE utf8_unicode_ci,
+  `seguro_email_emision_vida` text COLLATE utf8_unicode_ci,
   `seguro_email_endosos` text COLLATE utf8_unicode_ci,
   `seguro_email_rastreador` text COLLATE utf8_unicode_ci,
   `seguro_email_fotos` text COLLATE utf8_unicode_ci,
@@ -716,4 +717,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-10-24 19:19:23s
+-- 2013-10-25 12:30:00

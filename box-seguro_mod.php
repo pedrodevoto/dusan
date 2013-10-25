@@ -22,6 +22,10 @@
                 <input type="text" name="box-seguro_email_emision" id="box-seguro_email_emision" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
             </p>
             <p>
+                <label for="box-seguro_email_emision_vida">E-mail Emisión Vida</label>
+                <input type="text" name="box-seguro_email_emision_vida" id="box-seguro_email_emision_vida" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
+            </p>
+            <p>
                 <label for="box-seguro_email_endosos">E-mail Endosos</label>
                 <input type="text" name="box-seguro_email_endosos" id="box-seguro_email_endosos" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
             </p>
