@@ -856,7 +856,7 @@
 								$pdf->SetX($x + 79);
 								$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
 								$pdf->SetX($x + 132);
-								$pdf->Write(5, $asegurado['accidentes_asegurado_legal'] . ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? ' (' . $asegurado['accidentes_asegurado_beneficiario_tomador'] . ')' : ''));
+								$pdf->Write(5, ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? $asegurado['accidentes_asegurado_beneficiario_tomador'] : $asegurado['accidentes_asegurado_legal']));
 								$pdf->SetX($x + 145);
 								$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 								$pdf->SetX($x + 170);
@@ -1191,7 +1191,7 @@
 									$pdf->SetX($x + 79);
 									$pdf->Write(5, trimText($asegurado['asegurado_actividad_nombre'], $pdf, 50));
 									$pdf->SetX($x + 132);
-									$pdf->Write(5, $asegurado['accidentes_asegurado_legal'] . ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? ' (' . $asegurado['accidentes_asegurado_beneficiario_tomador'] . ')' : ''));
+									$pdf->Write(5, ($asegurado['accidentes_asegurado_beneficiario_tomador']!='' ? $asegurado['accidentes_asegurado_beneficiario_tomador'] : $asegurado['accidentes_asegurado_legal']));
 									$pdf->SetX($x + 145);
 									$pdf->Write(5, '$'.formatNumber($asegurado['accidentes_asegurado_suma_asegurada'], 2));
 									$pdf->SetX($x + 170);
