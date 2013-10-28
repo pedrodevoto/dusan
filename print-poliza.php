@@ -442,7 +442,16 @@
 					printText($txt_patente, $pdf, 28, 0);
 					
 					if (isset($_GET['en']) && $_GET['en']==1) {
-
+						$pdf->SetLineWidth(0.3);
+						$pdf->Line(130, 250, 190, 250);
+						$pdf->SetXY(146, 252);
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->Write(5, 'Firma Adherente');
+						$pdf->SetXY(146, 257);
+						$pdf->Write(5, 'Aclaracion:');
+						$pdf->SetXY(146, 262);
+						$pdf->Write(5, 'DNI:');
+						
 					}
 					else {
 						// Inspecciones (General)
@@ -1098,6 +1107,17 @@
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
+						
+						// Firma
+						$pdf->SetLineWidth(0.3);
+						$pdf->Line(130, 250, 190, 250);
+						$pdf->SetXY(146, 252);
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->Write(5, 'Firma Adherente');
+						$pdf->SetXY(146, 257);
+						$pdf->Write(5, 'Aclaracion:');
+						$pdf->SetXY(146, 262);
+						$pdf->Write(5, 'DNI:');
 					}
 					else {
 						if (count($asegurados)){
@@ -1891,6 +1911,17 @@
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
+						
+						// Firma
+						$pdf->SetLineWidth(0.3);
+						$pdf->Line(130, 250, 190, 250);
+						$pdf->SetXY(146, 252);
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->Write(5, 'Firma Adherente');
+						$pdf->SetXY(146, 257);
+						$pdf->Write(5, 'Aclaracion:');
+						$pdf->SetXY(146, 262);
+						$pdf->Write(5, 'DNI:');
 					}
 					else {	
 						foreach ($objects as $object) {
@@ -2488,6 +2519,17 @@
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
+						
+						// Firma
+						$pdf->SetLineWidth(0.3);
+						$pdf->Line(130, 250, 190, 250);
+						$pdf->SetXY(146, 252);
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->Write(5, 'Firma Adherente');
+						$pdf->SetXY(146, 257);
+						$pdf->Write(5, 'Aclaracion:');
+						$pdf->SetXY(146, 262);
+						$pdf->Write(5, 'DNI:');
 					}
 					else {
 						// Footer
