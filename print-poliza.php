@@ -220,6 +220,7 @@
 						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
 					}
 					// Patente
+					$pdf->RoundedRect(11 + 130, 86 + 20, 36, 5, 1, '1234', 'D');
 					$pdf->SetFont('Arial', 'B', 9);
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(142, 109);
@@ -354,7 +355,6 @@
 						$pdf->SetLineWidth(0.4);
 						$pdf->RoundedRect($x - 0.5, $y, 195.5, 6, 1, '1234', 'DF');
 						
-						$pdf->RoundedRect($x + 132, $y + 10, 32, 5, 1, '1234', 'D');
 						
 						$y += 7.5;
 						$pdf->SetFillColor(221,227,237);
@@ -436,6 +436,7 @@
 						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
 					}					
 					// Patente
+					$pdf->RoundedRect(11 + 132, 86 + 10, 36, 5, 1, '1234', 'D');
 					$pdf->SetFont('Arial', 'B', 9);
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(144, 98.5);
