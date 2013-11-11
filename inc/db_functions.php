@@ -67,19 +67,24 @@ class Encryption
 }
 
 // Processing
-function determineState($startdiff, $enddiff, $original_state = NULL) {
+function determineState($startdiff, $enddiff, $original_state = NULL, $al_dia = 1) {
 	$estado = NULL;
 	if ($startdiff > $enddiff) {
-		if ($startdiff < 0) {
-			$estado = 2; // PENDIENTE
-		} elseif ($enddiff > 0) {
-			$estado = $original_state==7?5:6; // FINALIZADA
-		} else {
-			if ($enddiff >= -30) {
-				$estado = $original_state==7?7:4; // A RENOVAR
+		if ($al_dia) {
+			if ($startdiff < 0) {
+				$estado = 2; // PENDIENTE
+			} elseif ($enddiff > 0) {
+				$estado = $original_state==7?5:6; // FINALIZADA
 			} else {
-				$estado = $original_state==7?7:3; // VIGENTE
+				if ($enddiff >= -30) {
+					$estado = $original_state==7?7:4; // A RENOVAR
+				} else {
+					$estado = $original_state==7?7:3; // VIGENTE
+				}
 			}
+		}
+		else {
+			$estado = 8; // BAJA POR MORA
 		}
 	}
 	return $estado;

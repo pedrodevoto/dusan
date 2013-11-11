@@ -22,7 +22,7 @@
 	$affected_rows = 0;
 		
 	// Recordset: Poliza
-	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado_id, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff FROM poliza LEFT JOIN (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE poliza_estado_id<>5 AND endoso_id IS NULL;
+	$query_Recordset1 = "SELECT poliza.poliza_id, poliza_estado_id, DATEDIFF(NOW(),poliza_validez_desde) AS startdiff, DATEDIFF(NOW(),poliza_validez_hasta) AS enddiff, IF(poliza_medio_pago = 'Directo', IF(COUNT(IF(DATEDIFF(cuota_vencimiento, NOW()) < -180 AND cuota_estado = '1 - No Pagado', 1, NULL))=0, 1, 0), 1) AS poliza_al_dia FROM cuota JOIN poliza ON cuota.poliza_id = poliza.poliza_id LEFT JOIN (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE poliza_estado_id<>5 AND endoso_id IS NULL GROUP BY poliza.poliza_id;
 ";
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	
@@ -30,7 +30,7 @@
 	while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)) {
 
 		// Determine correct state
-		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff'], $row_Recordset1['poliza_estado_id']);
+		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff'], $row_Recordset1['poliza_estado_id'], $row_Recordset1['poliza_al_dia']);
 
 		// If state is valid and has changed
 		if (!is_null($estado) && ($estado !== $row_Recordset1['poliza_estado_id'])) {
