@@ -1075,7 +1075,7 @@ $(document).ready(function () {
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 						// Si la poliza no es Automotor, ocultar campo ajuste
 						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').parent().hide();
+							$('#box-poliza_ajuste').removeClass('required').parent().hide();
 						}
 						// Resolve
 						dfd.resolve();
@@ -1110,7 +1110,7 @@ $(document).ready(function () {
 						populateFormGeneric(j, "box");
 						// Si la poliza no es Automotor, ocultar campo ajuste
 						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').parent().hide();
+							$('#box-poliza_ajuste').removeClass('required').parent().hide();
 						}
 						// Resolve
 						dfd.resolve();
@@ -3868,25 +3868,17 @@ $(document).ready(function () {
 					$("#box-tipo_poliza_id").change(function () {
 						$('#box-subtipo_poliza_id').html(loading);
 						populateListSubtipoPoliza($(this).val(), 'box-subtipo_poliza_id', 'box');
-						// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
-						switch ($(this).val()) {
-						case '3':
-							$('#box-poliza_ajuste').val('').parent().hide();
-							break;
-						default:
-							$('#box-poliza_ajuste').parent().show();
-							break;
-						}
+						// Si el tipo de póliza es PERSONAS, ampliar rango de selección de vigencia
 						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $(this).val());
 					});
 					$("#box-subtipo_poliza_id").change(function () {
 						// Si el subtipo de poliza es Automotor habilitar campo AJUSTE
 						switch ($(this).val()) {
 						case '6':
-							$('#box-poliza_ajuste').parent().show();
+							$('#box-poliza_ajuste').addClass('required').parent().show();
 							break;
 						default:
-							$('#box-poliza_ajuste').val('').parent().hide();
+							$('#box-poliza_ajuste').val('').removeClass('required').parent().hide();
 							break;
 						}
 
