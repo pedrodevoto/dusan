@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = "SELECT cobertura_tipo_id, cobertura_tipo_nombre FROM cobertura_tipo";
+	$query_Recordset1 = "SELECT seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_nombre FROM seguro_cobertura_tipo group by seguro_cobertura_tipo_nombre";
 	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	

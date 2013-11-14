@@ -45,7 +45,7 @@
 						null,
 						{"bSearchable": false},
 						{"bSearchable": false},
-						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModSeguro('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li></ul>'; }}
+						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModSeguro('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Coberturas" onclick="openBoxSegCob('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document"></span></li></ul>'; }}
 					],	
 					"aaSorting": [[1,'asc'],[2,'asc']],					
 					

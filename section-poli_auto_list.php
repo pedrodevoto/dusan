@@ -25,7 +25,7 @@
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
 				populateListPlizaEstado('poliza_estado_id', 'main');
-				populateListCoberturaTipo('cobertura_tipo_id', 'main');
+				populateListCoberturaTipo('seguro_cobertura_tipo_nombre', 'main');
 				populateListSuc('sucursal_id', 'main');
 				
 				// Filter: Assign listening functions to input-text for Submit
@@ -220,8 +220,8 @@
 								</select>
                             </td>
                             <td width="14%">
-                                <label for="cobertura_tipo_id">Cobertura</label>                                
-                                <select name="cobertura_tipo_id" id="cobertura_tipo_id">
+                                <label for="seguro_cobertura_tipo_nombre">Cobertura</label>                                
+                                <select name="seguro_cobertura_tipo_nombre" id="seguro_cobertura_tipo_nombre">
 								</select>
                             </td>
                             <td width="14%">

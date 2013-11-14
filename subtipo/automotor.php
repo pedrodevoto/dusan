@@ -6,7 +6,7 @@
 			$('#box-acreedor_rs').attr("readonly", false);
 			$('#box-acreedor_cuit').attr("readonly", false);			
 		}		
-		if ($('#box-cobertura_tipo_id').find(':selected').text() === 'D') {
+		if ($('#box-seguro_cobertura_tipo_id').find(':selected').text() === 'D') {
 			$('#box-franquicia').attr("readonly", false);
 		};
 		$('#box-venc_oblea').datepicker({
@@ -68,7 +68,7 @@
 			$('#box-acreedor_cuit').attr("readonly", true);			
 		}
 	});	
-	$('#box-cobertura_tipo_id').change(function(){
+	$('#box-seguro_cobertura_tipo_id').change(function(){
 		if ($(this).find(':selected').text() === 'D') {
 			$('#box-franquicia').attr("readonly", false).addClass('required');
 		} else {
@@ -439,8 +439,8 @@
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
     <p>
-        <label for="box-cobertura_tipo_id">Tipo *</label>
-        <select name="box-cobertura_tipo_id" id="box-cobertura_tipo_id" class="ui-widget-content required" style="width:90px">
+        <label for="box-seguro_cobertura_tipo_id">Tipo *</label>
+        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:90px">
         	<option value="">Seleccione</option>
 			<?php showCobertura($row_Recordset1['seguro_id']); ?>
         </select>        
