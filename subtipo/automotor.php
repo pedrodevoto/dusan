@@ -41,7 +41,7 @@
 					var options = ''; 
 					$.each(j, function(key, value) { 
 						options += '<option value="' + key + '">' + value + '</option>';
-					});		
+					});
 					$('#'+field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
@@ -54,6 +54,44 @@
 			}
 		});			
 		return dfd.promise();	
+	}
+	
+	function populateCobertura(cobertura_id) {
+		var dfd = new $.Deferred();		
+		$.ajax({
+			url: "get-json-segcob_info.php?id="+cobertura_id,
+			dataType: 'json',
+			success: function (j) {
+				if(j.error == 'expired'){
+					sessionExpire(context);
+				} else {				
+					var options = ''; 
+					var valid = true;
+					$.each(j, function(key, value) { 
+						switch (key) {
+							case 'seguro_cobertura_tipo_anios_de':
+								if (value && $("#box-ano").val() < value) {
+									valid = false;
+								}
+								break;
+							case 'seguro_cobertura_tipo_anios_a':
+								if (value && $("#box-ano").val() > value) {
+									valid = false;
+								}
+								break;
+							default:
+								$("#box-"+key).val(value);
+								break;
+						}
+					});
+					if (!valid) {
+						alert('Advertencia: el año del automotor está fuera del rango de años recomendado por la cobertura');
+					}
+					dfd.resolve();								
+				}
+			}
+		});			
+		return dfd.promise();
 	}
 	
 	// On Change
@@ -74,6 +112,7 @@
 		} else {
 			$('#box-franquicia').val('').attr("readonly", true).removeClass('required');			
 		}
+		populateCobertura($('#box-seguro_cobertura_tipo_id').val());
 	});
 	$('#box-automotor_tipo_id').change(function(){
 		$('box-automotor_carroceria_id').html('<option value="">Cargando...</option>');
@@ -450,10 +489,10 @@
         <input type="text" name="box-franquicia" id="box-franquicia" maxlength="5" class="ui-widget-content" style="width:120px" digits="true" min="0" max="99999" readonly="readonly" />
     </p>    
     <p>
-        <label for="box-limite_rc">Límite Resp. Civil *</label>
-        <select name="box-limite_rc" id="box-limite_rc" class="ui-widget-content required" style="width:120px">
+        <label for="box-seguro_cobertura_tipo_limite_rc_id">Límite Resp. Civil *</label>
+        <select name="box-seguro_cobertura_tipo_limite_rc_id" id="box-seguro_cobertura_tipo_limite_rc_id" class="ui-widget-content required" style="width:120px">
         	<option value="">Seleccione</option>
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'limite_rc', 'select', '$3.000.000'); ?>
+            <?php showLimiteRC(); ?>
         </select>        
     </p>    
     <p>

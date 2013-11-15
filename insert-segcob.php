@@ -12,10 +12,10 @@
 	if (isset($_POST["box-seguro_id"]) && $_POST["box-seguro_id"]!="") {
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO seguro_cobertura_tipo (seguro_id, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc, seguro_cobertura_tipo_gruas, seguro_cobertura_tipo_anios_de, seguro_cobertura_tipo_anios_a) VALUES (%s, UPPER(TRIM(%s)), %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO seguro_cobertura_tipo (seguro_id, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc_id, seguro_cobertura_tipo_gruas, seguro_cobertura_tipo_anios_de, seguro_cobertura_tipo_anios_a) VALUES (%s, UPPER(TRIM(%s)), %s, %s, %s, %s)",
 						GetSQLValueString($_POST['box-seguro_id'], "int"),
 						GetSQLValueString($_POST['box-seguro_cobertura_tipo_nombre'], "text"),						
-						GetSQLValueString($_POST['box-seguro_cobertura_tipo_limite_rc'], "int"),						
+						GetSQLValueString($_POST['box-seguro_cobertura_tipo_limite_rc_id'], "int"),						
 						GetSQLValueString($_POST['box-seguro_cobertura_tipo_gruas'], "int"),						
 						GetSQLValueString($_POST['box-seguro_cobertura_tipo_anios_de'], "int"),						
 						GetSQLValueString($_POST['box-seguro_cobertura_tipo_anios_a'], "int"));						

@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}	
-	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc, seguro_cobertura_tipo_gruas, CONCAT(IFNULL(seguro_cobertura_tipo_anios_de, ''), ' - ', IFNULL(seguro_cobertura_tipo_anios_a, '')) as seguro_cobertura_tipo_anios_de_a FROM seguro_cobertura_tipo WHERE seguro_id=%s", GetSQLValueString($colname_Recordset1, "int"));
+	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc_valor, seguro_cobertura_tipo_gruas, CONCAT(IFNULL(seguro_cobertura_tipo_anios_de, ''), ' - ', IFNULL(seguro_cobertura_tipo_anios_a, '')) as seguro_cobertura_tipo_anios_de_a FROM seguro_cobertura_tipo LEFT JOIN seguro_cobertura_tipo_limite_rc ON seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = seguro_cobertura_tipo.seguro_cobertura_tipo_limite_rc_id WHERE seguro_id=%s", GetSQLValueString($colname_Recordset1, "int"));
 			
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());

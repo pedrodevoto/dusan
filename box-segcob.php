@@ -24,8 +24,8 @@
                     <input type="text" name="box-seguro_cobertura_tipo_nombre" id="box-seguro_cobertura_tipo_nombre" maxlength="20" class="ui-widget-content" style="width:220px" />
                 </p>
                 <p>
-                    <label for="box-seguro_cobertura_tipo_limite_rc">Límite RC *</label>
-                    <input type="number" min="0" step="any" name="box-seguro_cobertura_tipo_limite_rc" id="box-seguro_cobertura_tipo_limite_rc" maxlength="20" class="ui-widget-content" style="width:220px" />
+                    <label for="box-seguro_cobertura_tipo_limite_rc_id">Límite RC *</label>
+                    <select name="box-seguro_cobertura_tipo_limite_rc_id" id="box-seguro_cobertura_tipo_limite_rc_id" maxlength="20" class="ui-widget-content"></select>
                 </p>
                 <p>
                     <label for="box-seguro_cobertura_tipo_gruas">Cantidad de grúas *</label>

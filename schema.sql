@@ -129,7 +129,7 @@ CREATE TABLE `automotor` (
   `nro_tubo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_cobertura_tipo_id` int(11) NOT NULL,
   `franquicia` mediumint(8) unsigned DEFAULT NULL,
-  `limite_rc` enum('$500.000','$3.000.000','$10.000.000') COLLATE utf8_unicode_ci NOT NULL,
+  `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL,
   `servicio_grua` tinyint(3) unsigned DEFAULT NULL,
   `valor_vehiculo` mediumint(8) unsigned NOT NULL,
   `valor_gnc` mediumint(8) unsigned NOT NULL,
@@ -642,13 +642,21 @@ CREATE TABLE `seguro_cobertura_tipo` (
   `seguro_cobertura_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
   `seguro_id` int(10) unsigned NOT NULL,
   `seguro_cobertura_tipo_nombre` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `seguro_cobertura_tipo_limite_rc` int(11) NOT NULL,
-  `seguro_cobertura_tipo_gruas` int(11) NOT NULL,
+  `seguro_cobertura_tipo_limite_rc_id` int(11) DEFAULT NULL,
+  `seguro_cobertura_tipo_gruas` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_anios_de` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_anios_a` int(11) DEFAULT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_id`),
   KEY `seguro_id` (`seguro_id`),
   CONSTRAINT `seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `seguro_cobertura_tipo_limite_rc`;
+CREATE TABLE `seguro_cobertura_tipo_limite_rc` (
+  `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL AUTO_INCREMENT,
+  `seguro_cobertura_tipo_limite_rc_valor` int(11) NOT NULL,
+  PRIMARY KEY (`seguro_cobertura_tipo_limite_rc_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -717,4 +725,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-11-14 18:43:48
+-- 2013-11-15 13:51:46

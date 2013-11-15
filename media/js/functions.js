@@ -807,6 +807,31 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
+	populateListLimiteRC = function (field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-limite_rc.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccionar');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();
@@ -1809,7 +1834,7 @@ $(document).ready(function () {
 					$.each(j, function (i, object) {
 						result += '<tr>';
 						result += '<td>' + object.seguro_cobertura_tipo_nombre + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_limite_rc + '</td>';
+						result += '<td>' + object.seguro_cobertura_tipo_limite_rc_valor + '</td>';
 						result += '<td>' + object.seguro_cobertura_tipo_gruas + '</td>';
 						result += '<td>' + object.seguro_cobertura_tipo_anios_de_a + '</td>';
 						result += '<td><ul class="listInlineIcons">';
@@ -2717,7 +2742,7 @@ $(document).ready(function () {
 					alert($.trim(data));
 				} else {
 					// Clear form
-					$("#box-seguro_cobertura_tipo_nombre, #box-seguro_cobertura_tipo_limite_rc, #box-seguro_cobertura_tipo_gruas, #box-seguro_cobertura_tipo_anios_de, #box-seguro_cobertura_tipo_anios_a").val('');
+					$("#box-seguro_cobertura_tipo_nombre, #box-seguro_cobertura_tipo_limite_rc_id, #box-seguro_cobertura_tipo_gruas, #box-seguro_cobertura_tipo_anios_de, #box-seguro_cobertura_tipo_anios_a").val('');
 					$("#box-seguro_cobertura_tipo_nombre").focus();
 					// Refresh DIVs
 					populateDiv_SegCob(id);
@@ -3590,42 +3615,45 @@ $(document).ready(function () {
 				// Disable forms
 				formDisable('frmBox', 'ui', true);
 
-				// Populate DIVs
-				populateDiv_Seguro_Info(id);
-				populateDiv_SegCob(id);
+				$.when(
+					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box')
+				).then(function () {
+					// Populate DIVs
+					populateDiv_Seguro_Info(id);
+					populateDiv_SegCob(id);
 
-				// -------------------- FORM 1 ----------------------
+					// -------------------- FORM 1 ----------------------
 
 
-				// Validate form
-				var validateForm = $("#frmBox").validate({
-					rules: {
-						"box-seguro_cobertura_tipo_nombre": {
-							required: true
-						},
-						"box-seguro_cobertura_tipo_limite_rc": {
-							required: true
-						},
-						"box-seguro_cobertura_tipo_gruas": {
-							required: true
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-seguro_cobertura_tipo_nombre": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_limite_rc_id": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_gruas": {
+								required: true
+							}
 						}
-					}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if ($("#box-action").val() == 'insert') {
+								insertFormSegCob(id);
+							} else {
+								updateFormSegCob(id);
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
 				});
-
-				// Button action
-				$("#btnBox").click(function () {
-					if (validateForm.form()) {
-						if ($("#box-action").val() == 'insert') {
-							insertFormSegCob(id);
-						} else {
-							updateFormSegCob(id);
-						}
-					};
-				});
-
-				// Enable form
-				formDisable('frmBox', 'ui', false);
-
 
 			}
 		});
