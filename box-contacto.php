@@ -30,6 +30,7 @@
 	</div>
     <div>
         <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
+			<input type="hidden" id="box-action" name="box-action" value="insert" />
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
                 <legend class="ui-widget ui-widget-header ui-corner-all">Agregar Contacto</legend>
                 <p>
@@ -79,7 +80,7 @@
                     <input type="text" name="box-contacto_telefono2" id="box-contacto_telefono2" maxlength="25" class="ui-widget-content" style="width:200px" />
                 </p>                                                                     
             	<p align="center" style="margin-top:10px">
-					<input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
+					<input type="reset" name="btnBoxReset" id="btnBoxReset" value="Borrar" /> <input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
                 </p>
             </fieldset>         
         </form>

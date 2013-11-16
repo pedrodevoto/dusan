@@ -806,7 +806,30 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-
+	populateListProductor = function (field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-productor.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccionar');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	populateListLimiteRC = function (field, context) {
 		var dfd = new $.Deferred();
 		$.ajax({
@@ -1640,6 +1663,29 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateFormBoxContacto = function (id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_contacto1.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	/* Other form functions */
 	assignClientToPoliza = function (id) {
 		$.ajax({
@@ -1914,6 +1960,7 @@ $(document).ready(function () {
 						result += '<td>' + object.contacto_telefono1 + '</td>';
 						result += '<td>' + object.contacto_telefono2 + '</td>';
 						result += '<td><ul class="listInlineIcons">';
+						result += '<li title="Editar" onClick="javascript:editInBoxContacto(' + object.contacto_id + ');"><span class="ui-icon ui-icon-search"></span></li>';
 						result += '<li title="Eliminar" onClick="javascript:deleteContacto(' + object.contacto_id + ', ' + id + ');"><span class="ui-icon ui-icon-trash"></span></li>';
 						if (object.contacto_default == 0) {
 							result += '<li title="Establecer por defecto" onClick="javascript:updateLinkContacto_Default(' + object.contacto_id + ', ' + id + ');"><span class="ui-icon ui-icon-star"></span></li>';
@@ -2960,6 +3007,35 @@ $(document).ready(function () {
 			}
 		});
 	}
+	updateFormContacto = function (id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-contacto.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));
+				} else {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+					$("#box-contacto_id").remove();
+					$("#box-action").val('insert');
+					$("#btnBoxReset").button('option', 'label', 'Borrar');
+					$("#btnBox").button('option', 'label', 'Agregar');
+					$("#box-contacto_domicilio").focus();
+					// Refresh DIVs
+					populateDiv_Contacto(id);
+				}
+				// Enable button
+				$('#btnBox').button("option", "disabled", false);
+			}
+		});
+	}
 
 	/* Update via Link functions */
 	updateLinkContacto_Default = function (id, cliente_id) {
@@ -3947,7 +4023,7 @@ $(document).ready(function () {
 				// -------------------- GENERAL ---------------------
 
 				// Initialize buttons
-				$("#btnBox").button();
+				$("#btnBox, #btnBoxReset").button();
 
 				// Disable forms
 				formDisable('frmBox', 'ui', true);
@@ -4009,11 +4085,14 @@ $(document).ready(function () {
 							}
 						}
 					});
-
 					// Button action
 					$("#btnBox").click(function () {
 						if (validateForm.form()) {
-							insertFormContacto(id);
+							if ($("#box-action").val() == 'insert') {
+								insertFormContacto(id);
+							} else {
+								updateFormContacto(id);
+							}
 						};
 					});
 
@@ -5104,6 +5183,34 @@ $(document).ready(function () {
 			$("#btnBox").button('option', 'label', 'Guardar');
 			formDisable('frmBox', 'ui', false);
 			$("#box-seguro_cobertura_tipo_nombre").focus();
+		});
+	}
+	editInBoxContacto = function (id) {
+		// Disable form
+		formDisable('frmBox', 'ui', true);
+		$.when(populateFormBoxContacto(id)).then(function () {
+
+			// Append hidden input to form
+			$('<input>').prop({
+				type: 'hidden',
+				id: 'box-contacto_ids',
+				name: 'box-contacto_id'
+			}).val(id).appendTo($('#frmBox'));
+			$("#box-action").val('edit');
+			$("#btnBoxReset").button('option', 'label', 'Cancelar').click(function () {
+				// Clear form
+				$('#frmBox').each(function () {
+					this.reset();
+				});
+				$("#box-contacto_id").remove();
+				$("#box-action").val('insert');
+				$("#btnBoxReset").button('option', 'label', 'Borrar');
+				$("#btnBox").button('option', 'label', 'Agregar');
+				$("#box-contacto_domicilio").focus();
+			});
+			$("#btnBox").button('option', 'label', 'Guardar');
+			formDisable('frmBox', 'ui', false);
+			$("#box-contacto_domicilio").focus();
 		});
 	}
 });
