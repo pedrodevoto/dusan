@@ -116,7 +116,7 @@
 										GetSQLValueString($_POST['box-valor_gnc'], 'int'),
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
 										GetSQLValueString($_POST['box-valor_total'], 'int'));																		
-				$Result1 = mysql_query($insertSQL, $connection);														
+				$Result1 = mysql_query($insertSQL, $connection) or die(mysql_error());														
 				$automotor_id = mysql_insert_id();
 			} else {
 				// Update
@@ -200,7 +200,7 @@
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
 										GetSQLValueString($_POST['box-valor_total'], 'int'),										
 										$row_Recordset2['automotor_id']);								
-				$Result1 = mysql_query($updateSQL, $connection);	
+				$Result1 = mysql_query($updateSQL, $connection) or die(mysql_error());	
 				$automotor_id = $row_Recordset2['automotor_id'];	
 			}		
 			
@@ -232,7 +232,7 @@
 												GetSQLValueString($item['detalle'], 'text'),
 												GetSQLValueString($item['valor'], 'double'),
 												$object);
-							mysql_query($insertSQL);					
+							mysql_query($insertSQL) or die(mysql_error());					
 						}
 					}
 				}
