@@ -55,7 +55,7 @@
 	}
 	// Filter by: fotos
 	if(isset($_GET['fotos']) && $_GET['fotos']!=""){	
-		$query_Recordset1_having .= sprintf(" AND poliza_fotos != '%s' ", $_GET['fotos']=='1'?'No':'Sí');
+		$query_Recordset1_having .= sprintf(" AND poliza_fotos IN %s ", $_GET['fotos']=='1'?'("Sí", "N/A")':'("No")');
 	}
 	// Filter by: castigado
 	if(isset($_GET['castigado']) && $_GET['castigado']!=""){	
