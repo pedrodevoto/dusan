@@ -210,10 +210,14 @@
 			// Fotos
 			$types = array('micrograbado', 'gnc');
 			foreach ($types as $type) {
-				if ($_FILES['box-'.$type.'_foto']['error'] == 0) {
-					if ($photo = processFoto($_FILES['box-'.$type.'_foto'], $poliza_id.$type)){
-						$sql = sprintf('INSERT INTO automotor_%1$s_foto (poliza_id, automotor_%1$s_foto_url, automotor_%1$s_foto_thumb_url, automotor_%1$s_foto_width, automotor_%1$s_foto_height) VALUES (%2$s, \'%3$s\', \'%4$s\', %5$s, %6$s)', $type, $poliza_id, $photo['filename'], $photo['thumb_filename'], $photo['width'], $photo['height']);
-						mysql_query($sql, $connection) or die(mysql_error());
+			    if(isset($_FILES['box-'.$type.'_foto']['tmp_name'])){
+					for ($i=0; $i < count($_FILES['box-'.$type.'_foto']['tmp_name']);$i++) {
+						if ($_FILES['box-'.$type.'_foto']['error'][$i] == 0) {
+							if ($photo = processFoto($_FILES['box-'.$type.'_foto'], $i)){
+								$sql = sprintf('INSERT INTO automotor_%1$s_foto (poliza_id, automotor_%1$s_foto_url, automotor_%1$s_foto_thumb_url, automotor_%1$s_foto_width, automotor_%1$s_foto_height) VALUES (%2$s, \'%3$s\', \'%4$s\', %5$s, %6$s)', $type, $poliza_id, $photo['filename'], $photo['thumb_filename'], $photo['width'], $photo['height']);
+								mysql_query($sql, $connection) or die(mysql_error());
+							}
+						}
 					}
 				}
 			}
