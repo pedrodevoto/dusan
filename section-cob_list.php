@@ -112,7 +112,11 @@
 				});
 			});	
 		</script>      
-
+		<style>
+		table.display tbody tr {
+		    height: 16px;
+		}
+		</style>
 	</head>
 	<body>     
 		<div id="divContainer">
