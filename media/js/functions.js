@@ -1069,6 +1069,34 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
+	populateFormBoxCob = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_segcob.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box')
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+
 	populateFormBoxCliente = function (id) {
 		var dfd = new $.Deferred();
 		$.ajax({
@@ -1469,6 +1497,7 @@ $(document).ready(function () {
 			addAutomotorAccesorios();
 		})
 	}
+	
 
 	addTvAudVidItem = function (cantidad, producto, marca, serial, valor) {
 		var j = 0;
@@ -1855,54 +1884,6 @@ $(document).ready(function () {
 					// Populate DIV
 					$('#divBoxInfo').html(result);
 				}
-			}
-		});
-	}
-	populateDiv_SegCob = function (id) {
-		$.getJSON("get-json-segcob.php?id=" + id, {}, function (j) {
-			if (j.error == 'expired') {
-				sessionExpire('box');
-			} else {
-				var result = '';
-				// Check if empty
-				if (j.length > 0) {
-					// Open Table
-					result += '<table class="tblBox">';
-					// Table Head
-					result += '<tr>';
-					result += '<th width="20%">Nombre</th>';
-					result += '<th width="20%">Límite RC</th>';
-					result += '<th width="20%">Grúas</th>';
-					result += '<th width="20%">Rango años</th>';
-					result += '<th width="20%">Acciones</th>';
-					result += '</tr>';
-					// Data
-					$.each(j, function (i, object) {
-						result += '<tr>';
-						result += '<td>' + object.seguro_cobertura_tipo_nombre + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_limite_rc_valor + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_gruas + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_anios_de_a + '</td>';
-						result += '<td><ul class="listInlineIcons">';
-						result += '<li title="Editar" onClick="javascript:editInBoxSegCob(' + object.seguro_cobertura_tipo_id + ');"><span class="ui-icon ui-icon-search"></span></li>';
-						result += '<li title="Eliminar"  onClick="javascript:deleteSegCob(' + object.seguro_cobertura_tipo_id + ', ' + id + ')"><span class="ui-icon ui-icon-trash"></span></li>';
-						result += '</ul></td>';
-						result += '</tr>';
-					});
-					// Close Table
-					result += '</table>';
-				} else {
-					result += 'El seguro no posee coberturas asignadas.';
-				}
-				// Populate DIV
-				$('#divBoxList').html(result);
-				// Make rows editable
-				$('.jeditrow1').editable('update-prodseg_code.php', {
-					indicator: 'Guardando...',
-					tooltip: 'Click para editar...',
-					width: '200',
-					height: '10'
-				});
 			}
 		});
 	}
@@ -2770,32 +2751,26 @@ $(document).ready(function () {
 			}
 		});
 	}
-	insertFormSegCob = function (id) {
+	insertFormSegCob = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Set form parameters
-		var param = $("#frmBox").serializeArray();
-		param.push({
-			name: "box-seguro_id",
-			value: id
-		});
 		// Post
-		$.post("insert-segcob.php", param, function (data) {
+		$.post("insert-segcob.php", $("#frmBox").serializeArray(), function (data) {
 			if (data == 'Session expired') {
 				sessionExpire('box');
 			} else {
-				// Show message if error ocurred
-				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));
-				} else {
-					// Clear form
-					$("#box-seguro_cobertura_tipo_nombre, #box-seguro_cobertura_tipo_limite_rc_id, #box-seguro_cobertura_tipo_gruas, #box-seguro_cobertura_tipo_anios_de, #box-seguro_cobertura_tipo_anios_a").val('');
-					$("#box-seguro_cobertura_tipo_nombre").focus();
-					// Refresh DIVs
-					populateDiv_SegCob(id);
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
 				}
-				// Enable button
-				$('#btnBox').button("option", "disabled", false);
+				// Show message
+				console.log(showBoxConf);
+				showBoxConf(data, false, 'always', 3000, function () {
+					
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
 			}
 		});
 	}
@@ -2990,17 +2965,15 @@ $(document).ready(function () {
 				if (data.toLowerCase().indexOf("error") != -1) {
 					alert($.trim(data));
 				} else {
-					// Clear form
-					$('#frmBox').each(function () {
-						this.reset();
+					// Table standing redraw
+					if (typeof oTable != 'undefined') {
+						oTable.fnStandingRedraw();
+					}
+					// Show message
+					showBoxConf(data, false, 'always', 3000, function () {
+						// Repopulate form
+						populateFormBoxCob(id);
 					});
-					$("#box-seguro_cobertura_tipo_id").remove();
-					$("#box-action").val('insert');
-					$("#btnBoxReset").button('option', 'label', 'Borrar');
-					$("#btnBox").button('option', 'label', 'Agregar');
-					$("#box-seguro_cobertura_tipo_nombre").focus();
-					// Refresh DIVs
-					populateDiv_SegCob(id);
 				}
 				// Enable button
 				$('#btnBox').button("option", "disabled", false);
@@ -3242,13 +3215,6 @@ $(document).ready(function () {
 			deleteViaLink('accidentes_clausula', id)
 		).then(function () {
 			populateDiv_Clausula(poliza_id);
-		})
-	}
-	deleteSegCob = function (id, seguro_id) {
-		$.when(
-			deleteViaLink('segcob', id)
-		).then(function () {
-			populateDiv_SegCob(seguro_id);
 		})
 	}
 
@@ -3670,65 +3636,6 @@ $(document).ready(function () {
 					// Enable form
 					formDisable('frmBox', 'ui', false);
 
-				});
-
-			}
-		});
-	}
-	openBoxSegCob = function(id) {
-		$.colorbox({
-			title: 'Seguro/Coberturas',
-			href: 'box-segcob.php',
-			width: '700px',
-			height: '600px',
-			onComplete: function () {
-
-				// -------------------- GENERAL ---------------------
-
-				// Initialize buttons
-				$("#btnBox, #btnBoxReset").button();
-
-				// Disable forms
-				formDisable('frmBox', 'ui', true);
-
-				$.when(
-					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box')
-				).then(function () {
-					// Populate DIVs
-					populateDiv_Seguro_Info(id);
-					populateDiv_SegCob(id);
-
-					// -------------------- FORM 1 ----------------------
-
-
-					// Validate form
-					var validateForm = $("#frmBox").validate({
-						rules: {
-							"box-seguro_cobertura_tipo_nombre": {
-								required: true
-							},
-							"box-seguro_cobertura_tipo_limite_rc_id": {
-								required: true
-							},
-							"box-seguro_cobertura_tipo_gruas": {
-								required: true
-							}
-						}
-					});
-
-					// Button action
-					$("#btnBox").click(function () {
-						if (validateForm.form()) {
-							if ($("#box-action").val() == 'insert') {
-								insertFormSegCob(id);
-							} else {
-								updateFormSegCob(id);
-							}
-						};
-					});
-
-					// Enable form
-					formDisable('frmBox', 'ui', false);
 				});
 
 			}
@@ -5157,34 +5064,6 @@ $(document).ready(function () {
 			}
 		});
 	}
-	editInBoxSegCob = function (id) {
-		// Disable form
-		formDisable('frmBox', 'ui', true);
-		$.when(populateFormBoxSegCob(id)).then(function () {
-
-			// Append hidden input to form
-			$('<input>').prop({
-				type: 'hidden',
-				id: 'box-seguro_cobertura_tipo_id',
-				name: 'box-seguro_cobertura_tipo_id'
-			}).val(id).appendTo($('#frmBox'));
-			$("#box-action").val('edit');
-			$("#btnBoxReset").button('option', 'label', 'Cancelar').click(function () {
-				// Clear form
-				$('#frmBox').each(function () {
-					this.reset();
-				});
-				$("#box-seguro_cobertura_tipo_id").remove();
-				$("#box-action").val('insert');
-				$("#btnBoxReset").button('option', 'label', 'Borrar');
-				$("#btnBox").button('option', 'label', 'Agregar');
-				$("#box-seguro_cobertura_tipo_nombre").focus();
-			});
-			$("#btnBox").button('option', 'label', 'Guardar');
-			formDisable('frmBox', 'ui', false);
-			$("#box-seguro_cobertura_tipo_nombre").focus();
-		});
-	}
 	editInBoxContacto = function (id) {
 		// Disable form
 		formDisable('frmBox', 'ui', true);
@@ -5211,6 +5090,97 @@ $(document).ready(function () {
 			$("#btnBox").button('option', 'label', 'Guardar');
 			formDisable('frmBox', 'ui', false);
 			$("#box-contacto_domicilio").focus();
+		});
+	}
+	openBoxAltaCob = function () {
+		$.colorbox({
+			title: 'Seguro/Cobertura',
+			href: 'box-segcob_alta.php',
+			width: '700px',
+			height: '600px',
+			onComplete: function () {
+
+				// -------------------- GENERAL ---------------------
+				
+				$("#btnBox").button();
+				
+				formDisable('frmBox', 'ui', false);
+
+				$.when(
+					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box'),
+					populateListSeguro('box-seguro_id', 'box')
+				).then(function() {
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-seguro_cobertura_tipo_nombre": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_limite_rc_id": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_gruas": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						insertFormSegCob();
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+				});
+			}
+		});
+	}
+	openBoxModCob = function(id) {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-segcob_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxCob(id)).then(function () {
+
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-seguro_cobertura_tipo_nombre": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_limite_rc_id": {
+								required: true
+							},
+							"box-seguro_cobertura_tipo_gruas": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							updateFormSegCob(id);
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+
+				});
+
+			}
 		});
 	}
 });
