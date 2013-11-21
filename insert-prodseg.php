@@ -19,8 +19,17 @@
 						GetSQLValueString($_POST['box-productor_seguro_codigo'], "text"),
 						GetSQLValueString($_POST['box-zona_riesgo_id'], "int"));						
 		$Result1 = mysql_query($insertSQL, $connection);
+
 		switch (mysql_errno()) {
 			case 0:
+				$productor_seguro_id = mysql_insert_id($connection);
+				foreach ($_POST['box-seguro_cobertura_tipo_id'] as $cobertura_id) {
+					$insertSQL = sprintf("INSERT INTO productor_seguro_cobertura_tipo (productor_seguro_id, seguro_cobertura_tipo_id) VALUES (%s, %s)",
+						GetSQLValueString($productor_seguro_id, "int"),
+						GetSQLValueString($cobertura_id, "int"));
+						error_log($insertSQL);
+					mysql_query($insertSQL, $connection);
+				}
 				echo "El registro ha sido insertado con éxito.";
 				break;
 			case 1062:

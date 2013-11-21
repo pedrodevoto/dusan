@@ -26,7 +26,7 @@
                 </p>                                                     
                 <p>
                     <label for="box-productor_seguro_codigo">Código *</label>
-                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:220px" />
+                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" />
                 </p>
 				<p>
 					<label for="box-zona_riesgo_id">Zona de riesgo</label>
@@ -34,6 +34,12 @@
 						<option value="">Cargando</option>
 					</select>
 				</p>
+			    <p>
+			        <label for="box-seguro_cobertura_tipo_id[]">Coberturas *</label>
+	                <select multiple="multiple" name="box-seguro_cobertura_tipo_id[]" id="box-seguro_cobertura_tipo_id" class="ui-widget-content" style="width:180px">
+	                	<option value="">Cargando</option>                
+	                </select>
+			    </p>
             	<p align="center" style="margin-top:10px">
 					<input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
                 </p>

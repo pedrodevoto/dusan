@@ -782,10 +782,11 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-	populateListCoberturaTipo = function (field, context) {
+	populateListCoberturaTipo = function (field, context, x, id) {
 		var dfd = new $.Deferred();
+		var url = "get-json-cobertura_tipo"+(x?"_id":"")+".php" + (id>0?'?id='+id:'');
 		$.ajax({
-			url: "get-json-cobertura_tipo.php",
+			url: url,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired') {
@@ -797,7 +798,12 @@ $(document).ready(function () {
 					});
 					$('#' + field).html(options);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					if (x) {
+						
+					}
+					else {
+						appendListItem(field, '', 'Todos');
+					}
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -1136,12 +1142,13 @@ $(document).ready(function () {
 					$.colorbox.close();
 				} else {
 					// Populate drop-downs, then form
-					console.log(j);
+					console.log(j.seguro_id);
 					$.when(
 						populateListProductor("box-productor_id", "box"),
 						populateListSeguro("box-seguro_id", "box"),
 						populateListSuc("box-sucursal_id", "box"),
-						populateListZonaRiesgo("box-zona_riesgo_id", "box")
+						populateListZonaRiesgo("box-zona_riesgo_id", "box"),
+						populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true, j.seguro_id)
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
@@ -5280,7 +5287,8 @@ $(document).ready(function () {
 					populateListProductor("box-productor_id", "box"),
 					populateListSeguro("box-seguro_id", "box"),
 					populateListSuc("box-sucursal_id", "box"),
-					populateListZonaRiesgo("box-zona_riesgo_id", "box")
+					populateListZonaRiesgo("box-zona_riesgo_id", "box"),
+					populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true)
 				).then(function() {
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -5299,6 +5307,13 @@ $(document).ready(function () {
 							}
 						}
 					});
+
+					$('#box-seguro_id').change(function() {
+						$("#box-seguro_cobertura_tipo_id").attr("disabled", true);
+						$.when(populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true, $(this).val())).then(function() {
+							$("#box-seguro_cobertura_tipo_id").attr("disabled", false);
+						});
+					})
 
 					// Button action
 					$("#btnBox").click(function () {

@@ -30,6 +30,12 @@
 						<option value="">Cargando</option>
 					</select>
 				</p>
+			    <p>
+			        <label for="box-seguro_cobertura_tipo_id[]">Coberturas *</label>
+	                <select multiple="multiple" name="box-seguro_cobertura_tipo_id[]" id="box-seguro_cobertura_tipo_id" class="ui-widget-content" style="width:180px">
+	                	<option value="">Cargando</option>                
+	                </select>
+			    </p>
             	<p align="center" style="margin-top:10px">
 		            <input type="hidden" name="box-productor_seguro_id" id="box-productor_seguro_id" />            
 					<input type="button" name="btnBox" id="btnBox" value="Guardar" />                                    

@@ -79,7 +79,7 @@
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Editar" onclick="openBoxModCod('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
-							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'segcob\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'prodseg\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
 							<? } ?>
 							returnval += '</ul>';
 							return returnval;
