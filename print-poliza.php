@@ -224,7 +224,7 @@
 					$pdf->SetFont('Arial', 'B', 9);
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(142, 109);
-					printText($txt_patente, $pdf, 28, 0);
+					printText($txt_patente, $pdf, 35, 0);
 					// GNC
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);
@@ -440,7 +440,7 @@
 					$pdf->SetFont('Arial', 'B', 9);
 					$pdf->SetTextColor(0,0,0);								
 					$pdf->SetXY(144, 98.5);
-					printText($txt_patente, $pdf, 28, 0);
+					printText($txt_patente, $pdf, 35, 0);
 					
 					if (isset($_GET['en']) && $_GET['en']==1) {
 						$pdf->SetLineWidth(0.3);
