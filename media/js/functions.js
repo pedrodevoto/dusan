@@ -855,6 +855,32 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	
+	populateListZonaRiesgo = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-zona_riesgo.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccionar');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
+	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();
@@ -1096,6 +1122,38 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateFormBoxCod = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_prodseg.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					console.log(j);
+					$.when(
+						populateListProductor("box-productor_id", "box"),
+						populateListSeguro("box-seguro_id", "box"),
+						populateListSuc("box-sucursal_id", "box"),
+						populateListZonaRiesgo("box-zona_riesgo_id", "box")
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 
 	populateFormBoxCliente = function (id) {
 		var dfd = new $.Deferred();
@@ -2547,28 +2605,22 @@ $(document).ready(function () {
 	insertFormProdSeg = function (id) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Set form parameters
-		var param = $("#frmBox").serializeArray();
-		param.push({
-			name: "box-productor_id",
-			value: id
-		});
 		// Post
-		$.post("insert-prodseg.php", param, function (data) {
+		$.post("insert-prodseg.php", $("#frmBox").serializeArray(), function (data) {
 			if (data == 'Session expired') {
 				sessionExpire('box');
 			} else {
-				// Show message if error ocurred
-				if (data.toLowerCase().indexOf("error") != -1) {
-					alert($.trim(data));
-				} else {
-					// Clear form
-					$('#box-productor_seguro_codigo').val('');
-					// Refresh DIVs
-					populateDiv_ProdSeg(id);
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
 				}
-				// Enable button
-				$('#btnBox').button("option", "disabled", false);
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
 			}
 		});
 	}
@@ -3003,6 +3055,33 @@ $(document).ready(function () {
 					$("#box-contacto_domicilio").focus();
 					// Refresh DIVs
 					populateDiv_Contacto(id);
+				}
+				// Enable button
+				$('#btnBox').button("option", "disabled", false);
+			}
+		});
+	}
+	updateFormSegCod = function (id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-prodseg.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));
+				} else {
+					// Table standing redraw
+					if (typeof oTable != 'undefined') {
+						oTable.fnStandingRedraw();
+					}
+					// Show message
+					showBoxConf(data, false, 'always', 3000, function () {
+						// Repopulate form
+						populateFormBoxCod(id);
+					});
 				}
 				// Enable button
 				$('#btnBox').button("option", "disabled", false);
@@ -5183,4 +5262,104 @@ $(document).ready(function () {
 			}
 		});
 	}
+	openBoxAltaCod = function () {
+		$.colorbox({
+			title: 'Productor/Seguro/Código',
+			href: 'box-prodseg_alta.php',
+			width: '700px',
+			height: '600px',
+			onComplete: function () {
+
+				// -------------------- GENERAL ---------------------
+				
+				$("#btnBox").button();
+				
+				formDisable('frmBox', 'ui', false);
+
+				$.when(
+					populateListProductor("box-productor_id", "box"),
+					populateListSeguro("box-seguro_id", "box"),
+					populateListSuc("box-sucursal_id", "box"),
+					populateListZonaRiesgo("box-zona_riesgo_id", "box")
+				).then(function() {
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-productor_id": {
+								required: true
+							},
+							"box-seguro_id": {
+								required: true
+							},
+							"box-sucursal_id": {
+								required: true
+							},
+							"box-productor_seguro_codigo": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						insertFormProdSeg();
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+				});
+			}
+		});
+	}
+	openBoxModCod = function(id) {
+		$.colorbox({
+			title: 'Productor/Seguro/Código',
+			href: 'box-prodseg_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxCod(id)).then(function () {
+
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-productor_id": {
+								required: true
+							},
+							"box-seguro_id": {
+								required: true
+							},
+							"box-sucursal_id": {
+								required: true
+							},
+							"box-productor_seguro_codigo": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							updateFormSegCod(id);
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+
+				});
+
+			}
+		});
+	}
+
 });

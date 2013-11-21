@@ -52,6 +52,7 @@
                         <li><a href="section-cob_list.php">Coberturas</a></li>
                         <li><a href="section-pro_list.php">Productores</a></li>
 						<li><a href="section-suc_list.php">Sucursales</a></li>
+                        <li><a href="section-cod_list.php">Códigos de Productor</a></li>
                     </ul>
                 </li>  
                 <? } ?>                  

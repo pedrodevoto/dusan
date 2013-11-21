@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}	
-	$query_Recordset1 = sprintf("SELECT productor_seguro.productor_seguro_id, sucursal_nombre, productor_seguro_codigo, seguro_nombre FROM productor_seguro JOIN (seguro) ON (productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN sucursal ON productor_seguro.sucursal_id = sucursal.sucursal_id WHERE productor_seguro.productor_id=%s", GetSQLValueString($colname_Recordset1, "int"));
+	$query_Recordset1 = sprintf("SELECT productor_seguro.productor_seguro_id as productor_seguro_id, sucursal_nombre, productor_seguro_codigo, seguro_nombre, productor_nombre, zona_riesgo_id FROM productor_seguro JOIN (seguro, productor, sucursal) ON productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.sucursal_id = sucursal.sucursal_id AND productor_seguro.productor_id = productor.productor_id WHERE productor_seguro_id=%s", GetSQLValueString($colname_Recordset1, "int"));
 			
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
@@ -22,11 +22,8 @@
 	$totalRows_Recordset1 = mysql_num_rows($Recordset1);		
 
 	$output = array();
-	for ($i=0; $i<$totalRows_Recordset1; $i++) {
-		foreach ($row_Recordset1 as $key=>$value) {
-			$output[$i][$key] = strip_tags($value);
-		}		
-		$row_Recordset1 = mysql_fetch_assoc($Recordset1);		
+	foreach ($row_Recordset1 as $key=>$value) {
+		$output[$key] = strip_tags($value);
 	}
 	echo json_encode($output);
 

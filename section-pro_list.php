@@ -47,7 +47,7 @@
 						null,
 						null,
 						null,
-						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModProd('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Seguros" onclick="openBoxProdSeg('+oObj.aData[0]+');"><span class="ui-icon ui-icon-link"></span></li></ul>'; }}
+						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModProd('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li></ul>'; }}
 					],	
 					"aaSorting": [[1,'asc']],					
 					
