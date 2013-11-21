@@ -1,6 +1,6 @@
 <?php
 function showCobertura($id) {
-	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre FROM seguro_cobertura_tipo WHERE seguro_id=%s", 
+	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo.seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre FROM productor_seguro_cobertura_tipo JOIN seguro_cobertura_tipo ON seguro_cobertura_tipo.seguro_cobertura_tipo_id = productor_seguro_cobertura_tipo.seguro_cobertura_tipo_id WHERE productor_seguro_id=%s", 
 		GetSQLValueString($id, "int"));
 
 	// Recordset: Main
