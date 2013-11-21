@@ -9,15 +9,15 @@
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
                 <legend class="ui-widget ui-widget-header ui-corner-all">Modificar Seguro</legend>
 	            <p>
-	                <label for="box-productor_nombre">Productor *</label>
+	                <label for="box-productor_nombre">Productor ^</label>
 	                <input type="text" name="box-productor_nombre" id="box-productor_nombre" class="ui-widget-content" style="width:180px" readonly />
 	            </p>
 				<p>
-                    <label for="box-seguro_nombre">Seguro *</label>
+                    <label for="box-seguro_nombre">Seguro ^</label>
                     <input type="text" name="box-seguro_nombre" id="box-seguro_nombre" class="ui-widget-content" style="width:180px" readonly />                   
                 </p>
                 <p>
-                    <label for="box-sucursal_nombre">Sucursal *</label>
+                    <label for="box-sucursal_nombre">Sucursal ^</label>
                     <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" class="ui-widget-content" style="width:180px" readonly />                    
                 </p>                                                     
                 <p>

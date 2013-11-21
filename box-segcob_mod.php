@@ -10,7 +10,7 @@
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
                 <legend class="ui-widget ui-widget-header ui-corner-all">Agregar Cobertura</legend>
 	            <p>
-	                <label for="box-seguro_nombre">Aseguradora *</label>
+	                <label for="box-seguro_nombre">Aseguradora ^</label>
 	                <input type="text" name="box-seguro_nombre" id="box-seguro_nombre" class="ui-widget-content" style="width:220px" readonly />
 	            </p>
                 <p>
