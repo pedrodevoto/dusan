@@ -7,7 +7,7 @@
     <div>
         <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
-                <legend class="ui-widget ui-widget-header ui-corner-all">Agregar Seguro</legend>
+                <legend class="ui-widget ui-widget-header ui-corner-all">Agregar Código</legend>
 	            <p>
 	                <label for="box-productor_id">Productor *</label>
 	                <select name="box-productor_id" id="box-productor_id" class="ui-widget-content" style="width:180px"></select>

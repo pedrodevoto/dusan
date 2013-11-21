@@ -7,7 +7,7 @@
     <div>
         <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
-                <legend class="ui-widget ui-widget-header ui-corner-all">Modificar Seguro</legend>
+                <legend class="ui-widget ui-widget-header ui-corner-all">Modificar Código</legend>
 	            <p>
 	                <label for="box-productor_nombre">Productor ^</label>
 	                <input type="text" name="box-productor_nombre" id="box-productor_nombre" class="ui-widget-content" style="width:180px" readonly />
