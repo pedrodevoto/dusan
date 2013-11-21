@@ -629,7 +629,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$to = $row_Recordset1['seguro_email_endoso'];
+								$to = $row_Recordset1['seguro_email_endosos'];
 								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset1['poliza_numero'].".pdf";
 								$type = 5;
 							break;
@@ -1386,7 +1386,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$to = $row_Recordset1['seguro_email_endoso'];
+								$to = $row_Recordset1['seguro_email_endosos'];
 								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset1['poliza_numero'].".pdf";
 								$body = FALSE;
 								$type = 5;
@@ -2149,7 +2149,7 @@
 									$type = 4;
 								break;
 								case 'en':
-									$to = $row_Recordset1['seguro_email_endoso'];
+									$to = $row_Recordset1['seguro_email_endosos'];
 									$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset1['poliza_numero'].".pdf";
 									$body = FALSE;
 									$type = 5;
@@ -2627,7 +2627,7 @@
 								$type = 4;
 							break;
 							case 'en':
-								$to = $row_Recordset1['seguro_email_endoso'];
+								$to = $row_Recordset1['seguro_email_endosos'];
 								$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset1['poliza_numero'].".pdf";
 								$body = FALSE;
 								$type = 5;
