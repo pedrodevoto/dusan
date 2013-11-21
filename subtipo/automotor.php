@@ -254,10 +254,11 @@
         <input type="checkbox" name="box-accesorios" id="box-accesorios" value="1" />
     </p>
     <p>
-        <label for="box-zona_riesgo">Zona de Riesgo *</label>
-        <select name="box-zona_riesgo" id="box-zona_riesgo" class="ui-widget-content required" style="width:110px">    
+        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
+        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
             <option value="">Seleccione</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
+            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
+			<?php showZonasRiesgo($row_Recordset1['productor_seguro_id']); ?>
         </select>
     </p>
     <p>
