@@ -238,6 +238,38 @@
 					mysql_query($insertSQL) or die(mysql_error());
 				break;
 				
+				case 'integral_comercio':
+					// ---------------------------------- INTEGRAL COMERCIO ---------------------------------- //
+					
+				$insertSQL = sprintf('INSERT INTO integral_comercio (poliza_id, integral_comercio_domicilio_calle, integral_comercio_domicilio_nro, integral_comercio_domicilio_piso, integral_comercio_domicilio_dpto, integral_comercio_domicilio_localidad, integral_comercio_domicilio_cp, integral_comercio_actividad, integral_comercio_valor_tasado, integral_comercio_inc_edif, integral_comercio_inc_edif_rep, integral_comercio_bienes_de_uso_flag, integral_comercio_inc_contenido, integral_comercio_robo_pra, integral_comercio_cristales_pra, integral_comercio_rc_comprensiva, integral_comercio_rc_ascensor, integral_comercio_robo_matafuegos, integral_comercio_robo_lcm, integral_comercio_danios_agua, integral_comercio_rc_garage, integral_comercio_rc_lind) 
+					(SELECT %s, integral_comercio_domicilio_calle, integral_comercio_domicilio_nro, integral_comercio_domicilio_piso, integral_comercio_domicilio_dpto, integral_comercio_domicilio_localidad, integral_comercio_domicilio_cp, integral_comercio_actividad, integral_comercio_valor_tasado, integral_comercio_inc_edif, integral_comercio_inc_edif_rep, integral_comercio_bienes_de_uso_flag, integral_comercio_inc_contenido, integral_comercio_robo_pra, integral_comercio_cristales_pra, integral_comercio_rc_comprensiva, integral_comercio_rc_ascensor, integral_comercio_robo_matafuegos, integral_comercio_robo_lcm, integral_comercio_danios_agua, integral_comercio_rc_garage, integral_comercio_rc_lind FROM integral_comercio WHERE poliza_id=%s)',
+					$new_id,
+					$row_Recordset1['poliza_id']);
+				
+				
+					mysql_query($insertSQL) or die(mysql_error());
+				
+					$integral_comercio_id = mysql_insert_id();
+					if ($integral_comercio_id > 0) {
+						$sql = "SELECT integral_comercio_id FROM integral_comercio WHERE poliza_id = ".$row_Recordset1['poliza_id'];
+						$res = mysql_query($sql);
+						list($integral_comercio_id_old) = mysql_fetch_array($res);
+						if ($integral_comercio_id_old > 0) {
+						
+							$objects = array('bienes_de_uso');
+						
+							foreach ($objects as $object) {
+								$insertSQL = sprintf('INSERT INTO integral_comercio_%3$s (integral_comercio_id, integral_comercio_%3$s_cantidad, integral_comercio_%3$s_producto, integral_comercio_%3$s_marca, integral_comercio_%3$s_valor)
+									 (SELECT %1$s, integral_comercio_%3$s_cantidad, integral_comercio_%3$s_producto, integral_comercio_%3$s_marca, integral_comercio_%3$s_valor FROM integral_comercio_%3$s WHERE integral_comercio_id=%2$s)',
+														$integral_comercio_id,
+														$integral_comercio_id_old,
+														$object);	
+																						
+								mysql_query($insertSQL, $connection) or die(mysql_die());
+							}	
+						}
+					}
+					break;
 			default:
 				// ---------------------------------- UNDEFINED ---------------------------------- //
 				die("Error: Subtipo no habilitado.");

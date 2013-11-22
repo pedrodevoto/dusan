@@ -355,6 +355,63 @@
 				$incendio_edificio_id = mysql_insert_id();
 				
 			break;	
+			case 'integral_comercio':
+				// ---------------------------------- INTEGRAL DE COMERCIO ---------------------------------- //
+
+				$upsertSQL = sprintf('INSERT INTO integral_comercio (poliza_id, integral_comercio_domicilio_calle, integral_comercio_domicilio_nro, integral_comercio_domicilio_piso, integral_comercio_domicilio_dpto, integral_comercio_domicilio_localidad, integral_comercio_domicilio_cp, integral_comercio_actividad, integral_comercio_valor_tasado, integral_comercio_inc_edif, integral_comercio_inc_edif_rep, integral_comercio_bienes_de_uso_flag, integral_comercio_inc_contenido, integral_comercio_robo_pra, integral_comercio_cristales_pra, integral_comercio_rc_comprensiva, integral_comercio_rc_ascensor, integral_comercio_robo_matafuegos, integral_comercio_robo_lcm, integral_comercio_danios_agua, integral_comercio_rc_garage, integral_comercio_rc_lind) 
+							          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), %9$s, %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s, %20$s, %21$s, %22$s) 
+								  ON DUPLICATE KEY UPDATE integral_comercio_domicilio_calle=UPPER(TRIM(%2$s)), integral_comercio_domicilio_nro=UPPER(TRIM(%3$s)), integral_comercio_domicilio_piso=UPPER(TRIM(%4$s)), integral_comercio_domicilio_dpto=UPPER(TRIM(%5$s)), integral_comercio_domicilio_localidad=UPPER(TRIM(%6$s)), integral_comercio_domicilio_cp=UPPER(TRIM(%7$s)), integral_comercio_actividad=UPPER(TRIM(%8$s)), integral_comercio_valor_tasado=%9$s, integral_comercio_inc_edif=%10$s, integral_comercio_inc_edif_rep=%11$s, integral_comercio_bienes_de_uso_flag=%12$s, integral_comercio_inc_contenido=%13$s, integral_comercio_robo_pra=%14$s, integral_comercio_cristales_pra=%15$s, integral_comercio_rc_comprensiva=%16$s, integral_comercio_rc_ascensor=%17$s, integral_comercio_robo_matafuegos=%18$s, integral_comercio_robo_lcm=%19$s, integral_comercio_danios_agua=%20$s, integral_comercio_rc_garage=%21$s, integral_comercio_rc_lind=%22$s, integral_comercio_id=LAST_INSERT_ID(integral_comercio_id)',
+										$poliza_id,
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_calle'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_nro'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_piso'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_dpto'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_localidad'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_domicilio_cp'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_actividad'], 'text'),
+										GetSQLValueString($_POST['box-integral_comercio_valor_tasado'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_inc_edif'], 'double'),
+										GetSQLValueString(isset($_POST['box-integral_comercio_inc_edif_rep']) ? 'true' : '', 'defined','1','0'),
+										GetSQLValueString(isset($_POST['box-integral_comercio_bienes_de_uso_flag']) ? 'true' : '', 'defined','1','0'),
+										GetSQLValueString($_POST['box-integral_comercio_inc_contenido'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_robo_pra'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_cristales_pra'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_rc_comprensiva'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_rc_ascensor'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_robo_matafuegos'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_robo_lcm'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_danios_agua'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_rc_garage'], 'double'),
+										GetSQLValueString($_POST['box-integral_comercio_rc_lind'], 'double'));
+
+				$Result1 = mysql_query($upsertSQL, $connection) or die(mysql_error());				
+				$integral_comercio_id = mysql_insert_id();
+			
+			
+				$objects = array('bienes_de_uso');
+			
+				foreach ($objects as $object) {
+					$deleteSQL = "DELETE FROM integral_comercio_".$object." WHERE integral_comercio_id = ".$integral_comercio_id;
+					mysql_query($deleteSQL);
+					if (isset($_POST['box-integral_comercio_'.$object])) {
+						foreach ($_POST['box-integral_comercio_'.$object] as $item) {
+							if (isset($item['cantidad']) and isset($item['producto']) and isset($item['marca']) and isset($item['valor'])){
+								$insertSQL = sprintf('INSERT INTO integral_comercio_%7$s (integral_comercio_id, integral_comercio_%7$s_cantidad, integral_comercio_%7$s_producto, integral_comercio_%7$s_marca, integral_comercio_%7$s_serial, integral_comercio_%7$s_valor) VALUES (%1$s, %2$s, UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), %6$s)',
+													$integral_comercio_id,												
+													GetSQLValueString($item['cantidad'], 'int'),
+													GetSQLValueString($item['producto'], 'text'),
+													GetSQLValueString($item['marca'], 'text'),
+													GetSQLValueString($item['serial'], 'text'),
+													GetSQLValueString($item['valor'], 'double'),
+													$object);
+								mysql_query($insertSQL);					
+							}
+						}
+					}
+				}
+
+									
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");

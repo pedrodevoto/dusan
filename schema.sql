@@ -81,7 +81,6 @@ CREATE TABLE `automotor` (
   `tapizado` enum('Tela','Pana','Cuero') COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accesorios` tinyint(3) unsigned NOT NULL,
-  `zona_riesgo` enum('1','2','3','4') COLLATE utf8_unicode_ci NOT NULL,
   `zona_riesgo_id` int(11) DEFAULT NULL,
   `prendado` tinyint(3) unsigned NOT NULL,
   `acreedor_rs` varchar(75) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -525,6 +524,51 @@ CREATE TABLE `incendio_edificio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `integral_comercio`;
+CREATE TABLE `integral_comercio` (
+  `integral_comercio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `integral_comercio_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `integral_comercio_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `integral_comercio_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_actividad` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `integral_comercio_inc_edif` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_inc_edif_rep` tinyint(3) unsigned DEFAULT NULL,
+  `integral_comercio_bienes_de_uso_flag` tinyint(3) unsigned DEFAULT NULL,
+  `integral_comercio_inc_contenido` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_robo_pra` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_cristales_pra` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_rc_comprensiva` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_rc_ascensor` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_robo_matafuegos` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_robo_lcm` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_rc_garage` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_comercio_rc_lind` decimal(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`integral_comercio_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `integral_comercio_bienes_de_uso`;
+CREATE TABLE `integral_comercio_bienes_de_uso` (
+  `integral_comercio_bienes_de_uso_id` int(11) NOT NULL AUTO_INCREMENT,
+  `integral_comercio_id` int(11) NOT NULL,
+  `integral_comercio_bienes_de_uso_cantidad` int(11) NOT NULL,
+  `integral_comercio_bienes_de_uso_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_bienes_de_uso_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_bienes_de_uso_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `integral_comercio_bienes_de_uso_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`integral_comercio_bienes_de_uso_id`),
+  KEY `combinado_familiar_id` (`integral_comercio_id`),
+  CONSTRAINT `integral_comercio_bienes_de_uso_ibfk_1` FOREIGN KEY (`integral_comercio_id`) REFERENCES `integral_comercio` (`integral_comercio_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -749,4 +793,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-11-21 20:40:06
+-- 2013-11-22 18:02:32

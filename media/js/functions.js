@@ -1417,6 +1417,15 @@ $(document).ready(function () {
 
 			$("#box-combinado_familiar_domicilio_calle").focus();
 			break;
+		case 'integral_comercio':
+			$('fieldset.optional').each(function (i, e) {
+				$(e).prop('disabled', !$(e).children().first().children().first().prop('checked'));
+			});
+			$('.toggle-fieldset').change(function () {
+				$(this).parent().parent().prop('disabled', !$(this).prop('checked')).children('p').first().children().eq(1).focus();
+			})
+			populateSectionBienesDeUso(id);
+			
 		}
 	}
 	populateSectionAsegurado = function (id) {
@@ -1560,7 +1569,14 @@ $(document).ready(function () {
 			addAutomotorAccesorios();
 		})
 	}
-	
+	populateSectionBienesDeUso = function (id) {
+		populateDiv_BienesDeUso(id);
+
+		calculateBienesDeUsoTotal();
+		$('#box-integral_comercio_bienes_de_uso_add').button().click(function () {
+			addBienesDeUsoItem();
+		})
+	}
 
 	addTvAudVidItem = function (cantidad, producto, marca, serial, valor) {
 		var j = 0;
@@ -1776,6 +1792,29 @@ $(document).ready(function () {
 			}
 		});
 		return dfd.promise();
+	}
+	addBienesDeUsoItem = function (cantidad, producto, marca, serial, valor) {
+		var j = 0;
+		$('#bienes_de_uso p').each(function (i, e) {
+			j = Math.max(Number($(e).attr('id')), j) + 1;
+		});
+		var bienes_de_uso = '<p id="' + j + '"><input type="number" name="box-integral_comercio_bienes_de_uso[' + j + '][cantidad]" class="box-integral_comercio_bienes_de_uso_cant" placeholder="Cant" style="width:40px" value="' + (cantidad ? cantidad : '') + '" /> <input type="text" name="box-integral_comercio_bienes_de_uso[' + j + '][producto]" placeholder="Producto" value="' + (producto ? producto : '') + '" /> <input type="text" name="box-integral_comercio_bienes_de_uso[' + j + '][marca]" placeholder="Marca" value="' + (marca ? marca : '') + '" /> <input type="text" name="box-integral_comercio_bienes_de_uso[' + j + '][serial]" placeholder="Nro Serie" value="' + (serial ? serial : '') + '" /> <input type="number" name="box-integral_comercio_bienes_de_uso[' + j + '][valor]" class="box-integral_comercio_bienes_de_uso_valor" placeholder="Valor" style="width:80px" value="' + (valor ? valor : '') + '" /> <input type="button" class="box-integral_comercio_bienes_de_uso_remove" value="-" /></p>';
+		$('#bienes_de_uso').append(bienes_de_uso);
+		$('#bienes_de_uso p#' + j + ' :nth-child(1)').focus();
+		$('.box-integral_comercio_bienes_de_uso_remove').button().click(function () {
+			$(this).parent().remove();
+			calculateBienesDeUsoTotal();
+		})
+		$('.box-integral_comercio_bienes_de_uso_valor, .box-integral_comercio_bienes_de_uso_cant').change(function () {
+			calculateBienesDeUsoTotal()
+		});
+	}
+	calculateBienesDeUsoTotal = function () {
+		var total = 0;
+		$('.box-integral_comercio_bienes_de_uso_valor').each(function (i, e) {
+			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
+		});
+		$("#bienes_de_uso_total").html(total);
 	}
 	
 	/* Other form functions */
@@ -2523,6 +2562,20 @@ $(document).ready(function () {
 					addAutomotorAccesorios(object.cantidad, object.detalle, object.valor, false);
 				});
 				calculateAutomotorAccesoriosTotal();
+			}
+		})
+	}
+	populateDiv_BienesDeUso = function (id) {
+		$.getJSON("get-json-fich_integral_comercio_bienes_de_uso.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				$('#bienes_de_uso').empty();
+				$.each(j, function (i, object) {
+					addBienesDeUsoItem(object.integral_comercio_bienes_de_uso_cantidad, object.integral_comercio_bienes_de_uso_producto, object.integral_comercio_bienes_de_uso_marca, object.integral_comercio_bienes_de_uso_serial, object.integral_comercio_bienes_de_uso_valor);
+				});
+				calculateBienesDeUsoTotal();
+				$("#box-integral_comercio_domicilio_calle").focus();
 			}
 		})
 	}
