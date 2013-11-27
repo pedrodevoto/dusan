@@ -421,8 +421,8 @@ CREATE TABLE `email_log` (
   PRIMARY KEY (`email_log_id`),
   KEY `usuario_id` (`usuario_id`),
   KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
-  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION
+  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION,
+  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -569,6 +569,34 @@ CREATE TABLE `integral_comercio_bienes_de_uso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `integral_consorcio`;
+CREATE TABLE `integral_consorcio` (
+  `integral_consorcio_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `integral_consorcio_domicilio_calle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_consorcio_domicilio_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_consorcio_domicilio_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `integral_consorcio_domicilio_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `integral_consorcio_domicilio_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_consorcio_domicilio_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_consorcio_valor_tasado` decimal(10,2) DEFAULT NULL,
+  `integral_consorcio_inc_edif` decimal(10,2) unsigned NOT NULL,
+  `integral_consorcio_inc_edif_rep` tinyint(3) unsigned DEFAULT NULL,
+  `integral_consorcio_inc_contenido` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_robo_gral` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_robo_matafuegos` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_robo_lcm` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_rc_comprensiva` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_cristales` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_danios_agua` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_rc_garage` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_acc_personales` decimal(10,2) unsigned DEFAULT NULL,
+  `integral_consorcio_robo_exp` decimal(10,2) unsigned DEFAULT NULL,
+  PRIMARY KEY (`integral_consorcio_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -673,8 +701,8 @@ CREATE TABLE `productor_seguro_cobertura_tipo` (
   PRIMARY KEY (`productor_seguro_cobertura_tipo_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `seguro_cobertura_tipo_id` (`seguro_cobertura_tipo_id`),
-  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_2` FOREIGN KEY (`seguro_cobertura_tipo_id`) REFERENCES `seguro_cobertura_tipo` (`seguro_cobertura_tipo_id`),
-  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE
+  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
+  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_2` FOREIGN KEY (`seguro_cobertura_tipo_id`) REFERENCES `seguro_cobertura_tipo` (`seguro_cobertura_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -780,8 +808,8 @@ CREATE TABLE `usuario_sucursal` (
   PRIMARY KEY (`usuario_sucursal_id`),
   UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -793,4 +821,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-11-27 00:41:23
+-- 2013-11-27 20:31:45
