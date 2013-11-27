@@ -270,6 +270,18 @@
 						}
 					}
 					break;
+				case 'integral_consorcio':
+					// ---------------------------------- INTEGRAL CONSORCIO ---------------------------------- //
+				
+				$insertSQL = sprintf('INSERT INTO integral_consorcio (poliza_id, integral_consorcio_domicilio_calle, integral_consorcio_domicilio_nro, integral_consorcio_domicilio_piso, integral_consorcio_domicilio_dpto, integral_consorcio_domicilio_localidad, integral_consorcio_domicilio_cp, integral_consorcio_valor_tasado, integral_consorcio_inc_edif, integral_consorcio_inc_edif_rep, integral_consorcio_inc_contenido, integral_consorcio_robo_gral, integral_consorcio_robo_matafuegos, integral_consorcio_robo_lcm, integral_consorcio_rc_comprensiva, integral_consorcio_cristales, integral_consorcio_danios_agua, integral_consorcio_rc_garage, integral_consorcio_acc_personales, integral_consorcio_robo_exp)
+					(SELECT %s, integral_consorcio_domicilio_calle, integral_consorcio_domicilio_nro, integral_consorcio_domicilio_piso, integral_consorcio_domicilio_dpto, integral_consorcio_domicilio_localidad, integral_consorcio_domicilio_cp, integral_consorcio_valor_tasado, integral_consorcio_inc_edif, integral_consorcio_inc_edif_rep, integral_consorcio_inc_contenido, integral_consorcio_robo_gral, integral_consorcio_robo_matafuegos, integral_consorcio_robo_lcm, integral_consorcio_rc_comprensiva, integral_consorcio_cristales, integral_consorcio_danios_agua, integral_consorcio_rc_garage, integral_consorcio_acc_personales, integral_consorcio_robo_exp FROM integral_consorcio WHERE poliza_id=%s)',
+					$new_id,
+					$row_Recordset1['poliza_id']);
+					
+					mysql_query($insertSQL) or die(mysql_error());
+					
+					$integral_consorcio_id = mysql_insert_id();
+					break;
 			default:
 				// ---------------------------------- UNDEFINED ---------------------------------- //
 				die("Error: Subtipo no habilitado.");

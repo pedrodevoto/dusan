@@ -412,6 +412,37 @@
 
 									
 			break;
+			case 'integral_consorcio':
+				// ---------------------------------- INTEGRAL DE CONSORCIO ---------------------------------- //
+
+				$upsertSQL = sprintf('INSERT INTO integral_consorcio (poliza_id, integral_consorcio_domicilio_calle, integral_consorcio_domicilio_nro, integral_consorcio_domicilio_piso, integral_consorcio_domicilio_dpto, integral_consorcio_domicilio_localidad, integral_consorcio_domicilio_cp, integral_consorcio_valor_tasado, integral_consorcio_inc_edif, integral_consorcio_inc_edif_rep, integral_consorcio_inc_contenido, integral_consorcio_robo_gral, integral_consorcio_robo_matafuegos, integral_consorcio_robo_lcm, integral_consorcio_rc_comprensiva, integral_consorcio_cristales, integral_consorcio_danios_agua, integral_consorcio_rc_garage, integral_consorcio_acc_personales, integral_consorcio_robo_exp)
+							          VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)), UPPER(TRIM(%5$s)), UPPER(TRIM(%6$s)), UPPER(TRIM(%7$s)), UPPER(TRIM(%8$s)), %9$s, %10$s, %11$s, %12$s, %13$s, %14$s, %15$s, %16$s, %17$s, %18$s, %19$s, %20$s) 
+								  ON DUPLICATE KEY UPDATE integral_consorcio_domicilio_calle=UPPER(TRIM(%2$s)), integral_consorcio_domicilio_nro=UPPER(TRIM(%3$s)), integral_consorcio_domicilio_piso=UPPER(TRIM(%4$s)), integral_consorcio_domicilio_dpto=UPPER(TRIM(%5$s)), integral_consorcio_domicilio_localidad=UPPER(TRIM(%6$s)), integral_consorcio_domicilio_cp=UPPER(TRIM(%7$s)), integral_consorcio_valor_tasado=%8$s, integral_consorcio_inc_edif=%9$s, integral_consorcio_inc_edif_rep=%10$s, integral_consorcio_inc_contenido=%11$s, integral_consorcio_robo_gral=%12$s, integral_consorcio_robo_matafuegos=%13$s, integral_consorcio_robo_lcm=%14$s, integral_consorcio_rc_comprensiva=%15$s, integral_consorcio_cristales=%16$s, integral_consorcio_danios_agua=%17$s, integral_consorcio_rc_garage=%18$s, integral_consorcio_acc_personales=%19$s, integral_consorcio_robo_exp=%20$s, integral_consorcio_id=LAST_INSERT_ID(integral_consorcio_id)',
+										$poliza_id,
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_calle'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_nro'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_piso'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_dpto'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_localidad'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_domicilio_cp'], 'text'),
+										GetSQLValueString($_POST['box-integral_consorcio_valor_tasado'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_inc_edif'], 'double'),
+										GetSQLValueString(isset($_POST['box-integral_consorcio_inc_edif_rep']) ? 'true' : '', 'defined','1','0'),
+										GetSQLValueString($_POST['box-integral_consorcio_inc_contenido'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_robo_gral'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_robo_matafuegos'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_robo_lcm'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_rc_comprensiva'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_cristales'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_danios_agua'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_rc_garage'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_acc_personales'], 'double'),
+										GetSQLValueString($_POST['box-integral_consorcio_robo_exp'], 'double'));
+
+				$Result1 = mysql_query($upsertSQL, $connection) or die(mysql_error());				
+				$integral_consorcio_id = mysql_insert_id();
+				
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
