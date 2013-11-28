@@ -402,6 +402,7 @@ CREATE TABLE `cuota` (
   `cuota_fe_pago` datetime DEFAULT NULL,
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
+  `cuota_nro_factura` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`cuota_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`,`cuota_nro`),
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),
@@ -769,6 +770,7 @@ CREATE TABLE `sucursal` (
   `sucursal_direccion` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sucursal_telefono` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sucursal_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sucursal_num_factura` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -821,4 +823,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-11-27 20:31:45
+-- 2013-11-28 12:25:20

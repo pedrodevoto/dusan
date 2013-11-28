@@ -12,11 +12,12 @@
 	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO sucursal (sucursal_nombre, sucursal_direccion, sucursal_telefono, sucursal_email) VALUES (UPPER(TRIM(%s)), UPPER(TRIM(%s)), TRIM(%s), TRIM(%s))",
+		$insertSQL = sprintf("INSERT INTO sucursal (sucursal_nombre, sucursal_direccion, sucursal_telefono, sucursal_email, sucursal_num_factura) VALUES (UPPER(TRIM(%s)), UPPER(TRIM(%s)), TRIM(%s), TRIM(%s), %s)",
 						GetSQLValueString($_POST['box-sucursal_nombre'], "text"),
 						GetSQLValueString($_POST['box-sucursal_direccion'], "text"),
 						GetSQLValueString($_POST['box-sucursal_telefono'], "text"),
-						GetSQLValueString($_POST['box-sucursal_email'], "text"));								
+						GetSQLValueString($_POST['box-sucursal_email'], "text"),
+						GetSQLValueString($_POST['box-sucursal_num_factura'], "int"));								
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
 			case 0:

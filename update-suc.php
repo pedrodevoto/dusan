@@ -12,11 +12,12 @@
 	if ((isset($_POST["box-sucursal_id"])) && ($_POST["box-sucursal_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE sucursal SET sucursal_nombre=UPPER(TRIM(%s)), sucursal_direccion=UPPER(TRIM(%s)), sucursal_telefono=TRIM(%s), sucursal_email=TRIM(%s) WHERE sucursal.sucursal_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE sucursal SET sucursal_nombre=UPPER(TRIM(%s)), sucursal_direccion=UPPER(TRIM(%s)), sucursal_telefono=TRIM(%s), sucursal_email=TRIM(%s), sucursal_num_factura=%s WHERE sucursal.sucursal_id=%s LIMIT 1",
 						GetSQLValueString($_POST['box-sucursal_nombre'], "text"),																																																				
 						GetSQLValueString($_POST['box-sucursal_direccion'], "text"),																								
 						GetSQLValueString($_POST['box-sucursal_telefono'], "text"),
 						GetSQLValueString($_POST['box-sucursal_email'], "text"),
+						GetSQLValueString($_POST['box-sucursal_num_factura'], "int"),
 						GetSQLValueString($_POST['box-sucursal_id'], "int"));			
 		$Result1 = mysql_query($updateSQL, $connection);
 		switch (mysql_errno()) {

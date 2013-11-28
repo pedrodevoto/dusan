@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT sucursal.sucursal_id, sucursal_nombre, sucursal_direccion, sucursal_telefono, sucursal_email FROM sucursal WHERE sucursal.sucursal_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT sucursal.sucursal_id, sucursal_nombre, sucursal_direccion, sucursal_telefono, sucursal_email, sucursal_num_factura FROM sucursal WHERE sucursal.sucursal_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Seguro
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());

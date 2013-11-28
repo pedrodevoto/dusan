@@ -24,7 +24,11 @@
             <p>
                 <label for="box-sucursal_email">E-mail</label>
                 <input type="text" name="box-sucursal_email" id="box-sucursal_email" maxlength="255" class="ui-widget-content" style="width:220px" />
-            </p>                     
+            </p>   
+            <p>
+                <label for="box-sucursal_num_factura">Número de facturación inicial</label>
+                <input type="number" name="box-sucursal_num_factura" id="box-sucursal_num_factura" maxlength="255" class="ui-widget-content" style="width:220px" />
+            </p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     
