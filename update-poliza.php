@@ -41,7 +41,7 @@
 		switch (mysql_errno()) {
 			case 0:									
 				$sql = sprintf('SELECT poliza_premio FROM poliza WHERE poliza_id=%s', GetSQLValueString($_POST['box-poliza_id'], "int"));
-				$res = mysql_query($sql, $sql);
+				$res = mysql_query($sql, $connection);
 				list($premio) = mysql_fetch_array($res);
 		
 				if (intval($_POST['box-poliza_premio'])!=$premio) {
@@ -57,10 +57,10 @@
 						$cuota = (intval($_POST['box-poliza_premio']) - $pagado) / $no_pagado_cant;
 				
 						$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado = "1 - No Pagado"', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
-						mysql_query($sql) or die(mysql_error());
+						mysql_query($sql, $connection) or die(mysql_error());
 				
 						$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-poliza_premio'], "int"), GetSQLValueString($_POST['box-poliza_id'], "int"));
-						mysql_query($sql) or die(mysql_error());
+						mysql_query($sql, $connection) or die(mysql_error());
 					}
 					else {
 						echo 'Acceso denegado para modificar el premio.';
