@@ -14,6 +14,7 @@
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
+				populateListSuc('sucursal_id', 'main');
 				
 				initDatePickersDaily('box-date', false, null);
 				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
@@ -25,6 +26,7 @@
 					rules: {
 						"fecha_desde": {required: true, dateAR: true},
 						"fecha_hasta": {required: true, dateAR: true},
+						"sucursal_id": {required: true}
 					},
 					errorPlacement: function(error, element) {
 						error.insertAfter(element.parent("p").children().last());
@@ -71,7 +73,9 @@
                             </td>
                               
 							<td width="20%">
-								
+                                <label for="sucursal_nombre">Sucursal</label>                                
+                                <select name="sucursal_id" id="sucursal_id">
+								</select>
 							</td>  
 							<td width="20%">
 								
