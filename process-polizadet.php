@@ -281,12 +281,18 @@
 									GetSQLValueString($_POST['box-combinado_familiar_country'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_lote'], 'text'),
 									GetSQLValueString($_POST['box-combinado_familiar_valor_tasado'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_inc_edif'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_rc_inc'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_cristales'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_responsabilidad_civil'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_danios_agua'], 'double'),
-									GetSQLValueString($_POST['box-combinado_familiar_jugadores_golf'], 'double'),
+									isset ($_POST['box-combinado_familiar_inc_edif'])?
+										GetSQLValueString($_POST['box-combinado_familiar_inc_edif'], 'double'):'NULL',
+									isset ($_POST['box-combinado_familiar_rc_inc'])?
+										GetSQLValueString($_POST['box-combinado_familiar_rc_inc'], 'double'):'NULL',
+									isset ($_POST['box-combinado_familiar_cristales'])?
+										GetSQLValueString($_POST['box-combinado_familiar_cristales'], 'double'):'NULL',
+									isset ($_POST['box-combinado_familiar_responsabilidad_civil'])?
+										GetSQLValueString($_POST['box-combinado_familiar_responsabilidad_civil'], 'double'):'NULL',
+									isset ($_POST['box-combinado_familiar_danios_agua'])?
+										GetSQLValueString($_POST['box-combinado_familiar_danios_agua'], 'double'):'NULL',
+									isset ($_POST['box-combinado_familiar_jugadores_golf'])?
+										GetSQLValueString($_POST['box-combinado_familiar_jugadores_golf'], 'double'):'NULL',
 									GetSQLValueString(isset($_POST['box-combinado_familiar_inc_edif_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_rc_inc_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_tv_aud_vid_flag']) ? 'true' : '', 'defined','1','0'),
@@ -297,9 +303,11 @@
 									GetSQLValueString(isset($_POST['box-combinado_familiar_danios_agua_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_jugadores_golf_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_film_foto_flag']) ? 'true' : '', 'defined','1','0'),
-									GetSQLValueString($_POST['box-combinado_familiar_inc_mob'], 'double'),
+									isset ($_POST['box-combinado_familiar_inc_mob'])?
+										GetSQLValueString($_POST['box-combinado_familiar_inc_mob'], 'double'):'NULL',
 									GetSQLValueString(isset($_POST['box-combinado_familiar_inc_mob_flag']) ? 'true' : '', 'defined','1','0'),
-									GetSQLValueString($_POST['box-combinado_familiar_ef_personales'], 'double'),
+									isset ($_POST['box-combinado_familiar_ef_personales'])?
+										GetSQLValueString($_POST['box-combinado_familiar_ef_personales'], 'double'):'NULL',
 									GetSQLValueString(isset($_POST['box-combinado_familiar_ef_personales_flag']) ? 'true' : '', 'defined','1','0'),
 									GetSQLValueString(isset($_POST['box-combinado_familiar_inc_edif_rep']) ? 'true' : '', 'defined','1','0'));
 

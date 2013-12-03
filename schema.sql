@@ -627,15 +627,22 @@ CREATE TABLE `poliza` (
   `poliza_ajuste` tinyint(3) unsigned DEFAULT NULL,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
   `poliza_observaciones` text COLLATE utf8_unicode_ci,
+  `poliza_plan_flag` tinyint(4) NOT NULL DEFAULT '0',
+  `poliza_plan_id` int(11) DEFAULT NULL,
+  `poliza_pack_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `poliza_estado_id` (`poliza_estado_id`),
+  KEY `poliza_plan_id` (`poliza_plan_id`),
+  KEY `poliza_pack_id` (`poliza_pack_id`),
   CONSTRAINT `poliza_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
   CONSTRAINT `poliza_ibfk_4` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
   CONSTRAINT `poliza_ibfk_5` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`),
-  CONSTRAINT `poliza_ibfk_6` FOREIGN KEY (`poliza_estado_id`) REFERENCES `poliza_estado` (`poliza_estado_id`)
+  CONSTRAINT `poliza_ibfk_6` FOREIGN KEY (`poliza_estado_id`) REFERENCES `poliza_estado` (`poliza_estado_id`),
+  CONSTRAINT `poliza_ibfk_7` FOREIGN KEY (`poliza_plan_id`) REFERENCES `poliza_plan` (`poliza_plan_id`),
+  CONSTRAINT `poliza_ibfk_8` FOREIGN KEY (`poliza_pack_id`) REFERENCES `poliza_pack` (`poliza_pack_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -657,6 +664,44 @@ CREATE TABLE `poliza_foto` (
   `poliza_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`poliza_foto_id`),
   KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `poliza_pack`;
+CREATE TABLE `poliza_pack` (
+  `poliza_pack_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_plan_id` int(11) NOT NULL,
+  `poliza_pack_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_pack_premio` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`poliza_pack_id`),
+  KEY `poliza_plan_id` (`poliza_plan_id`),
+  CONSTRAINT `poliza_pack_ibfk_1` FOREIGN KEY (`poliza_plan_id`) REFERENCES `poliza_plan` (`poliza_plan_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `poliza_pack_detalle`;
+CREATE TABLE `poliza_pack_detalle` (
+  `poliza_pack_detalle_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_pack_id` int(11) NOT NULL,
+  `poliza_pack_detalle_cobertura` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_pack_detalle_valor` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`poliza_pack_detalle_id`),
+  KEY `poliza_pack_id` (`poliza_pack_id`),
+  CONSTRAINT `poliza_pack_detalle_ibfk_1` FOREIGN KEY (`poliza_pack_id`) REFERENCES `poliza_pack` (`poliza_pack_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `poliza_plan`;
+CREATE TABLE `poliza_plan` (
+  `poliza_plan_id` int(11) NOT NULL AUTO_INCREMENT,
+  `subtipo_poliza_id` int(10) unsigned NOT NULL,
+  `seguro_id` int(10) unsigned NOT NULL,
+  `poliza_plan_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`poliza_plan_id`),
+  KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
+  KEY `seguro_id` (`seguro_id`),
+  CONSTRAINT `poliza_plan_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
+  CONSTRAINT `poliza_plan_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -823,4 +868,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-11-28 12:25:20
+-- 2013-12-03 09:51:40

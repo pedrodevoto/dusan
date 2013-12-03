@@ -68,6 +68,18 @@
                 	<option value="">Todos</option>
                 </select>
             </p>
+			<p class="poliza_plan" style="display:none">
+				<label for="box-poliza_plan_id">Plan *</label>
+				<select name="box-poliza_plan_id" id="box-poliza_plan_id" class="ui-widget-content" style="width:180px">
+					<option value="">Seleccione</option>
+				</select>
+			</p>
+			<p class="poliza_plan" style="display:none">
+				<label for="box-poliza_pack_id">Pack *</label>
+				<select name="box-poliza_pack_id" id="box-poliza_pack_id" class="ui-widget-content" style="width:180px">
+					<option value="">Seleccione</option>
+				</select>
+			</p>
             <p>
                 <label for="box-poliza_validez_desde">Vigencia Desde *</label>
                 <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
@@ -138,6 +150,7 @@
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
 			<input type="hidden" name="box-cliente_id" id="box-cliente_id" />			
+			<input type="hidden" name="box-poliza_plan_flag" id="box-poliza_plan_flag" value="0" />
 			<input type="button" name="btnBox" id="btnBox" value="Siguiente" />
         </p>
         <!-- Nota -->

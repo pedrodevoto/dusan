@@ -14,7 +14,7 @@
 	$poliza_id = intval($_GET['id']);
 	
 	// Recordset: Poliza
-	$query_Recordset1 = sprintf("SELECT subtipo_poliza_nombre, subtipo_poliza_tabla, cliente_nombre, productor_seguro.seguro_id as seguro_id, seguro_nombre, productor_nombre, poliza_numero, poliza.productor_seguro_id as productor_seguro_id FROM poliza JOIN (subtipo_poliza, cliente, productor_seguro, seguro, productor) ON (subtipo_poliza.subtipo_poliza_id=poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id) WHERE poliza.poliza_id=%s", $poliza_id);
+	$query_Recordset1 = sprintf("SELECT subtipo_poliza_nombre, subtipo_poliza_tabla, cliente_nombre, productor_seguro.seguro_id as seguro_id, seguro_nombre, productor_nombre, poliza_numero, poliza.productor_seguro_id as productor_seguro_id, poliza_plan_flag, poliza_plan_id, poliza_pack_id FROM poliza JOIN (subtipo_poliza, cliente, productor_seguro, seguro, productor) ON (subtipo_poliza.subtipo_poliza_id=poliza.subtipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.seguro_id=seguro.seguro_id AND productor_seguro.productor_id=productor.productor_id) WHERE poliza.poliza_id=%s", $poliza_id);
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
 	$totalRows_Recordset1 = mysql_num_rows($Recordset1);

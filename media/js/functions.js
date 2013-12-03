@@ -884,7 +884,58 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	
-	
+	populateListPoliza_Plan = function(field, context, subtipo_poliza_id, seguro_id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-poliza_plan.php?subtipo_poliza_id=" + subtipo_poliza_id + "&seguro_id=" + seguro_id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateListPoliza_Pack = function(field, context, id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-poliza_pack.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();
@@ -1333,7 +1384,29 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-
+	populateFormPolizaPackPremio = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich-poliza_pack_premio.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	populatePolizaDet = function (subtipo_poliza, id) {
 		switch (subtipo_poliza) {
 		case 'automotor':
@@ -4240,26 +4313,10 @@ $(document).ready(function () {
 						// Si el tipo de póliza es PERSONAS, ampliar rango de selección de vigencia
 						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $(this).val());
 					});
-					$("#box-subtipo_poliza_id").change(function () {
-						// Si el subtipo de poliza es Automotor habilitar campo AJUSTE
-						switch ($(this).val()) {
-						case '6':
-							$('#box-poliza_ajuste').addClass('required').parent().show();
-							break;
-						default:
-							$('#box-poliza_ajuste').val('').removeClass('required').parent().hide();
-							break;
-						}
-
-					})
 					$('#box-sucursal_id').change(function () {
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
 					})
-					$("#box-seguro_id").change(function () {
-						$('#box-productor_seguro_id').html(loading);
-						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
-					});
 					$("#box-poliza_vigencia").change(function () {
 						var months;
 						switch ($(this).val()) {
@@ -4328,19 +4385,73 @@ $(document).ready(function () {
 							cuotas = 1;
 						}
 						else {
-							switch ($("#box-poliza_medio_pago").val()) {
-								case 'Débito Bancario':
-								case 'Cuponera':
-								case 'Tarjeta de Crédito':
-									cuotas = 5;
-									break;
-								case 'Directo':
-									cuotas = 6;
-									break;
+							if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
+								cuotas = 12;
+							}
+							else {
+								switch ($("#box-poliza_medio_pago").val()) {
+									case 'Débito Bancario':
+									case 'Cuponera':
+									case 'Tarjeta de Crédito':
+										cuotas = 5;
+										break;
+									case 'Directo':
+										cuotas = 6;
+										break;
+								}
 							}
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 					});
+					$('#box-subtipo_poliza_id, #box-seguro_id').change(function() {
+						switch ($(this).attr('id')) {
+							case 'box-subtipo_poliza_id':
+								// Si el subtipo de poliza es Automotor habilitar campo AJUSTE
+								switch ($(this).val()) {
+								case '6':
+									$('#box-poliza_ajuste').addClass('required').parent().show();
+									break;
+								default:
+									$('#box-poliza_ajuste').val('').removeClass('required').parent().hide();
+									break;
+								}
+								break;
+							case 'box-seguro_id':
+								$('#box-productor_seguro_id').html(loading);
+								populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
+								break;
+						}
+						if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
+							$('#box-poliza_vigencia').val('Anual').change().children().each(function() {
+								$(this).attr('disabled', $(this).val()=='Anual'?false:true);
+							});
+							$('#box-poliza_recargo').val('20').change().attr('readonly', true);
+							$('#box-poliza_cant_cuotas').val('12').change();
+							$('#box-poliza_premio').attr('readonly', true);
+							$('.poliza_plan').show();
+							$('#box-poliza_plan_id, #box-poliza_pack_id').addClass('required');
+							$('#box-poliza_plan_id').html(loading);
+							populateListPoliza_Plan('box-poliza_plan_id', 'box', $('#box-subtipo_poliza_id').val(), $('#box-seguro_id').val());
+							$('#box-poliza_plan_flag').val(1);
+						}
+						else {
+							$('#box-poliza_vigencia').children().each(function() {
+								$(this).attr('disabled', false);
+							});
+							$('#box-poliza_recargo').attr('readonly', false);
+							$('#box-poliza_premio').attr('readonly', false);
+							$('#box-poliza_plan_id, #box-poliza_pack_id').removeClass('required');
+							$('.poliza_plan').hide();
+							$('#box-poliza_plan_flag').val(0);
+						}
+					})
+					$('#box-poliza_plan_id').change(function() {
+						$('#box-poliza_pack_id').html(loading);
+						populateListPoliza_Pack('box-poliza_pack_id', 'box', $(this).val());
+					})
+					$('#box-poliza_pack_id').change(function() {
+						populateFormPolizaPackPremio($(this).val());
+					})
 					// Set default values
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));

@@ -39,6 +39,22 @@
 			<input type="number" step="any" name="box-combinado_familiar_valor_tasado" id="box-combinado_familiar_valor_tasado" placeholder="Opcional" class="ui-widget-content" />
 		</p>
 	</fieldset>
+	<?php if ($row_Recordset1['poliza_plan_flag']):?>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+		    <legend class="ui-widget ui-widget-header ui-corner-all">Detalles del plan</legend>                                    
+			<?php
+			$sql = 'SELECT poliza_pack_detalle_cobertura, poliza_pack_detalle_valor FROM poliza_pack_detalle WHERE poliza_pack_id = '.$row_Recordset1['poliza_pack_id'];
+			$res = mysql_query($sql, $connection) or die(mysql_error());
+			while ($cobertura = mysql_fetch_array($res)):
+			?>
+			<p>
+	            <label style="width:200px"><?=$cobertura[0]?></label>
+	            <input type="name" maxlength="255" class="ui-widget-content" style="width:200px" value="<?=$cobertura[1]?>" readonly />
+	        </p>
+			<?php endwhile; ?>
+		</fieldset>
+	<input type="hidden" name="box-poliza_plan_flag" id="box-poliza_plan_flag" value="1" />
+	<?php else: ?>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all optional" style="margin-top:20px">
 	    <legend class="ui-widget ui-widget-header ui-corner-all"><input class="toggle-fieldset" name="box-combinado_familiar_inc_edif_flag" id="box-combinado_familiar_inc_edif_flag" type="checkbox" /> Incendio Edificio Prorrata</legend> 
 		<p>
@@ -129,4 +145,6 @@
 			<label for="box-combinado_familiar_jugadores_golf">Valor</label><input class="toggle-fieldset" type="number" step="any" min="200" max="5000" name="box-combinado_familiar_jugadores_golf" id="box-combinado_familiar_jugadores_golf" class="ui-widget-content" />
 		</p>
 	</fieldset>
+	<input type="hidden" name="box-poliza_plan_flag" id="box-poliza_plan_flag" value="0" />
+	<?php endif; ?>
 </form>
