@@ -27,7 +27,7 @@
 	$poliza_id = intval($_GET['id']);
 	
 	// Recordset: Main
-	$query_Recordset1 = sprintf("SELECT * FROM poliza JOIN (subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN (contacto) ON (poliza.cliente_id=contacto.cliente_id AND contacto_default=1) JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id
+	$query_Recordset1 = sprintf("SELECT * FROM poliza JOIN (subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN (contacto) ON (poliza.cliente_id=contacto.cliente_id AND contacto_default=1) JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id LEFT JOIN (poliza_plan, poliza_pack) ON poliza.poliza_plan_id = poliza_plan.poliza_plan_id AND poliza.poliza_pack_id = poliza_pack.poliza_pack_id
 									WHERE poliza.poliza_id=%s",
 									$poliza_id);
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
@@ -1444,6 +1444,14 @@
 				}
 			}
 			
+			$detalle_plan = array();
+			if ($row_Recordset1['poliza_plan_flag']) {
+				$sql = 'SELECT poliza_pack_detalle_cobertura, poliza_pack_detalle_valor FROM poliza_pack_detalle WHERE poliza_pack_id = '.$row_Recordset1['poliza_pack_id'];
+				$res = mysql_query($sql, $connection) or die(mysql_error());
+				while($row = mysql_fetch_array($res)) {
+					$detalle_plan[] = array('cobertura'=>$row[0], 'valor'=>$row[1]);
+				}
+			}
 			
 			// Compose Shared Texts
 			$txt_titular_c1 = array(
@@ -1583,44 +1591,18 @@
 					
 					$y = 123;
 					
-					
-					foreach ($objects as $object) {
-						$items = $object['items'];
-						$description = $object['desc'];
-						
-						if (!count($items)) continue;
-						$items[] = array('total'=>true);
-												
-						if ($y>270) {
-							newPage($pdf, false);				
-							$y = 48;
-						}
-						
+					if ($row_Recordset1['poliza_plan_flag']) {
 						$pdf->SetFillColor(221,227,237);
 						$pdf->SetLineWidth(0.4);
 						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
-						$pdf->SetXY(35, $y+0.5);
+						$pdf->SetXY(10, $y+0.5);
 						$pdf->SetFont('Arial','B',10);
-						$pdf->Write(5, $object['desc']);
-						
+						$pdf->Write(5, 'Plan '.$row_Recordset1['poliza_plan_nombre'].' - Pack '.$row_Recordset1['poliza_pack_nombre'].' - Detalle');
+					
 						$pdf->SetLineWidth(0.4);
 
 						$y += 9.5;
-						
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', 'B', 8);
-						$pdf->Write(5, 'Cantidad');
-						$pdf->SetX($x + 20);
-						$pdf->Write(5, 'Producto');
-						$pdf->SetX($x + 110);
-						$pdf->Write(5, 'Marca');
-						$pdf->SetX($x + 180);
-						$pdf->Write(5, 'Valor');
-						$y += 5;
-												
-						$count_items = 0;
-						$total_suma_asegurada = 0;
-						foreach ($items as $item) {
+						foreach ($detalle_plan as $cobertura) {
 							if ($y>270) {
 								newPage($pdf, false);				
 								$y = 48;
@@ -1629,91 +1611,152 @@
 								$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 								$pdf->SetXY(30, $y);
 								$pdf->SetFont('Arial','B',10);
-								$pdf->Write(5, $object['desc']);
-								
+								$pdf->Write(5, 'Plan '.$row_Recordset1['poliza_plan_nombre'].' - Pack '.$row_Recordset1['poliza_pack_nombre'].' - Detalle');
+							
 								$y += 7.5;
 								$pdf->SetLineWidth(0.4);
 
 								$y += 2;
-								
-								$pdf->SetXY($x + 2, $y);
-								$pdf->SetFont('Arial', 'B', 8);
-								$pdf->Write(5, 'Cantidad');
-								$pdf->SetX($x + 20);
-								$pdf->Write(5, 'Producto');
-								$pdf->SetX($x + 110);
-								$pdf->Write(5, 'Marca');
-								$pdf->SetX($x + 180);
-								$pdf->Write(5, 'Valor');
-								$y += 5;
-							}
-							if (!isset($item['total'])){
-								$pdf->SetXY($x + 2, $y);
-								$pdf->SetFont('Arial', '', 7);
-								$pdf->Write(5, $item['cantidad']);
-								$pdf->SetX($x + 20);
-								$pdf->Write(5, trimText($item['producto'], $pdf, 85));
-								$pdf->SetX($x + 110);
-								$pdf->Write(5, trimText($item['marca'], $pdf, 58));
-								printText('$'.formatNumber($item['valor'], 2), $pdf, 50, 5, 'R');
-								
-								$total_suma_asegurada += $item['valor'] * $item['cantidad'];
-								$count_items += 1 * $item['cantidad'];
-							}
-							else {
-								$pdf->SetXY($x + 2, $y);
-								$pdf->SetFont('Arial', 'B', 8);
-								$pdf->Write(5, 'Total: '.$count_items);
-								printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
-								$count_items++;
-							}
-							$y += 5;
 							
+							}
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, trimText($cobertura['cobertura'], $pdf, 200).': '.formatNumber($cobertura['valor'], 2));
+							$y += 5;
 						}
 						$y += 4;
 					}
-					
-					if ($y > 255) {
-						newPage($pdf, false);
-						$y = 48;
-					}
-					$pdf->SetFillColor(221,227,237);
-					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
-					$pdf->SetXY(95, $y+0.5);
-					$pdf->SetFont('Arial','B',10);
-					$pdf->Write(5, 'Otros');
-					
-					$pdf->SetLineWidth(0.4);
-					$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
-					
-					$y += 9.5;
+					else {
+						foreach ($objects as $object) {
+							$items = $object['items'];
+							$description = $object['desc'];
+						
+							if (!count($items)) continue;
+							$items[] = array('total'=>true);
+												
+							if ($y>270) {
+								newPage($pdf, false);				
+								$y = 48;
+							}
+						
+							$pdf->SetFillColor(221,227,237);
+							$pdf->SetLineWidth(0.4);
+							$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+							$pdf->SetXY(35, $y+0.5);
+							$pdf->SetFont('Arial','B',10);
+							$pdf->Write(5, $object['desc']);
+						
+							$pdf->SetLineWidth(0.4);
 
-					$pdf->SetXY($x + 2, $y);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Cristales a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_cristales'], 2));
+							$y += 9.5;
+						
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', 'B', 8);
+							$pdf->Write(5, 'Cantidad');
+							$pdf->SetX($x + 20);
+							$pdf->Write(5, 'Producto');
+							$pdf->SetX($x + 110);
+							$pdf->Write(5, 'Marca');
+							$pdf->SetX($x + 180);
+							$pdf->Write(5, 'Valor');
+							$y += 5;
+												
+							$count_items = 0;
+							$total_suma_asegurada = 0;
+							foreach ($items as $item) {
+								if ($y>270) {
+									newPage($pdf, false);				
+									$y = 48;
+									$pdf->SetFillColor(221,227,237);
+									$pdf->SetLineWidth(0.4);
+									$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+									$pdf->SetXY(30, $y);
+									$pdf->SetFont('Arial','B',10);
+									$pdf->Write(5, $object['desc']);
+								
+									$y += 7.5;
+									$pdf->SetLineWidth(0.4);
+
+									$y += 2;
+								
+									$pdf->SetXY($x + 2, $y);
+									$pdf->SetFont('Arial', 'B', 8);
+									$pdf->Write(5, 'Cantidad');
+									$pdf->SetX($x + 20);
+									$pdf->Write(5, 'Producto');
+									$pdf->SetX($x + 110);
+									$pdf->Write(5, 'Marca');
+									$pdf->SetX($x + 180);
+									$pdf->Write(5, 'Valor');
+									$y += 5;
+								}
+								if (!isset($item['total'])){
+									$pdf->SetXY($x + 2, $y);
+									$pdf->SetFont('Arial', '', 7);
+									$pdf->Write(5, $item['cantidad']);
+									$pdf->SetX($x + 20);
+									$pdf->Write(5, trimText($item['producto'], $pdf, 85));
+									$pdf->SetX($x + 110);
+									$pdf->Write(5, trimText($item['marca'], $pdf, 58));
+									printText('$'.formatNumber($item['valor'], 2), $pdf, 50, 5, 'R');
+								
+									$total_suma_asegurada += $item['valor'] * $item['cantidad'];
+									$count_items += 1 * $item['cantidad'];
+								}
+								else {
+									$pdf->SetXY($x + 2, $y);
+									$pdf->SetFont('Arial', 'B', 8);
+									$pdf->Write(5, 'Total: '.$count_items);
+									printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+									$count_items++;
+								}
+								$y += 5;
+							
+							}
+							$y += 4;
+						}
+						if ($y > 255) {
+							newPage($pdf, false);
+							$y = 48;
+						}
+						$pdf->SetFillColor(221,227,237);
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+						$pdf->SetXY(95, $y+0.5);
+						$pdf->SetFont('Arial','B',10);
+						$pdf->Write(5, 'Otros');
 					
-					$y += 5;
-					$pdf->SetXY($x + 2, $y);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
+						$pdf->SetLineWidth(0.4);
+						$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
 					
-					$y += 5;
-					$pdf->SetXY($x + 2, $y);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
+						$y += 9.5;
+
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, 'Cristales a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_cristales'], 2));
 					
-					$y += 5;
-					$pdf->SetXY($x + 2, $y);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+						$y += 5;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
 					
-					$y += 5;
-					$pdf->SetXY($x + 2, $y);
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+						$y += 5;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
 					
-					$y += 5;
+						$y += 5;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+						$y += 5;
+						$pdf->SetXY($x + 2, $y);
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+						$y += 5;
+					}
 					
 					// Footer
 					if ($y > 200) {
@@ -1925,43 +1968,18 @@
 						$pdf->Write(5, 'DNI:');
 					}
 					else {	
-						foreach ($objects as $object) {
-							$items = $object['items'];
-							$description = $object['desc'];
-						
-							if (!count($items)) continue;
-							$items[] = array('total'=>true);
-												
-							if ($y>270) {
-								newPage($pdf, false);				
-								$y = 48;
-							}
-						
+						if ($row_Recordset1['poliza_plan_flag']) {
 							$pdf->SetFillColor(221,227,237);
 							$pdf->SetLineWidth(0.4);
 							$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
-							$pdf->SetXY(35, $y+0.5);
+							$pdf->SetXY(10, $y+0.5);
 							$pdf->SetFont('Arial','B',10);
-							$pdf->Write(5, $object['desc']);
-						
+							$pdf->Write(5, 'Plan '.$row_Recordset1['poliza_plan_nombre'].' - Pack '.$row_Recordset1['poliza_pack_nombre'].' - Detalle');
+					
 							$pdf->SetLineWidth(0.4);
 
 							$y += 9.5;
-						
-							$pdf->SetXY($x + 2, $y);
-							$pdf->SetFont('Arial', 'B', 8);
-							$pdf->Write(5, 'Cantidad');
-							$pdf->SetX($x + 20);
-							$pdf->Write(5, 'Producto');
-							$pdf->SetX($x + 110);
-							$pdf->Write(5, 'Marca');
-							$pdf->SetX($x + 180);
-							$pdf->Write(5, 'Valor');
-							$y += 5;
-												
-							$count_items = 0;
-							$total_suma_asegurada = 0;
-							foreach ($items as $item) {
+							foreach ($detalle_plan as $cobertura) {
 								if ($y>270) {
 									newPage($pdf, false);				
 									$y = 48;
@@ -1970,91 +1988,153 @@
 									$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
 									$pdf->SetXY(30, $y);
 									$pdf->SetFont('Arial','B',10);
-									$pdf->Write(5, $object['desc']);
-								
+									$pdf->Write(5, 'Plan '.$row_Recordset1['poliza_plan_nombre'].' - Pack '.$row_Recordset1['poliza_pack_nombre'].' - Detalle');
+							
 									$y += 7.5;
 									$pdf->SetLineWidth(0.4);
 
 									$y += 2;
-								
-									$pdf->SetXY($x + 2, $y);
-									$pdf->SetFont('Arial', 'B', 8);
-									$pdf->Write(5, 'Cantidad');
-									$pdf->SetX($x + 20);
-									$pdf->Write(5, 'Producto');
-									$pdf->SetX($x + 110);
-									$pdf->Write(5, 'Marca');
-									$pdf->SetX($x + 180);
-									$pdf->Write(5, 'Valor');
-									$y += 5;
-								}
-								if (!isset($item['total'])){
-									$pdf->SetXY($x + 2, $y);
-									$pdf->SetFont('Arial', '', 7);
-									$pdf->Write(5, $item['cantidad']);
-									$pdf->SetX($x + 20);
-									$pdf->Write(5, trimText($item['producto'], $pdf, 85));
-									$pdf->SetX($x + 110);
-									$pdf->Write(5, trimText($item['marca'], $pdf, 58));
-									printText('$'.formatNumber($item['valor'], 2), $pdf, 50, 5, 'R');
-								
-									$total_suma_asegurada += $item['valor'] * $item['cantidad'];
-									$count_items += 1 * $item['cantidad'];
-								}
-								else {
-									$pdf->SetXY($x + 2, $y);
-									$pdf->SetFont('Arial', 'B', 8);
-									$pdf->Write(5, 'Total: '.$count_items);
-									printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
-									$count_items++;
-								}
-								$y += 5;
 							
+								}
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', '', 8);
+								$pdf->Write(5, trimText($cobertura['cobertura'], $pdf, 200).': '.formatNumber($cobertura['valor'], 2));
+								$y += 5;
 							}
 							$y += 4;
 						}
-					
-						if ($y > 255) {
-							newPage($pdf, false);
-							$y = 48;
-						}
-						$pdf->SetFillColor(221,227,237);
-						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
-						$pdf->SetXY(95, $y+0.5);
-						$pdf->SetFont('Arial','B',10);
-						$pdf->Write(5, 'Otros');
-					
-						$pdf->SetLineWidth(0.4);
-						$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
-					
-						$y += 9.5;
+						else {
+							foreach ($objects as $object) {
+								$items = $object['items'];
+								$description = $object['desc'];
+						
+								if (!count($items)) continue;
+								$items[] = array('total'=>true);
+												
+								if ($y>270) {
+									newPage($pdf, false);				
+									$y = 48;
+								}
+						
+								$pdf->SetFillColor(221,227,237);
+								$pdf->SetLineWidth(0.4);
+								$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+								$pdf->SetXY(35, $y+0.5);
+								$pdf->SetFont('Arial','B',10);
+								$pdf->Write(5, $object['desc']);
+						
+								$pdf->SetLineWidth(0.4);
 
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->Write(5, 'Cristales a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_cristales'], 2));
+								$y += 9.5;
+						
+								$pdf->SetXY($x + 2, $y);
+								$pdf->SetFont('Arial', 'B', 8);
+								$pdf->Write(5, 'Cantidad');
+								$pdf->SetX($x + 20);
+								$pdf->Write(5, 'Producto');
+								$pdf->SetX($x + 110);
+								$pdf->Write(5, 'Marca');
+								$pdf->SetX($x + 180);
+								$pdf->Write(5, 'Valor');
+								$y += 5;
+												
+								$count_items = 0;
+								$total_suma_asegurada = 0;
+								foreach ($items as $item) {
+									if ($y>270) {
+										newPage($pdf, false);				
+										$y = 48;
+										$pdf->SetFillColor(221,227,237);
+										$pdf->SetLineWidth(0.4);
+										$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+										$pdf->SetXY(30, $y);
+										$pdf->SetFont('Arial','B',10);
+										$pdf->Write(5, $object['desc']);
+								
+										$y += 7.5;
+										$pdf->SetLineWidth(0.4);
+
+										$y += 2;
+								
+										$pdf->SetXY($x + 2, $y);
+										$pdf->SetFont('Arial', 'B', 8);
+										$pdf->Write(5, 'Cantidad');
+										$pdf->SetX($x + 20);
+										$pdf->Write(5, 'Producto');
+										$pdf->SetX($x + 110);
+										$pdf->Write(5, 'Marca');
+										$pdf->SetX($x + 180);
+										$pdf->Write(5, 'Valor');
+										$y += 5;
+									}
+									if (!isset($item['total'])){
+										$pdf->SetXY($x + 2, $y);
+										$pdf->SetFont('Arial', '', 7);
+										$pdf->Write(5, $item['cantidad']);
+										$pdf->SetX($x + 20);
+										$pdf->Write(5, trimText($item['producto'], $pdf, 85));
+										$pdf->SetX($x + 110);
+										$pdf->Write(5, trimText($item['marca'], $pdf, 58));
+										printText('$'.formatNumber($item['valor'], 2), $pdf, 50, 5, 'R');
+								
+										$total_suma_asegurada += $item['valor'] * $item['cantidad'];
+										$count_items += 1 * $item['cantidad'];
+									}
+									else {
+										$pdf->SetXY($x + 2, $y);
+										$pdf->SetFont('Arial', 'B', 8);
+										$pdf->Write(5, 'Total: '.$count_items);
+										printText('$'.formatNumber($total_suma_asegurada, 2), $pdf, 50, 5, 'R');
+										$count_items++;
+									}
+									$y += 5;
+							
+								}
+								$y += 4;
+							}
+							if ($y > 255) {
+								newPage($pdf, false);
+								$y = 48;
+							}
+							$pdf->SetFillColor(221,227,237);
+							$pdf->SetLineWidth(0.4);
+							$pdf->RoundedRect($x - 0.5, $y, 197, 6, 1, '1234', 'DF');
+							$pdf->SetXY(95, $y+0.5);
+							$pdf->SetFont('Arial','B',10);
+							$pdf->Write(5, 'Otros');
 					
-						$y += 5;
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
+							$pdf->SetLineWidth(0.4);
+							$pdf->RoundedRect($x - 0.5, $y + 7.5, 197, 28, 1, '1234', 'D');
 					
-						$y += 5;
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
+							$y += 9.5;
+
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, 'Cristales a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_cristales'], 2));
 					
-						$y += 5;
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+							$y += 5;
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, 'RC Hechos Privados a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_responsabilidad_civil'], 2));
 					
-						$y += 5;
-						$pdf->SetXY($x + 2, $y);
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+							$y += 5;
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, 'RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_rc_inc'], 2));
 					
-						$y += 5;			
+							$y += 5;
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, trimText(' Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $', $pdf, 120).formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+							$y += 5;
+							$pdf->SetXY($x + 2, $y);
+							$pdf->SetFont('Arial', '', 8);
+							$pdf->Write(5, 'Jugadores de Golf a Primer Riesgo Absoluto: $'.formatNumber($row_Recordset2['combinado_familiar_danios_agua'], 2));
+					
+							$y += 5;			
+						
+						}
 					
 						// Footer
 						if ($y > 238) {

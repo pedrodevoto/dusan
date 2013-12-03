@@ -26,7 +26,7 @@
             </p>
             <p>
                 <label for="box-subtipo_poliza_nombre">Sección ^</label>
-                <input type="text" name="box-subtipo_poliza_nombre" id="box-subtipo_poliza_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
+                <input type="text" name="box-subtipo_poliza_nombre" id="box-subtipo_poliza_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly"><input type="hidden" name="box-subtipo_poliza_id" id="box-subtipo_poliza_id" />
             </p>                                                  
             <p>
                 <label for="box-poliza_numero">Nº de Poliza</label>
@@ -45,6 +45,18 @@
                 <select name="box-productor_seguro_id" id="box-productor_seguro_id" class="ui-widget-content" style="width:180px">
                 </select>
             </p>
+			<p class="poliza_plan" style="display:none">
+				<label for="box-poliza_plan_id">Plan *</label>
+				<select name="box-poliza_plan_id" id="box-poliza_plan_id" class="ui-widget-content" style="width:180px">
+					<option value="">Seleccione</option>
+				</select>
+			</p>
+			<p class="poliza_plan" style="display:none">
+				<label for="box-poliza_pack_id">Pack *</label>
+				<select name="box-poliza_pack_id" id="box-poliza_pack_id" class="ui-widget-content" style="width:180px">
+					<option value="">Seleccione</option>
+				</select>
+			</p>
             <p>
                 <label for="box-poliza_validez_desde">Vigencia Desde *</label>
                 <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
@@ -115,6 +127,7 @@
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
 			<input type="hidden" name="box-poliza_id" id="box-poliza_id" />			
+			<input type="hidden" name="box-poliza_plan_flag" id="box-poliza_plan_flag" value="0" />
 			<input type="button" name="btnBox" id="btnBox" value="Renovar" />
         </p>
         <!-- Nota -->

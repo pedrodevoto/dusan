@@ -62,8 +62,8 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste)
-		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_ajuste, poliza_plan_flag, poliza_plan_id, poliza_pack_id)
+		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
 								GetSQLValueString($estado, "int"),
 								GetSQLValueString($_POST['box-poliza_numero'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
@@ -86,6 +86,11 @@
 								GetSQLValueString($poliza_pago_detalle, "text"),
 								GetSQLValueString($_POST['box-poliza_recargo'], "double"),
 								GetSQLValueString($_POST['box-poliza_ajuste'], "int"),
+								GetSQLValueString($_POST['box-poliza_plan_flag'], "int"),
+								$_POST['box-poliza_plan_flag']=='1'? 
+									GetSQLValueString($_POST['box-poliza_plan_id'], "int"):'NULL',
+								$_POST['box-poliza_plan_flag']=='1'? 
+									GetSQLValueString($_POST['box-poliza_pack_id'], "int"):'NULL',
 								$row_Recordset1['poliza_id']);								
 		$Result1 = mysql_query($insertSQL, $connection);
 		

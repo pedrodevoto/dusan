@@ -4688,7 +4688,31 @@ $(document).ready(function () {
 					$("#box-seguro_id").change(function () {
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
-					});
+						
+						if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
+							$('#box-poliza_vigencia').val('Anual').change().children().each(function() {
+								$(this).attr('disabled', $(this).val()=='Anual'?false:true);
+							});
+							$('#box-poliza_recargo').val('20').change().attr('readonly', true);
+							$('#box-poliza_cant_cuotas').val('12').change();
+							$('#box-poliza_premio').attr('readonly', true);
+							$('.poliza_plan').show();
+							$('#box-poliza_plan_id, #box-poliza_pack_id').addClass('required');
+							$('#box-poliza_plan_id').html(loading);
+							populateListPoliza_Plan('box-poliza_plan_id', 'box', $('#box-subtipo_poliza_id').val(), $('#box-seguro_id').val());
+							$('#box-poliza_plan_flag').val(1);
+						}
+						else {
+							$('#box-poliza_vigencia').children().each(function() {
+								$(this).attr('disabled', false);
+							});
+							$('#box-poliza_recargo').attr('readonly', false);
+							$('#box-poliza_premio').attr('readonly', false);
+							$('#box-poliza_plan_id, #box-poliza_pack_id').removeClass('required');
+							$('.poliza_plan').hide();
+							$('#box-poliza_plan_flag').val(0);
+						}
+					}).change();
 					$("#box-poliza_vigencia").change(function () {
 						var months;
 						switch ($(this).val()) {
@@ -4733,7 +4757,7 @@ $(document).ready(function () {
 						} else {
 							$('#box-poliza_validez_hasta').val('');
 						}
-					});
+					}).change();
 					$("#box-poliza_vigencia_dias").change(function () {
 						var days = $(this).val();
 						$('#box-poliza_validez_desde').datepicker('option', 'dateFormat', 'yy-mm-dd');
@@ -4771,6 +4795,13 @@ $(document).ready(function () {
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 					});
+					$('#box-poliza_plan_id').change(function() {
+						$('#box-poliza_pack_id').html(loading);
+						populateListPoliza_Pack('box-poliza_pack_id', 'box', $(this).val());
+					})
+					$('#box-poliza_pack_id').change(function() {
+						populateFormPolizaPackPremio($(this).val());
+					})
 					// Set default values
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
 					// Validate form
