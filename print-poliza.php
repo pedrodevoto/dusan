@@ -1578,13 +1578,14 @@
 					$pdf->Write(5, 'Lote: '.$row_Recordset2['combinado_familiar_lote']);
 					
 					$y +=5;
-					$pdf->SetXY($x + 2, $y);
-					$pdf->Write(5, 'Incendio Edificio:         $'.formatNumber($row_Recordset2['combinado_familiar_inc_edif'], 2));
-					$pdf->SetX($x + 70);
-					$pdf->Write(5, 'Incendio Mobiliario: $'.formatNumber($row_Recordset2['combinado_familiar_inc_mob'], 2));
-					$pdf->SetX($x + 140);
-					$pdf->Write(5, 'Efectos Personales:     $'.formatNumber($row_Recordset2['combinado_familiar_ef_personales'], 2));
-					
+					if (!$row_Recordset1['poliza_plan_flag']) {
+						$pdf->SetXY($x + 2, $y);
+						$pdf->Write(5, 'Incendio Edificio:         $'.formatNumber($row_Recordset2['combinado_familiar_inc_edif'], 2));
+						$pdf->SetX($x + 70);
+						$pdf->Write(5, 'Incendio Mobiliario: $'.formatNumber($row_Recordset2['combinado_familiar_inc_mob'], 2));
+						$pdf->SetX($x + 140);
+						$pdf->Write(5, 'Efectos Personales:     $'.formatNumber($row_Recordset2['combinado_familiar_ef_personales'], 2));
+					}
 					$y +=5;
 					$pdf->SetXY($x + 2, $y);
 					$pdf->Write(5, 'Valor tasado de la propiedad: $'.formatNumber($row_Recordset2['combinado_familiar_valor_tasado'], 2));
