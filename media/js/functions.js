@@ -898,8 +898,6 @@ $(document).ready(function () {
 						options += '<option value="' + key + '">' + value + '</option>';
 					});
 					$('#' + field).html(options);
-					// Sort options alphabetically
-					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Seleccione');
 					// Select first item
@@ -924,8 +922,6 @@ $(document).ready(function () {
 						options += '<option value="' + key + '">' + value + '</option>';
 					});
 					$('#' + field).html(options);
-					// Sort options alphabetically
-					sortListAlpha(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Seleccione');
 					// Select first item
