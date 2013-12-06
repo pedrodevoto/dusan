@@ -574,7 +574,7 @@ CREATE TABLE `integral_comercio_bienes_de_uso` (
   `integral_comercio_id` int(11) NOT NULL,
   `integral_comercio_bienes_de_uso_cantidad` int(11) NOT NULL,
   `integral_comercio_bienes_de_uso_producto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `integral_comercio_bienes_de_uso_marca` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `integral_comercio_bienes_de_uso_marca` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `integral_comercio_bienes_de_uso_serial` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `integral_comercio_bienes_de_uso_valor` decimal(10,2) NOT NULL,
   PRIMARY KEY (`integral_comercio_bienes_de_uso_id`),
@@ -883,4 +883,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-12-06 12:22:00
+-- 2013-12-06 12:25:30
