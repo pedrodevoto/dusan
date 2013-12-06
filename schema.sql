@@ -168,6 +168,19 @@ CREATE TABLE `automotor_carroceria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `automotor_cedula_verde_foto`;
+CREATE TABLE `automotor_cedula_verde_foto` (
+  `automotor_cedula_verde_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_cedula_verde_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_cedula_verde_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_cedula_verde_foto_width` int(11) NOT NULL,
+  `automotor_cedula_verde_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_cedula_verde_foto_id`),
+  KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `automotor_gnc_foto`;
 CREATE TABLE `automotor_gnc_foto` (
   `automotor_gnc_foto_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -870,4 +883,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-12-05 22:29:31
+-- 2013-12-06 12:22:00

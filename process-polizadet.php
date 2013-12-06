@@ -208,7 +208,7 @@
 			mysql_free_result($Recordset2);									
 		
 			// Fotos
-			$types = array('micrograbado', 'gnc');
+			$types = array('micrograbado', 'gnc', 'cedula_verde');
 			foreach ($types as $type) {
 			    if(isset($_FILES['box-'.$type.'_foto']['tmp_name'])){
 					for ($i=0; $i < count($_FILES['box-'.$type.'_foto']['tmp_name']);$i++) {

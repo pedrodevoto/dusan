@@ -278,6 +278,17 @@
         <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
     </p>                            
 </fieldset>
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+    <legend class="ui-widget ui-widget-header ui-corner-all">Cédula verde</legend>
+    <div id="items-cedula_verde">
+		<p id="0">
+	        <label for="box-cedula_verde_foto">Imagen</label>
+	        <input type="file" name="box-cedula_verde_foto[]" id="box-cedula_verde_foto" class="ui-widget-content" style="width:220px" /> <button class="addFoto" object="cedula_verde">+</button>
+	    </p>
+	</div>
+	<div id="divBoxFotosCedulaVerde" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
+	</div>
+</fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">Equipamiento *</legend>    
         <table border="0" width="100%" cellpadding="0" cellspacing="0">

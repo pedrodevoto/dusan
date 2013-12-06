@@ -1436,6 +1436,7 @@ $(document).ready(function () {
 			populateDiv_Fotos('poliza', id);
 			populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 			populateDiv_Fotos('automotor_gnc', id, 'GNC');
+			populateDiv_Fotos('automotor_cedula_verde', id, 'CedulaVerde');
 
 			populateSectionAutomotorAccesorios(id);
 
