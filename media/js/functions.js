@@ -1402,6 +1402,32 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateFormPFC = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich-sucursal_pfc.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					// $.colorbox.close();
+				} else {
+					if (j.sucursal_pfc==1) {
+						$('#pfc').show().children().eq(0).attr('disabled', false).prop('checked', (j.sucursal_pfc_default==1?true:false));
+					}
+					else {
+						$('#pfc').hide().children().eq(0).attr('disabled', true);
+					}
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	
 	populatePolizaDet = function (subtipo_poliza, id) {
 		switch (subtipo_poliza) {
@@ -2456,17 +2482,7 @@ $(document).ready(function () {
 						result += '<td>' + object.cuota_estado + '</td>';
 						result += '<td>' + object.cuota_fe_pago + '</td>';
 						result += '<td>' + object.cuota_recibo + '</td>';
-						result += '<td>';
-						if (object.cuota_nro == 1) {
-							if (object.cuota_pfc == 1) {
-								result += '<span onClick="javascript:updateLinkCuota_PFC(' + object.cuota_id + ', ' + id + ');" style="cursor: pointer;" class="ui-icon ui-icon-circle-check" title="Cambiar"></span>';
-							} else {
-								result += '<span onClick="javascript:updateLinkCuota_PFC(' + object.cuota_id + ', ' + id + ');" style="cursor: pointer;" class="ui-icon ui-icon-circle-close" title="Cambiar"></span>';
-							}
-						} else {
-							result += '&nbsp;';
-						}
-						result += '</td>';
+						result += '<td>' + (object.cuota_pfc==1?'Sí':'&nbsp;') + '</td>';
 						result += '<td>';
 						if (object.cuota_estado != '3 - Anulado') {
 							if (object.cuota_estado === '2 - Pagado') {
@@ -2486,13 +2502,6 @@ $(document).ready(function () {
 					result += '</table>';
 					// Populate DIV
 					$('#divBoxList').html(result);
-					// Initialize JEditable
-					$('.jeditrow2').editable('update-cuota_venc.php', {
-						indicator: 'Guardando...',
-						tooltip: 'Click para editar...',
-						width: '80',
-						height: '10'
-					});
 				}
 			}
 		});
@@ -3861,6 +3870,10 @@ $(document).ready(function () {
 				// Disable form
 				formDisable('frmBox', 'ui', true);
 
+				$('#box-sucursal_pfc').change(function() {
+					$('#box-sucursal_pfc_default').attr('disabled', !$(this).prop('checked'));
+				})
+				
 				// Validate form
 				var validateForm = $("#frmBox").validate({
 					rules: {
@@ -3884,7 +3897,7 @@ $(document).ready(function () {
 
 				// Enable form
 				formDisable('frmBox', 'ui', false);
-
+				$('#box-sucursal_pfc').change();
 			}
 		});
 	}
@@ -3905,7 +3918,10 @@ $(document).ready(function () {
 
 				// Populate form, then initialize
 				$.when(populateFormBoxSuc(id)).then(function () {
-
+					$('#box-sucursal_pfc').change(function() {
+						$('#box-sucursal_pfc_default').attr('disabled', !$(this).prop('checked'));
+					})
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -3929,7 +3945,7 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-sucursal_pfc').change();
 				});
 
 			}
@@ -4312,6 +4328,7 @@ $(document).ready(function () {
 					$('#box-sucursal_id').change(function () {
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
+						populateFormPFC($(this).val());
 					})
 					$("#box-poliza_vigencia").change(function () {
 						var months;
@@ -4385,16 +4402,7 @@ $(document).ready(function () {
 								cuotas = 12;
 							}
 							else {
-								switch ($("#box-poliza_medio_pago").val()) {
-									case 'Débito Bancario':
-									case 'Cuponera':
-									case 'Tarjeta de Crédito':
-										cuotas = 5;
-										break;
-									case 'Directo':
-										cuotas = 6;
-										break;
-								}
+								cuotas = 5;
 							}
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
@@ -4451,7 +4459,7 @@ $(document).ready(function () {
 					// Set default values
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
-					$('#box-poliza_medio_pago').val('Directo');
+					$('#box-poliza_medio_pago').val('Directo').change();
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4778,16 +4786,7 @@ $(document).ready(function () {
 							cuotas = 1;
 						}
 						else {
-							switch ($("#box-poliza_medio_pago").val()) {
-								case 'Débito Bancario':
-								case 'Cuponera':
-								case 'Tarjeta de Crédito':
-									cuotas = 5;
-									break;
-								case 'Directo':
-									cuotas = 6;
-									break;
-							}
+							cuotas = 5;
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 					});

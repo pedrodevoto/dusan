@@ -18,13 +18,18 @@
 	list($recibo) = mysql_fetch_array($res);		
 	
 	// Determinar factura
-	$sql = sprintf('SELECT poliza.sucursal_id, sucursal_num_factura  FROM cuota JOIN (poliza, sucursal) ON cuota.poliza_id = poliza.poliza_id AND poliza.sucursal_id = sucursal.sucursal_id WHERE cuota_id = %s', $cuota_id);
+	$sql = sprintf('SELECT poliza.sucursal_id, sucursal_num_factura, cuota_pfc  FROM cuota JOIN (poliza, sucursal) ON cuota.poliza_id = poliza.poliza_id AND poliza.sucursal_id = sucursal.sucursal_id WHERE cuota_id = %s', $cuota_id);
 	$res = mysql_query($sql, $connection) or die(mysql_die());
-	list($sucursal_id, $sucursal_num_factura) = mysql_fetch_array($res);
+	list($sucursal_id, $sucursal_num_factura, $cuota_pfc) = mysql_fetch_array($res);
 	
-	$sql = sprintf('SELECT COALESCE(MAX(cuota_nro_factura)+1,%s) FROM cuota JOIN poliza ON cuota.poliza_id = poliza.poliza_id WHERE sucursal_id = %s', $sucursal_num_factura, $sucursal_id);
-	$res = mysql_query($sql, $connection) or die(mysql_die());
-	list($cuota_nro_factura) = mysql_fetch_array($res);
+	if ($cuota_pfc==1) {
+		$cuota_nro_factura = 'NULL';
+	}
+	else {
+		$sql = sprintf('SELECT COALESCE(MAX(cuota_nro_factura)+1,%s) FROM cuota JOIN poliza ON cuota.poliza_id = poliza.poliza_id WHERE sucursal_id = %s', $sucursal_num_factura, $sucursal_id);
+		$res = mysql_query($sql, $connection) or die(mysql_die());
+		list($cuota_nro_factura) = mysql_fetch_array($res);
+	}
 	
 	$sql = sprintf('UPDATE cuota SET cuota_estado="2 - Pagado", cuota_fe_pago=%s, cuota_monto=%s, cuota_recibo=%s, cuota_nro_factura = %s WHERE cuota_id=%s', 
 					GetSQLValueString($_POST['box-cuota_fe_pago'], "date"),

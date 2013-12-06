@@ -816,6 +816,8 @@ CREATE TABLE `sucursal` (
   `sucursal_telefono` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sucursal_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sucursal_num_factura` int(11) NOT NULL DEFAULT '0',
+  `sucursal_pfc` tinyint(4) NOT NULL,
+  `sucursal_pfc_default` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`sucursal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -868,4 +870,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-12-03 09:51:40
+-- 2013-12-05 22:29:31

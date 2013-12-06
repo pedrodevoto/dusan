@@ -29,6 +29,10 @@
                 <label for="box-sucursal_num_factura">Número de facturación inicial</label>
                 <input type="number" name="box-sucursal_num_factura" id="box-sucursal_num_factura" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
+			<p>
+				<label for="box-sucursal_pfc">PFC</label>
+				<input type="checkbox" name="box-sucursal_pfc" id="box-sucursal_pfc" class="ui-widget-content" /> Default: <select name="box-sucursal_pfc_default" id="box-sucursal_pfc_default" disabled><option value="1">Sí</option><option value="0">No</option></select>
+			</p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     

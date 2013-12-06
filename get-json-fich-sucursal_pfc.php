@@ -1,5 +1,5 @@
 <?php
-	$MM_authorizedUsers = "master";
+	$MM_authorizedUsers = "administrativo,master";
 ?>
 <?php require_once('inc/security-ajax.php'); ?>
 <?php
@@ -14,8 +14,8 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT sucursal.sucursal_id, sucursal_nombre, sucursal_direccion, sucursal_telefono, sucursal_email, sucursal_num_factura, sucursal_pfc, sucursal_pfc_default FROM sucursal WHERE sucursal.sucursal_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
-		
+	$query_Recordset1 = sprintf("SELECT sucursal_pfc, sucursal_pfc_default FROM sucursal WHERE sucursal_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	
 	// Recordset: Seguro
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	$row_Recordset1 = mysql_fetch_assoc($Recordset1);

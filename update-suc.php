@@ -12,12 +12,14 @@
 	if ((isset($_POST["box-sucursal_id"])) && ($_POST["box-sucursal_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE sucursal SET sucursal_nombre=UPPER(TRIM(%s)), sucursal_direccion=UPPER(TRIM(%s)), sucursal_telefono=TRIM(%s), sucursal_email=TRIM(%s), sucursal_num_factura=%s WHERE sucursal.sucursal_id=%s LIMIT 1",
-						GetSQLValueString($_POST['box-sucursal_nombre'], "text"),																																																				
-						GetSQLValueString($_POST['box-sucursal_direccion'], "text"),																								
+		$updateSQL = sprintf("UPDATE sucursal SET sucursal_nombre=UPPER(TRIM(%s)), sucursal_direccion=UPPER(TRIM(%s)), sucursal_telefono=TRIM(%s), sucursal_email=TRIM(%s), sucursal_num_factura=%s, sucursal_pfc=%s, sucursal_pfc_default=%s WHERE sucursal.sucursal_id=%s LIMIT 1",
+						GetSQLValueString($_POST['box-sucursal_nombre'], "text"),
+						GetSQLValueString($_POST['box-sucursal_direccion'], "text"),
 						GetSQLValueString($_POST['box-sucursal_telefono'], "text"),
 						GetSQLValueString($_POST['box-sucursal_email'], "text"),
 						GetSQLValueString($_POST['box-sucursal_num_factura'], "int"),
+						GetSQLValueString(isset($_POST['box-sucursal_pfc']) ? 'true' : '', 'defined','1','0'),
+						GetSQLValueString($_POST['box-sucursal_pfc_default'], "int"),
 						GetSQLValueString($_POST['box-sucursal_id'], "int"));			
 		$Result1 = mysql_query($updateSQL, $connection);
 		switch (mysql_errno()) {
