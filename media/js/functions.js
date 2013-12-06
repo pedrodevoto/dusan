@@ -1955,7 +1955,7 @@ $(document).ready(function () {
 		// Enable main form
 		formDisable('frmBox', 'ui', false);
 		// Set focus
-		$("#box-endoso_tipo").focus();
+		$("#box-endoso_tipo_id").focus();
 	}
 
 	/* Populate DIV functions */
@@ -2534,7 +2534,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_Endosos = function (id) {
+	populateDiv_Endosos = function (id, poliza_numero) {
 		$.getJSON("get-json-fich_poliendosos.php?id=" + id, {}, function (j) {
 			if (j.error == 'expired') {
 				sessionExpire('box');
@@ -2570,6 +2570,14 @@ $(document).ready(function () {
 				}
 				// Populate DIV
 				$('#divBoxList').html(result);
+				$('#btnNuevoEndoso').click(function() {
+					if (poliza_numero) {
+						$.when(openBoxAltaEndoso()).then(function() {
+							assignPolizaToEndoso(id, poliza_numero);
+							
+						});
+					}
+				})
 			}
 		});
 	}
@@ -5084,6 +5092,7 @@ $(document).ready(function () {
 		});
 	}
 	openBoxAltaEndoso = function () {
+		var dfd = new $.Deferred();
 		$.colorbox({
 			title: 'Endoso',
 			href: 'box-endoso_alta.php',
@@ -5157,10 +5166,11 @@ $(document).ready(function () {
 				formDisable('frmSelectPoliza', 'normal', false);
 				// Set focus on search
 				$("#box0-poliza_numero").focus();
-
+				dfd.resolve();
 			}
 
 		});
+		return dfd.promise();	
 	}
 	openBoxModEndoso = function (id) {
 		$.colorbox({
@@ -5265,7 +5275,7 @@ $(document).ready(function () {
 
 		});
 	}
-	openBoxEndosos = function (id) {
+	openBoxEndosos = function (id, poliza_numero) {
 		$.colorbox({
 			title: 'Póliza/Endosos',
 			href: 'box-poliendosos.php',
@@ -5275,9 +5285,11 @@ $(document).ready(function () {
 
 				// -------------------- GENERAL ---------------------
 
+				$('#btnNuevoEndoso').button();
+
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);
-				populateDiv_Endosos(id);
+				populateDiv_Endosos(id, poliza_numero);
 			}
 		});
 	}

@@ -98,7 +98,7 @@
 							<?php if($_SESSION['ADM_UserGroup']=='master') {?>
 							returnval += '<li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
 							<?php } ?>
-							returnval += '<li title="Endosos" onclick="openBoxEndosos('+oObj.aData[0]+');"><span class="ui-icon ui-icon-folder-collapsed"></span></li>';
+							returnval += '<li title="Endosos" onclick="openBoxEndosos('+oObj.aData[0]+', '+(oObj.aData[2]?oObj.aData[2]:undefined)+');"><span class="ui-icon ui-icon-folder-collapsed"></span></li>';
 							returnval += '<li title="Ver detalle de cliente" onclick="openBoxModCliente('+oObj.aData[1]+');"><span class="ui-icon ui-icon-person"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
