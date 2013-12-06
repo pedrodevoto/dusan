@@ -49,7 +49,7 @@
 			</p>
             <p>
                 <label for="box-endoso_numero">Número de endoso</label>
-                <input type="text" name="box-poliza_numero" id="box-poliza_numero" maxlength="255" class="ui-widget-content" style="width:180px" />
+                <input type="text" name="box-endoso_numero" id="box-endoso_numero" maxlength="255" class="ui-widget-content" style="width:180px" />
             </p>
             <p>
                 <label for="box-endoso_fecha_compania">Fecha de la compañía</label>
