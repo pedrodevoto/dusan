@@ -1416,10 +1416,10 @@ $(document).ready(function () {
 					// $.colorbox.close();
 				} else {
 					if (j.sucursal_pfc==1) {
-						$('#pfc').show().children().eq(0).attr('disabled', false).prop('checked', (j.sucursal_pfc_default==1?true:false));
+						$('#pfc').children().eq(0).attr('disabled', false).prop('checked', (j.sucursal_pfc_default==1?true:false));
 					}
 					else {
-						$('#pfc').hide().children().eq(0).attr('disabled', true);
+						$('#pfc').children().eq(0).attr('disabled', true).prop('checked', false);
 					}
 					// Resolve
 					dfd.resolve();
@@ -1933,6 +1933,7 @@ $(document).ready(function () {
 						$('#divBoxClienteSearchResults').html('');
 						// Enable main form
 						formDisable('frmBox', 'ui', false);
+						$('#box-sucursal_pfc').attr('disabled', true);
 						// Set focus
 						$("#box-tipo_poliza_id").focus();
 					}
@@ -4393,6 +4394,7 @@ $(document).ready(function () {
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 					})
 					$("#box-poliza_medio_pago, #box-poliza_cuotas").change(function() {
+						$('#pfc')[($('#box-poliza_medio_pago').val()=='Directo'?'show':'hide')]().children().eq(0).attr('disabled', ($('#box-poliza_medio_pago').val()=='Directo'?false:true));
 						var cuotas = '';
 						if ($('#box-poliza_cuotas').val()=='Total') {
 							cuotas = 1;
