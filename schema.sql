@@ -740,6 +740,11 @@ CREATE TABLE `productor_seguro` (
   `sucursal_id` int(11) NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `zona_riesgo_id` int(11) DEFAULT NULL,
+  `productor_seguro_organizacion_flag` tinyint(4) DEFAULT NULL,
+  `productor_seguro_organizacion_nombre` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `productor_seguro_organizacion_tipo_persona` tinyint(4) DEFAULT NULL,
+  `productor_seguro_organizacion_matricula` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `productor_seguro_organizacion_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`productor_seguro_id`),
   UNIQUE KEY `code` (`productor_id`,`seguro_id`,`productor_seguro_codigo`) USING BTREE,
   KEY `seguro_id` (`seguro_id`),
@@ -883,4 +888,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2013-12-06 12:25:30
+-- 2014-01-06 21:32:02

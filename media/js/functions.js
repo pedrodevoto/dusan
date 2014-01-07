@@ -5517,7 +5517,12 @@ $(document).ready(function () {
 							$("#box-seguro_cobertura_tipo_id").attr("disabled", false);
 						});
 					})
-
+					
+					$('#box-productor_seguro_organizacion_flag').change(function() {
+						$('#box-productor_seguro_organizacion_nombre, #box-productor_seguro_organizacion_tipo_persona, #box-productor_seguro_organizacion_matricula, #box-productor_seguro_organizacion_cuit').prop('disabled', !$(this).prop('checked'));
+						if ($(this).prop('checked')) $('#box-productor_seguro_organizacion_nombre').focus();
+					});
+					
 					// Button action
 					$("#btnBox").click(function () {
 						insertFormProdSeg();
@@ -5525,6 +5530,8 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
+					
+					$('#box-productor_seguro_organizacion_flag').change();
 				});
 			}
 		});
@@ -5563,6 +5570,11 @@ $(document).ready(function () {
 							}
 						}
 					});
+					
+					$('#box-productor_seguro_organizacion_flag').change(function() {
+						$('#box-productor_seguro_organizacion_nombre, #box-productor_seguro_organizacion_tipo_persona, #box-productor_seguro_organizacion_matricula, #box-productor_seguro_organizacion_cuit').prop('disabled', !$(this).prop('checked'));
+						if ($(this).prop('checked')) $('#box-productor_seguro_organizacion_nombre').focus();
+					});
 
 					// Button action
 					$("#btnBox").click(function () {
@@ -5573,7 +5585,7 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-productor_seguro_organizacion_flag').change();
 				});
 
 			}

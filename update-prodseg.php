@@ -12,11 +12,16 @@
 	if ((isset($_POST["box-productor_seguro_id"])) && ($_POST["box-productor_seguro_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE productor_seguro SET productor_seguro_codigo=UPPER(TRIM(%s)), zona_riesgo_id=%s WHERE productor_seguro_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE productor_seguro SET productor_seguro_codigo=UPPER(TRIM(%s)), zona_riesgo_id=%s, productor_seguro_organizacion_flag=%s, productor_seguro_organizacion_nombre=UPPER(TRIM(%s)), productor_seguro_organizacion_tipo_persona=%s, productor_seguro_organizacion_matricula=UPPER(TRIM(%s)), productor_seguro_organizacion_cuit=UPPER(TRIM(%s)) WHERE productor_seguro_id=%s LIMIT 1",
 								GetSQLValueString($_POST['box-productor_seguro_codigo'], "text"),
 								GetSQLValueString($_POST['box-zona_riesgo_id'], "int"),
+								GetSQLValueString(isset($_POST['box-productor_seguro_organizacion_flag']) ? 'true' : '', 'defined','1','0'),
+								GetSQLValueString($_POST['box-productor_seguro_organizacion_nombre'], "text"),
+								GetSQLValueString($_POST['box-productor_seguro_organizacion_tipo_persona'], "int"),
+								GetSQLValueString($_POST['box-productor_seguro_organizacion_matricula'], "text"),
+								GetSQLValueString($_POST['box-productor_seguro_organizacion_cuit'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
-										
+								
 		$Result1 = mysql_query($updateSQL, $connection);
 		switch (mysql_errno()) {
 				case 0:

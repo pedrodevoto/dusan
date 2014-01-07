@@ -36,11 +36,37 @@
 	                	<option value="">Cargando</option>                
 	                </select>
 			    </p>
-            	<p align="center" style="margin-top:10px">
-		            <input type="hidden" name="box-productor_seguro_id" id="box-productor_seguro_id" />            
-					<input type="button" name="btnBox" id="btnBox" value="Guardar" />                                    
-                </p>
-            </fieldset>         
+            </fieldset>       
+			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+				<legend class="ui-widget ui-widget-header ui-corner-all">Organización</legend>
+				<p>
+					<label for="box-productor_seguro_organizacion_flag">Pertenece a organización</label>
+					<input type="checkbox" name="box-productor_seguro_organizacion_flag" id="box-productor_seguro_organizacion_flag" />
+				</p>
+				<p>
+					<label for="box-productor_seguro_organizacion_nombre">Nombre de la organización</label>
+					<input type="text" name="box-productor_seguro_organizacion_nombre" id="box-productor_seguro_organizacion_nombre" maxlength="250" class="ui-widget-content" style="width:180px" disabled />
+				</p>
+				<p>
+					<label for="box-productor_seguro_organizacion_tipo_persona">Tipo de persona</label>
+					<select name="box-productor_seguro_organizacion_tipo_persona" id="box-productor_seguro_organizacion_tipo_persona" class="ui-widget-content" style="width:180px" disabled>
+	                	<option value="1">Persona Física</option>    
+	                	<option value="2">Persona Jurídica</option> 
+					</select>    
+				</p>
+				<p>
+					<label for="box-productor_seguro_organizacion_matricula">Matrícula del organizador</label>
+					<input type="text" name="box-productor_seguro_organizacion_matricula" id="box-productor_seguro_organizacion_matricula" maxlength="250" class="ui-widget-content" style="width:180px" disabled />
+				</p>
+				<p>
+					<label for="box-productor_seguro_organizacion_cuit">CUIT</label>
+					<input type="text" name="box-productor_seguro_organizacion_cuit" id="box-productor_seguro_organizacion_cuit" maxlength="250" class="ui-widget-content" style="width:180px" disabled />
+				</p>
+			</fieldset>  
+        	<p align="center" style="margin-top:10px">
+	            <input type="hidden" name="box-productor_seguro_id" id="box-productor_seguro_id" />            
+				<input type="button" name="btnBox" id="btnBox" value="Guardar" />                                    
+            </p>
         </form>
 	    <div id="divBoxMessage" class="ui-state-highlight ui-corner-all divBoxMessage"> 
 	        <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
