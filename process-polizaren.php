@@ -302,7 +302,7 @@
 		$res = mysql_query($sql);
 		list($startdiff, $enddiff) = mysql_fetch_array($res);
 		$state = determineState($startdiff, $enddiff);
-		$new_state = $state==3?7:5; // si la poliza original estaba vigente, pasa a estar VIGENTE/RENOVADA. si no, directamente pasa a RENOVADA
+		$new_state = $state==3 or $state==4?7:5; // si la poliza original estaba vigente, pasa a estar VIGENTE/RENOVADA. si no, directamente pasa a RENOVADA
 			
 		// Update
 		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s WHERE poliza.poliza_id=%s LIMIT 1",
