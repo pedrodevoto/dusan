@@ -5,9 +5,9 @@
 <?php
 require_once('Connections/connection.php');
 $poliza_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = 'SELECT poliza_estado_id, cliente_nombre, cliente_email, seguro_email_emision, seguro_email_emision_vida, seguro_email_fotos, seguro_email_rastreador, tipo_poliza_id, poliza.subtipo_poliza_id, patente, IF(COUNT(poliza_foto_id) > 0, 1, 0) as poliza_fotos, equipo_rastreo, equipo_rastreo_pedido_nombre FROM poliza JOIN (subtipo_poliza, cliente, productor_seguro, seguro) ON poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id = cliente.cliente_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id LEFT JOIN automotor ON poliza.poliza_id = automotor.poliza_id LEFT JOIN equipo_rastreo_pedido ON automotor.equipo_rastreo_pedido_id = equipo_rastreo_pedido.equipo_rastreo_pedido_id LEFT JOIN poliza_foto ON poliza.poliza_id = poliza_foto.poliza_id WHERE poliza.poliza_id='.$poliza_id;
+$sql = 'SELECT poliza_estado_id, cliente_nombre, cliente_email, seguro_email_emision, seguro_email_emision_vida, seguro_email_patrimoniales_otras, seguro_email_fotos, seguro_email_rastreador, tipo_poliza_id, poliza.subtipo_poliza_id, patente, IF(COUNT(poliza_foto_id) > 0, 1, 0) as poliza_fotos, equipo_rastreo, equipo_rastreo_pedido_nombre FROM poliza JOIN (subtipo_poliza, cliente, productor_seguro, seguro) ON poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND poliza.cliente_id = cliente.cliente_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id LEFT JOIN automotor ON poliza.poliza_id = automotor.poliza_id LEFT JOIN equipo_rastreo_pedido ON automotor.equipo_rastreo_pedido_id = equipo_rastreo_pedido.equipo_rastreo_pedido_id LEFT JOIN poliza_foto ON poliza.poliza_id = poliza_foto.poliza_id WHERE poliza.poliza_id='.$poliza_id;
 $res = mysql_query($sql) or die(mysql_error());
-list($state, $cliente_nombre, $cliente_email, $seguro_email_emision, $seguro_email_emision_vida, $seguro_email_fotos, $seguro_email_rastreador, $tipo_poliza_id, $subtipo_poliza_id, $patente, $fotos, $equipo_rastreo, $equipo_rastreo_pedido) = mysql_fetch_array($res);
+list($state, $cliente_nombre, $cliente_email, $seguro_email_emision, $seguro_email_emision_vida, $seguro_email_patrimoniales_otras, $seguro_email_fotos, $seguro_email_rastreador, $tipo_poliza_id, $subtipo_poliza_id, $patente, $fotos, $equipo_rastreo, $equipo_rastreo_pedido) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
 
@@ -31,8 +31,8 @@ list($state, $cliente_nombre, $cliente_email, $seguro_email_emision, $seguro_ema
 			<p>
 				<div id="doc">
 					<input type="radio" id="doc1" name="type" value="cc" mail="<?=$cliente_email?>" subject='DUSAN ASESORES DE SEGUROS' /><label for="doc1">CC</label>
-					<input type="radio" id="doc2" name="type" value="pe" mail="<?=($tipo_poliza_id==3?$seguro_email_emision_vida:$seguro_email_emision)?>" subject='EMITIR <?=$patente?>' /><label for="doc2">Pedido de Emisión</label>
-					<input type="radio" id="doc3" name="type" value="pemc" mail="<?=($tipo_poliza_id==3?$seguro_email_emision_vida:$seguro_email_emision)?>" subject='M/C <?=$patente?>' /><label for="doc3">Pedido de M/C</label>
+					<input type="radio" id="doc2" name="type" value="pe" mail="<?=($tipo_poliza_id==3?$seguro_email_emision_vida:($tipo_poliza_id==2&&$subtipo_poliza_id!=6?$seguro_email_patrimoniales_otras:$seguro_email_emision))?>" subject='EMITIR <?=$patente?>' /><label for="doc2">Pedido de Emisión</label>
+					<input type="radio" id="doc3" name="type" value="pemc" mail="<?=($tipo_poliza_id==3?$seguro_email_emision_vida:($tipo_poliza_id==2&&$subtipo_poliza_id!=6?$seguro_email_patrimoniales_otras:$seguro_email_emision))?>" subject='M/C <?=$patente?>' /><label for="doc3">Pedido de M/C</label>
 					<?php if($state==4):?><input type="radio" id="doc4" name="type" value="pere" mail="<?=$seguro_email_emision?>" subject="RENOVACION <?=$patente?>" /><label for="doc4">Pedido de Renovación</label><?php endif;?>
 					<?php if($fotos):?><input type="radio" id="doc5" name="type" value="fotos" mail="<?=$seguro_email_fotos?>" subject="FOTOS <?=$patente?>" /><label for="doc5">Fotos</label><?php endif; ?>
 					<?php if($equipo_rastreo): ?><input type="radio" id="doc6" name="type" value="rast" mail="<?=$seguro_email_rastreador?>" subject="<?=$equipo_rastreo_pedido?> EQUIPO DE RASTREO <?=$patente?> - '<?=$cliente_nombre?>'" /><label for="doc6">Equipo de Rastreo</label><?php endif;?>

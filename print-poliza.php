@@ -2212,7 +2212,7 @@
 							$type = 1;
 							break;
 						case 'pe':
-							$to = $row_Recordset1['seguro_email_emision'];
+							$to = $row_Recordset1['seguro_email_patrimoniales_otras'];
 							switch(substr($_GET['type'], 2)) {
 								case '':
 									$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
@@ -2690,7 +2690,7 @@
 						$type = 1;
 						break;
 					case 'pe':
-						$to = $row_Recordset1['seguro_email_emision'];
+						$to = $row_Recordset1['seguro_email_patrimoniales_otras'];
 						switch(substr($_GET['type'], 2)) {
 							case '':
 								$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
@@ -3282,7 +3282,7 @@
 								$type = 1;
 								break;
 							case 'pe':
-								$to = $row_Recordset1['seguro_email_emision'];
+								$to = $row_Recordset1['seguro_email_patrimoniales_otras'];
 								switch(substr($_GET['type'], 2)) {
 									case '':
 										$file_name = $row_Recordset1['subtipo_poliza_nombre'].' - '.$row_Recordset1['cliente_nombre'].'.pdf';
