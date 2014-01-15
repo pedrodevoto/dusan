@@ -1794,6 +1794,7 @@ $(document).ready(function () {
 		});
 		$("#automotor_accesorios_total").html(total);
 		$("#box-valor_accesorios").val(total);
+		calculateTotal();
 	}
 	populateFormBoxAsegurado = function (id) {
 		var dfd = new $.Deferred();
