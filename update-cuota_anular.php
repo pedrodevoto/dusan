@@ -12,7 +12,12 @@
 	// Obtain URL parameter
 	$cuota_id = intval($_POST['id']);	
 	
-	$sql = sprintf('UPDATE cuota SET cuota_estado="3 - Anulado" WHERE cuota_id=%s', $cuota_id);
+	$cuota_estado = '3 - Anulado';
+	if (!empty($_POST['flag']) && $_POST['flag']==1) {
+		$cuota_estado = '1 - No Pagado';
+	}
+	
+	$sql = sprintf('UPDATE cuota SET cuota_estado="%s" WHERE cuota_id=%s', $cuota_estado, $cuota_id);
 	mysql_query($sql, $connection) or die(mysql_error());
 	
 	echo 'Cuota anulada';

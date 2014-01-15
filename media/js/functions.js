@@ -2494,9 +2494,9 @@ $(document).ready(function () {
 							} else {
 								result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
 							}
-							if (object.master) {
-								result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
-							}
+						}
+						if (object.master && object.cuota_estado != '2 - Pagado') {
+							result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ', '+(object.cuota_estado == '3 - Anulado'?'1':'0')+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-'+(object.cuota_estado == '3 - Anulado'?'minus':'close')+'" title="'+(object.cuota_estado == '3 - Anulado'?'Revertir anulación':'Anular')+'"></span>';
 						}
 						result += '</td>';
 						result += '</tr>';
@@ -3283,10 +3283,11 @@ $(document).ready(function () {
 			}
 		});
 	}
-	updateCuotaAnular = function (cuota_id, poliza_id) {
-		if (confirm('Seguro desea anular la cuota? Esta operación no puede ser revertida')) {
+	updateCuotaAnular = function (cuota_id, poliza_id, flag) {
+		if (confirm('Seguro desea '+(flag?'revertir el estado de':'anular')+' la cuota?')) {
 			$.post('update-cuota_anular.php', {
-				'id': cuota_id
+				'id': cuota_id,
+				'flag': flag
 			}, function (data) {
 				openBoxCuota(poliza_id);
 			});
