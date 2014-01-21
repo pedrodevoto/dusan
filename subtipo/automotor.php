@@ -302,7 +302,7 @@
                     <input type="checkbox" name="box-estereo" id="box-estereo" value="1" /><label for="box-estereo" class="secondary">Estereo</label><br />                
                     <input type="checkbox" name="box-parlantes" id="box-parlantes" value="1" /><label for="box-parlantes" class="secondary">Parlantes</label><br />                
                     <input type="checkbox" name="box-aire" id="box-aire" value="1" /><label for="box-aire" class="secondary">Aire</label><br />                
-                    <input type="checkbox" name="box-cristales_electricos" id="box-cristales_electricos" value="1" /><label for="box-cristales_electricos" class="secondary">C. Eléctricos</label><br />                
+                    <input type="checkbox" name="box-cristales_electricos" id="box-cristales_electricos" value="1" /><label for="box-cristales_electricos" class="secondary">Cristales Elec.</label><br />                
                     <input type="checkbox" name="box-faros_adicionales" id="box-faros_adicionales" value="1" /><label for="box-faros_adicionales" class="secondary">Faros Adic.</label><br />                
                     <input type="checkbox" name="box-cierre_sincro" id="box-cierre_sincro" value="1" /><label for="box-cierre_sincro" class="secondary">Cierre Sincro</label><br />                
                 </td>
