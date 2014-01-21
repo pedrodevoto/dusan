@@ -1463,6 +1463,7 @@ $(document).ready(function () {
 					populateDiv_Fotos('poliza', id);
 				}
 			});
+			$('#box-combustible').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado

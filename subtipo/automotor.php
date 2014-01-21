@@ -132,6 +132,10 @@
 		$('#items-'+object).append(item);
 		return false;
 	})
+	$('#box-combustible').change(function(){
+		$('#box-nro_oblea, #box-nro_regulador, #box-marca_regulador, #box-marca_cilindro, #box-venc_oblea, #box-nro_tubo').prop('readonly', $(this).val() == 'Diesel');
+		$('#box-gnc_foto').prop('disabled', $(this).val() == 'Diesel');
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
