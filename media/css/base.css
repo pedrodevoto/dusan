@@ -502,3 +502,8 @@ table.display tfoot th {
 .progMenu ul li.selected {	
 	background: #333 !important;
 }
+.alert-success {
+color: #3c763d !important;
+background: #dff0d8 !important;
+border-color: #d6e9c6 !important;
+}

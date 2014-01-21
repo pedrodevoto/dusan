@@ -70,7 +70,7 @@ list($seguro_email_endoso) = mysql_fetch_array($res);
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>
 	</form>    
-    <div id="divBoxMessage" class="ui-state-highlight ui-corner-all divBoxMessage"> 
+    <div id="divBoxMessage" class="ui-state-highlight alert-success ui-corner-all divBoxMessage"> 
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>
     </div>
