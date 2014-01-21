@@ -62,6 +62,9 @@ function showMarcas() {
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
 	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
+		if ($row_Recordset1[1] == 'ACURA') {
+			echo '<optgroup label="----------"></optgroup>';
+		}
 		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
 	}
 }
