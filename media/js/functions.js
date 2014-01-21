@@ -84,6 +84,14 @@ $(document).ready(function () {
 		return true;
 	}
 
+	$.validator.defaults.focusInvalid = false;
+	$.validator.defaults.invalidHandler = function(form, validator) {
+		if (!validator.numberOfInvalids()) {
+			return;
+		}
+		$(validator.errorList[0].element).focus();
+	}
+
 	/* List functions */
 	sortListAlpha = function (field) {
 		$("select#" + field).html($("select#" + field + " option").sort(function (a, b) {
