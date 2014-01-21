@@ -248,10 +248,6 @@
     <p>
         <label for="box-color">Color *</label>
         <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content required" style="width:220px" />
-    </p>    
-    <p>
-        <label for="box-accesorios">Accesorios *</label>
-        <input type="checkbox" name="box-accesorios" id="box-accesorios" value="1" />
     </p>
     <p>
         <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
