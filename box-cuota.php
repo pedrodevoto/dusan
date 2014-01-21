@@ -21,7 +21,7 @@ list($cliente_email) = mysql_fetch_array($res);
         </div>
         <div style="margin-top:10px">
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
-                <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Cuotas</legend> 
+                <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Plan de Pago</legend> 
                 <div id="divBoxList" style="min-height:30px">
                     Cargando...
                 </div>

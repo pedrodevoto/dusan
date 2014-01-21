@@ -139,7 +139,7 @@
 			$txt_cobertura = "Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
@@ -717,7 +717,7 @@
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
@@ -1478,7 +1478,7 @@
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
@@ -2289,7 +2289,7 @@
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-			$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
@@ -2770,7 +2770,7 @@
 					array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 				);
 				$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-				$txt_pago_c2 = "Cuotas: ".$row_Recordset1['poliza_cant_cuotas'];
+				$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 				$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 				$txt_imp_c1 = array(
 					array('maxwidth' => 95, 'text' => "Prima:"),

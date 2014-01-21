@@ -62,7 +62,7 @@
                 <input type="text" name="box-poliza_validez_hasta" id="box-poliza_validez_hasta" maxlength="10" class="ui-widget-content box-date" style="width:80px">
             </p> 
             <p>
-                <label for="box-poliza_cuotas">Cuotas ^</label>
+                <label for="box-poliza_cuotas">Plan de Pago ^</label>
                 <input type="text" name="box-poliza_cuotas" id="box-poliza_cuotas" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
             </p> 
             <p>
