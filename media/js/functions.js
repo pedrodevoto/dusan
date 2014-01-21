@@ -666,8 +666,6 @@ $(document).ready(function () {
 					$('#' + field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
-					// Append option: "all"
-					appendListItem(field, '', 'Todos');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();

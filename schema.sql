@@ -636,7 +636,7 @@ CREATE TABLE `poliza` (
   `poliza_entregada` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `poliza_prima` decimal(10,2) unsigned DEFAULT NULL,
   `poliza_premio` decimal(10,2) unsigned NOT NULL,
-  `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo','Depósito en Cuenta') COLLATE utf8_unicode_ci NOT NULL,
   `poliza_pago_detalle` blob,
   `poliza_ajuste` tinyint(3) unsigned DEFAULT NULL,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
