@@ -23,6 +23,11 @@
                         <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
 				</li>
+				<li><a href="#">Op. Pendientes</a>
+					<ul>
+						<li><a href="section-poli_pendientes_list.php">Pólizas</a></li>
+					</ul>
+				</li>
 				<li><a href="section-endosos_list.php">Endosos</a></li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
@@ -41,6 +46,11 @@
                         <li><a href="section-poli_patrimoniales_list.php">Patrimoniales (Otras)</a></li>
                         <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
+				</li>
+				<li><a href="#">Op. Pendientes</a>
+					<ul>
+						<li><a href="section-poli_pendientes_list.php">Pólizas</a></li>
+					</ul>
 				</li>
 				<li><a href="section-endosos_list.php">Endosos</a></li>
 				<li><a href="section-facturacion.php">Facturación</a></li>
