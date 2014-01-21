@@ -78,7 +78,7 @@ CREATE TABLE `automotor` (
   `chapa` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `pintura` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `tipo_pintura` enum('Común','Bicapa','Tricapa') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tapizado` enum('Tela','Pana','Cuero') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tapizado` enum('Tela','Pana','Cuero','Combinado') COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accesorios` tinyint(3) unsigned NOT NULL,
   `zona_riesgo_id` int(11) DEFAULT NULL,
