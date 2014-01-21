@@ -45,7 +45,7 @@
 				$res = mysql_query($sql, $connection);
 				list($premio) = mysql_fetch_array($res);
 		
-				if (intval($_POST['box-poliza_premio'])!=$premio) {
+				if (floatval($_POST['box-poliza_premio'])!=floatval($premio)) {
 					if ($_SESSION['ADM_UserGroup']=='master') {
 						$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado = "2 - Pagado"', GetSQLValueString($_POST['box-poliza_id'], "int"));
 						$res = mysql_query($sql, $connection);
