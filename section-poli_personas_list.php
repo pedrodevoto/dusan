@@ -188,7 +188,7 @@
 								</select>
                             </td>
                             <td width="12%">
-                                <label for="poliza_al_dia">Al día</label>                                
+                                <label for="poliza_al_dia">Pago al día</label>                                
                                 <select name="poliza_al_dia" id="poliza_al_dia">
 									<option value="">Indistinto</option>
 									<option value="1">Sí</option>
@@ -229,7 +229,7 @@
                             <th>V. Hasta</th>
 							<th>Estado Póliza</th>
                             <th>Estado</th> 
-                            <th>Al día</th>                                                                                    
+                            <th>Pago al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    
                             <th>Acc.</th>                                                        
                         </tr>
