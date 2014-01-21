@@ -632,6 +632,7 @@ CREATE TABLE `poliza` (
   `poliza_fecha_recepcion` date DEFAULT NULL,
   `poliza_fecha_entrega` date DEFAULT NULL,
   `poliza_correo` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `poliza_email` tinyint(3) unsigned NOT NULL,
   `poliza_entregada` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `poliza_prima` decimal(10,2) unsigned DEFAULT NULL,
   `poliza_premio` decimal(10,2) unsigned NOT NULL,

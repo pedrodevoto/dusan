@@ -112,7 +112,7 @@
             <p>
                 <label for="box-poliza_fecha_entrega">Fecha Envío/Entrega</label>
                 <input type="text" name="box-poliza_fecha_entrega" id="box-poliza_fecha_entrega" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
-                <input type="checkbox" name="box-poliza_correo" id="box-poliza_correo" value="1" /><label for="box-poliza_correo" class="secondary">Correo</label>&nbsp;<input type="checkbox" name="box-poliza_entregada" id="box-poliza_entregada" value="1" /><label for="box-poliza_entregada" class="secondary">Entregada</label>
+                <input type="checkbox" name="box-poliza_correo" id="box-poliza_correo" value="1" /><label for="box-poliza_correo" class="secondary">Correo</label>&nbsp;<input type="checkbox" name="box-poliza_email" id="box-poliza_email" value="1" /><label for="box-poliza_email" class="secondary">Email</label>&nbsp;<input type="checkbox" name="box-poliza_entregada" id="box-poliza_entregada" value="1" /><label for="box-poliza_entregada" class="secondary">Entregada</label>
             </p>
             <p>
                 <label for="box-poliza_prima">Prima</label>
