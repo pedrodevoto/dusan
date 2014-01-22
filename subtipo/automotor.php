@@ -136,6 +136,12 @@
 		$('#box-nro_oblea, #box-nro_regulador, #box-marca_regulador, #box-marca_cilindro, #box-venc_oblea, #box-nro_tubo').prop('readonly', $(this).val() == 'Diesel');
 		$('#box-gnc_foto').prop('disabled', $(this).val() == 'Diesel');
 	});
+	$('#box-automotor_carroceria_id').change(function() {
+		if ($(this).val()==17) {
+			$('#box-patente_0').val(101);
+			$('#box-patente_1').val('').focus();
+		}
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
@@ -173,8 +179,9 @@
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">General</legend>      
     <p>
-        <label for="box-patente">Patente *</label>
-        <input type="text" name="box-patente" id="box-patente" maxlength="20" class="ui-widget-content required" style="width:110px" />
+        <label for="box-patente_0">Patente *</label>
+        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
+		<input type="text" name="box-patente_1" id="box-patente_1" maxlength="17" class="ui-widget-content required" style="width:110px" />
     </p>
     <p>
         <label for="box-automotor_tipo_id">Tipo *</label>

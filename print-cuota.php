@@ -149,7 +149,7 @@
 			// Text 4
 			$txt4 = array(
 						array('maxwidth' => 0, 'text' => ""),
-						array('maxwidth' => 47, 'text' => "Año: ".formatNumber($row_Recordset2['ano'],0)." Patente: ".$row_Recordset2['patente']),
+						array('maxwidth' => 47, 'text' => "Año: ".formatNumber($row_Recordset2['ano'],0)." Patente: ".$row_Recordset2['patente_0'].$row_Recordset2['patente_1']),
 						array('maxwidth' => 47, 'text' => "Cobertura: ".$row_Recordset2['cobertura_tipo']),
 						array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 			);
