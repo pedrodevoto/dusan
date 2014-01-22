@@ -385,6 +385,9 @@
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
+						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
+						$y += 7;
+						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 						
@@ -1104,6 +1107,9 @@
 						$pdf->SetXY($x, $y);
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
+						$y += 7;
+						$pdf->SetXY($x, $y);
+						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
@@ -1954,6 +1960,9 @@
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
+						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
+						$y += 7;
+						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 						
@@ -2599,6 +2608,9 @@
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
+						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
+						$y += 7;
+						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
 						$pdf->Write(5, 'Detalle: '.$endoso_cuerpo);
 						
@@ -3122,6 +3134,9 @@
 							$pdf->SetXY($x, $y);
 							$pdf->SetFont('Arial', '', 8);
 							$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
+							$y += 7;
+							$pdf->SetXY($x, $y);
+							$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
 							$y += 7;
 							$pdf->SetXY($x, $y);
 							$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
