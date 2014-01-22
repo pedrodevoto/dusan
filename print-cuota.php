@@ -237,7 +237,7 @@
 		
 		// Header
 		$txthead = array(
-			array('text'=>iconv('UTF-8', 'windows-1252', date("d/m/Y")."\n")),
+			array('text'=>iconv('UTF-8', 'windows-1252', date('d/m/Y', strtotime($row_Recordset1['cuota_fe_pago']))."\n")),
 			array('text'=>iconv('UTF-8', 'windows-1252', $row_Recordset1['cuota_recibo']))
 		);
 		
@@ -305,7 +305,7 @@
 	}
 	else {
 		// Date
-		$date = date("d/m/Y");
+		$date = date('d/m/Y', strtotime($row_Recordset1['cuota_fe_pago']));
 		$pdf->SetXY(160, 142);
 		$pdf->SetFont('Arial', 'B', 12);
 		$pdf->MultiCell(34, 4.1, $date, 0, 'L');
