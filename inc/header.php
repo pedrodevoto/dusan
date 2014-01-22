@@ -49,7 +49,8 @@
 				</li>
 				<li><a href="#">Op. Pendientes</a>
 					<ul>
-						<li><a href="section-poli_pendientes_list.php">Pólizas</a></li>
+						<li><a href="section-poli_pendientes_list.php">Pólizas Pendientes</a></li>
+						<li><a href="section-poli_archivadas_list.php">Pólizas Archivadas</a></li>
 					</ul>
 				</li>
 				<li><a href="section-endosos_list.php">Endosos</a></li>

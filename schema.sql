@@ -644,6 +644,7 @@ CREATE TABLE `poliza` (
   `poliza_plan_flag` tinyint(4) NOT NULL DEFAULT '0',
   `poliza_plan_id` int(11) DEFAULT NULL,
   `poliza_pack_id` int(11) DEFAULT NULL,
+  `poliza_archivada` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),

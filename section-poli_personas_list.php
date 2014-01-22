@@ -102,6 +102,7 @@
 							returnval += '<li title="Ver detalle de cliente" onclick="openBoxModCliente('+oObj.aData[1]+');"><span class="ui-icon ui-icon-person"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							returnval += '<li title="Archivar Póliza" onclick="updatePolizaArchivar('+oObj.aData[0]+');"><span class="ui-icon ui-icon-disk"></span></li>';
 							<? } ?>
 							returnval += '</ul>';
 							return returnval;

@@ -3320,6 +3320,18 @@ $(document).ready(function () {
 			}
 		});
 	}
+	updatePolizaArchivar = function(id) {
+		if (confirm('Seguro desea archivar la póliza?')) {
+			$.post('update-poliza_archivar.php', {
+				'id': id,
+			}, function (data) {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+			});
+		}
+	}
 
 	/* Process via form functions */
 	processFormPolizaDet = function (id, fromcreate) {
