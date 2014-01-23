@@ -46,7 +46,7 @@
 	$endoso['anulacion'] = NULL;
 	if (isset($_GET['endoso_id']) && $_GET['endoso_id']!='') {
 		$endoso_id = mysql_real_escape_string($_GET['endoso_id']);
-		$sql = sprintf("SELECT endoso_tipo_nombre, endoso_cuerpo, IF(endoso_tipo_grupo_id=1, 1, 0) AS anulacion FROM endoso JOIN endoso_tipo ON endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id WHERE endoso_id=%s", $endoso_id);
+		$sql = sprintf("SELECT endoso_tipo_nombre, endoso_cuerpo, IF(endoso_tipo_grupo_id=1, 1, 0) AS anulacion, endoso_fecha_pedido FROM endoso JOIN endoso_tipo ON endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id WHERE endoso_id=%s", $endoso_id);
 		$res = mysql_query($sql) or die(mysql_error());
 		$endoso = mysql_fetch_assoc($res) or die('No se encontró el endoso.');
 	}
@@ -385,7 +385,7 @@
 						$pdf->Write(5, 'Motivo de endoso: '.$endoso['endoso_tipo_nombre']);
 						$y += 7;
 						$pdf->SetXY($x, $y);
-						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y') . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
+						$pdf->Write(5, 'Vigencia del endoso: de '. date('d/m/Y', strtotime($endoso['endoso_fecha_pedido'])) . ' a ' . date('d/m/Y', strtotime($row_Recordset1['poliza_validez_hasta'])));
 						$y += 7;
 						$pdf->SetXY($x, $y);
 						$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
