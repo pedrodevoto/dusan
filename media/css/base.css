@@ -489,18 +489,20 @@ table.display tfoot th {
 }
 .progMenu ul li {	
 	float: left;
-	list-style: none;		
+	list-style: none;
 	font-size: 1.1em;
 	display: block;
-	background: #666;
+	background: #fbf9ee;
 	padding: 5px 12px;
-	border-right: 1px solid white;
+	border: 1px solid #fcefa1;
 	width: auto;
-	color: #ffffff;
+	color: #363636;
 	white-space: nowrap;
 }
 .progMenu ul li.selected {	
-	background: #333 !important;
+	background: #666;
+	color: #ffffff;	
+	border-color:white;
 }
 .alert-success {
 color: #3c763d !important;

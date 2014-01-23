@@ -25,7 +25,10 @@
 		<?php
 			for ($i=1; $i<=count($progMenu); $i++) {
 				echo '<li';
-				if ($i === $section) {
+				if ($i < $section) {
+					echo ' class="alert-success"';
+				}
+				elseif ($i === $section) {
 					echo ' class="selected"';
 				}
 				echo '>'.$progMenu[$i].'</li>';
