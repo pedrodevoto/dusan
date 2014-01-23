@@ -28,7 +28,7 @@
 	<?php require_once('inc/progress.php'); ?>
 	<div style="margin-top:20px">
         <fieldset class="ui-widget ui-widget-content ui-corner-all">
-            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Subtipo de Poliza</legend> 
+            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Poliza</legend> 
             <div>
                 <table class="tblBox">
                 	<tr><td><strong>Cliente: </strong><?php echo($row_Recordset1['cliente_nombre']); ?></tr></td> 
