@@ -39,8 +39,13 @@
             </div>
         </fieldset>
     </div>
+	<?php
+	// Require form by type
+            require_once('subtipo/'.$row_Recordset1['subtipo_poliza_tabla'].'.php');
+        ?>          
+	</form>         
 	<?php if ($row_Recordset1['subtipo_poliza_tabla']=='automotor'){?>
-	<div style="margin-top:20px">
+	<div style="margin-top:10px">
 	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
 	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
 			<form id="fileForm" action="upload-poliza_foto.php" method="post" enctype="multipart/form-data">
@@ -55,19 +60,15 @@
 			</div>
 		</fieldset>
 	</div>
-	<?php }
-	// Require form by type
-            require_once('subtipo/'.$row_Recordset1['subtipo_poliza_tabla'].'.php');
-        ?> 
-        <!-- Acciones -->
-        <p align="center" style="margin-top:20px">     
-            <input type="button" name="btnBox" id="btnBox" value="Cargando" />
-        </p>        
-        <!-- Nota -->
-        <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>           
-	</form>        
+	<?php } ?>
+    <!-- Acciones -->
+    <p align="center" style="margin-top:20px">     
+        <input type="button" name="btnBox" id="btnBox" value="Cargando" />
+    </p>      
+    <!-- Nota -->
+    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>  
     <div id="divBoxMessage" class="ui-state-highlight alert-success ui-corner-all divBoxMessage"> 
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>
-    </div>    
+    </div>   
 </div>
