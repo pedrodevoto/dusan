@@ -4321,7 +4321,7 @@ $(document).ready(function () {
 		});
 
 	}
-	openBoxAltaPoliza = function (tipo) {
+	openBoxAltaPoliza = function (tipo, subtipo) {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-poliza_alta.php?section=1&tipo='+tipo,
@@ -4495,6 +4495,13 @@ $(document).ready(function () {
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_medio_pago').val('Directo').change();
+					if (subtipo == 'automotor') {
+						$('#box-tipo_poliza_id').val(2);
+						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', 2);
+						$.when(populateListSubtipoPoliza(2, 'box-subtipo_poliza_id', 'box')).then(function() {
+							$('#box-subtipo_poliza_id').val(6).change();
+						});
+					}
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
