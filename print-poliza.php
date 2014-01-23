@@ -109,7 +109,7 @@
 				array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo_nombre']),
 				array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
 			);
-			$txt_patente = "Patente: ".$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];
+			$txt_patente = "Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];
 			$txt_gnc_c1 = array(
 				array('maxwidth' => 60, 'text' => "Nro. Oblea: ".$row_Recordset2['nro_oblea']),
 				array('maxwidth' => 60, 'text' => "Nro. Regulador: ".$row_Recordset2['nro_regulador'])
@@ -620,15 +620,15 @@
 						$type = 0;
 						switch(substr($_GET['type'], 2)) {
 							case '':
-								$file_name = $row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
+								$file_name = ($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
 								$type = 2;
 							break;
 							case 'mc':
-								$file_name = $row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
+								$file_name = ($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
 								$type = 3;
 							break;
 							case 're':
-								$file_name = 'Renovacion '.$row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
+								$file_name = 'Renovacion '.($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'].'.pdf';
 								$type = 4;
 							break;
 							case 'en':
