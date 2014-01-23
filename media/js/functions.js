@@ -3320,10 +3320,12 @@ $(document).ready(function () {
 			}
 		});
 	}
-	updatePolizaArchivar = function(id) {
+	updatePolizaArchivar = function(id, flag) {
+		flag = flag || 0;
 		if (confirm('Seguro desea archivar la póliza?')) {
 			$.post('update-poliza_archivar.php', {
 				'id': id,
+				'flag': flag,
 			}, function (data) {
 				// Table standing redraw
 				if (typeof oTable != 'undefined') {

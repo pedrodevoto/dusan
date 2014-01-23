@@ -1,5 +1,5 @@
 <?php
-	$MM_authorizedUsers = "administrativo,master";
+	$MM_authorizedUsers = "master";
 ?>
 <?php require_once('inc/security-ajax.php'); ?>
 <?php

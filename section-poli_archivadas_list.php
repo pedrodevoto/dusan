@@ -1,5 +1,5 @@
 <?php
-	$MM_authorizedUsers = "administrativo,master";
+	$MM_authorizedUsers = "master";
 ?>
 <?php require_once('inc/security.php'); ?>
 <?php require_once('inc/general_functions.php'); ?>
@@ -96,14 +96,11 @@
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="openBoxPolizaDet('+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
 							returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Plan de Pago" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li>';
-							<?php if($_SESSION['ADM_UserGroup']=='master') {?>
 							returnval += '<li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
-							<?php } ?>
 							returnval += '<li title="Endosos" onclick="openBoxEndosos('+oObj.aData[0]+', '+(oObj.aData[2]?oObj.aData[2]:undefined)+');"><span class="ui-icon ui-icon-folder-collapsed"></span></li>';
 							returnval += '<li title="Ver detalle de cliente" onclick="openBoxModCliente('+oObj.aData[1]+');"><span class="ui-icon ui-icon-person"></span></li>';
-							<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'poliza\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
-							<? } ?>
+							returnval += '<li title="Quitar póliza de archivo" onclick="updatePolizaArchivar('+oObj.aData[0]+', 1);"><span class="ui-icon ui-icon-arrowthickstop-1-w"></span></li>';
 							returnval += '</ul>';
 							return returnval;
 						}}
