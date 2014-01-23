@@ -455,6 +455,7 @@ CREATE TABLE `endoso` (
   `endoso_fecha_pedido` date NOT NULL,
   `endoso_tipo_id` int(11) NOT NULL,
   `endoso_cuerpo` text COLLATE utf8_unicode_ci,
+  `endoso_premio` decimal(10,2) DEFAULT NULL,
   `endoso_numero` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `endoso_fecha_compania` date DEFAULT NULL,
   `endoso_completo` tinyint(1) NOT NULL,
