@@ -177,7 +177,7 @@
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);										
 					$pdf->SetXY(0, 45);
-					printText($txt_date, $pdf, 196, 0, 'R');
+					// printText($txt_date, $pdf, 196, 0, 'R');
 					// Compañía / Sucursal
 					$txt_compania = "Compañía Aseguradora: ".strtoupper($row_Recordset1['seguro_nombre']);
 					$txt_compania.= "  -  Sucursal: ".strtoupper($row_Recordset1['sucursal_nombre']);
@@ -316,9 +316,9 @@
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);
 					$pdf->SetXY(175, 5);
-					foreach ($txt_date as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 5);
-					}
+					// foreach ($txt_date as $array) {
+					// 	printText($array['text'], $pdf, $array['maxwidth'], 5);
+					// }
 					// Emitir
 					$size_emitir = 44;
 					if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
@@ -754,7 +754,7 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);										
 						$pdf->SetXY(0, 45);
-						printText($txt_date, $pdf, 196, 0, 'R');
+						// printText($txt_date, $pdf, 196, 0, 'R');
 					}
 			
 					// NEW DOCUMENT
@@ -1027,9 +1027,9 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);
 						$pdf->SetXY(175, 5);
-						foreach ($txt_date as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 5);
-						}
+						// foreach ($txt_date as $array) {
+						// 	printText($array['text'], $pdf, $array['maxwidth'], 5);
+						// }
 						// Emitir
 						$size_emitir = 44;
 						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
@@ -1517,7 +1517,7 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);										
 						$pdf->SetXY(0, 45);
-						printText($txt_date, $pdf, 196, 0, 'R');
+						// printText($txt_date, $pdf, 196, 0, 'R');
 					}
 			
 					// NEW DOCUMENT
@@ -1832,9 +1832,9 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);
 						$pdf->SetXY(175, 5);
-						foreach ($txt_date as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 5);
-						}
+						// foreach ($txt_date as $array) {
+						// 	printText($array['text'], $pdf, $array['maxwidth'], 5);
+						// }
 						// Emitir
 						$size_emitir = 44;
 						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
@@ -2331,7 +2331,7 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);										
 						$pdf->SetXY(0, 45);
-						printText($txt_date, $pdf, 196, 0, 'R');
+						// printText($txt_date, $pdf, 196, 0, 'R');
 					}
 		
 					// NEW DOCUMENT
@@ -2480,9 +2480,9 @@
 						$pdf->SetFont('Arial', '', 8);
 						$pdf->SetTextColor(0,0,0);
 						$pdf->SetXY(175, 5);
-						foreach ($txt_date as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 5);
-						}
+						// foreach ($txt_date as $array) {
+						// 	printText($array['text'], $pdf, $array['maxwidth'], 5);
+						// }
 						// Emitir
 						$size_emitir = 44;
 						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
@@ -2815,7 +2815,7 @@
 							$pdf->SetFont('Arial', '', 8);
 							$pdf->SetTextColor(0,0,0);										
 							$pdf->SetXY(0, 45);
-							printText($txt_date, $pdf, 196, 0, 'R');
+							// printText($txt_date, $pdf, 196, 0, 'R');
 						}
 
 						// NEW DOCUMENT
@@ -3019,9 +3019,9 @@
 							$pdf->SetFont('Arial', '', 8);
 							$pdf->SetTextColor(0,0,0);
 							$pdf->SetXY(175, 5);
-							foreach ($txt_date as $array) {
-								printText($array['text'], $pdf, $array['maxwidth'], 5);
-							}
+							// foreach ($txt_date as $array) {
+							// 	printText($array['text'], $pdf, $array['maxwidth'], 5);
+							// }
 							// Emitir
 							$size_emitir = 44;
 							if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
