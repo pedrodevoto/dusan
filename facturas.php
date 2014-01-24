@@ -13,7 +13,7 @@
 	$cuota_id = intval($_POST['box-cuota_id']);
 	
 	
-	$sql = "SELECT cuota_id, cuota_fe_pago FROM cuota WHERE cuota_estado = '2 - Pagado' AND cuota_nro_factura IS NULL ORDER BY cuota_fe_pago ASC";
+	$sql = "SELECT cuota_id, cuota_fe_pago FROM cuota WHERE cuota_estado_id = 2 AND cuota_nro_factura IS NULL ORDER BY cuota_fe_pago ASC";
 	$rows = mysql_query($sql);
 	
 	while ($row = mysql_fetch_array($rows)) {

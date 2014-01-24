@@ -52,7 +52,7 @@
 	
 	// Recordset: Main
 	$query_Recordset1 = sprintf("SELECT * FROM cuota JOIN (poliza, subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (cuota.poliza_id=poliza.poliza_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN (contacto) ON (poliza.cliente_id=contacto.cliente_id AND contacto_default=1) JOIN sucursal on poliza.sucursal_id = sucursal.sucursal_id
-									WHERE cuota_recibo IS NOT NULL AND cuota_estado='2 - Pagado' AND cuota.cuota_id=%s",
+									WHERE cuota_recibo IS NOT NULL AND cuota_estado_id=2 AND cuota.cuota_id=%s",
 									$cuota_id);
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	$row_Recordset1 = mysql_fetch_assoc($Recordset1);

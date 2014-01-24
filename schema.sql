@@ -411,7 +411,7 @@ CREATE TABLE `cuota` (
   `cuota_periodo` date NOT NULL,
   `cuota_monto` decimal(10,2) unsigned NOT NULL,
   `cuota_vencimiento` date NOT NULL,
-  `cuota_estado` enum('1 - No Pagado','2 - Pagado','3 - Anulado') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1 - No Pagado',
+  `cuota_estado_id` int(11) NOT NULL,
   `cuota_fe_pago` datetime DEFAULT NULL,
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
@@ -420,7 +420,17 @@ CREATE TABLE `cuota` (
   UNIQUE KEY `poliza_id` (`poliza_id`,`cuota_nro`),
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),
   UNIQUE KEY `cuota_recibo` (`cuota_recibo`),
-  CONSTRAINT `cuota_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+  KEY `cuota_estado_id` (`cuota_estado_id`),
+  CONSTRAINT `cuota_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
+  CONSTRAINT `cuota_ibfk_2` FOREIGN KEY (`cuota_estado_id`) REFERENCES `cuota_estado` (`cuota_estado_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cuota_estado`;
+CREATE TABLE `cuota_estado` (
+  `cuota_estado_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cuota_estado_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cuota_estado_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

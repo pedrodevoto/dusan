@@ -2489,21 +2489,21 @@ $(document).ready(function () {
 						result += '<td>' + object.cuota_periodo + '</td>';
 						result += '<td>' + object.cuota_monto + '</td>';
 						result += '<td><span class="jeditrow2" id="vencimiento_' + object.cuota_id + '">' + object.cuota_vencimiento + '</span></td>';
-						result += '<td>' + object.cuota_estado + '</td>';
+						result += '<td>' + object.cuota_estado_nombre + '</td>';
 						result += '<td>' + object.cuota_fe_pago + '</td>';
 						result += '<td>' + object.cuota_recibo + '</td>';
 						result += '<td>' + (object.cuota_pfc==1?'Sí':'&nbsp;') + '</td>';
 						result += '<td>';
-						if (object.cuota_estado != '3 - Anulado') {
-							if (object.cuota_estado === '2 - Pagado') {
+						if (object.cuota_estado_nombre != 'Anulado') {
+							if (object.cuota_estado_nombre === 'Pagado') {
 								result += '<span onClick="javascript:window.open(\'print-cuota.php?id=' + object.cuota_id + '&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
 								result += '<span onClick="setCuotaToPrint(' + object.cuota_recibo + ', ' + object.cuota_id + ');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Enviar por email"></span>';
 							} else {
 								result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
 							}
 						}
-						if (object.master && object.cuota_estado != '2 - Pagado') {
-							result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ', '+(object.cuota_estado == '3 - Anulado'?'1':'0')+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-'+(object.cuota_estado == '3 - Anulado'?'minus':'close')+'" title="'+(object.cuota_estado == '3 - Anulado'?'Revertir anulación':'Anular')+'"></span>';
+						if (object.master && object.cuota_estado_nombre != 'Pagado') {
+							result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ', '+(object.cuota_estado_nombre == 'Anulado'?'1':'0')+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-'+(object.cuota_estado_nombre == 'Anulado'?'minus':'close')+'" title="'+(object.cuota_estado_nombre == 'Anulado'?'Revertir anulación':'Anular')+'"></span>';
 						}
 						result += '</td>';
 						result += '</tr>';

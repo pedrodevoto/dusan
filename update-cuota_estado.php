@@ -15,7 +15,7 @@
 	$value = $_POST['value'];
 
 	// Recordset: Main
-	$query_Recordset1 = sprintf("SELECT cuota_estado FROM cuota WHERE cuota.cuota_id=%s",
+	$query_Recordset1 = sprintf("SELECT cuota_estado_id FROM cuota WHERE cuota.cuota_id=%s",
 						GetSQLValueString($strID, "int"));	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
@@ -26,16 +26,16 @@
 		
 		// Switch (Estado)
 		switch ($value) {
-			case '1 - No Pagado':
+			case 1:
 				// Do Nothing
 				break;
-			case '2 - Pagado':
+			case 2:
 				// Recordset: Max Value
 				$query_Recordset2 = "SELECT COALESCE(MAX(cuota_recibo)+1,1) AS val_max FROM cuota";
 				$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 				$row_Recordset2 = mysql_fetch_assoc($Recordset2);				
 				// Update
-				$updateSQL = sprintf("UPDATE cuota SET cuota_estado=%s, cuota_fe_pago=NOW(), cuota_recibo=%s WHERE cuota.cuota_id=%s LIMIT 1",
+				$updateSQL = sprintf("UPDATE cuota SET cuota_estado_id=%s, cuota_fe_pago=NOW(), cuota_recibo=%s WHERE cuota.cuota_id=%s LIMIT 1",
 								GetSQLValueString($value, "text"),
 								$row_Recordset2['val_max'],
 								GetSQLValueString($strID, "int"));											
@@ -46,19 +46,19 @@
 				echo $value;
 				// Break							
 				break;
-			case '3 - Anulado':
+			case 3:
 				// If not specific state			
-				if ($row_Recordset1['cuota_estado'] !== '1 - No Pagado') {
+				if ($row_Recordset1['cuota_estado_id'] !== 1) {
 					// Update
-					$updateSQL = sprintf("UPDATE cuota SET cuota_estado=%s WHERE cuota.cuota_id=%s LIMIT 1",
-									GetSQLValueString($value, "text"),
+					$updateSQL = sprintf("UPDATE cuota SET cuota_estado_id=%s WHERE cuota.cuota_id=%s LIMIT 1",
+									GetSQLValueString($value, "int"),
 									GetSQLValueString($strID, "int"));											
 					$Result1 = mysql_query($updateSQL, $connection) or die(mysql_die());
 					// Show value
 					echo $value;			
 				} else {
 					// Show original value
-					echo $row_Recordset1['cuota_estado'];
+					echo $row_Recordset1['cuota_estado_id'];
 				}
 				break;
 			default:

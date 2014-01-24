@@ -31,7 +31,7 @@
 		list($cuota_nro_factura) = mysql_fetch_array($res);
 	}
 	
-	$sql = sprintf('UPDATE cuota SET cuota_estado="2 - Pagado", cuota_fe_pago=%s, cuota_monto=%s, cuota_recibo=%s, cuota_nro_factura = %s WHERE cuota_id=%s', 
+	$sql = sprintf('UPDATE cuota SET cuota_estado_id=2, cuota_fe_pago=%s, cuota_monto=%s, cuota_recibo=%s, cuota_nro_factura = %s WHERE cuota_id=%s', 
 					GetSQLValueString($_POST['box-cuota_fe_pago'], "date"),
 					GetSQLValueString($_POST['box-cuota_monto'], "double"),
 					$recibo,
