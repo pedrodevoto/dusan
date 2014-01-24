@@ -3642,6 +3642,9 @@ $(document).ready(function () {
 						},
 						"box-seguro_email_fotos": {
 							csemails: true
+						},
+						"box-seguro_email_inspeccion": {
+							csemails: true
 						}
 					}
 				});
@@ -3697,6 +3700,9 @@ $(document).ready(function () {
 								csemails: true
 							},
 							"box-seguro_email_fotos": {
+								csemails: true
+							},
+							"box-seguro_email_inspeccion": {
 								csemails: true
 							}
 						}
@@ -4976,7 +4982,7 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-polizacert.php?section=3&id=' + id,
-			width: '700px',
+			width: '750px',
 			height: '600px',
 			onComplete: function () {
 
@@ -5010,6 +5016,9 @@ $(document).ready(function () {
 							break;
 						case 'rast':
 							url = 'send-rastreo.php';
+							break;
+						case 'insp':
+							url = 'send-inspeccion.php';
 							break;
 						default:
 							url = 'print-poliza.php';

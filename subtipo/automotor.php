@@ -136,6 +136,10 @@
 		$('#box-nro_oblea, #box-nro_regulador, #box-marca_regulador, #box-marca_cilindro, #box-venc_oblea, #box-nro_tubo').prop('readonly', $(this).val() == 'Diesel');
 		$('#box-gnc_foto').prop('disabled', $(this).val() == 'Diesel');
 	});
+	$('#box-pedido_instalacion').change(function() {
+		$('#box-pedido_instalacion_direccion, #box-pedido_instalacion_horario, #box-pedido_instalacion_telefono, #box-pedido_instalacion_observaciones').prop('readonly', !$(this).prop('checked'));
+		if ($(this).prop('checked')) $('#box-pedido_instalacion_direccion').focus();
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
@@ -532,6 +536,29 @@
         <label for="box-valor_total">Valor Total ^</label>
         <input type="text" name="box-valor_total" id="box-valor_total" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
     </p>                            
+</fieldset>
+<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+	<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de instalación</legend>
+    <p>
+        <label for="box-pedido_instalacion">Pedir</label>
+        <input type="checkbox" name="box-pedido_instalacion" id="box-pedido_instalacion" value="1" />
+    </p>
+	<p>
+		<label for="box-pedido_instalacion_direccion">Dirección</label>
+		<input type="text" name="box-pedido_instalacion_direccion" id="box-pedido_instalacion_direccion" class="ui-widget-content" style="width:120px" readonly />
+	</p>
+	<p>
+		<label for="box-pedido_instalacion_horario">Horario de atención</label>
+		<input type="text" name="box-pedido_instalacion_horario" id="box-pedido_instalacion_horario" class="ui-widget-content" style="width:120px" readonly />
+	</p>
+	<p>
+		<label for="box-pedido_instalacion_telefono">Teléfono de contacto</label>
+		<input type="text" name="box-pedido_instalacion_telefono" id="box-pedido_instalacion_telefono" class="ui-widget-content" style="width:120px" readonly />
+	</p>
+	<p>
+		<label for="box-pedido_instalacion_observaciones">Observaciones</label>
+		<input type="text" name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:120px" maxlength="500" readonly />
+	</p>
 </fieldset>  
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cédula verde</legend>

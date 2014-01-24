@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-seguro_id"])) && ($_POST["box-seguro_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE seguro SET seguro_nombre=UPPER(TRIM(%s)), seguro_email_siniestro=TRIM(%s), seguro_email_emision=TRIM(%s), seguro_email_emision_vida=TRIM(%s), seguro_email_patrimoniales_otras=TRIM(%s), seguro_email_endosos=TRIM(%s), seguro_email_rastreador=TRIM(%s), seguro_email_fotos=TRIM(%s), seguro_cuit=UPPER(TRIM(%s)), seguro_direccion=UPPER(TRIM(%s)), seguro_localidad=UPPER(TRIM(%s)), seguro_cp=UPPER(TRIM(%s)) WHERE seguro.seguro_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE seguro SET seguro_nombre=UPPER(TRIM(%s)), seguro_email_siniestro=TRIM(%s), seguro_email_emision=TRIM(%s), seguro_email_emision_vida=TRIM(%s), seguro_email_patrimoniales_otras=TRIM(%s), seguro_email_endosos=TRIM(%s), seguro_email_rastreador=TRIM(%s), seguro_email_fotos=TRIM(%s), seguro_email_inspeccion=TRIM(%s), seguro_cuit=UPPER(TRIM(%s)), seguro_direccion=UPPER(TRIM(%s)), seguro_localidad=UPPER(TRIM(%s)), seguro_cp=UPPER(TRIM(%s)) WHERE seguro.seguro_id=%s LIMIT 1",
 						GetSQLValueString($_POST['box-seguro_nombre'], "text"),
 						GetSQLValueString($_POST['box-seguro_email_siniestro'], "text"),
 						GetSQLValueString($_POST['box-seguro_email_emision'], "text"),
@@ -21,6 +21,7 @@
 						GetSQLValueString($_POST['box-seguro_email_endosos'], "text"),
 						GetSQLValueString($_POST['box-seguro_email_rastreador'], "text"),
 						GetSQLValueString($_POST['box-seguro_email_fotos'], "text"),
+						GetSQLValueString($_POST['box-seguro_email_inspeccion'], "text"),
 						GetSQLValueString($_POST['box-seguro_cuit'], "text"),
 						GetSQLValueString($_POST['box-seguro_direccion'], "text"),
 						GetSQLValueString($_POST['box-seguro_localidad'], "text"),

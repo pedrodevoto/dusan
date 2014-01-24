@@ -42,6 +42,10 @@
                 <input type="text" name="box-seguro_email_fotos" id="box-seguro_email_fotos" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
             </p>
             <p>
+                <label for="box-seguro_email_inspeccion">E-mail Inspección</label>
+                <input type="text" name="box-seguro_email_inspeccion" id="box-seguro_email_inspeccion" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
+            </p>
+            <p>
                 <label for="box-seguro_cuit">CUIT</label>
                 <input type="text" name="box-seguro_cuit" id="box-seguro_cuit" maxlength="15" class="ui-widget-content" style="width:220px" />
             </p>
