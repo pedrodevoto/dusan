@@ -538,14 +538,14 @@
     </p>                            
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-	<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de instalación</legend>
+	<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de inspección</legend>
     <p>
-        <label for="box-pedido_instalacion">Pedir</label>
-        <input type="checkbox" name="box-pedido_instalacion" id="box-pedido_instalacion" value="1" />
+        <label for="box-pedido_instalacion">Pedir inspección?</label>
+        Sí <input type="checkbox" name="box-pedido_instalacion" id="box-pedido_instalacion" value="1" />
     </p>
 	<p>
 		<label for="box-pedido_instalacion_direccion">Dirección</label>
-		<input type="text" name="box-pedido_instalacion_direccion" id="box-pedido_instalacion_direccion" class="ui-widget-content" style="width:120px" readonly />
+		<input type="text" name="box-pedido_instalacion_direccion" id="box-pedido_instalacion_direccion" class="ui-widget-content" style="width:220px" readonly />
 	</p>
 	<p>
 		<label for="box-pedido_instalacion_horario">Horario de atención</label>
@@ -557,7 +557,7 @@
 	</p>
 	<p>
 		<label for="box-pedido_instalacion_observaciones">Observaciones</label>
-		<input type="text" name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:120px" maxlength="500" readonly />
+		<textarea name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:220px" maxlength="500" readonly /> </textarea>
 	</p>
 </fieldset>  
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
