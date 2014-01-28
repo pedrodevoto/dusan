@@ -198,6 +198,12 @@
 								</select>
                             </td>
                         </tr>
+						<tr>
+                            <td width="14%">
+								<label for="poliza_vigencia_dia">Día de vigencia</label>
+								<input type="text" name="poliza_vigencia_dia" maxlength="2" />
+                            </td>
+						</tr>
                         <tr>                                
                             <td colspan="8" align="center">
                             	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />

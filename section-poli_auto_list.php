@@ -234,7 +234,8 @@
 								</select>
                             </td>
                             <td width="14%">
-
+								<label for="poliza_vigencia_dia">Día de vigencia</label>
+								<input type="text" name="poliza_vigencia_dia" maxlength="2" />
                             </td>
                         </tr>
                         <tr>                                

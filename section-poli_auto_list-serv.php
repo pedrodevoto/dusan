@@ -73,6 +73,10 @@
 	if(isset($_GET['poliza_al_dia']) && $_GET['poliza_al_dia']!=""){	
 		$query_Recordset1_having .= sprintf(" AND poliza_al_dia = %s", GetSQLValueString($_GET['poliza_al_dia']=='1'?'Sí':'No', "text"));
 	}
+	// Filter by: poliza_vigencia_dia
+	if(isset($_GET['poliza_vigencia_dia']) && $_GET['poliza_vigencia_dia']!=""){	
+		$query_Recordset1_where .= sprintf(" AND DATE_FORMAT(poliza_validez_desde, '%%e') = %s", GetSQLValueString($_GET['poliza_vigencia_dia'], "int"));
+	}
 ?>
 <?php
 
