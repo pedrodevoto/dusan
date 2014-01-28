@@ -281,7 +281,7 @@ $(document).ready(function () {
 					// Sort options by index value
 					sortListValue(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -310,7 +310,7 @@ $(document).ready(function () {
 					// Sort options by index value
 					sortListValue(field);
 					// Append option: "all"
-					if (all) appendListItem(field, '', 'Todos');
+					if (all) appendListItem(field, '', 'Elegir');
 					// Select first item
 					// selectFirstItem(field);
 					dfd.resolve();
@@ -339,7 +339,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -369,7 +369,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -399,7 +399,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -428,7 +428,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -457,7 +457,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -486,7 +486,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -515,7 +515,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -544,7 +544,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -573,7 +573,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -599,7 +599,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -699,7 +699,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -725,7 +725,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -749,7 +749,7 @@ $(document).ready(function () {
 					});
 					$('#' + field).html(options);
 					// Append option: "all"
-					appendListItem(field, '', 'Todos');
+					appendListItem(field, '', 'Elegir');
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -806,7 +806,7 @@ $(document).ready(function () {
 						
 					}
 					else {
-						appendListItem(field, '', 'Todos');
+						appendListItem(field, '', 'Elegir');
 					}
 					// Select first item
 					selectFirstItem(field);
