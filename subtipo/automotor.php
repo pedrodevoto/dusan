@@ -140,6 +140,9 @@
 		$('#box-pedido_instalacion_direccion, #box-pedido_instalacion_horario, #box-pedido_instalacion_telefono, #box-pedido_instalacion_observaciones').prop('readonly', !$(this).prop('checked'));
 		if ($(this).prop('checked')) $('#box-pedido_instalacion_direccion').focus();
 	});
+	$('#box-cert_rodamiento').change(function() {
+		$('#box-cert_rodamiento_foto').prop('disabled', !$(this).prop('checked'));
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
@@ -214,6 +217,13 @@
         <label for="box-0km">0 KM</label>
         <input type="checkbox" name="box-0km" id="box-0km" value="1" />
     </p>
+	<p>
+		<label for="box-cert_rodamiento">Certificado de no rodamiento</label>
+		<input type="checkbox" name="box-cert_rodamiento" id="box-cert_rodamiento" value="1" /> 
+		<input type="file" name="box-cert_rodamiento_foto[]" id="box-cert_rodamiento_foto" class="ui-widget-content" style="width:220px" disabled /> 
+		<div id="divBoxFotosCertRodamiento" style="width:108px;height:135px;overflow:auto;white-space: nowrap;display:none">
+		</div>
+	</p>
     <p>
         <label for="box-importado">Importado</label>
         <input type="checkbox" name="box-importado" id="box-importado" value="1" />

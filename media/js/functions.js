@@ -1442,6 +1442,7 @@ $(document).ready(function () {
 			populateDiv_Fotos('poliza', id);
 			populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 			populateDiv_Fotos('automotor_gnc', id, 'GNC');
+			populateDiv_Fotos('automotor_cert_rodamiento', id, 'CertRodamiento');
 			populateDiv_Fotos('automotor_cedula_verde', id, 'CedulaVerde');
 
 			populateSectionAutomotorAccesorios(id);
@@ -1463,7 +1464,7 @@ $(document).ready(function () {
 					populateDiv_Fotos('poliza', id);
 				}
 			});
-			$('#box-combustible, #box-pedido_instalacion').change();
+			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado

@@ -73,13 +73,14 @@ CREATE TABLE `automotor` (
   `automotor_carroceria_id` int(11) NOT NULL,
   `combustible` enum('Nafta','Diesel') COLLATE utf8_unicode_ci NOT NULL,
   `0km` tinyint(3) unsigned NOT NULL,
+  `cert_rodamiento` tinyint(3) unsigned NOT NULL,
   `importado` tinyint(3) unsigned NOT NULL,
   `nro_motor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `nro_chasis` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `chapa` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `pintura` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `tipo_pintura` enum('Común','Bicapa','Tricapa') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tapizado` enum('Tela','Pana','Cuero','Combinado') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tapizado` enum('Tela','Pana','Cuero') COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zona_riesgo_id` int(11) DEFAULT NULL,
   `prendado` tinyint(3) unsigned NOT NULL,
@@ -182,6 +183,19 @@ CREATE TABLE `automotor_cedula_verde_foto` (
   `automotor_cedula_verde_foto_width` int(11) NOT NULL,
   `automotor_cedula_verde_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_cedula_verde_foto_id`),
+  KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_cert_rodamiento_foto`;
+CREATE TABLE `automotor_cert_rodamiento_foto` (
+  `automotor_cert_rodamiento_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_cert_rodamiento_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_cert_rodamiento_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_cert_rodamiento_foto_width` int(11) NOT NULL,
+  `automotor_cert_rodamiento_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_cert_rodamiento_foto_id`),
   KEY `poliza_id` (`poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
