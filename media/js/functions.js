@@ -5632,5 +5632,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-
+	openBoxPolizaFotos = function(id) {
+		
+	}
 });
