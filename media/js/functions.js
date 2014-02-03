@@ -437,6 +437,33 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateListCliente_Nac = function (field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-clie_nac.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	populateListCliente_TipoDoc = function (field, context) {
 		var dfd = new $.Deferred();
 		$.ajax({
@@ -485,10 +512,6 @@ $(document).ready(function () {
 					$('#' + field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
-					// Append option: "all"
-					appendListItem(field, '', 'Elegir');
-					// Select first item
-					selectFirstItem(field);
 					dfd.resolve();
 				}
 			}
@@ -514,8 +537,31 @@ $(document).ready(function () {
 					$('#' + field).html(options);
 					// Sort options alphabetically
 					sortListAlpha(field);
-					// Append option: "all"
-					appendListItem(field, '', 'Elegir');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateListCliente_TipoSociedad = function (field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-clie_tipo_sociedad.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -1229,12 +1275,15 @@ $(document).ready(function () {
 					// Populate drop-downs, then form
 					$.when(
 						populateListCliente_Sexo('box-cliente_sexo', 'box'),
+						populateListCliente_Nac('box-cliente_nacionalidad_id', 'box'),
 						populateListCliente_CF('box-cliente_cf', 'box'),
 						populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
-						populateListCliente_RegTipo('box-cliente_reg_tipo', 'box')
+						populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
+						populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
+						populateDiv_Fotos('cliente', id);
 						// Resolve
 						dfd.resolve();
 					});
@@ -3069,20 +3118,31 @@ $(document).ready(function () {
 	updateFormCliente = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post
-		$.post("update-cliente.php", $("#frmBox").serialize(), function (data) {
-			if (data == 'Session expired') {
-				sessionExpire('box');
-			} else {
-				// Table standing redraw
-				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();
+		// AJAXize form
+		$("#frmBox").ajaxSubmit({
+			url: 'update-cliente.php',
+			type: 'POST',
+			beforeSend: function () {
+
+			},
+			uploadProgress: function (event, position, total, percentComplete) {
+
+			},
+			success: function (responseText, statusText, xhr) {
+				data = responseText;
+				if (data == 'Session expired') {
+					sessionExpire('box');
+				} else {
+					// Table standing redraw
+					if (typeof oTable != 'undefined') {
+						oTable.fnStandingRedraw();
+					}
+					// Show message
+					showBoxConf(data, true, 'always', 3000, function () {
+						// Repopulate form
+						populateFormBoxCliente($('#box-cliente_id').val());
+					});
 				}
-				// Show message
-				showBoxConf(data, true, 'always', 3000, function () {
-					// Repopulate form
-					populateFormBoxCliente($('#box-cliente_id').val());
-				});
 			}
 		});
 	}
@@ -4010,9 +4070,11 @@ $(document).ready(function () {
 				// Populate drop-downs, then initialize form
 				$.when(
 					populateListCliente_Sexo('box-cliente_sexo', 'box'),
+					populateListCliente_Nac('box-cliente_nacionalidad_id', 'box'),
 					populateListCliente_CF('box-cliente_cf', 'box'),
 					populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
-					populateListCliente_RegTipo('box-cliente_reg_tipo', 'box')
+					populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
+					populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')
 				).then(function () {
 
 					// Init Datepickers
@@ -4031,10 +4093,10 @@ $(document).ready(function () {
 
 					// Set default values
 					$("#box-cliente_sexo").val('M');
-					$("#box-cliente_nacionalidad").val('Argentino');
-					$("#box-cliente_cf").val('Consumidor Final');
+					$("#box-cliente_nacionalidad").val(1);
+					$("#box-cliente_cf_id").val(1);
 					$("#box-cliente_tipo_doc").val('DNI');
-					$("#box-cliente_reg_tipo").val('B1');
+					$("#box-cliente_reg_tipo").val(5);
 
 					// On Change: Input text
 					$("#box-cliente_nro_doc").keyup(function () {
@@ -4042,38 +4104,7 @@ $(document).ready(function () {
 					});
 
 					// Validate form
-					var validateForm = $("#frmBox").validate({
-						rules: {
-							"box-cliente_nombre": {
-								required: true
-							},
-							"box-cliente_nacimiento": {
-								required: true,
-								dateAR: true
-							},
-							"box-cliente_sexo": {
-								required: true
-							},
-							"box-cliente_nacionalidad": {
-								required: true
-							},
-							"box-cliente_cf": {
-								required: true
-							},
-							"box-cliente_tipo_doc": {
-								required: true
-							},
-							"box-cliente_nro_doc": {
-								required: true
-							},
-							"box-cliente_reg_vencimiento": {
-								dateAR: true
-							},
-							"box-cliente_email": {
-								email: true
-							}
-						}
-					});
+					var validateForm = $("#frmBox").validate();
 
 					// Button action
 					$("#btnBox").click(function () {
@@ -4087,7 +4118,7 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-cliente_tipo_persona').change();
 				});
 
 			}
@@ -4127,38 +4158,7 @@ $(document).ready(function () {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
 					// Validate form
-					var validateForm = $("#frmBox").validate({
-						rules: {
-							"box-cliente_nombre": {
-								required: true
-							},
-							"box-cliente_nacimiento": {
-								required: true,
-								dateAR: true
-							},
-							"box-cliente_sexo": {
-								required: true
-							},
-							"box-cliente_nacionalidad": {
-								required: true
-							},
-							"box-cliente_cf": {
-								required: true
-							},
-							"box-cliente_tipo_doc": {
-								required: true
-							},
-							"box-cliente_nro_doc": {
-								required: true
-							},
-							"box-cliente_reg_vencimiento": {
-								dateAR: true
-							},
-							"box-cliente_email": {
-								email: true
-							}
-						}
-					});
+					var validateForm = $("#frmBox").validate();
 
 					// Button action
 					$("#btnBox").click(function () {
@@ -4175,7 +4175,7 @@ $(document).ready(function () {
 					
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-cliente_tipo_persona').change();
 				});
 
 			}
@@ -4192,7 +4192,7 @@ $(document).ready(function () {
 				// -------------------- GENERAL ---------------------
 
 				// Initialize buttons
-				$("#btnBox, #btnBoxReset").button();
+				$("#btnBox, #btnBoxReset, #btnAcciones").button();
 
 				// Disable forms
 				formDisable('frmBox', 'ui', true);
@@ -4201,31 +4201,6 @@ $(document).ready(function () {
 				populateDiv_Cliente_Info(id);
 				populateDiv_Contacto(id);
 				populateDiv_Fotos('cliente', id);
-
-				// Append hidden input to AJAX file form
-				$('<input>').prop({
-					type: 'hidden',
-					id: 'cliente_id',
-					name: 'cliente_id'
-				}).val(id).appendTo($('#fileForm'));
-
-				// AJAX file form
-				$("#fileForm").ajaxForm({
-					beforeSend: function () {
-						$("#fotosLoading").show();
-					},
-					uploadProgress: function (event, position, total, percentComplete) {
-
-					},
-					complete: function (xhr) {
-						if (xhr.responseText.indexOf('Error:') != -1) {
-							alert(xhr.responseText);
-						} else {
-							$("#fotosLoading").hide();
-						}
-						populateDiv_Fotos('cliente', id);
-					}
-				});
 
 				// -------------------- FORM 1 ----------------------
 
@@ -4265,6 +4240,10 @@ $(document).ready(function () {
 						};
 					});
 
+					$('#btnAcciones').click(function() {
+						openBoxClieAcciones(id);
+					});
+					
 					// Enable form
 					formDisable('frmBox', 'ui', false);
 
@@ -4328,7 +4307,7 @@ $(document).ready(function () {
 		});
 
 	}
-	openBoxAltaPoliza = function (tipo, subtipo) {
+	openBoxAltaPoliza = function (tipo, subtipo, cliente_id) {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-poliza_alta.php?section=1&tipo='+tipo,
@@ -4502,13 +4481,16 @@ $(document).ready(function () {
 					$('#box-poliza_validez_desde').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_fecha_solicitud').val(Date.today().clearTime().toString("dd/MM/yy"));
 					$('#box-poliza_medio_pago').val('Directo').change();
-					if (subtipo == 'automotor') {
-						$('#box-tipo_poliza_id').val(2);
-						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', 2);
-						$.when(populateListSubtipoPoliza(2, 'box-subtipo_poliza_id', 'box')).then(function() {
-							$('#box-subtipo_poliza_id').val(6).change();
+					if (tipo) {
+						$('#box-tipo_poliza_id').val(tipo);
+						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', tipo);
+						$.when(populateListSubtipoPoliza(tipo, 'box-subtipo_poliza_id', 'box')).then(function() {
+							if (subtipo) {
+								$('#box-subtipo_poliza_id').val(subtipo).change();
+							}
 						});
 					}
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4593,31 +4575,35 @@ $(document).ready(function () {
 					});
 				});
 
-				// FORM SELECT CLIENT
-				// Initialize special fields
-				initAutocompleteCliente('box0-cliente_nombre', 'box');
-				// Assign functions to buttons
-				$("#BtnSearchCliente").click(function () {
-					// If a field was completed
-					if ($('#box0-cliente_nombre').val() != '' || $('#box0-cliente_nro_doc').val() != '') {
-						populateDiv_Cliente_Results();
-					} else {
-						$('#divBoxClienteSearchResults').html('Debe ingresar información en al menos un campo.');
-					}
-				});
-				// Submit on Enter
-				$("#frmSelectClient :input[type=text]").each(function () {
-					$(this).keypress(function (e) {
-						if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
-							$("#BtnSearchCliente").click();
+				if (cliente_id) {
+					assignClientToPoliza(cliente_id);
+				}
+				else {
+					// FORM SELECT CLIENT
+					// Initialize special fields
+					initAutocompleteCliente('box0-cliente_nombre', 'box');
+					// Assign functions to buttons
+					$("#BtnSearchCliente").click(function () {
+						// If a field was completed
+						if ($('#box0-cliente_nombre').val() != '' || $('#box0-cliente_nro_doc').val() != '') {
+							populateDiv_Cliente_Results();
+						} else {
+							$('#divBoxClienteSearchResults').html('Debe ingresar información en al menos un campo.');
 						}
 					});
-				});
-				// Enable form
-				formDisable('frmSelectClient', 'normal', false);
-				// Set focus on search
-				$("#box0-cliente_nombre").focus();
-
+					// Submit on Enter
+					$("#frmSelectClient :input[type=text]").each(function () {
+						$(this).keypress(function (e) {
+							if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+								$("#BtnSearchCliente").click();
+							}
+						});
+					});
+					// Enable form
+					formDisable('frmSelectClient', 'normal', false);
+					// Set focus on search
+					$("#box0-cliente_nombre").focus();
+				}
 			}
 		});
 	}
@@ -5633,6 +5619,30 @@ $(document).ready(function () {
 		});
 	}
 	openBoxPolizaFotos = function(id) {
+		
+	}
+	openBoxClieAcciones = function(id) {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-cliente_acciones.php',
+			width: '700px',
+			height: '250px',
+			onComplete: function () {
+				$('#btnAutomotor').button().click(function() {
+					openBoxAltaPoliza(2, 6, id);
+				});
+				$('#btnPatrimoniales').button().click(function() {
+					openBoxAltaPoliza(2, null, id);
+				});
+				$('#btnPersonas').button().click(function() {
+					openBoxAltaPoliza(3, null, id);
+				});
+				$('#btnNada').button().click(function() {
+					$.colorbox.close();
+				});
+				
+			}
+		});
 		
 	}
 });

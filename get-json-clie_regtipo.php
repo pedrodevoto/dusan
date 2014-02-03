@@ -5,36 +5,20 @@
 <?php
 	// Require connection
 	require_once('Connections/connection.php');
+	// Require DB functions
+	require_once('inc/db_functions.php');		
 ?>
-<?php
+<?php	
 	// Main Query
-	$query_Recordset1 = "SELECT column_type FROM information_schema.columns WHERE table_name = 'cliente' AND column_name = 'cliente_reg_tipo'";
+	$query_Recordset1 = sprintf("SELECT cliente_reg_tipo_id, cliente_reg_tipo_nombre FROM cliente_reg_tipo");
 	
-	// Recordset: Cliente
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
-	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
-	$totalRows_Recordset1 = mysql_num_rows($Recordset1);	
 	
-	$output = array();	
-	
-	// If Recordset not empty (Cliente)
-	if ($totalRows_Recordset1 > 0) {	
-
-		// Parse result	
-		$result = str_replace(array("enum('", "')", "''"), array('', '', "'"), $row_Recordset1['column_type']);
-		$result = explode("','", $result);
-		
-		// Create array
-		foreach ($result as $key=>$value) {
-			$output[$value] = ucfirst($value);
-		}
-
-	} else {
-		$output["empty"] = true;
+	$output = array();
+	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
+		$output[$row_Recordset1[0]] = strip_tags($row_Recordset1[1]);
 	}
+	echo json_encode($output);
 	
-	echo json_encode($output);			
-	
-	// Close Recordset: Cliente
 	mysql_free_result($Recordset1);
 ?>

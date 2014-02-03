@@ -259,21 +259,48 @@ CREATE TABLE `automotor_tipo_carroceria` (
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `cliente_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cliente_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_nacimiento` date NOT NULL,
-  `cliente_sexo` enum('F','M') COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_tipo_doc` enum('Pasaporte','LC','LE','DNI') COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_nro_doc` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_nacionalidad` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `cliente_cf` enum('Consumidor Final','Responsable Inscripto','Monotribustista','Excento') COLLATE utf8_unicode_ci NOT NULL,
+  `cliente_tipo_persona` tinyint(3) unsigned NOT NULL,
+  `cliente_nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_apellido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_razon_social` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_tipo_sociedad_id` int(11) DEFAULT NULL,
+  `cliente_nacimiento` date DEFAULT NULL,
+  `cliente_sexo` enum('F','M') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_tipo_doc` enum('Pasaporte','LC','LE','DNI') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_nro_doc` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_nacionalidad_id` int(10) DEFAULT NULL,
+  `cliente_cf_id` int(10) DEFAULT NULL,
   `cliente_registro` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_reg_vencimiento` date DEFAULT NULL,
-  `cliente_reg_tipo` enum('Profesional','Particular','Motos','Carga','B1') COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_email_alt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`cliente_id`),
   KEY `cliente_nombre` (`cliente_nombre`),
-  KEY `cliente_nro_doc` (`cliente_nro_doc`)
+  KEY `cliente_nro_doc` (`cliente_nro_doc`),
+  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`),
+  CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`cliente_tipo_sociedad_id`) REFERENCES `cliente_tipo_sociedad` (`cliente_tipo_sociedad_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cliente_cf`;
+CREATE TABLE `cliente_cf` (
+  `cliente_cf_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_cf_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cliente_cf_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cliente_cliente_reg_tipo`;
+CREATE TABLE `cliente_cliente_reg_tipo` (
+  `cliente_cliente_reg_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` int(10) unsigned NOT NULL,
+  `cliente_reg_tipo_id` int(11) NOT NULL,
+  PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
+  KEY `cliente_id` (`cliente_id`),
+  KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -288,6 +315,30 @@ CREATE TABLE `cliente_foto` (
   PRIMARY KEY (`cliente_foto_id`),
   KEY `cliente_id` (`cliente_id`),
   CONSTRAINT `cliente_foto_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cliente_nacionalidad`;
+CREATE TABLE `cliente_nacionalidad` (
+  `cliente_nacionalidad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_nacionalidad_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cliente_nacionalidad_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cliente_reg_tipo`;
+CREATE TABLE `cliente_reg_tipo` (
+  `cliente_reg_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_reg_tipo_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cliente_reg_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `cliente_tipo_sociedad`;
+CREATE TABLE `cliente_tipo_sociedad` (
+  `cliente_tipo_sociedad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_tipo_sociedad_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`cliente_tipo_sociedad_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -415,6 +466,7 @@ CREATE TABLE `contacto` (
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_observaciones` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_default` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),

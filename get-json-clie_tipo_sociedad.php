@@ -10,7 +10,7 @@
 ?>
 <?php	
 	// Main Query
-	$query_Recordset1 = sprintf("SELECT cliente_cf_id, cliente_cf_nombre FROM cliente_cf");
+	$query_Recordset1 = sprintf("SELECT cliente_tipo_sociedad_id, cliente_tipo_sociedad_nombre FROM cliente_tipo_sociedad");
 	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
 	

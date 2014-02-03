@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-contacto_id"])) && ($_POST["box-contacto_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE contacto SET contacto_tipo=%s, contacto_domicilio=UPPER(TRIM(%s)), contacto_nro=UPPER(TRIM(%s)), contacto_piso=UPPER(TRIM(%s)), contacto_dpto=UPPER(TRIM(%s)), contacto_localidad=UPPER(TRIM(%s)), contacto_cp=UPPER(TRIM(%s)), contacto_country=UPPER(TRIM(%s)), contacto_lote=UPPER(TRIM(%s)), contacto_telefono1=UPPER(TRIM(%s)), contacto_telefono2=UPPER(TRIM(%s)) WHERE contacto_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE contacto SET contacto_tipo=%s, contacto_domicilio=UPPER(TRIM(%s)), contacto_nro=UPPER(TRIM(%s)), contacto_piso=UPPER(TRIM(%s)), contacto_dpto=UPPER(TRIM(%s)), contacto_localidad=UPPER(TRIM(%s)), contacto_cp=UPPER(TRIM(%s)), contacto_country=UPPER(TRIM(%s)), contacto_lote=UPPER(TRIM(%s)), contacto_telefono1=UPPER(TRIM(%s)), contacto_telefono2=UPPER(TRIM(%s)), contacto_observaciones=UPPER(TRIM(%s)) WHERE contacto_id=%s LIMIT 1",
 								GetSQLValueString($_POST['box-contacto_tipo'], "text"),
 								GetSQLValueString($_POST['box-contacto_domicilio'], "text"),
 								GetSQLValueString($_POST['box-contacto_nro'], "text"),
@@ -24,6 +24,7 @@
 								GetSQLValueString($_POST['box-contacto_lote'], "text"),
 								GetSQLValueString($_POST['box-contacto_telefono1'], "text"),
 								GetSQLValueString($_POST['box-contacto_telefono2'], "text"),
+								GetSQLValueString($_POST['box-contacto_observaciones'], "text"),
 								GetSQLValueString($_POST['box-contacto_id'], "int"));
 										
 		$Result1 = mysql_query($updateSQL, $connection);

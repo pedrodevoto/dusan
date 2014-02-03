@@ -69,9 +69,13 @@
 					"iDisplayLength": 25,
 					"aoColumns": [	
 						// Hidden fields (IDs)
-						{"bSearchable": false, "bVisible": false},																																																																
+						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)						
-						{"sWidth": "20%"},					
+						{"sWidth": "20%", "fnRender": function(oObj) {
+							return [oObj.aData[2], oObj.aData[1]].join(' ');
+							}
+						},					
+						{"bSearchable": false, "bVisible": false},					
 						{"sWidth": "10%"},
 						{"sWidth": "25%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
@@ -92,7 +96,7 @@
 							}
 						}
 					],	
-					"aaSorting": [[1,'asc']],					
+					"aaSorting": [[2,'asc']],					
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
@@ -177,6 +181,7 @@
                         <tr>                        
                             <th>Cliente ID (Hide)</th>
                             <th>Nombre</th>                            
+                            <th>Apellido</th>                            
                             <th>Documento</th> 
                             <th>E-mail</th>
                             <th>Teléfono 1</th>
@@ -191,7 +196,8 @@
                         <tr>
                             <th></th>
                             <th>Nombre</th>                            
-                            <th>Documento</th> 
+                            <th></th>
+							<th>Documento</th> 
                             <th></th>
                             <th></th>
                             <th></th>

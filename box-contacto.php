@@ -13,21 +13,6 @@
             </div>
         </fieldset>
     </div>
-	<div style="margin-top:20px">
-	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
-	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
-			<form id="fileForm" action="upload-cliente_foto.php" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="cliente_id" value="<?=$cliente_id?>" />
-			    <p>
-			        <label for="box-cliente_foto">Subir</label>
-			        <input type="file" name="box-cliente_foto" id="box-cliente_foto" class="ui-widget-content" style="width:220px" />
-					<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
-			    </p>
-			</form>
-			<div id="divBoxFotos" style="width:840px;height:135px;overflow:auto;white-space: nowrap;display:none">
-			</div>
-		</fieldset>
-	</div>
     <div>
         <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px">
 			<input type="hidden" id="box-action" name="box-action" value="insert" />
@@ -79,6 +64,10 @@
                     <label for="box-contacto_telefono2">Teléfono 2</label>
                     <input type="text" name="box-contacto_telefono2" id="box-contacto_telefono2" maxlength="25" class="ui-widget-content" style="width:200px" />
                 </p>                                                                     
+                <p>
+                    <label for="box-contacto_observaciones">Observaciones</label>
+                    <textarea name="box-contacto_observaciones" id="box-contacto_observaciones" maxlength="500" class="ui-widget-content" style="width:200px"></textarea>
+                </p>                                                                     
             	<p align="center" style="margin-top:10px">
 					<input type="reset" name="btnBoxReset" id="btnBoxReset" value="Borrar" /> <input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
                 </p>
@@ -93,5 +82,9 @@
             </div>
         </fieldset>
     </div>      
-    
+    <div style="margin-top:10px">
+		<p align="center">
+			<button id="btnAcciones">Acciones</button>
+		</p>
+	</div>
 </div>
