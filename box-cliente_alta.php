@@ -19,10 +19,20 @@ $('#box-cliente_tipo_persona').change(function() {
 		break;
 	}
 });
+$('.addFoto').click(function() {
+	var object = $(this).attr("object");
+	var j = 0;
+	$('#items-'+object+' p').each(function (i, e) {
+		j = Math.max(Number($(e).attr('id')), j) + 1;
+	});
+	var item = '<p id="'+j+'"><label for="box-'+object+'_foto"> </label> <input type="file" name="box-'+object+'_foto[]" id="box-'+object+'_foto" class="ui-widget-content" style="width:220px" /></p>';
+	$('#items-'+object).append(item);
+	return false;
+})
 </script>
 <div class="divBoxContainer" style="width:94%">
 
-	<form name="frmBox" id="frmBox" class="frmBoxMain">
+	<form name="frmBox" id="frmBox" class="frmBoxMain" enctype="multipart/form-data">
     	<!-- Cliente -->    
 		<fieldset class="ui-widget ui-widget-content ui-corner-all">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Tipo de Persona</legend>
@@ -104,12 +114,18 @@ $('#box-cliente_tipo_persona').change(function() {
                 <label for="box-cliente_reg_vencimiento">Vencimiento</label>
                 <input type="text" name="box-cliente_reg_vencimiento" id="box-cliente_reg_vencimiento" maxlength="10" class="ui-widget-content box-date" style="width:220px" />
             </p>
+		    <div id="items-cliente">
+				<p id="0">
+					<label for="box-cliente_foto">Fotos</label>
+					<input type="file" name="box-cliente_foto[]" id="box-cliente_foto" class="ui-widget-content" style="width:220px" />
+					<button class="addFoto" object="cliente">+</button>
+				</p>
+			</div>
 		</fieldset>
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     
             <input type="hidden" name="box-insert" id="box-insert" value="1" />            
-            <input type="button" name="btnBox" id="btnBox" value="Aceptar" />
-			<button name="btnContact" id="btnContact">Siguiente</button>
+            <input type="button" name="btnBox" id="btnBox" value="Siguiente" />
         </p>
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio</p>

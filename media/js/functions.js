@@ -2853,27 +2853,32 @@ $(document).ready(function () {
 	insertFormCliente = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// Post
-		$.post("insert-cliente.php", $("#frmBox").serialize(), function (data) {
-			if (data == 'Session expired') {
-				sessionExpire('box');
-			} else {
-				// Table standing redraw
-				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();
-				}
-				if (data.toLowerCase().indexOf("error") === -1) {
-					$('#frmBox').each(function () {
-						this.reset();
-					});
-					$('#btnContact').show().click(function() {
+		// AJAXize form
+		$("#frmBox").ajaxSubmit({
+			url: 'insert-cliente.php',
+			type: 'POST',
+			beforeSend: function () {
+
+			},
+			uploadProgress: function (event, position, total, percentComplete) {
+
+			},
+			success: function (responseText, statusText, xhr) {
+				data = responseText;
+				if (data == 'Session expired') {
+					sessionExpire('box');
+				} else {
+					// Table standing redraw
+					if (typeof oTable != 'undefined') {
+						oTable.fnStandingRedraw();
+					}
+					if (!isNaN(data)) {
 						openBoxContacto(data);
-						return false;
-					});
-				}
-				else {
-					// Show message
-					showBoxConf(data, false, 'always', 3000, function () {});
+					}
+					else {
+						// Show message
+						showBoxConf(data, false, 'always', 3000, function () {});
+					}
 				}
 			}
 		});
@@ -4102,7 +4107,7 @@ $(document).ready(function () {
 					$("#box-cliente_nacionalidad").val(1);
 					$("#box-cliente_cf_id").val(1);
 					$("#box-cliente_tipo_doc").val('DNI');
-					$("#box-cliente_reg_tipo").val(5);
+					$("#box-cliente_reg_tipo_id").val(5);
 
 					// On Change: Input text
 					$("#box-cliente_nro_doc").keyup(function () {
@@ -4511,7 +4516,7 @@ $(document).ready(function () {
 								required: true
 							},
 							"box-cliente_nombre": {
-								required: true;
+								required: true
 							},
 							"box-subtipo_poliza_id": {
 								required: true

@@ -7,6 +7,7 @@
 	require_once('Connections/connection.php');
 	// Require DB functions
 	require_once('inc/db_functions.php');	
+	require_once('inc/process-foto.php');
 ?>
 <?php
 	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
@@ -39,6 +40,22 @@
 					$sql = 'INSERT INTO cliente_cliente_reg_tipo (cliente_id, cliente_reg_tipo_id) VALUES ('.$cliente_id.', '.intval($cliente_reg_tipo_id).')';
 					mysql_query($sql, $connection) or die(mysql_error());
 				}
+				
+				// Fotos
+				$types = array('cliente');
+				foreach ($types as $type) {
+				    if(isset($_FILES['box-'.$type.'_foto']['tmp_name'])){
+						for ($i=0; $i < count($_FILES['box-'.$type.'_foto']['tmp_name']);$i++) {
+							if ($_FILES['box-'.$type.'_foto']['error'][$i] == 0) {
+								if ($photo = processFoto($_FILES['box-'.$type.'_foto'], $i)){
+									$sql = sprintf('INSERT INTO %1$s_foto (cliente_id, %1$s_foto_url, %1$s_foto_thumb_url, %1$s_foto_width, %1$s_foto_height) VALUES (%2$s, \'%3$s\', \'%4$s\', %5$s, %6$s)', $type, $cliente_id, $photo['filename'], $photo['thumb_filename'], $photo['width'], $photo['height']);
+									mysql_query($sql, $connection) or die(mysql_error());
+								}
+							}
+						}
+					}
+				}
+				
 				echo $cliente_id;
 				break;
 			case 1062:
