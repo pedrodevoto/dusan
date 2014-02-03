@@ -2862,13 +2862,19 @@ $(document).ready(function () {
 				if (typeof oTable != 'undefined') {
 					oTable.fnStandingRedraw();
 				}
-				// Show message
-				showBoxConf(data, true, 'onerror', 3000, function () {
-					// Clear form
+				if (data.toLowerCase().indexOf("error") === -1) {
 					$('#frmBox').each(function () {
 						this.reset();
 					});
-				});
+					$('#btnContact').show().click(function() {
+						openBoxContacto(data);
+						return false;
+					});
+				}
+				else {
+					// Show message
+					showBoxConf(data, false, 'always', 3000, function () {});
+				}
 			}
 		});
 	}
@@ -4062,7 +4068,7 @@ $(document).ready(function () {
 			onComplete: function () {
 
 				// Initialize buttons
-				$("#btnBox").button();
+				$("#btnBox, #btnContact").button();
 
 				// Disable form
 				formDisable('frmBox', 'ui', true);
@@ -4119,6 +4125,7 @@ $(document).ready(function () {
 					// Enable form
 					formDisable('frmBox', 'ui', false);
 					$('#box-cliente_tipo_persona').change();
+					$('#btnContact').hide();
 				});
 
 			}
@@ -4192,7 +4199,7 @@ $(document).ready(function () {
 				// -------------------- GENERAL ---------------------
 
 				// Initialize buttons
-				$("#btnBox, #btnBoxReset, #btnAcciones").button();
+				$("#btnBox, #btnBoxReset, #btnAtras, #btnAcciones").button();
 
 				// Disable forms
 				formDisable('frmBox', 'ui', true);
@@ -4239,7 +4246,10 @@ $(document).ready(function () {
 							}
 						};
 					});
-
+					
+					$('#btnAtras').click(function() {
+						openBoxModCliente(id);
+					});
 					$('#btnAcciones').click(function() {
 						openBoxClieAcciones(id);
 					});
@@ -4499,6 +4509,9 @@ $(document).ready(function () {
 							},
 							"box-sucursal_id": {
 								required: true
+							},
+							"box-cliente_nombre": {
+								required: true;
 							},
 							"box-subtipo_poliza_id": {
 								required: true

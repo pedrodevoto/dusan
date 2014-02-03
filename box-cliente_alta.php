@@ -109,6 +109,7 @@ $('#box-cliente_tipo_persona').change(function() {
         <p align="center" style="margin-top:20px">     
             <input type="hidden" name="box-insert" id="box-insert" value="1" />            
             <input type="button" name="btnBox" id="btnBox" value="Aceptar" />
+			<button name="btnContact" id="btnContact">Siguiente</button>
         </p>
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio</p>

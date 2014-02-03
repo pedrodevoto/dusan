@@ -84,7 +84,7 @@
     </div>      
     <div style="margin-top:10px">
 		<p align="center">
-			<button id="btnAcciones">Acciones</button>
+			<button id="btnAtras">Atrás</button> <button id="btnAcciones" class="alert-success">Hecho</button>
 		</p>
 	</div>
 </div>

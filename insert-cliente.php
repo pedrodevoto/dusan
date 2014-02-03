@@ -39,7 +39,7 @@
 					$sql = 'INSERT INTO cliente_cliente_reg_tipo (cliente_id, cliente_reg_tipo_id) VALUES ('.$cliente_id.', '.intval($cliente_reg_tipo_id).')';
 					mysql_query($sql, $connection) or die(mysql_error());
 				}
-				echo 'El registro ha sido insertado con éxito | <a href="javascript:openBoxContacto('.$cliente_id.')" class="lnkBox">ALTA DE CONTACTOS</a>';
+				echo $cliente_id;
 				break;
 			case 1062:
 				echo 'Error: Registro duplicado.';
