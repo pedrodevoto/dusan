@@ -1276,7 +1276,7 @@ $(document).ready(function () {
 					$.when(
 						populateListCliente_Sexo('box-cliente_sexo', 'box'),
 						populateListCliente_Nac('box-cliente_nacionalidad_id', 'box'),
-						populateListCliente_CF('box-cliente_cf', 'box'),
+						populateListCliente_CF('box-cliente_cf_id', 'box'),
 						populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
 						populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
 						populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')
@@ -4082,7 +4082,7 @@ $(document).ready(function () {
 				$.when(
 					populateListCliente_Sexo('box-cliente_sexo', 'box'),
 					populateListCliente_Nac('box-cliente_nacionalidad_id', 'box'),
-					populateListCliente_CF('box-cliente_cf', 'box'),
+					populateListCliente_CF('box-cliente_cf_id', 'box'),
 					populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
 					populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
 					populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')

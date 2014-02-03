@@ -76,8 +76,8 @@ $('.addFoto').click(function() {
 				</select>
             </p>
             <p class="persona_fisica">
-                <label for="box-cliente_cf">Condición Fiscal *</label>
-                <select name="box-cliente_cf" id="box-cliente_cf" class="ui-widget-content" style="width:180px"></select>
+                <label for="box-cliente_cf_id">Condición Fiscal *</label>
+                <select name="box-cliente_cf_id" id="box-cliente_cf_id" class="ui-widget-content" style="width:180px"></select>
             </p>                                    
             <p>
                 <label for="box-cliente_cuit">CUIT</label>
