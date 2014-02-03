@@ -10,12 +10,12 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT cliente.cliente_id, cliente_nombre, cliente_tipo_doc, cliente_nro_doc FROM cliente WHERE 1";
+	$query_Recordset1 = "SELECT cliente.cliente_id, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre, cliente_tipo_doc, cliente_nro_doc FROM cliente WHERE 1";
 	
 	// Query Where	
 	if (isset($_GET['box0-cliente_nombre']) || isset($_GET['box0-cliente_nro_doc'])) {
 		if (isset($_GET['box0-cliente_nombre']) && $_GET['box0-cliente_nombre'] !== '') {
-			$query_Recordset1 .= sprintf(" AND cliente.cliente_nombre=%s",
+			$query_Recordset1 .= sprintf(" AND IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social)=%s",
 									GetSQLValueString($_GET['box0-cliente_nombre'], "text"));			
 		}
 		if (isset($_GET['box0-cliente_nro_doc']) && $_GET['box0-cliente_nro_doc'] !== '') {

@@ -72,7 +72,7 @@
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)						
 						{"sWidth": "20%", "fnRender": function(oObj) {
-							return [oObj.aData[2], oObj.aData[1]].join(' ');
+							return [oObj.aData[1], oObj.aData[2]].join(' ');
 							}
 						},					
 						{"bSearchable": false, "bVisible": false},					
