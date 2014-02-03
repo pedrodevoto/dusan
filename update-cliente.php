@@ -13,7 +13,7 @@
 	if ((isset($_POST["box-cliente_id"])) && ($_POST["box-cliente_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE cliente SET cliente_tipo_persona=%s, cliente_nombre=UPPER(TRIM(%s)), cliente_apellido=UPPER(TRIM(%s)), cliente_razon_social=UPPER(TRIM(%s)), cliente_tipo_sociedad_id=%s, cliente_nacimiento=%s, cliente_sexo=%s, cliente_tipo_doc=%s, cliente_nro_doc=TRIM(%s), cliente_nacionalidad_id=%s, cliente_cf_id=%s, cliente_registro=TRIM(%s), cliente_reg_vencimiento=%s,  cliente_cuit=TRIM(%s), cliente_email=TRIM(%s), cliente_email_alt=TRIM(%s) WHERE cliente.cliente_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE cliente SET cliente_tipo_persona=%s, cliente_nombre=UPPER(TRIM(%s)), cliente_apellido=UPPER(TRIM(%s)), cliente_razon_social=UPPER(TRIM(%s)), cliente_tipo_sociedad_id=%s, cliente_nacimiento=%s, cliente_sexo=%s, cliente_tipo_doc=%s, cliente_nro_doc=TRIM(%s), cliente_nacionalidad_id=%s, cliente_cf_id=%s, cliente_registro=TRIM(%s), cliente_reg_vencimiento=%s,  cliente_cuit_0=TRIM(%s), cliente_cuit_1=TRIM(%s), cliente_cuit_2=TRIM(%s), cliente_email=TRIM(%s), cliente_email_alt=TRIM(%s) WHERE cliente.cliente_id=%s LIMIT 1",
 						GetSQLValueString($_POST['box-cliente_tipo_persona'], "int"),
 						GetSQLValueString($_POST['box-cliente_nombre'], "text"),
 						GetSQLValueString($_POST['box-cliente_apellido'], "text"),
@@ -27,7 +27,9 @@
 						GetSQLValueString($_POST['box-cliente_cf_id'], "int"),						
 						GetSQLValueString($_POST['box-cliente_registro'], "text"),
 						GetSQLValueString($_POST['box-cliente_reg_vencimiento'], "date"),
-						GetSQLValueString($_POST['box-cliente_cuit'], "text"),
+						GetSQLValueString($_POST['box-cliente_cuit_0'], "text"),
+						GetSQLValueString($_POST['box-cliente_cuit_1'], "text"),
+						GetSQLValueString($_POST['box-cliente_cuit_2'], "text"),
 						GetSQLValueString($_POST['box-cliente_email'], "text"),
 						GetSQLValueString($_POST['box-cliente_email_alt'], "text"),
 						GetSQLValueString($_POST['box-cliente_id'], "int"));			

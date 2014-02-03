@@ -6,13 +6,15 @@
 $('#box-cliente_tipo_persona').change(function() {
 	switch($(this).val()) {
 	case '1':
-		$('#persona_fisica').show();
-		$('#persona_juridica').hide();
+		$('.persona_fisica').show();
+		$('.persona_juridica').hide();
+		$('#titulo_tipo_persona').text('Persona Física');
 		$('#box-cliente_apellido').focus();
 		break;
 	case '2':
-		$('#persona_juridica').show();
-		$('#persona_fisica').hide();
+		$('.persona_juridica').show();
+		$('.persona_fisica').hide();
+		$('#titulo_tipo_persona').text('Persona Jurídica');
 		$('#box-cliente_razon_social').focus();
 		break;
 	}
@@ -42,30 +44,38 @@ $('.addFoto').click(function() {
 				</select>
 			</p>
 		</fieldset>
-		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px" id="persona_fisica">
-            <legend class="ui-widget ui-widget-header ui-corner-all">Persona Física</legend>                                     
-			<p>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+            <legend class="ui-widget ui-widget-header ui-corner-all" id="titulo_tipo_persona"></legend>                                     
+			<p class="persona_fisica">
                 <label for="box-cliente_apellido">Apellido *</label>
                 <input type="text" name="box-cliente_apellido" id="box-cliente_apellido" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
-			<p>
+			<p class="persona_fisica">
                 <label for="box-cliente_nombre">Nombre *</label>
                 <input type="text" name="box-cliente_nombre" id="box-cliente_nombre" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
-            <p>
+			<p class="persona_juridica">
+				<label for="box-cliente_razon_social">Razón Social</label>
+				<input type="text" name="box-cliente_razon_social" id="box-cliente_razon_social" maxlength="255" class="ui-widget-content" style="width:220px" />
+			</p>
+			<p class="persona_juridica">
+				<label for="box-cliente_tipo_sociedad_id">Tipo de Sociedad</label>
+				<select name="box-cliente_tipo_sociedad_id" id="box-cliente_tipo_sociedad_id" class="ui-widget-content" style="width:100px"></select>
+			</p>
+            <p class="persona_fisica">
                 <label for="box-cliente_nacimiento">Nacimiento *</label>
                 <input type="text" name="box-cliente_nacimiento" id="box-cliente_nacimiento" maxlength="10" class="ui-widget-content box-date" style="width:220px" />
             </p>                        
-            <p>
+            <p class="persona_fisica">
                 <label for="box-cliente_sexo">Sexo *</label>
                 <select name="box-cliente_sexo" id="box-cliente_sexo" class="ui-widget-content" style="width:65px"></select>
             </p>
-            <p>
+            <p class="persona_fisica">
                 <label for="box-cliente_nacionalidad_id">Nacionalidad *</label>
                 <select name="box-cliente_nacionalidad_id" id="box-cliente_nacionalidad_id" class="ui-widget-content" style="width:220px">
 				</select>
             </p>
-            <p>
+            <p class="persona_fisica">
                 <label for="box-cliente_cf">Condición Fiscal *</label>
                 <select name="box-cliente_cf" id="box-cliente_cf" class="ui-widget-content" style="width:180px"></select>
             </p>                                    
@@ -73,37 +83,14 @@ $('.addFoto').click(function() {
                 <label for="box-cliente_cuit">CUIT</label>
 				<input type="text" name="box-cliente_cuit_0" id="box-cliente_cuit_0" maxlength="2" class="ui-widget-content" style="width:20px" /> <input type="text" name="box-cliente_cuit_1" id="box-cliente_cuit_1" maxlength="8" class="ui-widget-content" style="width:75px" /> <input type="text" name="box-cliente_cuit_2" id="box-cliente_cuit_2" maxlength="1" class="ui-widget-content" style="width:20px" />
             </p>
-            <p>
+            <p class="persona_fisica">
                 <label for="box-cliente_tipo_doc">Tipo Doc. *</label>
                 <select name="box-cliente_tipo_doc" id="box-cliente_tipo_doc" class="ui-widget-content" style="width:100px"></select>
             </p>
-            <p>
+            <p class="persona_fisica">
                 <label for="box-cliente_nro_doc">Nro de Doc. *</label>
                 <input type="text" name="box-cliente_nro_doc" id="box-cliente_nro_doc" maxlength="15" class="ui-widget-content" style="width:220px" />
             </p>                                                           
-            <p>
-                <label for="box-cliente_email">E-mail</label>
-                <input type="text" name="box-cliente_email" id="box-cliente_email" maxlength="255" class="ui-widget-content" style="width:220px" />
-            </p>                                    
-			<p>
-				<label for="box-cliente_email_alt">E-mail Alternativo</label>
-				<input type="text" name="box-cliente_email_alt" id="box-cliente_email_alt" maxlength="255" class="ui-widget-content" style="width:220px" />
-			</p>
-		</fieldset>
-		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px" id="persona_juridica">
-			<legend class="ui-widget ui-widget-header ui-corner-all">Persona Jurídica</legend>
-			<p>
-				<label for="box-cliente_razon_social">Razón Social</label>
-				<input type="text" name="box-cliente_razon_social" id="box-cliente_razon_social" maxlength="255" class="ui-widget-content" style="width:220px" />
-			</p>
-			<p>
-				<label for="box-cliente_tipo_sociedad_id">Tipo de Sociedad</label>
-				<select name="box-cliente_tipo_sociedad_id" id="box-cliente_tipo_sociedad_id" class="ui-widget-content" style="width:100px"></select>
-			</p>
-			<p>
-				<label for="box-cliente_cuit">CUIT</label>
-				<input type="text" name="box-cliente_cuit_0" id="box-cliente_cuit_0" maxlength="2" class="ui-widget-content" style="width:20px" /> <input type="text" name="box-cliente_cuit_1" id="box-cliente_cuit_1" maxlength="8" class="ui-widget-content" style="width:75px" /> <input type="text" name="box-cliente_cuit_2" id="box-cliente_cuit_2" maxlength="1" class="ui-widget-content" style="width:20px" />
-			</p>
             <p>
                 <label for="box-cliente_email">E-mail</label>
                 <input type="text" name="box-cliente_email" id="box-cliente_email" maxlength="255" class="ui-widget-content" style="width:220px" />
