@@ -510,7 +510,7 @@
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
     <p>
         <label for="box-seguro_cobertura_tipo_id">Tipo *</label>
-        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:90px">
+        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:120px">
         	<option value="">Seleccione</option>
 			<?php showCobertura($row_Recordset1['productor_seguro_id']); ?>
         </select>        
