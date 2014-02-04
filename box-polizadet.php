@@ -44,23 +44,6 @@
             require_once('subtipo/'.$row_Recordset1['subtipo_poliza_tabla'].'.php');
         ?>          
 	</form>         
-	<?php if ($row_Recordset1['subtipo_poliza_tabla']=='automotor'){?>
-	<div style="margin-top:10px">
-	    <fieldset class="ui-widget ui-widget-content ui-corner-all">
-	        <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos</legend> 
-			<form id="fileForm" action="upload-poliza_foto.php" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="poliza_id" value="<?=$poliza_id?>" />
-			    <p>
-			        <label for="box-poliza_foto">Subir</label>
-			        <input type="file" name="box-poliza_foto" id="box-poliza_foto" class="ui-widget-content" style="width:220px" />
-					<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
-			    </p>
-			</form>
-			<div id="divBoxFotos" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
-			</div>
-		</fieldset>
-	</div>
-	<?php } ?>
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">     
         <input type="button" name="btnBox" id="btnBox" value="Cargando" />

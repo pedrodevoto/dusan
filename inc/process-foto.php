@@ -16,16 +16,19 @@ function return_bytes($val) {
 
     return $val;
 }
-function processFoto($file, $i) {
-	if ($file["size"][$i] > return_bytes(ini_get('upload_max_filesize'))) {
+function processFoto($file, $i = -1) {
+	$size = $i<=0?$file['size'][$i]:$file['size'];
+	if ($size > return_bytes(ini_get('upload_max_filesize'))) {
 		return FALSE;
 	}
-	$extension = strtolower(strrchr($file["name"][$i], '.'));
+	$name = $i<=0?$file['name'][$i]:$file['name'];
+	$extension = strtolower(strrchr($name, '.'));
 	if (!in_array($extension, array(".jpg", ".jpeg", ".png"))) {
 		return FALSE;
 	}
 	$filename = "fotos/" . uniqid();
-	if (move_uploaded_file($file["tmp_name"][$i], $filename . $extension )) {
+	$tmp_name = $i<=0?$file['tmp_name'][$i]:$file['tmp_name'];
+	if (move_uploaded_file($tmp_name, $filename . $extension )) {
 		$thumb_filename = $filename . '_thumb.png';
 		switch($extension)
 		{

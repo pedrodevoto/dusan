@@ -220,9 +220,6 @@
 	<p>
 		<label for="box-cert_rodamiento">Certificado de no rodamiento</label>
 		<input type="checkbox" name="box-cert_rodamiento" id="box-cert_rodamiento" value="1" /> 
-		<input type="file" name="box-cert_rodamiento_foto[]" id="box-cert_rodamiento_foto" class="ui-widget-content" style="width:220px" disabled /> 
-		<div id="divBoxFotosCertRodamiento" style="width:108px;height:135px;overflow:auto;white-space: nowrap;display:none">
-		</div>
 	</p>
     <p>
         <label for="box-importado">Importado</label>
@@ -358,14 +355,6 @@
 		<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
         <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
 	</p>
-    <div id="items-micrograbado">
-		<p id="0">
-	        <label for="box-micrograbado_foto">Imagen</label>
-	        <input type="file" name="box-micrograbado_foto[]" id="box-micrograbado_foto" class="ui-widget-content" style="width:220px" /> <button class="addFoto" object="micrograbado">+</button>
-	    </p>
-	</div>
-	<div id="divBoxFotosMicrograbado" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
-	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
@@ -488,14 +477,6 @@
         <label for="box-nro_tubo">Nº Tubo</label>
         <input type="text" name="box-nro_tubo" id="box-nro_tubo" maxlength="50" class="ui-widget-content" style="width:220px" />
     </p>                        
-    <div id="items-gnc">
-		<p id="0">
-	        <label for="box-gnc_foto">Imagen</label>
-	        <input type="file" name="box-gnc_foto[]" id="box-gnc_foto" class="ui-widget-content" style="width:220px" /> <button class="addFoto" object="gnc">+</button>
-	    </p>
-	</div>
-	<div id="divBoxFotosGNC" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
-	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">Accesorios</legend> 
@@ -569,15 +550,4 @@
 		<label for="box-pedido_instalacion_observaciones">Observaciones</label>
 		<textarea name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:220px" maxlength="500" readonly /> </textarea>
 	</p>
-</fieldset>  
-<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-    <legend class="ui-widget ui-widget-header ui-corner-all">Cédula verde</legend>
-    <div id="items-cedula_verde">
-		<p id="0">
-	        <label for="box-cedula_verde_foto">Imagen</label>
-	        <input type="file" name="box-cedula_verde_foto[]" id="box-cedula_verde_foto" class="ui-widget-content" style="width:220px" /> <button class="addFoto" object="cedula_verde">+</button>
-	    </p>
-	</div>
-	<div id="divBoxFotosCedulaVerde" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
-	</div>
 </fieldset>  

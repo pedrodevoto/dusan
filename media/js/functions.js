@@ -5637,7 +5637,40 @@ $(document).ready(function () {
 		});
 	}
 	openBoxPolizaFotos = function(id) {
-		
+		$.colorbox({
+			title: 'Fotos',
+			href: 'box-polizafotos.php',
+			width: '700px',
+			height: '100%',
+			onComplete: function() {
+				populateDiv_Fotos('poliza', id, 'Poliza');
+				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
+				populateDiv_Fotos('automotor_gnc', id, 'GNC');
+				populateDiv_Fotos('automotor_cert_rodamiento', id, 'CertRodamiento');
+				populateDiv_Fotos('automotor_cedula_verde', id, 'CedulaVerde');
+				
+				// AJAX file form
+				$(".fileForm").each(function (i,e) {
+					$(e).ajaxForm({
+						data: { poliza_id: id },
+						beforeSend: function () {
+							$("#fotosLoading"+$(e).prop('id')).show();
+						},
+						uploadProgress: function (event, position, total, percentComplete) {
+
+						},
+						complete: function (xhr) {
+							if (xhr.responseText.indexOf('Error:') != -1) {
+								alert(xhr.responseText);
+							} else {
+								$("#fotosLoading"+$(e).prop('id')).show().hide();
+							}
+							populateDiv_Fotos(($(e).prop('id')!='poliza'?'automotor_':'')+$(e).prop('id'), id, $(e).attr('suffix'));
+						}
+					});
+				})
+			}
+		});
 	}
 	openBoxClieAcciones = function(id) {
 		$.colorbox({
