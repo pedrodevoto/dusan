@@ -40,14 +40,14 @@
 	</fieldset>
     <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
         <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Certificado de no rodamiento</legend> 
-		<form class="fileForm" id="cert_rodamiento" suffix="CertRodamiento" action="upload-automotor_foto.php" method="post" enctype="multipart/form-data">
+		<form class="fileForm" id="cert_rodamiento" suffix="CertRodamiento" action="upload-automotor_archivo.php" method="post" enctype="multipart/form-data">
 			<p>
-		        <label for="box-cert_rodamiento_foto">Imagen</label>
-		        <input type="file" name="box-cert_rodamiento_foto" id="box-cert_rodamiento_foto" class="ui-widget-content" style="width:220px" /> 
-				<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
+		        <label for="box-cert_rodamiento_archivo">Archivo</label>
+		        <input type="file" name="box-cert_rodamiento_archivo" id="box-cert_rodamiento_archivo" class="ui-widget-content" style="width:220px" /> 
+				<input type="submit" value="Subir archivo"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 		    </p>
 		</form>	
-		<div id="divBoxFotosCertRodamiento" style="width:108px;height:135px;overflow:auto;white-space: nowrap;display:none">
+		<div id="divBoxArchivosCertRodamiento">
 		</div>
 	</fieldset>
     <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">

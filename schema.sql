@@ -187,15 +187,13 @@ CREATE TABLE `automotor_cedula_verde_foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `automotor_cert_rodamiento_foto`;
-CREATE TABLE `automotor_cert_rodamiento_foto` (
-  `automotor_cert_rodamiento_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `automotor_cert_rodamiento_archivo`;
+CREATE TABLE `automotor_cert_rodamiento_archivo` (
+  `automotor_cert_rodamiento_archivo_id` int(11) NOT NULL AUTO_INCREMENT,
   `poliza_id` int(10) unsigned NOT NULL,
-  `automotor_cert_rodamiento_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `automotor_cert_rodamiento_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `automotor_cert_rodamiento_foto_width` int(11) NOT NULL,
-  `automotor_cert_rodamiento_foto_height` int(11) NOT NULL,
-  PRIMARY KEY (`automotor_cert_rodamiento_foto_id`),
+  `automotor_cert_rodamiento_archivo_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_cert_rodamiento_archivo_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_cert_rodamiento_archivo_id`),
   KEY `poliza_id` (`poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -280,8 +278,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`cliente_id`),
   KEY `cliente_nombre` (`cliente_nombre`),
   KEY `cliente_nro_doc` (`cliente_nro_doc`),
-  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`),
-  CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`cliente_tipo_sociedad_id`) REFERENCES `cliente_tipo_sociedad` (`cliente_tipo_sociedad_id`)
+  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -299,9 +296,9 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   `cliente_id` int(10) unsigned NOT NULL,
   `cliente_reg_tipo_id` int(11) NOT NULL,
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
-  KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
+  KEY `cliente_id` (`cliente_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
   CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

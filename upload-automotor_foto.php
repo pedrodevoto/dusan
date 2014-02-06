@@ -12,7 +12,7 @@
 <?php
 if (isset($_POST['poliza_id'])) {
 	$poliza_id = intval($_POST['poliza_id']);
-	$types = array('micrograbado', 'gnc', 'cedula_verde', 'cert_rodamiento');
+	$types = array('micrograbado', 'gnc', 'cedula_verde');
 	foreach ($types as $type) {
 	    if(isset($_FILES['box-'.$type.'_foto']['tmp_name'])){
 			if ($_FILES['box-'.$type.'_foto']['error'] == 0) {

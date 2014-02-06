@@ -213,13 +213,11 @@
             <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'combustible', 'select', 'Nafta'); ?>        
         </select>
     </p>
-    <p>
-        <label for="box-0km">0 KM</label>
-        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
-    </p>
 	<p>
 		<label for="box-cert_rodamiento">Certificado de no rodamiento</label>
 		<input type="checkbox" name="box-cert_rodamiento" id="box-cert_rodamiento" value="1" /> 
+        <label for="box-0km" style="width:30px">0 KM</label>
+        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
 	</p>
     <p>
         <label for="box-importado">Importado</label>

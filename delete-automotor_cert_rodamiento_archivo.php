@@ -11,14 +11,19 @@
 <?php
 	if ((isset($_POST["id"])) && ($_POST["id"] != "")) {
 		
+		$sql = sprintf("SELECT automotor_cert_rodamiento_archivo_url FROM automotor_cert_rodamiento_archivo WHERE automotor_cert_rodamiento_archivo_id=%s LIMIT 1",
+						GetSQLValueString($_POST["id"], "int"));
+		$res = mysql_query($sql, $connection);
+		list($archivo) = mysql_fetch_array($res);
 		// Delete record
-		$deleteSQL = sprintf("DELETE FROM automotor_cert_rodamiento_foto WHERE automotor_cert_rodamiento_foto_id=%s LIMIT 1",
+		$deleteSQL = sprintf("DELETE FROM automotor_cert_rodamiento_archivo WHERE automotor_cert_rodamiento_archivo_id=%s LIMIT 1",
 						GetSQLValueString($_POST["id"], "int"));
 		$Result1 = mysql_query($deleteSQL, $connection);
 		
 		// Evaluate results
 		switch (mysql_errno()) {
 			case 0:
+				unlink($archivo);
 				echo "El registro ha sido eliminado con éxito.";
 				break;
 			default: 

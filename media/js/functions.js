@@ -1487,12 +1487,6 @@ $(document).ready(function () {
 	populatePolizaDet = function (subtipo_poliza, id) {
 		switch (subtipo_poliza) {
 		case 'automotor':
-			// Populate DIVs
-			populateDiv_Fotos('poliza', id);
-			populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
-			populateDiv_Fotos('automotor_gnc', id, 'GNC');
-			populateDiv_Fotos('automotor_cert_rodamiento', id, 'CertRodamiento');
-			populateDiv_Fotos('automotor_cedula_verde', id, 'CedulaVerde');
 
 			populateSectionAutomotorAccesorios(id);
 
@@ -2725,7 +2719,38 @@ $(document).ready(function () {
 			}
 		})
 	}
-
+	populateDiv_Archivos = function (section, id, divsuffix) {
+		divsuffix = divsuffix || '';
+		$.getJSON("get-json-" + section + "_archivos.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// General variables
+					var result = '';
+					$.each(j, function (i, object) {
+						result += '<a href="'+object.archivo_url+'" target="_blank">';
+						result += object.archivo_nombre;
+						result += '</a>';
+						result += ' <a href="#" onclick="deleteViaLink(\'' + section + '_archivo\', \'' + object.archivo_id + '\');$(\'#divBoxArchivos' + divsuffix + '\').hide();populateDiv_Archivos(\'' + section + '\', ' + id + ', \'' + divsuffix + '\');"><span class="ui-icon ui-icon-trash" style="display:inline-block;margin-top:2px"></span></span>';
+						result += '<br />';
+					});
+					
+					// Populate DIV
+					$('#divBoxArchivos' + divsuffix).html(result);
+					if (j != '') {
+						$('#divBoxArchivos' + divsuffix).show();
+					} else {
+						$('#divBoxArchivos' + divsuffix).hide();
+					}
+				}
+			}
+		});
+	}
 	editCuotaObservacion = function (id) {
 		$.getJSON("get-json-cuota_observacion.php?id=" + id, {}, function (j) {
 			var comment = prompt('Ingrese las observaciones', j);
@@ -5637,6 +5662,7 @@ $(document).ready(function () {
 		});
 	}
 	openBoxPolizaFotos = function(id) {
+		console.log('sdf');
 		$.colorbox({
 			title: 'Fotos',
 			href: 'box-polizafotos.php',
@@ -5646,7 +5672,7 @@ $(document).ready(function () {
 				populateDiv_Fotos('poliza', id, 'Poliza');
 				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 				populateDiv_Fotos('automotor_gnc', id, 'GNC');
-				populateDiv_Fotos('automotor_cert_rodamiento', id, 'CertRodamiento');
+				populateDiv_Archivos('automotor_cert_rodamiento', id, 'CertRodamiento');
 				populateDiv_Fotos('automotor_cedula_verde', id, 'CedulaVerde');
 				
 				// AJAX file form
@@ -5665,7 +5691,14 @@ $(document).ready(function () {
 							} else {
 								$("#fotosLoading"+$(e).prop('id')).show().hide();
 							}
-							populateDiv_Fotos(($(e).prop('id')!='poliza'?'automotor_':'')+$(e).prop('id'), id, $(e).attr('suffix'));
+							switch ($(e).prop('id')) {
+							case 'cert_rodamiento':
+								populateDiv_Archivos('automotor_'+$(e).prop('id'), id, $(e).attr('suffix'));
+								break;
+							default:
+								populateDiv_Fotos(($(e).prop('id')!='poliza'?'automotor_':'')+$(e).prop('id'), id, $(e).attr('suffix'));
+								break;
+							}
 						}
 					});
 				})
