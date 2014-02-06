@@ -33,7 +33,7 @@
 				$res = mysql_query($sql, $connection);
 				list($premio) = mysql_fetch_array($res);
 		
-				if ((!empty($_POST['box-endoso_premio'])) && floatval($_POST['box-endoso_premio'])!=floatval($premio)) {
+				if (!empty($_POST['box-endoso_premio'])) {
 					if ($_SESSION['ADM_UserGroup']=='master') {
 						$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 2', GetSQLValueString($_POST['box-poliza_id'], "int"));
 						$res = mysql_query($sql, $connection);
@@ -43,12 +43,12 @@
 						$res = mysql_query($sql, $connection);
 						list($no_pagado_cant) = mysql_fetch_array($res);
 				
-						$cuota = (floatval($_POST['box-endoso_premio']) - $pagado) / $no_pagado_cant;
+						$cuota = (floatval($premio) + floatval($_POST['box-endoso_premio']) - $pagado) / $no_pagado_cant;
 				
 						$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
 						mysql_query($sql, $connection) or die(mysql_error());
 				
-						$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-endoso_premio'], "double"), GetSQLValueString($_POST['box-poliza_id'], "int"));
+						$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-endoso_premio'], "double")+floatval($premio), GetSQLValueString($_POST['box-poliza_id'], "int"));
 						mysql_query($sql, $connection) or die(mysql_error());
 					}
 					else {
