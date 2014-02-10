@@ -10,10 +10,10 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT DISTINCT cliente.cliente_nombre FROM cliente WHERE 1";
+	$query_Recordset1 = "SELECT DISTINCT TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) as cliente_nombre FROM cliente WHERE 1";
 	// Append Search
 	if (isset($_GET['term']) && $_GET['term'] !== "") {
-		$query_Recordset1 .= sprintf(" AND cliente.cliente_nombre LIKE %s",
+		$query_Recordset1 .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) LIKE %s",
 								GetSQLValueString('%'.$_GET['term'].'%', "text"));
 	}	
 	// Order By / Limit

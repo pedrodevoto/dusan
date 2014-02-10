@@ -96,7 +96,7 @@
 							}
 						}
 					],	
-					"aaSorting": [[2,'asc']],					
+					"aaSorting": [[2,'asc'],[1,'asc']],					
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
@@ -122,6 +122,7 @@
 					"sPlaceHolder": "head:foot",					
 					aoColumns: [
 						null,
+						{type: "text"},
 						{type: "text"},
 						{type: "text"},
 						null,

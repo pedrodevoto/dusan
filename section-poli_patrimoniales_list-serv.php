@@ -40,7 +40,11 @@
 	}
 	// Filter by: cliente_nombre
 	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND cliente_nombre LIKE %s",GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+		$condition = array();
+		foreach (explode(' ', $_GET['cliente_nombre']) as $term) {
+			$conditions[] = sprintf('(cliente_nombre LIKE %1$s OR cliente_apellido LIKE %1$s)', GetSQLValueString('%' . $term . '%', "text"));
+		}
+		$query_Recordset1_where .= ' AND ('.implode(' OR ', $conditions).')';
 	}
 	// Filter by: poliza_estado_id
 	if(isset($_GET['poliza_estado_id']) && $_GET['poliza_estado_id']!=""){	
