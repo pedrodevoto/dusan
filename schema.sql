@@ -880,6 +880,8 @@ CREATE TABLE `seguro_cobertura_tipo` (
   `seguro_cobertura_tipo_nombre` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `seguro_cobertura_tipo_limite_rc_id` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_gruas` int(11) DEFAULT NULL,
+  `seguro_cobertura_tipo_gruas_km` int(11) DEFAULT NULL,
+  `seguro_cobertura_tipo_gruas_desde` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_anios_de` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_anios_a` int(11) DEFAULT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_id`),

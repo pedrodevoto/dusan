@@ -12,10 +12,12 @@
 	if ((isset($_POST["box-seguro_cobertura_tipo_id"])) && ($_POST["box-seguro_cobertura_tipo_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE seguro_cobertura_tipo SET seguro_cobertura_tipo_nombre=UPPER(TRIM(%s)), seguro_cobertura_tipo_limite_rc_id=%s, seguro_cobertura_tipo_gruas=%s, seguro_cobertura_tipo_anios_de=%s, seguro_cobertura_tipo_anios_a=%s WHERE seguro_cobertura_tipo_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE seguro_cobertura_tipo SET seguro_cobertura_tipo_nombre=UPPER(TRIM(%s)), seguro_cobertura_tipo_limite_rc_id=%s, seguro_cobertura_tipo_gruas=%s, seguro_cobertura_tipo_gruas_km=%s, seguro_cobertura_tipo_gruas_desde=%s, seguro_cobertura_tipo_anios_de=%s, seguro_cobertura_tipo_anios_a=%s WHERE seguro_cobertura_tipo_id=%s LIMIT 1",
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_nombre'], "text"),
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_limite_rc_id'], "int"),
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_gruas'], "int"),
+								GetSQLValueString($_POST['box-seguro_cobertura_tipo_gruas_km'], "int"),
+								GetSQLValueString($_POST['box-seguro_cobertura_tipo_gruas_desde'], "int"),
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_anios_de'], "int"),
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_anios_a'], "int"),
 								GetSQLValueString($_POST['box-seguro_cobertura_tipo_id'], "int"));
