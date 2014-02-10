@@ -84,25 +84,7 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false},
-						{"sWidth": "6%", "bSearchable": false, "fnRender": function(oObj) {
-								var val = '<span style="';
-								switch (oObj.aData[12]) {
-								case 'CUMPLIDA':
-								case 'CUMPLIDA RENOVADA':
-									val += 'color:green';
-									break;
-								case 'ANULADA':
-									val += 'color:red';
-									break;
-								case 'PENDIENTE':
-								default:
-									val += 'color:black';
-									break;
-								}
-								val += '">' + oObj.aData[12] + "</span>";
-								return val;
-							}
-						},
+						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "5%"},
 						{"sWidth": "4%",  "bSearchable": false, "fnRender": function(oObj) {
 								return '<span title="'+oObj.aData[15]+'">'+oObj.aData[14]+'</span>';
@@ -152,7 +134,23 @@
 								sessionExpire('main');
 							}
 						});
-					}							
+					},
+					"fnRowCallback": function(nRow, aData, iDisplayIndex) {
+						switch (aData[12]) {
+						case 'CUMPLIDA':
+						case 'CUMPLIDA RENOVADA':
+							$(nRow).css('color', 'green');
+							break;
+						case 'ANULADA':
+							$(nRow).css('color', 'red');
+							break;
+						case 'PENDIENTE':
+						default:
+							$(nRow).css('color', 'black');
+							break;
+						}
+						return nRow;
+					}
 												
 				});		
 
