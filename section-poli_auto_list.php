@@ -274,6 +274,9 @@
 							
 								<label for="poliza_mc">M/C</label>
 								<input type="checkbox" name="poliza_mc" id="poliza_mc" value="1"></input>
+								
+								<label for="poliza_anulada">Anulada</label>
+								<input type="checkbox" name="poliza_anulada" id="poliza_anulada" value="1"></input>
 							</td>
 						</tr>
                         <tr>                                

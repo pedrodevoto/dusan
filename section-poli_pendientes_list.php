@@ -216,7 +216,7 @@
                             </td>
                         </tr>
 						<tr>
-							<td colspan="4">
+							<td colspan="5">
 								<label for="poliza_vigente">Vigente</label>
 								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" />
 							
@@ -234,6 +234,9 @@
 							
 								<label for="poliza_mc">M/C</label>
 								<input type="checkbox" name="poliza_mc" id="poliza_mc" value="1"></input>
+								
+								<label for="poliza_anulada">Anulada</label>
+								<input type="checkbox" name="poliza_anulada" id="poliza_anulada" value="1"></input>
 							</td>
 						</tr>
                         <tr>                                

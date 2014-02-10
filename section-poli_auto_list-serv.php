@@ -60,6 +60,10 @@
 		}
 		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id IN (%s)", implode(',', $estados_id));
 	}
+	// Filter by: poliza_anulada
+	if (!empty($_GET['poliza_anulada'])) {
+		$query_Recordset1_having .= ' AND COUNT(endoso_id) > 0';
+	}
 	// Filter by: poliza_medio_pago
 	if(isset($_GET['poliza_medio_pago']) && $_GET['poliza_medio_pago']!=""){	
 		$query_Recordset1_where .= sprintf(" AND poliza.poliza_medio_pago = %s",GetSQLValueString($_GET['poliza_medio_pago'], "text"));
