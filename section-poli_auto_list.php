@@ -147,6 +147,8 @@
 							$(nRow).css('color', 'red');
 							break;
 						case 'PENDIENTE':
+							$(nRow).css('color', 'grey');
+							break;
 						default:
 							$(nRow).css('color', 'black');
 							break;
