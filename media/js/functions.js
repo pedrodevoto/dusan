@@ -111,7 +111,12 @@ $(document).ready(function () {
 	selectFirstItem = function (field) {
 		$("select#" + field).val($("select#" + field + " option:first").val());
 	}
-
+	sortListNum = function (field) {
+		$("select#" + field).html($("select#" + field + " option").sort(function (a, b) {
+			return parseFloat(a.text.replace(/[^0-9\.]/g, '')) > parseFloat(b.text.replace(/[^0-9\.]/g, ''));
+		}));
+	}
+	
 	/* Initialize Special Field functions */
 	initDatePickersDaily = function (clase, clear, maxdate) {
 		$("." + clase).each(function () {
@@ -900,6 +905,7 @@ $(document).ready(function () {
 						options += '<option value="' + key + '">' + value + '</option>';
 					});
 					$('#' + field).html(options);
+					sortListNum(field);
 					// Append option: "all"
 					appendListItem(field, '', 'Seleccionar');
 					// Select first item
