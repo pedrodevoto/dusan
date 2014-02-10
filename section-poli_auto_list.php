@@ -199,9 +199,6 @@
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
                             <td width="14%">
-                                <label for="poliza_estado_id">Estado</label>                                
-                                <select name="poliza_estado_id" id="poliza_estado_id">
-								</select>
                             </td>
                         </tr>
                         <tr>                   
@@ -257,6 +254,27 @@
 								<input type="text" name="poliza_vigencia_dia" maxlength="2" />
                             </td>
                         </tr>
+						<tr>
+							<td colspan="4">
+								<label for="poliza_vigente">Vigente</label>
+								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" />
+							
+								<label for="poliza_vigente_a_renovar">Vigente a Renovar</label>
+								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4"></input>
+							
+								<label for="poliza_cumplida">Cumplida</label>
+								<input type="checkbox" name="poliza_cumplida" id="poliza_cumplida" value="6"></input>
+							
+								<label for="poliza_cumplida_renovada">Cumplida Renovada</label>
+								<input type="checkbox" name="poliza_cumplida_renovada" id="poliza_cumplida_renovada" value="5"></input>
+							
+								<label for="poliza_pendiente">Pendiente</label>
+								<input type="checkbox" name="poliza_pendiente" id="poliza_pendiente" value="2"></input>
+							
+								<label for="poliza_mc">M/C</label>
+								<input type="checkbox" name="poliza_mc" id="poliza_mc" value="1"></input>
+							</td>
+						</tr>
                         <tr>                                
                             <td colspan="7" align="center">
                             	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />

@@ -47,8 +47,15 @@
 		$query_Recordset1_where .= ' AND ('.implode(' OR ', $conditions).')';
 	}
 	// Filter by: poliza_estado_id
-	if(isset($_GET['poliza_estado_id']) && $_GET['poliza_estado_id']!=""){	
-		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id = %s",GetSQLValueString($_GET['poliza_estado_id'], "int"));
+	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
+		$estados = array('poliza_vigente', 'poliza_vigente_a_renovar', 'poliza_cumplida', 'poliza_cumplida_renovada', 'poliza_pendiente', 'poliza_mc');
+		$estados_id = array();
+		foreach ($estados as $estado) {
+			if (!empty($_GET[$estado])) {
+				$estados_id[] = GetSQLValueString($_GET[$estado], 'int');
+			}
+		}
+		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id IN (%s)", implode(',', $estados_id));
 	}
 	// Filter by: poliza_medio_pago
 	if(isset($_GET['poliza_medio_pago']) && $_GET['poliza_medio_pago']!=""){	
