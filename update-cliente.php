@@ -25,7 +25,7 @@
 						GetSQLValueString(preg_replace('/[^0-9]/', '', $_POST['box-cliente_nro_doc']), "int"),
 						GetSQLValueString($_POST['box-cliente_nacionalidad_id'], "int"),
 						GetSQLValueString($_POST['box-cliente_cf_id'], "int"),						
-						GetSQLValueString($_POST['box-cliente_registro'], "text"),
+						GetSQLValueString(preg_replace('/[^0-9]/', '', $_POST['box-cliente_registro']), "int"),
 						GetSQLValueString($_POST['box-cliente_reg_vencimiento'], "date"),
 						GetSQLValueString($_POST['box-cliente_cuit_0'], "text"),
 						GetSQLValueString($_POST['box-cliente_cuit_1'], "text"),
