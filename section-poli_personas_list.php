@@ -85,10 +85,7 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "8%", "bSearchable": false},
-						{"sWidth": "6%",  "bSearchable": false, "fnRender": function(oObj) {
-								return '<span title="'+oObj.aData[14]+'">'+oObj.aData[13]+'</span>';
-							}
-						},
+						{"sWidth": "6%",  "bSearchable": false},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
@@ -150,6 +147,10 @@
 							$(nRow).css('color', 'black');
 							break;
 						}
+						if (aData[13]=='No') {
+							$('td:eq(11)', nRow).addClass('ui-state-error');
+						}
+						$('td:eq(11)', nRow).html('<span title="'+aData[14]+'">'+aData[13]+'</span>');
 						return nRow;
 					}
 												
