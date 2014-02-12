@@ -23,6 +23,7 @@
         
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
+			var filtersource = '';
 			$(document).ready(function() {	            
 				populateListPlizaEstado('poliza_estado_id', 'main');
 				populateListCoberturaTipo('seguro_cobertura_tipo_nombre', 'main');
@@ -30,12 +31,11 @@
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
-
 				// Filter: Submit handler
 				$('#btnFiltro').click(function() {						
-					var filtersource = $('#frmFiltro').serialize();					
+					filtersource = $('#frmFiltro').serialize();					
 					// Get table data
-					var newsource = sourceURL+'?action=view&' + filtersource;
+					newsource = sourceURL+'?action=view&' + filtersource;
 					oTable.fnSettings().sAjaxSource = newsource;
 					oTable.fnDraw();
 				});	
@@ -128,7 +128,9 @@
 								sessionExpire('main');
 							}
 						});
-						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php', function(data){
+					},
+					"fnFooterCallback": function( oSettings ) {
+						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php?'+filtersource, function(data){
 							if (data=='Session expired') {
 								sessionExpire('main');
 							}

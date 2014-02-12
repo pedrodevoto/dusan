@@ -23,6 +23,7 @@
         
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
+			var filtersource = '';
 			$(document).ready(function() {	            
 				populateListPlizaEstado('poliza_estado_id', 'main');
 				populateListSuc('sucursal_id', 'main');
@@ -32,7 +33,7 @@
 
 				// Filter: Submit handler
 				$('#btnFiltro').click(function() {						
-					var filtersource = $('#frmFiltro').serialize();					
+					filtersource = $('#frmFiltro').serialize();					
 					// Get table data
 					var newsource = sourceURL+'?action=view&' + filtersource;
 					oTable.fnSettings().sAjaxSource = newsource;
@@ -125,7 +126,9 @@
 								sessionExpire('main');
 							}
 						});
-						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php', function(data){
+					},
+					"fnFooterCallback": function( oSettings ) {
+						$('#dtDivFooterTotal').load('section-<?php echo(getCurrentSection()); ?>-dttotal.php?'+filtersource, function(data){
 							if (data=='Session expired') {
 								sessionExpire('main');
 							}
