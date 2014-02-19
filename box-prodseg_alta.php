@@ -26,7 +26,7 @@
                 </p>                                                     
                 <p>
                     <label for="box-productor_seguro_codigo">Código *</label>
-                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" />
+                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" required/>
                 </p>
 				<p>
 					<label for="box-zona_riesgo_id">Zona de riesgo</label>
