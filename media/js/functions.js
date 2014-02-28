@@ -1263,7 +1263,28 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-	
+	populateFormBoxRie = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_rie.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 
 	populateFormBoxCliente = function (id) {
 		var dfd = new $.Deferred();
@@ -3092,6 +3113,28 @@ $(document).ready(function () {
 			}
 		});
 	}
+	insertFormRie = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-rie.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
+			}
+		});
+	}
 
 	/* Update via form functions */
 	updateFormUsuario = function () {
@@ -3365,7 +3408,27 @@ $(document).ready(function () {
 			}
 		});
 	}
-
+	updateFormRie = function (id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-rie.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxSuc($('#box-sucursal_id').val());
+				});
+			}
+		});
+	}
+	
 	/* Update via Link functions */
 	updateLinkContacto_Default = function (id, cliente_id) {
 		if (confirm('Está seguro que desea establecer este contacto como primario?')) {
@@ -5785,6 +5848,90 @@ $(document).ready(function () {
 						break;
 					}
 				});
+			}
+		});
+	}
+	openBoxAltaZonaRiesgo = function() {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-rie_alta.php',
+			width: '700px',
+			height: '450px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+
+				// Validate form
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						"box-zona_riesgo_nombre": {
+							required: true
+						}
+					}
+				});
+
+				// Button action
+				$("#btnBox").click(function () {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							insertFormRie();
+						}
+					};
+				});
+
+				// Enable form
+				formDisable('frmBox', 'ui', false);
+			}
+		});
+	}
+	openBoxModZonaRiesgo = function(id) {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-rie_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxRie(id)).then(function () {
+					$('#box-sucursal_pfc').change(function() {
+						$('#box-sucursal_pfc_default').attr('disabled', !$(this).prop('checked'));
+					})
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-sucursal_nombre": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormRie();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+					$('#box-sucursal_pfc').change();
+				});
+
 			}
 		});
 	}

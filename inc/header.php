@@ -64,6 +64,7 @@
                         <li><a href="section-pro_list.php">Productores</a></li>
 						<li><a href="section-suc_list.php">Sucursales</a></li>
                         <li><a href="section-cod_list.php">Códigos de Productor</a></li>
+                        <li><a href="section-rie_list.php">Zonas de riesgo</a></li>
                     </ul>
                 </li>  
                 <? } ?>                  
