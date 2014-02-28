@@ -25,12 +25,22 @@
 	if ($totalRows_Recordset1 === 1) {
 					
 		// Recordset: Detail
-		$query_Recordset2 = sprintf("SELECT * FROM %s WHERE poliza_id=%s",
-								$row_Recordset1['subtipo_poliza_tabla'],
-								$poliza_id);
-		$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
-		$row_Recordset2 = mysql_fetch_assoc($Recordset2);
-		$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+		if ($_GET['flota']=='new') {
+			$totalRows_Recordset2 = 0;
+		}
+		else {
+			if ($_GET['flota']=='0') {
+				$query_Recordset2 = sprintf("SELECT * FROM %s WHERE poliza_id=%s",
+										$row_Recordset1['subtipo_poliza_tabla'],
+										$poliza_id);
+			}
+			else {
+				$query_Recordset2 = sprintf('SELECT * FROM automotor WHERE automotor_id=%s', intval($_GET['flota']));				
+			}
+			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
+			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
+			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+		}
 					
 		// If Recordset not empty
 		if ($totalRows_Recordset2 > 0) {

@@ -1367,10 +1367,10 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-	populateFormBoxPolizaDet = function (id) {
+	populateFormBoxPolizaDet = function (id, flota) {
 		var dfd = new $.Deferred();
 		$.ajax({
-			url: "get-json-fich_polizadet.php?id=" + id,
+			url: "get-json-fich_polizadet.php?id=" + id + '&flota=' + flota,
 			dataType: 'json',
 			success: function (j) {
 				if (j.error == 'expired') {
@@ -1488,6 +1488,26 @@ $(document).ready(function () {
 			}
 		});
 		return dfd.promise();
+	}
+	populateFormFlota = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-seguro_flota.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					//Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					// $.colorbox.close();
+				} else {
+					console.log(j.seguro_flota==1);
+					$('#box-poliza_flota').attr('disabled', !j.seguro_flota==1);
+					dfd.resolve();
+				}
+			}
+		})
 	}
 	
 	populatePolizaDet = function (subtipo_poliza, id) {
@@ -1992,7 +2012,7 @@ $(document).ready(function () {
 						$('#divBoxClienteSearchResults').html('');
 						// Enable main form
 						formDisable('frmBox', 'ui', false);
-						$('#box-sucursal_pfc').attr('disabled', true);
+						$('#box-sucursal_pfc, #box-poliza_flota').attr('disabled', true);
 						// Set focus
 						$("#box-sucursal_id").focus();
 					}
@@ -3439,7 +3459,7 @@ $(document).ready(function () {
 	}
 
 	/* Process via form functions */
-	processFormPolizaDet = function (id, fromcreate) {
+	processFormPolizaDet = function (id, fromcreate, flota) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 
@@ -3448,7 +3468,8 @@ $(document).ready(function () {
 			url: 'process-polizadet.php',
 			type: 'POST',
 			data: {
-				'box-poliza_id': id
+				'box-poliza_id': id,
+				'flota': flota,
 			},
 			beforeSend: function () {
 
@@ -3716,7 +3737,7 @@ $(document).ready(function () {
 			title: 'Registro',
 			href: 'box-seguro_alta.php',
 			width: '700px',
-			height: '450px',
+			height: '550px',
 			onComplete: function () {
 
 				// Initialize buttons
@@ -3772,7 +3793,7 @@ $(document).ready(function () {
 			title: 'Registro',
 			href: 'box-seguro_mod.php',
 			width: '700px',
-			height: '500px',
+			height: '550px',
 			onComplete: function () {
 
 				// Initialize buttons
@@ -4490,6 +4511,7 @@ $(document).ready(function () {
 							case 'box-seguro_id':
 								$('#box-productor_seguro_id').html(loading);
 								populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
+								populateFormFlota($(this).val());
 								break;
 						}
 						if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
@@ -4964,7 +4986,8 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxPolizaDet = function (id, fromcreate) {
+	openBoxPolizaDet = function (id, fromcreate, flota) {
+		flota = flota || 0;
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-polizadet.php?section=2&id=' + id,
@@ -4986,7 +5009,7 @@ $(document).ready(function () {
 				formDisable('frmBox', 'ui', true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxPolizaDet(id)).then(function () {
+				$.when(populateFormBoxPolizaDet(id, flota)).then(function () {
 
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
@@ -5001,7 +5024,7 @@ $(document).ready(function () {
 						// if (customValidations()) {
 						if (validateForm.form() && customValidations()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
-							processFormPolizaDet(id, fromcreate);
+							processFormPolizaDet(id, fromcreate, flota);
 						}
 						// }
 					});
@@ -5667,8 +5690,8 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxPolizaFotos = function(id) {
-		console.log('sdf');
+	openBoxPolizaFotos = function(id, flota) {
+		flota = flota || 0;
 		$.colorbox({
 			title: 'Fotos',
 			href: 'box-polizafotos.php',
@@ -5734,5 +5757,35 @@ $(document).ready(function () {
 			}
 		});
 		
+	}
+	openBoxPolizaFlota = function(tipo, id) {
+		$.colorbox({
+			title: 'Flota',
+			href: 'box-poliza_flota.php?id=' + id + '&tipo='+tipo,
+			width: '750px',
+			height: '400px',
+			onComplete: function () {
+				$('#create').button().click(function() {
+					switch (tipo) {
+					case 'detalle':
+						openBoxPolizaDet(id, false, 'new');
+						break;
+					case 'imagenes':
+						openBoxPolizaFotos(id, $(this).attr('polizadet'));
+						break;
+					}
+				});
+				$('.flotaedit').button().click(function() {
+					switch (tipo) {
+					case 'detalle':
+						openBoxPolizaDet(id, false, $(this).attr('polizadet'));
+						break;
+					case 'imagenes':
+						
+						break;
+					}
+				});
+			}
+		});
 	}
 });

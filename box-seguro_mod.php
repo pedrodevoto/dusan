@@ -61,6 +61,10 @@
                 <label for="box-seguro_cp">Código Postal</label>
                 <input type="text" name="box-seguro_cp" id="box-seguro_cp" maxlength="15" class="ui-widget-content" style="width:220px" />
             </p>
+			<p>
+				<label for="box-seguro_flota">Flota</label>
+				<input type="checkbox" name="box-seguro_flota" id="box-seguro_flota" class="ui-widget-content" />
+			</p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     

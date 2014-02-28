@@ -12,6 +12,7 @@
 <?php
 	// Obtain URL parameter
 	$poliza_id = intval($_POST['box-poliza_id']);
+	$flota = $_POST['flota'];
 	
 	// Recordset: Poliza
 	$query_Recordset1 = sprintf("SELECT subtipo_poliza_tabla FROM subtipo_poliza JOIN (poliza) ON (subtipo_poliza.subtipo_poliza_id=poliza.subtipo_poliza_id) WHERE poliza.poliza_id=%s", $poliza_id);
@@ -36,7 +37,7 @@
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
 			
 			// If record exists
-			if ($totalRows_Recordset2 === 0) {				
+			if ($totalRows_Recordset2 === 0 || $flota == 'new') {				
 				// Insert
 				$insertSQL = sprintf("INSERT INTO automotor (poliza_id, automotor_marca_id, modelo, castigado, patente_0, patente_1, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, cert_rodamiento, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, zona_riesgo_id, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo, equipo_rastreo_pedido_id, equipo_rastreo_id, micro_grabado, cupon_vintrak, cupon_vintrak_fecha, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, seguro_cobertura_tipo_id, franquicia, seguro_cobertura_tipo_limite_rc_id, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total, pedido_instalacion, pedido_instalacion_direccion, pedido_instalacion_horario, pedido_instalacion_telefono, pedido_instalacion_observaciones) 
 							          VALUES (%s, %s, UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, %s, %s, %s, %s, %s, %s, %s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)))",
@@ -211,7 +212,7 @@
 										GetSQLValueString($_POST['box-pedido_instalacion_horario'], 'text'),
 										GetSQLValueString($_POST['box-pedido_instalacion_telefono'], 'text'),
 										GetSQLValueString($_POST['box-pedido_instalacion_observaciones'], 'text'),										
-										$row_Recordset2['automotor_id']);								
+										(intval($flota)>0?GetSQLValueString($flota, 'int'):$row_Recordset2['automotor_id']));								
 				$Result1 = mysql_query($updateSQL, $connection) or die(mysql_error());	
 				$automotor_id = $row_Recordset2['automotor_id'];	
 			}		

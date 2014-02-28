@@ -1,4 +1,4 @@
--- Adminer 3.7.1 MySQL dump
+-- Adminer 4.0.3 MySQL dump
 
 SET NAMES utf8;
 SET foreign_key_checks = 0;
@@ -298,8 +298,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -692,6 +692,38 @@ CREATE TABLE `integral_consorcio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `libros_rubricados_ros`;
+CREATE TABLE `libros_rubricados_ros` (
+  `libros_rubricados_ros_id` int(11) NOT NULL AUTO_INCREMENT,
+  `productor_id` int(10) unsigned NOT NULL,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_nro_orden` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_fecha_registro` datetime NOT NULL,
+  `libros_rubricados_ros_asegurado_tipo` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_asegurado_tipo_doc` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_asegurado_nro_doc` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_asegurado_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_cpa_proponente` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_obs_proponente` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_cpa` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_cia_id` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_bien_asegurado` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_ramo` int(11) NOT NULL,
+  `libros_rubricados_ros_suma_asegurada` decimal(10,2) NOT NULL,
+  `libros_rubricados_ros_suma_asegurada_tipo` int(11) NOT NULL,
+  `libros_rubricados_ros_cobertura_desde` datetime NOT NULL,
+  `libros_rubricados_ros_cobertura_hasta` datetime NOT NULL,
+  `libros_rubricados_ros_observacion_tipo` int(11) NOT NULL,
+  `libros_rubricados_ros_flota` int(11) NOT NULL,
+  `libros_rubricados_ros_operacion_origen` int(11) NOT NULL,
+  PRIMARY KEY (`libros_rubricados_ros_id`),
+  KEY `productor_id` (`productor_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `libros_rubricados_ros_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`) ON DELETE NO ACTION,
+  CONSTRAINT `libros_rubricados_ros_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -713,11 +745,11 @@ CREATE TABLE `poliza` (
   `poliza_fecha_recepcion` date DEFAULT NULL,
   `poliza_fecha_entrega` date DEFAULT NULL,
   `poliza_correo` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `poliza_email` tinyint(3) unsigned NOT NULL,
+  `poliza_email` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `poliza_entregada` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `poliza_prima` decimal(10,2) unsigned DEFAULT NULL,
   `poliza_premio` decimal(10,2) unsigned NOT NULL,
-  `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo','Depósito en Cuenta') COLLATE utf8_unicode_ci NOT NULL,
+  `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo') COLLATE utf8_unicode_ci NOT NULL,
   `poliza_pago_detalle` blob,
   `poliza_ajuste` tinyint(3) unsigned DEFAULT NULL,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
@@ -860,6 +892,7 @@ CREATE TABLE `seguro` (
   `seguro_email_siniestro` text COLLATE utf8_unicode_ci,
   `seguro_email_emision` text COLLATE utf8_unicode_ci,
   `seguro_email_emision_vida` text COLLATE utf8_unicode_ci,
+  `seguro_email_patrimoniales_otras` text COLLATE utf8_unicode_ci,
   `seguro_email_endosos` text COLLATE utf8_unicode_ci,
   `seguro_email_rastreador` text COLLATE utf8_unicode_ci,
   `seguro_email_fotos` text COLLATE utf8_unicode_ci,
@@ -895,6 +928,29 @@ CREATE TABLE `seguro_cobertura_tipo_limite_rc` (
   `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL AUTO_INCREMENT,
   `seguro_cobertura_tipo_limite_rc_valor` int(11) NOT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_limite_rc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros`;
+CREATE TABLE `siniestros` (
+  `siniestro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`siniestro_id`),
+  KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `siniestros_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_data`;
+CREATE TABLE `siniestros_data` (
+  `siniestros_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestro_id` int(11) NOT NULL,
+  `siniestros_data_field` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `siniestros_data_data` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`siniestros_data_id`),
+  KEY `siniestro_id` (`siniestro_id`),
+  KEY `siniestros_data_field` (`siniestros_data_field`),
+  CONSTRAINT `siniestros_data_ibfk_1` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`siniestro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -974,4 +1030,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-01-06 21:32:02
+-- 2014-02-09 22:06:57

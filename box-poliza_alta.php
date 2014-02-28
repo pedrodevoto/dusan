@@ -61,6 +61,7 @@
             <p>
                 <label for="box-seguro_id">Aseguradora *</label>
                 <select name="box-seguro_id" id="box-seguro_id" class="ui-widget-content" style="width:180px"></select>
+				<input type="checkbox" name="box-poliza_flota" id="box-poliza_flota" value="1" disabled /><label for="box-poliza_flota" class="secondary">Flota</label>
             </p>
             <p>
                 <label for="box-productor_seguro_id">Productor *</label>

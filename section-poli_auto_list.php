@@ -89,11 +89,13 @@
 						{"sWidth": "5%"},
 						{"sWidth": "4%",  "bSearchable": false},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
+						{"bSearchable": false, "bVisible": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
-							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="openBoxPolizaDet('+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
-							returnval += '<li title="Editar imágenes" onclick="openBoxPolizaFotos('+oObj.aData[0]+');"><span class="ui-icon ui-icon-image"></span></li>';
+							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="'+(oObj.aData[16]==1?'openBoxPolizaFlota(\'detalle\', ':'openBoxPolizaDet(')+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
+							returnval += '<li title="Editar imágenes" onclick="'+(oObj.aData[16]==1?'openBoxPolizaFlota(\'imagenes\', ':'openBoxPolizaFotos(')+oObj.aData[0]+');"><span class="ui-icon ui-icon-image"></span></li>';
+							// returnval += '<li title="Editar imágenes" onclick="openBoxPolizaFotos('+oObj.aData[0]+');"><span class="ui-icon ui-icon-image"></span></li>';
 							returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Plan de Pago" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=='master') {?>
 							returnval +='<li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
@@ -317,6 +319,7 @@
                             <th>Fotos</th> 
                             <th>Pago al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    
+							<th>Flota</th>
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -336,6 +339,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+							<th></th>
                             <th></th> 
                             <th></th>         
 							<th></th>                                                
