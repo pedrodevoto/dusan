@@ -60,7 +60,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = zona_riesgo.zona_riesgo_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = zona_riesgo.zona_riesgo_id LEFT JOIN producto ON producto.producto_id = automotor.producto_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -136,7 +136,8 @@
 				array('maxwidth' => 95, 'text' => ""),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 			);
-			$txt_cobertura = "Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
+			error_log($row_Recordset2['producto_id']);
+			$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';

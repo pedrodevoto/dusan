@@ -128,6 +128,7 @@ CREATE TABLE `automotor` (
   `marca_cilindro` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `venc_oblea` date DEFAULT NULL,
   `nro_tubo` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `producto_id` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_id` int(11) NOT NULL,
   `franquicia` mediumint(8) unsigned DEFAULT NULL,
   `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL,
@@ -830,6 +831,14 @@ CREATE TABLE `poliza_plan` (
   KEY `seguro_id` (`seguro_id`),
   CONSTRAINT `poliza_plan_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
   CONSTRAINT `poliza_plan_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `producto`;
+CREATE TABLE `producto` (
+  `producto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`producto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

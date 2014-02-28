@@ -89,4 +89,13 @@ function showZonasRiesgo($id) {
 		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
 	}
 }
+function showProducto() {
+	$query_Recordset1 = sprintf("SELECT producto_id, producto_nombre FROM producto");
+
+	// Recordset: Main
+	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
+	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
+		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
+	}
+}
 ?>

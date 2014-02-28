@@ -487,9 +487,18 @@
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
-    <p>
-        <label for="box-seguro_cobertura_tipo_id">Tipo *</label>
-        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:120px">
+    <?php if($row_Recordset1['seguro_id']==4):?>
+	<p>
+        <label for="box-producto_id">Producto *</label>
+        <select name="box-producto_id" id="box-producto_id" class="ui-widget-content required" style="width:160px">
+        	<option value="">Seleccione</option>
+			<?php showProducto(); ?>
+        </select>        
+    </p>
+	<?php endif;?>
+	<p>
+        <label for="box-seguro_cobertura_tipo_id">Cobertura *</label>
+        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:160px">
         	<option value="">Seleccione</option>
 			<?php showCobertura($row_Recordset1['productor_seguro_id']); ?>
         </select>        
