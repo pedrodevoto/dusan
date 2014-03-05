@@ -12,9 +12,8 @@
 	if ((isset($_POST["box-productor_seguro_id"])) && ($_POST["box-productor_seguro_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE productor_seguro SET productor_seguro_codigo=UPPER(TRIM(%s)), zona_riesgo_id=%s, productor_seguro_organizacion_flag=%s, productor_seguro_organizacion_nombre=UPPER(TRIM(%s)), productor_seguro_organizacion_tipo_persona=%s, productor_seguro_organizacion_matricula=UPPER(TRIM(%s)), productor_seguro_organizacion_cuit=UPPER(TRIM(%s)) WHERE productor_seguro_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE productor_seguro SET productor_seguro_codigo=UPPER(TRIM(%s)), productor_seguro_organizacion_flag=%s, productor_seguro_organizacion_nombre=UPPER(TRIM(%s)), productor_seguro_organizacion_tipo_persona=%s, productor_seguro_organizacion_matricula=UPPER(TRIM(%s)), productor_seguro_organizacion_cuit=UPPER(TRIM(%s)) WHERE productor_seguro_id=%s LIMIT 1",
 								GetSQLValueString($_POST['box-productor_seguro_codigo'], "text"),
-								GetSQLValueString($_POST['box-zona_riesgo_id'], "int"),
 								GetSQLValueString(isset($_POST['box-productor_seguro_organizacion_flag']) ? 'true' : '', 'defined','1','0'),
 								GetSQLValueString($_POST['box-productor_seguro_organizacion_nombre'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_organizacion_tipo_persona'], "int"),
@@ -33,7 +32,16 @@
 						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
 						GetSQLValueString($cobertura_id, "int"));
 						error_log($insertSQL);
-					mysql_query($insertSQL, $connection);
+					mysql_query($insertSQL, $connection) or die(mysql_error());
+				}
+				$deleteSQL = sprintf("DELETE FROM productor_seguro_zonas_riesgo WHERE productor_seguro_id = %s",
+					GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
+				mysql_query($deleteSQL, $connection);
+				foreach ($_POST['box-zona_riesgo_id'] as $zona_riesgo_id) {
+					$insertSQL = sprintf("INSERT INTO productor_seguro_zonas_riesgo (productor_seguro_id, zona_riesgo_id) VALUES (%s, %s)",
+						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
+						GetSQLValueString($zona_riesgo_id, "int"));
+						mysql_query($insertSQL, $connection) or die(mysql_error());
 				}
 				echo "El registro ha sido actualizado.";							
 				break;								

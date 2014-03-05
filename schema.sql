@@ -863,7 +863,6 @@ CREATE TABLE `productor_seguro` (
   `seguro_id` int(10) unsigned NOT NULL,
   `sucursal_id` int(11) NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `zona_riesgo_id` int(11) DEFAULT NULL,
   `productor_seguro_organizacion_flag` tinyint(4) DEFAULT NULL,
   `productor_seguro_organizacion_nombre` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `productor_seguro_organizacion_tipo_persona` tinyint(4) DEFAULT NULL,
@@ -874,7 +873,6 @@ CREATE TABLE `productor_seguro` (
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
   KEY `sucursal_id` (`sucursal_id`),
-  KEY `zona_riesgo_id` (`zona_riesgo_id`),
   CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
   CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`),
   CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
@@ -891,6 +889,19 @@ CREATE TABLE `productor_seguro_cobertura_tipo` (
   KEY `seguro_cobertura_tipo_id` (`seguro_cobertura_tipo_id`),
   CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
   CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_2` FOREIGN KEY (`seguro_cobertura_tipo_id`) REFERENCES `seguro_cobertura_tipo` (`seguro_cobertura_tipo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `productor_seguro_zonas_riesgo`;
+CREATE TABLE `productor_seguro_zonas_riesgo` (
+  `productor_seguro_zonas_riesgo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `productor_seguro_id` int(10) unsigned NOT NULL,
+  `zona_riesgo_id` int(11) NOT NULL,
+  PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
+  KEY `productor_seguro_id` (`productor_seguro_id`),
+  KEY `zona_riesgo_id` (`zona_riesgo_id`),
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`),
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

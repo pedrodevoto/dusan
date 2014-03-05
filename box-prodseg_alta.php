@@ -30,7 +30,7 @@
                 </p>
 				<p>
 					<label for="box-zona_riesgo_id">Zona de riesgo</label>
-					<select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content" style="width:180px">
+					<select multiple="multiple" name="box-zona_riesgo_id[]" id="box-zona_riesgo_id" class="ui-widget-content" style="width:180px">
 						<option value="">Cargando</option>
 					</select>
 				</p>

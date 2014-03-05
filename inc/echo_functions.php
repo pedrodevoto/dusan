@@ -80,7 +80,7 @@ function showLimiteRC() {
 }
 
 function showZonasRiesgo($id) {
-	$query_Recordset1 = sprintf("SELECT productor_seguro.zona_riesgo_id, zona_riesgo_nombre FROM productor_seguro JOIN zona_riesgo ON zona_riesgo.zona_riesgo_id = productor_seguro.zona_riesgo_id WHERE productor_seguro_id=%s", 
+	$query_Recordset1 = sprintf("SELECT productor_seguro_zonas_riesgo.zona_riesgo_id, zona_riesgo_nombre FROM productor_seguro_zonas_riesgo JOIN zona_riesgo ON zona_riesgo.zona_riesgo_id = productor_seguro_zonas_riesgo.zona_riesgo_id WHERE productor_seguro_id=%s", 
 		GetSQLValueString($id, "int"));
 
 	// Recordset: Main
