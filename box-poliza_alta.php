@@ -95,10 +95,6 @@
                 <input type="text" name="box-poliza_validez_hasta" id="box-poliza_validez_hasta" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
             </p> 
             <p>
-                <label for="box-poliza_cuotas">Plan de Pago *</label>
-                <select name="box-poliza_cuotas" id="box-poliza_cuotas" class="ui-widget-content" style="width:130px"></select>
-            </p> 
-            <p>
                 <label for="box-poliza_fecha_solicitud">Fecha Solicitud</label>
                 <input type="text" name="box-poliza_fecha_solicitud" id="box-poliza_fecha_solicitud" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
             </p>
@@ -123,6 +119,10 @@
                 <label for="box-poliza_premio">Premio *</label>
                 <input type="text" name="box-poliza_premio" id="box-poliza_premio" maxlength="11" class="ui-widget-content" style="width:100px" />
             </p>
+            <p>
+                <label for="box-poliza_cuotas">Plan de Pago *</label>
+                <select name="box-poliza_cuotas" id="box-poliza_cuotas" class="ui-widget-content" style="width:130px"></select>
+            </p> 
             <p>
                 <label for="box-poliza_medio_pago">Medio de Pago *</label>
                 <select name="box-poliza_medio_pago" id="box-poliza_medio_pago" class="ui-widget-content" style="width:180px"></select>

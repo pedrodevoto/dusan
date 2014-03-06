@@ -679,32 +679,49 @@ $(document).ready(function () {
 		}
 		$('#' + field).html(options);
 	}
-	populateListPoliza_Cuotas = function (field, context) {
-		var dfd = new $.Deferred();
-		$.ajax({
-			url: "get-json-poliza_cuotas.php",
-			dataType: 'json',
-			success: function (j) {
-				if (j.error == 'expired') {
-					sessionExpire(context);
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
-				} else {
-					var options = '';
-					$.each(j, function (key, value) {
-						options += '<option value="' + key + '">' + value + '</option>';
-					});
-					$('#' + field).html(options);
-					// Sort options alphabetically
-					sortListAlpha(field);
-					// Select first item
-					selectFirstItem(field);
-					dfd.resolve();
-				}
-			}
-		});
-		return dfd.promise();
+	populateListPoliza_Cuotas = function (field, context, seguro_id) {
+		var cuotas;
+		switch (seguro_id) {
+		case "4":
+			cuotas = ['Mensual', 'Semestral'];
+			break;
+		default:
+			cuotas = ['Mensual', 'Total'];
+			break;
+		}
+		var options = '';
+		for (var i = 0; i < cuotas.length; i++) {
+			options += '<option value="' + cuotas[i] + '">' + cuotas[i] + '</option>';
+		}
+		$('#' + field).html(options);
+		
+		return true;
+		
+		// var dfd = new $.Deferred();
+		// $.ajax({
+		// 	url: "get-json-poliza_cuotas.php",
+		// 	dataType: 'json',
+		// 	success: function (j) {
+		// 		if (j.error == 'expired') {
+		// 			sessionExpire(context);
+		// 		} else if (j.empty == true) {
+		// 			// Record not found
+		// 			$.colorbox.close();
+		// 		} else {
+		// 			var options = '';
+		// 			$.each(j, function (key, value) {
+		// 				options += '<option value="' + key + '">' + value + '</option>';
+		// 			});
+		// 			$('#' + field).html(options);
+		// 			// Sort options alphabetically
+		// 			sortListAlpha(field);
+		// 			// Select first item
+		// 			selectFirstItem(field);
+		// 			dfd.resolve();
+		// 		}
+		// 	}
+		// });
+		// return dfd.promise();
 	}
 	populateListPoliza_MP = function (field, context) {
 		var dfd = new $.Deferred();
@@ -4543,20 +4560,64 @@ $(document).ready(function () {
 						$('#box-poliza_validez_hasta').datepicker('option', 'dateFormat', 'dd/mm/y');
 					})
 					$("#box-poliza_medio_pago, #box-poliza_cuotas").change(function() {
-						$('#pfc')[($('#box-poliza_medio_pago').val()=='Directo'?'show':'hide')]().children().eq(0).attr('disabled', ($('#box-poliza_medio_pago').val()=='Directo'?false:true));
-						var cuotas = '';
-						if ($('#box-poliza_cuotas').val()=='Total') {
-							cuotas = 1;
+						if ($('#box-seguro_id').val()=='4') {
+							switch ($(this).prop('id')) {
+							case 'box-poliza_cuotas':
+								var mp;
+								switch ($(this).val()) {
+								case 'Mensual':
+									mp = ['Tarjeta de Crédito'];
+									var options = '';
+									for (var i = 0; i < mp.length; i++) {
+										options += '<option value="' + mp[i] + '">' + mp[i] + '</option>';
+									}
+									$('#box-poliza_medio_pago').html(options);
+									$('#box-poliza_medio_pago').val('Tarjeta de Crédito').change();
+									break;
+								case 'Semestral':
+									mp = ['1 Pago Cupon Contado', '1 Pago Tarjeta de Credito', '6 Cuotas Pago Cupones', '6 Cuotas Pago Tarj/CBU'];
+									var options = '';
+									for (var i = 0; i < mp.length; i++) {
+										options += '<option value="' + mp[i] + '">' + mp[i] + '</option>';
+									}
+									$('#box-poliza_medio_pago').html(options);
+									$('#box-poliza_medio_pago').val('6 Cuotas Pago Cupones').change();
+									break;
+								}
+								break;
+							case 'box-poliza_medio_pago':
+								var cuotas = '';
+								switch ($(this).val()) {
+								case 'Tarjeta de Crédito':
+								case '1 Pago Cupon Contado':
+								case '1 Pago Tarjeta de Credito':
+									cuotas = 1;
+									break;
+								case '6 Cuotas Pago Cupones':
+								case '6 Cuotas Pago Tarj/CBU':
+									cuotas = 6;
+									break;
+								}
+								$('#box-poliza_cant_cuotas').val(cuotas);
+								break;
+							}
 						}
-						else {
-							if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
-								cuotas = 12;
+						else {	$('#pfc')[($('#box-poliza_medio_pago').val()=='Directo'?'show':'hide')]().children().eq(0).attr('disabled', ($('#box-poliza_medio_pago').val()=='Directo'?false:true));
+							populateListPoliza_MP('box-poliza_medio_pago', 'box');
+							var cuotas = '';
+							if ($('#box-poliza_cuotas').val()=='Total') {
+								cuotas = 1;
 							}
 							else {
-								cuotas = 5;
+								if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
+									cuotas = 12;
+								}
+								else {
+									cuotas = 5;
+								}
 							}
+							$('#box-poliza_cant_cuotas').val(cuotas);
 						}
-						$('#box-poliza_cant_cuotas').val(cuotas);
 					});
 					$('#box-subtipo_poliza_id, #box-seguro_id').change(function() {
 						switch ($(this).attr('id')) {
@@ -4574,6 +4635,8 @@ $(document).ready(function () {
 							case 'box-seguro_id':
 								$('#box-productor_seguro_id').html(loading);
 								populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
+								populateListPoliza_Cuotas('box-poliza_cuotas', 'box', $(this).val());
+								$('#box-poliza_cuotas, #box-poliza_medio_pago').change();
 								populateFormFlota($(this).val());
 								break;
 						}

@@ -25,8 +25,11 @@
 		$result = explode("','", $result);
 		
 		// Create array
+		$i = 0;
 		foreach ($result as $key=>$value) {
+			if ($i==4) break;
 			$output[$value] = ucfirst($value);
+			$i++;
 		}
 
 	} else {
