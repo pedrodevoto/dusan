@@ -90,7 +90,6 @@
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false},
 						{"sWidth": "6%", "bSearchable": false},
-						{"sWidth": "5%"},
 						{"sWidth": "4%",  "bSearchable": false},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
@@ -155,10 +154,10 @@
 							$(nRow).css('color', 'black');
 							break;
 						}
-						if (aData[14]=='No') {
-							$('td:eq(12)', nRow).addClass('ui-state-error');
+						if (aData[13]=='No') {
+							$('td:eq(11)', nRow).addClass('ui-state-error');
 						}
-						$('td:eq(12)', nRow).html('<span title="'+aData[15]+'">'+aData[14]+'</span>');
+						$('td:eq(11)', nRow).html('<span title="'+aData[14]+'">'+aData[13]+'</span>');
 						return nRow;
 					}
 												
@@ -280,7 +279,6 @@
                             <th>V. Hasta</th>
                             <th>Estado Póliza</th> 
 							<th>Estado</th>
-                            <th>Fotos</th> 
                             <th>Pago al día</th>                                                                                    
                             <th>Al día detalle</th>                                                                                    
                             <th>Acc.</th>                                                        
@@ -295,7 +293,6 @@
                             <th></th>                            
                             <th></th> 
                             <th></th> 
-                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
