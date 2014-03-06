@@ -10,6 +10,9 @@
 	if (!empty($_GET['sucursal_id'])) {
 		$sql .= sprintf(' AND sucursal_id = %s', GetSQLValueString($_GET['sucursal_id'], 'int'));
 	}
+	if (!empty($_GET['poliza_medio_pago'])) {
+		$sql .= sprintf(' AND poliza_medio_pago = %s', GetSQLValueString($_GET['poliza_medio_pago'], 'text'));
+	}
 	$res = mysql_query($sql, $connection);
 	$row = mysql_fetch_assoc($res);
 	$total = $row['total'];
