@@ -52,6 +52,7 @@ $query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_nombre, ''),
 			}
 		}
 		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id IN (%s)", implode(',', $estados_id));
+		$query_Recordset1_having .= ' AND COUNT(endoso_id) = 0';
 	}
 	// Filter by: poliza_anulada
 	if (!empty($_GET['poliza_anulada'])) {

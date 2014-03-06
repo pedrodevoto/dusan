@@ -46,6 +46,10 @@
 					});
 				});	
 				
+				$('#poliza_anulada').change(function() {
+					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
+				});
+				
 				// Filter: Get focus
 				$("#patente").focus();				
 				
