@@ -43,11 +43,7 @@
 	}
 	// Filter by: cliente_nombre
 	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
-		$condition = array();
-		foreach (explode(' ', $_GET['cliente_nombre']) as $term) {
-			$conditions[] = sprintf('(cliente_nombre LIKE %1$s OR cliente_apellido LIKE %1$s)', GetSQLValueString('%' . $term . '%', "text"));
-		}
-		$query_Recordset1_where .= ' AND ('.implode(' OR ', $conditions).')';
+		$query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_nombre, ''), ' ', IFNULL(cliente_apellido, ''))) LIKE %s", GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
 	}
 	// Filter by: poliza_estado_id
 	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
