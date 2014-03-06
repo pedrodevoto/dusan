@@ -4566,13 +4566,13 @@ $(document).ready(function () {
 								var mp;
 								switch ($(this).val()) {
 								case 'Mensual':
-									mp = ['Tarjeta de Crédito'];
+									mp = ['Tarjeta de Credito / CBU - 1 Cuota'];
 									var options = '';
 									for (var i = 0; i < mp.length; i++) {
 										options += '<option value="' + mp[i] + '">' + mp[i] + '</option>';
 									}
 									$('#box-poliza_medio_pago').html(options);
-									$('#box-poliza_medio_pago').val('Tarjeta de Crédito').change();
+									$('#box-poliza_medio_pago').val('Tarjeta de Credito / CBU - 1 Cuota').change();
 									break;
 								case 'Semestral':
 									mp = ['1 Pago Cupon Contado', '1 Pago Tarjeta de Credito', '6 Cuotas Pago Cupones', '6 Cuotas Pago Tarj/CBU'];
@@ -4588,7 +4588,7 @@ $(document).ready(function () {
 							case 'box-poliza_medio_pago':
 								var cuotas = '';
 								switch ($(this).val()) {
-								case 'Tarjeta de Crédito':
+								case 'Tarjeta de Credito / CBU - 1 Cuota':
 								case '1 Pago Cupon Contado':
 								case '1 Pago Tarjeta de Credito':
 									cuotas = 1;
