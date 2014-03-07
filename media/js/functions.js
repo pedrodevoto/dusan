@@ -1351,6 +1351,7 @@ $(document).ready(function () {
 				} else {
 					// Populate drop-downs, then form
 					$.when(
+						populateListSuc('box-sucursal_id', 'box'),
 						populateListSeguro('box-seguro_id', 'box'),
 						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
@@ -4827,6 +4828,10 @@ $(document).ready(function () {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
+					$('#box-sucursal_id').change(function () {
+						$('#box-productor_seguro_id').html(loading);
+						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
+					})
 					$("#box-seguro_id").change(function () {
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');

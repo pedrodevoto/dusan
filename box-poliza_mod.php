@@ -12,10 +12,6 @@
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Poliza (General)</legend>  
-            <p>
-                <label for="box-sucursal_nombre">Sucursal ^</label>
-                <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly"><input type="hidden" name="box-sucursal_id" id="box-sucursal_id" />
-			</p>
 			<p>
                 <label for="box-cliente_nombre">Cliente ^</label>
                 <input type="text" name="box-cliente_nombre" id="box-cliente_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
@@ -40,6 +36,12 @@
                 <label for="box-poliza_renueva_num">Renueva Poliza Nº ^</label>
                 <input type="text" name="box-poliza_renueva_num" id="box-poliza_renueva_num" maxlength="20" class="ui-widget-content" style="width:220px" readonly="readonly" />
             </p>            
+            <p>
+                <label for="box-sucursal_id">Sucursal</label>
+                <select name="box-sucursal_id" id="box-sucursal_id" class="ui-widget-content" style="width:222px">
+                	<option value="">Cargando</option>                
+                </select>
+            </p>
             <p>
                 <label for="box-seguro_id">Aseguradora *</label>
                 <select name="box-seguro_id" id="box-seguro_id" class="ui-widget-content" style="width:180px"></select>
