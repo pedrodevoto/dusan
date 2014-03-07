@@ -13,11 +13,8 @@
 	$cuota_id = intval($_POST['id']);	
 	
 	$cuota_estado = 3;
-	if (!empty($_POST['flag']) && $_POST['flag']==1) {
-		$cuota_estado = 1;
-	}
 	
-	$sql = sprintf('UPDATE cuota SET cuota_estado_id="%s" WHERE cuota_id=%s', $cuota_estado, $cuota_id);
+	$sql = sprintf('UPDATE cuota SET cuota_estado_id="%s", cuota_fe_pago=NULL, cuota_recibo=NULL, cuota_nro_factura=NULL WHERE cuota_id=%s', $cuota_estado, $cuota_id);
 	mysql_query($sql, $connection) or die(mysql_error());
 	
 	echo 'Cuota anulada';

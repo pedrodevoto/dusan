@@ -2602,16 +2602,18 @@ $(document).ready(function () {
 						result += '<td>' + object.cuota_recibo + '</td>';
 						result += '<td>' + (object.cuota_pfc==1?'Sí':'&nbsp;') + '</td>';
 						result += '<td>';
-						if (object.cuota_estado_nombre != 'Anulado') {
-							if (object.cuota_estado_nombre === 'Pagado') {
-								result += '<span onClick="javascript:window.open(\'print-cuota.php?id=' + object.cuota_id + '&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
-								result += '<span onClick="setCuotaToPrint(' + object.cuota_recibo + ', ' + object.cuota_id + ');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Enviar por email"></span>';
-							} else {
-								result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+						switch (object.cuota_estado_nombre) {
+						case 'Pagado':
+							result += '<span onClick="javascript:window.open(\'print-cuota.php?id=' + object.cuota_id + '&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
+							result += '<span onClick="setCuotaToPrint(' + object.cuota_recibo + ', ' + object.cuota_id + ');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Enviar por email"></span>';
+							if (object.master) {
+								result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
 							}
-						}
-						if (object.master && object.cuota_estado_nombre != 'Pagado') {
-							result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ', '+(object.cuota_estado_nombre == 'Anulado'?'1':'0')+')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-'+(object.cuota_estado_nombre == 'Anulado'?'minus':'close')+'" title="'+(object.cuota_estado_nombre == 'Anulado'?'Revertir anulación':'Anular')+'"></span>';
+							break;
+						case 'No Pagado':
+						case 'Anulado':
+							result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+							break;
 						}
 						result += '</td>';
 						result += '</tr>';
@@ -3493,11 +3495,10 @@ $(document).ready(function () {
 			}
 		});
 	}
-	updateCuotaAnular = function (cuota_id, poliza_id, flag) {
-		if (confirm('Seguro desea '+(flag?'revertir el estado de':'anular')+' la cuota?')) {
+	updateCuotaAnular = function (cuota_id, poliza_id) {
+		if (confirm('Seguro desea anular la cuota?')) {
 			$.post('update-cuota_anular.php', {
 				'id': cuota_id,
-				'flag': flag
 			}, function (data) {
 				openBoxCuota(poliza_id);
 			});
