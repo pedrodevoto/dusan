@@ -19,9 +19,8 @@
 		}		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_numero=TRIM(%s), productor_seguro_id=%s, poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_ajuste=%s WHERE poliza.poliza_id=%s LIMIT 1",
-						GetSQLValueString($_POST['box-poliza_numero'], "text"),						
-						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),	
+		$updateSQL = sprintf("UPDATE poliza SET poliza_numero=TRIM(%s), poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_ajuste=%s",
+						GetSQLValueString($_POST['box-poliza_numero'], "text"),							
 						GetSQLValueString($_POST['box-poliza_validez_desde'], "date"),						
 						GetSQLValueString($_POST['box-poliza_validez_hasta'], "date"),
 						GetSQLValueString($_POST['box-poliza_fecha_solicitud'], "date"),
@@ -35,8 +34,12 @@
 						GetSQLValueString($_POST['box-poliza_medio_pago'], "text"),
 						GetSQLValueString($poliza_pago_detalle, "text"),		
 						GetSQLValueString($_POST['box-poliza_recargo'], "double"),									
-						GetSQLValueString($_POST['box-poliza_ajuste'], "int"),						
-						GetSQLValueString($_POST['box-poliza_id'], "int"));			
+						GetSQLValueString($_POST['box-poliza_ajuste'], "int"));			
+						
+		if ($_SESSION['ADM_UserGroup']=='master') {
+			$updateSQL .= sprintf(', sucursal_id=%s, productor_seguro_id=%s', GetSQLValueString($_POST['box-sucursal_id'], "int"), GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
+		}
+		$updateSQL .= ' WHERE poliza.poliza_id='.GetSQLValueString($_POST['box-poliza_id'], "int").' LIMIT 1';
 		$Result1 = mysql_query($updateSQL, $connection);
 		
 		switch (mysql_errno()) {
