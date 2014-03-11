@@ -4605,7 +4605,8 @@ $(document).ready(function () {
 							}
 						}
 						else {	$('#pfc')[($('#box-poliza_medio_pago').val()=='Directo'?'show':'hide')]().children().eq(0).attr('disabled', ($('#box-poliza_medio_pago').val()=='Directo'?false:true));
-							populateListPoliza_MP('box-poliza_medio_pago', 'box');
+							if ($(this).prop('id')=='box-poliza_cuotas')
+								populateListPoliza_MP('box-poliza_medio_pago', 'box');
 							var cuotas = '';
 							if ($('#box-poliza_cuotas').val()=='Total') {
 								cuotas = 1;
