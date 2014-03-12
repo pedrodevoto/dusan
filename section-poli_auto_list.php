@@ -78,6 +78,7 @@
 						// Hidden fields (IDs)
 						{"bSearchable": false, "bVisible": false},
 						{"bSearchable": false, "bVisible": false},
+						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
 						{"sWidth": "7%"},
 						{"sWidth": "6%"},
@@ -97,9 +98,8 @@
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
-							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="'+(oObj.aData[16]==1?'openBoxPolizaFlota(\'detalle\', ':'openBoxPolizaDet(')+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
-							returnval += '<li title="Editar imágenes" onclick="'+(oObj.aData[16]==1?'openBoxPolizaFlota(\'imagenes\', ':'openBoxPolizaFotos(')+oObj.aData[0]+');"><span class="ui-icon ui-icon-image"></span></li>';
-							// returnval += '<li title="Editar imágenes" onclick="openBoxPolizaFotos('+oObj.aData[0]+');"><span class="ui-icon ui-icon-image"></span></li>';
+							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="'+(oObj.aData[17]==1?'openBoxPolizaFlota(\'detalle\', ':'openBoxPolizaDet(')+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';
+							returnval += '<li title="Editar imágenes" onclick="'+(oObj.aData[17]==1?'openBoxPolizaFlota(\'imagenes\', '+oObj.aData[0]+');':'openBoxPolizaFotos('+oObj.aData[2]+');')+'"><span class="ui-icon ui-icon-image"></span></li>';
 							returnval += '<li title="Certificados" onclick="openBoxPolizaCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li><li title="Plan de Pago" onclick="openBoxCuota('+oObj.aData[0]+');"><span class="ui-icon ui-icon-calculator"></span></li>';
 							<?php if($_SESSION['ADM_UserGroup']=='master') {?>
 							returnval +='<li title="Renovar Póliza" onclick="openBoxPolizaRen('+oObj.aData[0]+');"><span class="ui-icon ui-icon-refresh"></span></li>';
@@ -143,7 +143,7 @@
 						});
 					},
 					"fnRowCallback": function(nRow, aData, iDisplayIndex) {
-						switch (aData[12]) {
+						switch (aData[13]) {
 						case 'CUMPLIDA':
 						case 'CUMPLIDA RENOVADA':
 							$(nRow).css('color', 'green');
@@ -158,10 +158,10 @@
 							$(nRow).css('color', 'black');
 							break;
 						}
-						if (aData[14]=='No') {
+						if (aData[15]=='No') {
 							$('td:eq(12)', nRow).addClass('ui-state-error');
 						}
-						$('td:eq(12)', nRow).html('<span title="'+aData[15]+'">'+aData[14]+'</span>');
+						$('td:eq(12)', nRow).html('<span title="'+aData[16]+'">'+aData[15]+'</span>');
 						return nRow;
 					}
 												
@@ -309,7 +309,8 @@
                         <tr>                        
                             <th>Poliza ID (Hide)</th>
 							<th>Cliente ID (Hide)</th>
-                            <th>Póliza N°</th>                            
+                            <th>Automotor ID (Hide)</th>
+							<th>Póliza N°</th>                            
                             <th>Patente</th> 
                             <th>Compañía</th>
                             <th>Sucursal</th>
@@ -335,6 +336,8 @@
                             <th></th>
                             <th></th>                            
                             <th></th> 
+                            <th></th>                            
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>

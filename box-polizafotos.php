@@ -4,22 +4,22 @@
 <div class="divBoxContainer" style="width:94%">
     <fieldset class="ui-widget ui-widget-content ui-corner-all">
         <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Fotos generales</legend> 
-		<form class="fileForm" id="poliza" suffix="Poliza" action="upload-poliza_foto.php" method="post" enctype="multipart/form-data">
+		<form class="fileForm" id="automotor" suffix="Automotor" action="upload-automotor_foto.php" method="post" enctype="multipart/form-data">
 		    <p>
-		        <label for="box-poliza_foto">Subir</label>
-		        <input type="file" name="box-poliza_foto" id="box-poliza_foto" class="ui-widget-content" style="width:220px" />
+		        <label for="box-automotor_foto">Subir</label>
+		        <input type="file" name="box-automotor_foto" id="box-automotor_foto" class="ui-widget-content" style="width:220px" />
 				<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 		    </p>
 		</form>
-		<div id="divBoxFotosPoliza" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
+		<div id="divBoxFotosAutomotor" style="width:600px;height:135px;overflow:auto;white-space: nowrap;display:none">
 		</div>
 	</fieldset>
     <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
         <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Micrograbado</legend> 
 		<form class="fileForm" id="micrograbado" suffix="Micrograbado" action="upload-automotor_foto.php" method="post" enctype="multipart/form-data">
 			<p>
-		        <label for="box-micrograbado_foto">Imagen</label>
-		        <input type="file" name="box-micrograbado_foto" id="box-micrograbado_foto" class="ui-widget-content" style="width:220px" /> 
+		        <label for="box-automotor_micrograbado_foto">Imagen</label>
+		        <input type="file" name="box-automotor_micrograbado_foto" id="box-automotor_micrograbado_foto" class="ui-widget-content" style="width:220px" /> 
 				<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 		    </p>
 		</form>
@@ -30,8 +30,8 @@
         <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">GNC</legend> 
 		<form class="fileForm" id="gnc" suffix="GNC" action="upload-automotor_foto.php" method="post" enctype="multipart/form-data">
 			<p>
-		        <label for="box-gnc_foto">Imagen</label>
-		        <input type="file" name="box-gnc_foto" id="box-gnc_foto" class="ui-widget-content" style="width:220px" /> 
+		        <label for="box-automotor_gnc_foto">Imagen</label>
+		        <input type="file" name="box-automotor_gnc_foto" id="box-automotor_gnc_foto" class="ui-widget-content" style="width:220px" /> 
 				<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 		    </p>
 		</form>	
@@ -54,8 +54,8 @@
         <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Cédula verde</legend> 
 		<form class="fileForm" id="cedula_verde" suffix="CedulaVerde" action="upload-automotor_foto.php" method="post" enctype="multipart/form-data">
 			<p>
-		        <label for="box-cedula_verde_foto">Imagen</label>
-		        <input type="file" name="box-cedula_verde_foto" id="box-cedula_verde_foto" class="ui-widget-content" style="width:220px" /> 
+		        <label for="box-automotor_cedula_verde_foto">Imagen</label>
+		        <input type="file" name="box-automotor_cedula_verde_foto" id="box-automotor_cedula_verde_foto" class="ui-widget-content" style="width:220px" /> 
 				<input type="submit" value="Subir foto"> <span id="fotosLoading" style="display:none"><img title="Subiendo..." src="media/images/fotos-loading.gif" /></span>
 		    </p>
 		</form>

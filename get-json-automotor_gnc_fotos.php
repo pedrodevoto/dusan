@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}	
-	$query_Recordset1 = sprintf("SELECT automotor_gnc_foto_id as foto_id, automotor_gnc_foto_url as foto_url, automotor_gnc_foto_thumb_url as foto_thumb_url, automotor_gnc_foto_width as foto_with, automotor_gnc_foto_height as foto_height FROM automotor_gnc_foto WHERE poliza_id=%s", 
+	$query_Recordset1 = sprintf("SELECT automotor_gnc_foto_id as foto_id, automotor_gnc_foto_url as foto_url, automotor_gnc_foto_thumb_url as foto_thumb_url, automotor_gnc_foto_width as foto_with, automotor_gnc_foto_height as foto_height FROM automotor_gnc_foto WHERE automotor_id=%s", 
 		GetSQLValueString($colname_Recordset1, "int"));
 			
 	// Recordset: Main

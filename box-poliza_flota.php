@@ -18,7 +18,7 @@
 			</p>
 			<p>
 				<?php if ($_GET['tipo']=='detalle'):?>
-				<input type="button" id="create" value="Nuevo automotor" />
+				<input type="button" id="create" value="Agregar vehículo" /> <input type="button" id="certificados" value="Finalizar" />
 				<?php endif;?>
 			</p>
 		</fieldset>

@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}	
-	$query_Recordset1 = sprintf("SELECT automotor_cert_rodamiento_archivo_id as archivo_id, automotor_cert_rodamiento_archivo_url as archivo_url, automotor_cert_rodamiento_archivo_nombre as archivo_nombre FROM automotor_cert_rodamiento_archivo WHERE poliza_id=%s", 
+	$query_Recordset1 = sprintf("SELECT automotor_cert_rodamiento_archivo_id as archivo_id, automotor_cert_rodamiento_archivo_url as archivo_url, automotor_cert_rodamiento_archivo_nombre as archivo_nombre FROM automotor_cert_rodamiento_archivo WHERE automotor_id=%s", 
 		GetSQLValueString($colname_Recordset1, "int"));
 			
 	// Recordset: Main

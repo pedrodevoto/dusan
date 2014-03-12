@@ -6,7 +6,7 @@
 			$('#box-acreedor_rs').attr("readonly", false);
 			$('#box-acreedor_cuit').attr("readonly", false);			
 		}		
-		if ($('#box-seguro_cobertura_tipo_id').find(':selected').text() === 'D') {
+		if ($('#box-seguro_cobertura_tipo_id').find(':selected').text() == 'DP') {
 			$('#box-franquicia').attr("readonly", false);
 		};
 		$('#box-venc_oblea').datepicker({
@@ -107,7 +107,7 @@
 		}
 	});	
 	$('#box-seguro_cobertura_tipo_id').change(function(){
-		if ($(this).find(':selected').text() === 'D') {
+		if ($(this).find(':selected').text() === 'DP') {
 			$('#box-franquicia').attr("readonly", false).addClass('required');
 		} else {
 			$('#box-franquicia').val('').attr("readonly", true).removeClass('required');			

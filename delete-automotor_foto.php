@@ -12,7 +12,7 @@
 	if ((isset($_POST["id"])) && ($_POST["id"] != "")) {
 		
 		// Delete record
-		$deleteSQL = sprintf("DELETE FROM poliza_foto WHERE poliza_foto_id=%s LIMIT 1",
+		$deleteSQL = sprintf("DELETE FROM automotor_foto WHERE automotor_foto_id=%s LIMIT 1",
 						GetSQLValueString($_POST["id"], "int"));
 		$Result1 = mysql_query($deleteSQL, $connection);
 		

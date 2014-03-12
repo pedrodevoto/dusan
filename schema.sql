@@ -143,11 +143,11 @@ CREATE TABLE `automotor` (
   `pedido_instalacion_telefono` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pedido_instalacion_observaciones` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`automotor_id`),
-  UNIQUE KEY `poliza_id` (`poliza_id`) USING BTREE,
   KEY `automotor_tipo_id` (`automotor_tipo_id`),
   KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
   KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
   KEY `equipo_rastreo_pedido_id` (`equipo_rastreo_pedido_id`),
+  KEY `poliza_id` (`poliza_id`),
   CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
   CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
   CONSTRAINT `automotor_ibfk_4` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`),
@@ -178,37 +178,54 @@ CREATE TABLE `automotor_carroceria` (
 DROP TABLE IF EXISTS `automotor_cedula_verde_foto`;
 CREATE TABLE `automotor_cedula_verde_foto` (
   `automotor_cedula_verde_foto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_id` int(10) unsigned DEFAULT NULL,
   `automotor_cedula_verde_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_cedula_verde_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_cedula_verde_foto_width` int(11) NOT NULL,
   `automotor_cedula_verde_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_cedula_verde_foto_id`),
-  KEY `poliza_id` (`poliza_id`)
+  KEY `automotor_id` (`automotor_id`),
+  CONSTRAINT `automotor_cedula_verde_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `automotor_cert_rodamiento_archivo`;
 CREATE TABLE `automotor_cert_rodamiento_archivo` (
   `automotor_cert_rodamiento_archivo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_id` int(10) unsigned DEFAULT NULL,
   `automotor_cert_rodamiento_archivo_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_cert_rodamiento_archivo_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`automotor_cert_rodamiento_archivo_id`),
-  KEY `poliza_id` (`poliza_id`)
+  KEY `automotor_id` (`automotor_id`),
+  CONSTRAINT `automotor_cert_rodamiento_archivo_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_foto`;
+CREATE TABLE `automotor_foto` (
+  `automotor_foto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_id` int(10) unsigned DEFAULT NULL,
+  `automotor_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_foto_width` int(11) NOT NULL,
+  `automotor_foto_height` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_foto_id`),
+  KEY `automotor_id` (`automotor_id`),
+  CONSTRAINT `automotor_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `automotor_gnc_foto`;
 CREATE TABLE `automotor_gnc_foto` (
   `automotor_gnc_foto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_id` int(10) unsigned DEFAULT NULL,
   `automotor_gnc_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_gnc_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_gnc_foto_width` int(11) NOT NULL,
   `automotor_gnc_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_gnc_foto_id`),
-  KEY `poliza_id` (`poliza_id`)
+  KEY `automotor_id` (`automotor_id`),
+  CONSTRAINT `automotor_gnc_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -223,14 +240,14 @@ CREATE TABLE `automotor_marca` (
 DROP TABLE IF EXISTS `automotor_micrograbado_foto`;
 CREATE TABLE `automotor_micrograbado_foto` (
   `automotor_micrograbado_foto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
+  `automotor_id` int(10) unsigned DEFAULT NULL,
   `automotor_micrograbado_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_micrograbado_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `automotor_micrograbado_foto_width` int(11) NOT NULL,
   `automotor_micrograbado_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_micrograbado_foto_id`),
-  KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `automotor_micrograbado_foto_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+  KEY `automotor_id` (`automotor_id`),
+  CONSTRAINT `automotor_micrograbado_foto_ibfk_3` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -759,6 +776,7 @@ CREATE TABLE `poliza` (
   `poliza_plan_id` int(11) DEFAULT NULL,
   `poliza_pack_id` int(11) DEFAULT NULL,
   `poliza_archivada` tinyint(4) DEFAULT NULL,
+  `poliza_flota` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
@@ -780,19 +798,6 @@ CREATE TABLE `poliza_estado` (
   `poliza_estado_id` int(11) NOT NULL AUTO_INCREMENT,
   `poliza_estado_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`poliza_estado_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `poliza_foto`;
-CREATE TABLE `poliza_foto` (
-  `poliza_foto_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
-  `poliza_foto_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `poliza_foto_thumb_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `poliza_foto_width` int(11) NOT NULL,
-  `poliza_foto_height` int(11) NOT NULL,
-  PRIMARY KEY (`poliza_foto_id`),
-  KEY `poliza_id` (`poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -921,6 +926,7 @@ CREATE TABLE `seguro` (
   `seguro_direccion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_cp` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seguro_flota` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`seguro_id`),
   UNIQUE KEY `seguro_nombre` (`seguro_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1050,4 +1056,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-02-09 22:06:57
+-- 2014-03-12 14:38:44
