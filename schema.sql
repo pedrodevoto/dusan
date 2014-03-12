@@ -185,7 +185,7 @@ CREATE TABLE `automotor_cedula_verde_foto` (
   `automotor_cedula_verde_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_cedula_verde_foto_id`),
   KEY `automotor_id` (`automotor_id`),
-  CONSTRAINT `automotor_cedula_verde_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `automotor_cedula_verde_foto_ibfk_1` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -197,7 +197,7 @@ CREATE TABLE `automotor_cert_rodamiento_archivo` (
   `automotor_cert_rodamiento_archivo_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`automotor_cert_rodamiento_archivo_id`),
   KEY `automotor_id` (`automotor_id`),
-  CONSTRAINT `automotor_cert_rodamiento_archivo_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `automotor_cert_rodamiento_archivo_ibfk_1` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -210,8 +210,7 @@ CREATE TABLE `automotor_foto` (
   `automotor_foto_width` int(11) NOT NULL,
   `automotor_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_foto_id`),
-  KEY `automotor_id` (`automotor_id`),
-  CONSTRAINT `automotor_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `automotor_id` (`automotor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -225,7 +224,7 @@ CREATE TABLE `automotor_gnc_foto` (
   `automotor_gnc_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_gnc_foto_id`),
   KEY `automotor_id` (`automotor_id`),
-  CONSTRAINT `automotor_gnc_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `automotor_gnc_foto_ibfk_1` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -247,7 +246,7 @@ CREATE TABLE `automotor_micrograbado_foto` (
   `automotor_micrograbado_foto_height` int(11) NOT NULL,
   PRIMARY KEY (`automotor_micrograbado_foto_id`),
   KEY `automotor_id` (`automotor_id`),
-  CONSTRAINT `automotor_micrograbado_foto_ibfk_3` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `automotor_micrograbado_foto_ibfk_2` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -314,10 +313,10 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   `cliente_id` int(10) unsigned NOT NULL,
   `cliente_reg_tipo_id` int(11) NOT NULL,
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
-  KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
+  KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1056,4 +1055,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-03-12 14:38:44
+-- 2014-03-12 16:54:33
