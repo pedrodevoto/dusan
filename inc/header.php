@@ -1,6 +1,6 @@
-	<div id="divHeaderImage" style="background: url('media/images/banner_cabezal.jpg');background-repeat:no-repeat;height:51px">
+	<a href="main.php"><div id="divHeaderImage" style="background: url('media/images/banner_cabezal.jpg');background-repeat:no-repeat;height:51px">
 		
-	</div>
+	</div></a>
 	<div id="divHeader">
     	<!-- Logo -->
         <div style="float:left; margin-right: 20px;">

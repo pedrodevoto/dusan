@@ -2625,7 +2625,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_Poliza_Results = function () {
+	populateDiv_Poliza_Results = function (tipo) {
 		$.getJSON("get-json-fich_poliza_search.php", $("#frmSelectPoliza").serialize(), function (j) {
 			if (j.error == 'expired') {
 				sessionExpire('box');
@@ -2642,7 +2642,16 @@ $(document).ready(function () {
 						result += '<td>' + object.poliza_numero + '</td>';
 						result += '<td>' + object.validez + '</td>';
 						result += '<td>' + object.seguro_nombre + '</td>';
-						result += '<td style="text-align:right"><a href="javascript:assignPolizaToEndoso(' + object.poliza_id + ', \'' + object.poliza_numero + '\')">SELECCIONAR</a></td>';
+						var f = '';
+						switch (tipo) {
+						case 'endoso':
+							f = 'assignPolizaToEndoso('+object.poliza_id+', \'' + object.poliza_numero + '\')';
+							break;
+						case 'recibo':
+							f = 'openBoxPolizaCert('+object.poliza_id+')';
+							break;
+						}
+						result += '<td style="text-align:right"><a href="javascript:'+f+'">SELECCIONAR</a></td>';
 						result += '</tr>';
 					});
 					result += '</table>';
@@ -5383,7 +5392,7 @@ $(document).ready(function () {
 				$("#BtnSearchPoliza").click(function () {
 					// If a field was completed
 					if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_nombre').val() != '') {
-						populateDiv_Poliza_Results();
+						populateDiv_Poliza_Results('endoso');
 					} else {
 						$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');
 					}
@@ -6009,6 +6018,45 @@ $(document).ready(function () {
 				});
 
 			}
+		});
+	}
+	openBoxEmitirRecibo = function() {
+		$.colorbox({
+			title: 'Endoso',
+			href: 'box-emitirrecibo.php',
+			width: '700px',
+			height: '100%',
+			onComplete: function () {
+
+				$("#btnBox").button();
+				
+				
+				// FORM SELECT POLIZA
+				// Initialize special fields
+				initAutocompletePoliza('box0-poliza_numero', 'box');
+				// Assign functions to buttons
+				$("#BtnSearchPoliza").click(function () {
+					// If a field was completed
+					if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_nombre').val() != '' || $('#box0-patente').val() != '') {
+						populateDiv_Poliza_Results('recibo');
+					} else {
+						$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');
+					}
+				});
+				// Submit on Enter
+				$("#frmSelectPoliza :input[type=text]").each(function () {
+					$(this).keypress(function (e) {
+						if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+							$("#BtnSearchPoliza").click();
+						}
+					});
+				});
+				// Enable form
+				formDisable('frmSelectPoliza', 'normal', false);
+				// Set focus on search
+				$("#box0-poliza_numero").focus();
+			}
+			
 		});
 	}
 });
