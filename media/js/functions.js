@@ -4258,7 +4258,10 @@ $(document).ready(function () {
 					$("#box-cliente_nro_doc").keyup(function () {
 						$('#box-cliente_registro').val($(this).val());
 					});
-
+					$("#box-cliente_cuit_1").keyup(function() {
+						$("#box-cliente_nro_doc").val($(this).val()).keyup();
+					});
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate();
 
