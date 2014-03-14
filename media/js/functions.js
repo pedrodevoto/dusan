@@ -2648,7 +2648,7 @@ $(document).ready(function () {
 							f = 'assignPolizaToEndoso('+object.poliza_id+', \'' + object.poliza_numero + '\')';
 							break;
 						case 'recibo':
-							f = 'openBoxPolizaCert('+object.poliza_id+')';
+							f = 'openBoxCuota('+object.poliza_id+')';
 							break;
 						}
 						result += '<td style="text-align:right"><a href="javascript:'+f+'">SELECCIONAR</a></td>';
