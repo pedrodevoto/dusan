@@ -3004,6 +3004,7 @@ $(document).ready(function () {
 					$('#frmBox').each(function () {
 						this.reset();
 					});
+					$('box-contacto_tipo').val('Particular');
 					// Refresh DIVs
 					populateDiv_Contacto(id);
 				}
@@ -3399,6 +3400,7 @@ $(document).ready(function () {
 					$("#box-action").val('insert');
 					$("#btnBoxReset").button('option', 'label', 'Borrar');
 					$("#btnBox").button('option', 'label', 'Agregar');
+					$("#box-contacto_tipo").val('Particular');
 					$("#box-contacto_domicilio").focus();
 					// Refresh DIVs
 					populateDiv_Contacto(id);
@@ -4368,6 +4370,8 @@ $(document).ready(function () {
 				$.when(
 					populateListContacto_Tipo('box-contacto_tipo', 'box')
 				).then(function () {
+					
+					$('#box-contacto_tipo').val('Particular');
 
 					// Validate form
 					var validateForm = $("#frmBox").validate({

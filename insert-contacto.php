@@ -21,7 +21,7 @@
 		$contacto_default = ($totalRows_Recordset1 === 0) ? 1 : 0;
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO contacto (contacto.cliente_id, contacto_tipo, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, contacto_localidad, contacto_cp, contacto_country, contacto_lote, contacto_telefono1, contacto_telefono2, contacto_observaciones, contacto_default) VALUES (%s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s)",
+		$insertSQL = sprintf("INSERT INTO contacto (contacto.cliente_id, contacto_tipo, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, contacto_localidad, contacto_cp, contacto_country, contacto_lote, contacto_telefono1, contacto_telefono2, contacto_telefono_laboral, contacto_telefono_alt, contacto_observaciones, contacto_default) VALUES (%s, %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s)",
 						GetSQLValueString($_POST['box-cliente_id'], "int"),
 						GetSQLValueString($_POST['box-contacto_tipo'], "text"),
 						GetSQLValueString($_POST['box-contacto_domicilio'], "text"),
@@ -34,6 +34,8 @@
 						GetSQLValueString($_POST['box-contacto_lote'], "text"),
 						GetSQLValueString($_POST['box-contacto_telefono1'], "text"),
 						GetSQLValueString($_POST['box-contacto_telefono2'], "text"),
+						GetSQLValueString($_POST['box-contacto_telefono_laboral'], "text"),
+						GetSQLValueString($_POST['box-contacto_telefono_alt'], "text"),
 						GetSQLValueString($_POST['box-contacto_observaciones'], "text"),
 						GetSQLValueString($contacto_default, "int"));						
 		$Result1 = mysql_query($insertSQL, $connection);

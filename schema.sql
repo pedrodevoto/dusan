@@ -315,8 +315,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -482,6 +482,8 @@ CREATE TABLE `contacto` (
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_telefono_laboral` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_telefono_alt` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_observaciones` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_default` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`contacto_id`),
@@ -1055,4 +1057,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-03-12 16:54:33
+-- 2014-03-14 17:02:43
