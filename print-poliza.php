@@ -136,7 +136,6 @@
 				array('maxwidth' => 95, 'text' => ""),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 			);
-			error_log($row_Recordset2['producto_id']);
 			$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
@@ -164,12 +163,12 @@
 					if (isset($_GET['print'])) {
 						$pdf = new FPDI('P','mm',array(215.9,279.4));
 						$pdf->AddPage();
-						$pdf->setSourceFile('pdf/cc.pdf');
+						$pdf->setSourceFile('pdf/cc'.($row_Recordset1['poliza_flota']==1?'_sin_firma':'').'.pdf');
 					}
 					else {
 						$pdf = new FPDI('P');
 						$pdf->AddPage();
-						$pdf->setSourceFile('pdf/cc_digital.pdf');
+						$pdf->setSourceFile('pdf/cc_digital'.($row_Recordset1['poliza_flota']==1?'_sin_firma':'').'.pdf');
 					}
 					$tplIdx = $pdf->importPage(1);
 					$pdf->useTemplate($tplIdx);
@@ -204,64 +203,139 @@
 					foreach ($txt_poliza as $array) {
 						printText($array['text'], $pdf, $array['maxwidth'], 4.1);
 					}
-					// Marca - Modelo
-					$pdf->SetFont('Arial', 'B', 10);
-					$pdf->SetTextColor(255,0,0);										
-					$pdf->SetXY(11, 99);
-					printText($txt_marca_modelo, $pdf, 190, 0);
-					// Datos Vehículo
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(11, 105);
-					foreach ($txt_datos_vehiculo_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 4.3);
+					
+					// Vehiculos
+					for ($i = 1; $i <= $totalRows_Recordset2; $i++) {
+						if ($i > 1) {
+							$row_Recordset2 = mysql_fetch_assoc($Recordset2);
+							$txt_marca_modelo = $row_Recordset2['automotor_marca_nombre']." - ".strtoupper($row_Recordset2['modelo']);
+							$txt_datos_vehiculo_c1 = array(
+								array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
+								array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),
+								array('maxwidth' => 57, 'text' => "Año: ".$row_Recordset2['ano']),
+								array('maxwidth' => 57, 'text' => "Motor: ".$row_Recordset2['nro_motor']),
+								array('maxwidth' => 57, 'text' => "Nº Chasis: ".$row_Recordset2['nro_chasis'])
+							);
+							$txt_datos_vehiculo_c2 = array(
+								array('maxwidth' => 67, 'text' => "Uso: ".$row_Recordset2['uso']),
+								array('maxwidth' => 67, 'text' => "Importado: ".formatCB($row_Recordset2['importado'],'W')),
+								array('maxwidth' => 67, 'text' => "Accesorios: ".formatCB($row_Recordset2['accesorios'],'W')),
+								array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo_nombre']),
+								array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
+							);
+							$txt_patente = "Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];
+							$txt_gnc_c1 = array(
+								array('maxwidth' => 60, 'text' => "Nro. Oblea: ".$row_Recordset2['nro_oblea']),
+								array('maxwidth' => 60, 'text' => "Nro. Regulador: ".$row_Recordset2['nro_regulador'])
+							);
+							$txt_gnc_c2 = array(
+								array('maxwidth' => 68, 'text' => "Marca Regulador: ".$row_Recordset2['marca_regulador']),
+								array('maxwidth' => 68, 'text' => "Marca Cilindro: ".$row_Recordset2['marca_cilindro'])
+							);
+							$txt_gnc_c3 = array(
+								array('maxwidth' => 58, 'text' => "Venc. Oblea: ".(is_null($row_Recordset2['venc_oblea']) ? "" : strftime("%d/%m/%Y", strtotime($row_Recordset2['venc_oblea'])))),
+								array('maxwidth' => 58, 'text' => "Nro. Tubo: ".$row_Recordset2['nro_tubo'])
+							);
+							$txt_sumas_c1 = array(
+								array('maxwidth' => 95, 'text' => "Suma Asegurada del Vehículo"),
+								array('maxwidth' => 95, 'text' => "Equipo GNC"),
+								array('maxwidth' => 95, 'text' => "Accesorios"),
+								array('maxwidth' => 95, 'text' => ""),
+								array('maxwidth' => 95, 'text' => "TOTAL:")
+							);
+							$txt_sumas_c2 = array(
+								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_vehiculo'])." "),
+								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_gnc'])." "),
+								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_accesorios'])." "),
+								array('maxwidth' => 95, 'text' => ""),
+								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
+							);
+							$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
+							$txt_observaciones = $row_Recordset2['observaciones'];			
+							
+							$pdf->AddPage();
+							if ($totalRows_Recordset2 > $i) {
+								if (isset($_GET['print'])) {
+									$pdf->setSourceFile('pdf/cc_flota_2.pdf');
+								}
+								else {
+									$pdf->setSourceFile('pdf/cc_digital_flota_2.pdf');
+								}
+							}
+							else {
+								// ultima hoja con footer
+								if (isset($_GET['print'])) {
+									$pdf->setSourceFile('pdf/cc_flota_ultima.pdf');
+								}
+								else {
+									$pdf->setSourceFile('pdf/cc_digital_flota_ultima.pdf');
+								}
+							}
+							$tplIdx = $pdf->importPage(1);
+							$pdf->useTemplate($tplIdx);
+
+						}
+						// Marca - Modelo
+						$pdf->SetFont('Arial', 'B', 10);
+						$pdf->SetTextColor(255,0,0);										
+						$pdf->SetXY(11, 99);
+						printText($txt_marca_modelo, $pdf, 190, 0);
+						// Datos Vehículo
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(11, 105);
+						foreach ($txt_datos_vehiculo_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 4.3);
+						}
+						$pdf->SetXY(70, 104.7);
+						foreach ($txt_datos_vehiculo_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						// Patente
+						$pdf->RoundedRect(11 + 130, 86 + 20, 36, 5, 1, '1234', 'D');
+						$pdf->SetFont('Arial', 'B', 9);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(142, 109);
+						printText($txt_patente, $pdf, 35, 0);
+						// GNC
+						$pdf->SetFont('Arial', '', 8);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 137.5);
+						foreach ($txt_gnc_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						$pdf->SetXY(75, 137.5);
+						foreach ($txt_gnc_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}
+						$pdf->SetXY(145, 137.5);
+						foreach ($txt_gnc_c3 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.7);
+						}					
+						// Sumas Seguro
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->SetTextColor(0,0,0);
+						$pdf->SetXY(12, 155.3);
+						foreach ($txt_sumas_c1 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
+						}
+						$pdf->SetXY(11, 155.3);
+						foreach ($txt_sumas_c2 as $array) {
+							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+						}
+						// Cobertura
+						$pdf->SetFont('Arial', 'B', 9);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12, 179);
+						printText($txt_cobertura, $pdf, 190, 0);
+						// Observaciones
+						$pdf->SetFont('Arial', '', 9);
+						$pdf->SetTextColor(0,0,0);								
+						$pdf->SetXY(12, 193);
+						printText($txt_observaciones, $pdf, 190, 0);
 					}
-					$pdf->SetXY(70, 104.7);
-					foreach ($txt_datos_vehiculo_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					// Patente
-					$pdf->RoundedRect(11 + 130, 86 + 20, 36, 5, 1, '1234', 'D');
-					$pdf->SetFont('Arial', 'B', 9);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(142, 109);
-					printText($txt_patente, $pdf, 35, 0);
-					// GNC
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 137.5);
-					foreach ($txt_gnc_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					$pdf->SetXY(75, 137.5);
-					foreach ($txt_gnc_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}
-					$pdf->SetXY(145, 137.5);
-					foreach ($txt_gnc_c3 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.7);
-					}					
-					// Sumas Seguro
-					$pdf->SetFont('Arial', '', 9);
-					$pdf->SetTextColor(0,0,0);
-					$pdf->SetXY(12, 155.3);
-					foreach ($txt_sumas_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(11, 155.3);
-					foreach ($txt_sumas_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
-					// Cobertura
-					$pdf->SetFont('Arial', 'B', 9);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12, 179);
-					printText($txt_cobertura, $pdf, 190, 0);
-					// Observaciones
-					$pdf->SetFont('Arial', '', 9);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(12, 193);
-					printText($txt_observaciones, $pdf, 190, 0);
+					// Fin vehículos
+					
 					// Forma de Pago					
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
