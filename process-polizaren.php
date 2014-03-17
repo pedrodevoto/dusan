@@ -152,11 +152,11 @@
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 					
 					// Copiar fotos
-					$insertSQL = sprintf("INSERT INTO poliza_foto (poliza_id, poliza_foto_url, poliza_foto_thumb_url, poliza_foto_width, poliza_foto_height) 
-										  (SELECT %s, poliza_foto_url, poliza_foto_thumb_url, poliza_foto_width, poliza_foto_height FROM poliza_foto WHERE poliza_id=%s)",
-											$new_id,
-											$row_Recordset1['poliza_id']);																		
-					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+					// temporalmente deshabilitar el copiado de fotos porque ahora apuntan a automotor en vez de poliza
+ 					// $insertSQL = sprintf("INSERT INTO automotor_foto (automotor_id, automotor_foto_url, automotor_foto_thumb_url, automotor_foto_width, automotor_foto_height) 
+					// 					  (SELECT automotor_foto.automotor_id, automotor_foto_url, automotor_foto_thumb_url, automotor_foto_width, automotor_foto_height FROM automotor_foto JOIN automotor ON automotor.automotor_id = automotor_foto.automotor_id WHERE poliza_id=%s)",
+					// 						$row_Recordset1['poliza_id']);																		
+					// $Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 					
 				}																						
 			
