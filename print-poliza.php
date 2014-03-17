@@ -419,20 +419,20 @@
 						// Emitir
 						$size_emitir = 44;
 						if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
-							$txt_emitir = "MC";
+							$txt_emitir = "MC".($row_Recordset1['poliza_flota']==1?' FLOTA':'');
 						} 
 						elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
-							$txt_emitir = "RENOVACIÓN";
+							$txt_emitir = "RENOVACIÓN".($row_Recordset1['poliza_flota']==1?' FLOTA':'');
 						}
 						elseif (isset($_GET['en']) && $_GET['en']==1) {
-							$txt_emitir = "ENDOSO";
+							$txt_emitir = "ENDOSO".($row_Recordset1['poliza_flota']==1?' FLOTA':'');
 							if($endoso['anulacion']) {
 								$size_emitir = 30;
-								$txt_emitir = "ENDOSO - ANULACION";
+								$txt_emitir = "ENDOSO - ANULACION".($row_Recordset1['poliza_flota']==1?' FLOTA':'');
 							}
 						} 
 						else {
-							$txt_emitir = "EMITIR";						
+							$txt_emitir = "EMITIR".($row_Recordset1['poliza_flota']==1?' FLOTA':'');						
 						}
 						$txt_titular_c1 = array(
 							array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
