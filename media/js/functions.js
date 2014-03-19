@@ -5142,7 +5142,7 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-polizadet.php?section=2&id=' + id,
-			width: '750px',
+			width: '830px',
 			height: '100%',
 			onComplete: function () {
 

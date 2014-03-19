@@ -147,10 +147,10 @@
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
 	<fieldset class="ui-widget ui-widget-content ui-corner-all">    
-	    <legend class="ui-widget ui-widget-header ui-corner-all">Resumen</legend>      
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Detalle del vehículo</legend>      
 	    <p>
 	        <label for="box-automotor_marca_id">Marca *</label>
-	        <select name="box-automotor_marca_id" id="box-automotor_marca_id" class="ui-widget-content required">
+	        <select name="box-automotor_marca_id" id="box-automotor_marca_id" class="ui-widget-content required" style="width:223px">
 				<option value="">Seleccionar</option>
 				<?php showMarcas(); ?>
 			</select>
@@ -168,125 +168,128 @@
 	    </p>
 	    <p>
 	        <label for="box-suma_asegurada">Suma Asegurada ^</label>
-	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
+	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:95px" readonly="readonly" value="0" />
 	    </p> 
-		<p>
+		<p> 
 			<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
+			<label for="box-infoauto" style="margin-left:10px">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
 		</p>
-	    <p>
-	        <label for="box-infoauto">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
-	    </p>
 	</fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
     <legend class="ui-widget ui-widget-header ui-corner-all">General</legend>      
-    <p>
-        <label for="box-patente_0">Patente *</label>
-        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
-		<input type="text" name="box-patente_1" id="box-patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
-    </p>
-    <p>
-        <label for="box-automotor_tipo_id">Tipo *</label>
-        <select name="box-automotor_tipo_id" id="box-automotor_tipo_id" class="ui-widget-content required" style="width:110px">    
-            <option value="">Seleccione</option>    
-            <?php showAutomotorTipo(); ?>
-        </select>
-    </p>
-    <p>
-        <label for="box-uso">Uso *</label>
-        <select name="box-uso" id="box-uso" class="ui-widget-content required" style="width:180px">    
-            <option value="">Seleccione</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'uso', 'select', 'Particular'); ?>
-        </select>
-    </p>
+    
+	<div style="float:left;width:50%">
+		<p>
+	        <label for="box-patente_0">Patente *</label>
+	        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
+			<input type="text" name="box-patente_1" id="box-patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
+	    </p>
+	    <p>
+	        <label for="box-automotor_tipo_id">Tipo *</label>
+	        <select name="box-automotor_tipo_id" id="box-automotor_tipo_id" class="ui-widget-content required" style="width:160px">    
+	            <option value="">Seleccione</option>    
+	            <?php showAutomotorTipo(); ?>
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-uso">Uso *</label>
+	        <select name="box-uso" id="box-uso" class="ui-widget-content required" style="width:160px">    
+	            <option value="">Seleccione</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'uso', 'select', 'Particular'); ?>
+	        </select>
+	    </p>
 
-    <p>
-        <label for="box-automotor_carroceria_id">Carrocería *</label>
-        <select name="box-automotor_carroceria_id" id="box-automotor_carroceria_id" class="ui-widget-content required" style="width:140px">    
-            <option value="">Seleccione</option>    
-            <?php showCarroceria($poliza_id); ?>        
-        </select>
-    </p>
-    <p>
-        <label for="box-combustible">Combustible *</label>
-        <select name="box-combustible" id="box-combustible" class="ui-widget-content required" style="width:110px">    
-            <option value="">Seleccione</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'combustible', 'select', 'Nafta'); ?>        
-        </select>
-    </p>
-	<p>
-		<label for="box-cert_rodamiento">Certificado de no rodamiento</label>
-		<input type="checkbox" name="box-cert_rodamiento" id="box-cert_rodamiento" value="1" /> 
-        <label for="box-0km" style="width:30px">0 KM</label>
-        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
-	</p>
-    <p>
-        <label for="box-importado">Importado</label>
-        <input type="checkbox" name="box-importado" id="box-importado" value="1" />
-    </p>
-    <p>
-        <label for="box-nro_motor">Nº Motor *</label>
-        <input type="text" name="box-nro_motor" id="box-nro_motor" maxlength="255" class="ui-widget-content required" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-nro_chasis">Nº Chasis *</label>
-        <input type="text" name="box-nro_chasis" id="box-nro_chasis" maxlength="255" class="ui-widget-content required" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-chapa">Chapa</label>
-        <select name="box-chapa" id="box-chapa" class="ui-widget-content" style="width:110px">    
-            <option value="">No Definido</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'chapa', 'select', 'Bueno'); ?>     
-        </select>
-    </p>
-    <p>
-        <label for="box-pintura">Pintura</label>
-        <select name="box-pintura" id="box-pintura" class="ui-widget-content" style="width:110px">    
-            <option value="">No Definido</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'pintura', 'select', 'Bueno'); ?>   
-        </select>
-    </p>
-    <p>
-        <label for="box-tipo_pintura">Tipo Pintura</label>
-        <select name="box-tipo_pintura" id="box-tipo_pintura" class="ui-widget-content" style="width:110px">    
-            <option value="">No Definido</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tipo_pintura', 'select', 'Bicapa'); ?>  
-        </select>
-    </p>
-    <p>
-        <label for="box-tapizado">Tapizado</label>
-        <select name="box-tapizado" id="box-tapizado" class="ui-widget-content" style="width:110px">    
-            <option value="">No Definido</option>    
-            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tapizado', 'select', 'Tela'); ?>   
-        </select>
-    </p>
-    <p>
-        <label for="box-color">Color *</label>
-        <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content required" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
-        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
-            <option value="">Seleccione</option>    
-            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
-			<?php showZonasRiesgo($row_Recordset1['productor_seguro_id']); ?>
-        </select>
-    </p>
-    <p>
-        <label for="box-prendado">Prendado *</label>
-        <input type="checkbox" name="box-prendado" id="box-prendado" value="1" />
-    </p>
-    <p>
-        <label for="box-acreedor_rs">Razón Social</label>
-        <input type="text" name="box-acreedor_rs" id="box-acreedor_rs" maxlength="75" class="ui-widget-content" style="width:220px" readonly="readonly" />
-    </p>
-    <p>
-        <label for="box-acreedor_cuit">CUIT Nº</label>
-        <input type="text" name="box-acreedor_cuit" id="box-acreedor_cuit" maxlength="15" class="ui-widget-content" style="width:220px" readonly="readonly" />
-    </p>
-    <p>
-        <label for="box-observaciones">Observaciones</label>
-        <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
-    </p>                            
+	    <p>
+	        <label for="box-automotor_carroceria_id">Carrocería *</label>
+	        <select name="box-automotor_carroceria_id" id="box-automotor_carroceria_id" class="ui-widget-content required" style="width:160px">    
+	            <option value="">Seleccione</option>    
+	            <?php showCarroceria($poliza_id); ?>        
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-combustible">Combustible *</label>
+	        <select name="box-combustible" id="box-combustible" class="ui-widget-content required" style="width:160px">    
+	            <option value="">Seleccione</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'combustible', 'select', 'Nafta'); ?>        
+	        </select>
+	    </p>
+		<p>
+			<label for="box-cert_rodamiento">Certificado de no rodamiento</label>
+			<input type="checkbox" name="box-cert_rodamiento" id="box-cert_rodamiento" value="1" /> 
+	        <label for="box-0km" style="width:30px">0 KM</label>
+	        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
+		</p>
+	    <p>
+	        <label for="box-importado">Importado</label>
+	        <input type="checkbox" name="box-importado" id="box-importado" value="1" />
+	    </p>
+	    <p>
+	        <label for="box-nro_motor">Nº Motor *</label>
+	        <input type="text" name="box-nro_motor" id="box-nro_motor" maxlength="255" class="ui-widget-content required" style="width:200px" />
+	    </p>
+	    <p>
+	        <label for="box-nro_chasis">Nº Chasis *</label>
+	        <input type="text" name="box-nro_chasis" id="box-nro_chasis" maxlength="255" class="ui-widget-content required" style="width:200px" />
+	    </p>
+	</div>
+	<div style="float:left;width:50%">
+	    <p>
+	        <label for="box-chapa">Chapa</label>
+	        <select name="box-chapa" id="box-chapa" class="ui-widget-content" style="width:110px">    
+	            <option value="">No Definido</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'chapa', 'select', 'Bueno'); ?>     
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-pintura">Pintura</label>
+	        <select name="box-pintura" id="box-pintura" class="ui-widget-content" style="width:110px">    
+	            <option value="">No Definido</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'pintura', 'select', 'Bueno'); ?>   
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-tipo_pintura">Tipo Pintura</label>
+	        <select name="box-tipo_pintura" id="box-tipo_pintura" class="ui-widget-content" style="width:110px">    
+	            <option value="">No Definido</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tipo_pintura', 'select', 'Bicapa'); ?>  
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-tapizado">Tapizado</label>
+	        <select name="box-tapizado" id="box-tapizado" class="ui-widget-content" style="width:110px">    
+	            <option value="">No Definido</option>    
+	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tapizado', 'select', 'Tela'); ?>   
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-color">Color *</label>
+	        <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content required" style="width:106px" />
+	    </p>
+	    <p>
+	        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
+	        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
+	            <option value="">Seleccione</option>    
+	            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
+				<?php showZonasRiesgo($row_Recordset1['productor_seguro_id']); ?>
+	        </select>
+	    </p>
+	    <p>
+	        <label for="box-prendado">Prendado *</label>
+	        <input type="checkbox" name="box-prendado" id="box-prendado" value="1" />
+	    </p>
+	    <p>
+	        <label for="box-acreedor_rs">Razón Social</label>
+	        <input type="text" name="box-acreedor_rs" id="box-acreedor_rs" maxlength="75" class="ui-widget-content" style="width:220px" readonly="readonly" />
+	    </p>
+	    <p>
+	        <label for="box-acreedor_cuit">CUIT Nº</label>
+	        <input type="text" name="box-acreedor_cuit" id="box-acreedor_cuit" maxlength="15" class="ui-widget-content" style="width:220px" readonly="readonly" />
+	    </p>
+	    <p>
+	        <label for="box-observaciones">Observaciones</label>
+	        <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
+	    </p>                            
+	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">Equipamiento *</legend>    
@@ -358,84 +361,90 @@
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
     <p>
         <label for="box-cubiertas_marca">Marca</label>
-        <input type="text" name="box-cubiertas_marca" id="box-cubiertas_marca" maxlength="100" class="ui-widget-content" style="width:220px" />
+        <input type="text" name="box-cubiertas_marca" id="box-cubiertas_marca" maxlength="100" class="ui-widget-content" style="width:215px" />
     </p>           
     <p>
         <label for="box-cubiertas_medidas">Medidas</label>
-        <input type="text" name="box-cubiertas_medidas" id="box-cubiertas_medidas" maxlength="50" class="ui-widget-content" style="width:220px" />
+        <input type="text" name="box-cubiertas_medidas" id="box-cubiertas_medidas" maxlength="50" class="ui-widget-content" style="width:215px" />
     </p>
-    <p>
-        <label for="box-cubiertas_desgaste_di">Desg. Del/Izq *</label>
-        <select name="box-cubiertas_desgaste_di" id="box-cubiertas_desgaste_di" class="ui-widget-content required" style="width:90px">
-        	<option value="">Seleccione</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20" selected>20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
-    <p>
-        <label for="box-cubiertas_desgaste_dd">Desg. Del/Der *</label>
-        <select name="box-cubiertas_desgaste_dd" id="box-cubiertas_desgaste_dd" class="ui-widget-content required" style="width:90px">
-        	<option value="">Seleccione</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20" selected>20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
-    <p>
-        <label for="box-cubiertas_desgaste_ti">Desg. Tra/Izq *</label>
-        <select name="box-cubiertas_desgaste_ti" id="box-cubiertas_desgaste_ti" class="ui-widget-content required" style="width:90px">
-        	<option value="">Seleccione</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20" selected>20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
-    <p>
-        <label for="box-cubiertas_desgaste_td">Desg. Tra/Der *</label>
-        <select name="box-cubiertas_desgaste_td" id="box-cubiertas_desgaste_td" class="ui-widget-content required" style="width:90px">
-        	<option value="">Seleccione</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20" selected>20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
-    <p>
-        <label for="box-cubiertas_desgaste_1ei">Desg. 1E/Izq</label>
-        <select name="box-cubiertas_desgaste_1ei" id="box-cubiertas_desgaste_1ei" class="ui-widget-content" style="width:90px">
-        	<option value="">N/A</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20">20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
-    <p>
-        <label for="box-cubiertas_desgaste_1ed">Desg. 1E/Der</label>
-        <select name="box-cubiertas_desgaste_1ed" id="box-cubiertas_desgaste_1ed" class="ui-widget-content" style="width:90px">
-        	<option value="">N/A</option>
-            <option value="0">0%</option>
-            <option value="10">10%</option>
-            <option value="20">20%</option>
-            <option value="30">30%</option>
-            <option value="40">40%</option>
-            <option value="50">50%</option>            
-        </select>        
-    </p>
+	<div style="float:left;width30%">
+	    <p>
+	        <label for="box-cubiertas_desgaste_di">Desg. Del/Izq *</label>
+	        <select name="box-cubiertas_desgaste_di" id="box-cubiertas_desgaste_di" class="ui-widget-content required" style="width:90px">
+	        	<option value="">Seleccione</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20" selected>20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	    <p>
+	        <label for="box-cubiertas_desgaste_dd">Desg. Del/Der *</label>
+	        <select name="box-cubiertas_desgaste_dd" id="box-cubiertas_desgaste_dd" class="ui-widget-content required" style="width:90px">
+	        	<option value="">Seleccione</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20" selected>20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	</div>
+	<div style="float:left;width30%">
+	    <p>
+	        <label for="box-cubiertas_desgaste_ti">Desg. Tra/Izq *</label>
+	        <select name="box-cubiertas_desgaste_ti" id="box-cubiertas_desgaste_ti" class="ui-widget-content required" style="width:90px">
+	        	<option value="">Seleccione</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20" selected>20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	    <p>
+	        <label for="box-cubiertas_desgaste_td">Desg. Tra/Der *</label>
+	        <select name="box-cubiertas_desgaste_td" id="box-cubiertas_desgaste_td" class="ui-widget-content required" style="width:90px">
+	        	<option value="">Seleccione</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20" selected>20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	</div>
+	<div style="float:left;width30%">
+	    <p>
+	        <label for="box-cubiertas_desgaste_1ei">Desg. 1E/Izq</label>
+	        <select name="box-cubiertas_desgaste_1ei" id="box-cubiertas_desgaste_1ei" class="ui-widget-content" style="width:90px">
+	        	<option value="">N/A</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20">20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	    <p>
+	        <label for="box-cubiertas_desgaste_1ed">Desg. 1E/Der</label>
+	        <select name="box-cubiertas_desgaste_1ed" id="box-cubiertas_desgaste_1ed" class="ui-widget-content" style="width:90px">
+	        	<option value="">N/A</option>
+	            <option value="0">0%</option>
+	            <option value="10">10%</option>
+	            <option value="20">20%</option>
+	            <option value="30">30%</option>
+	            <option value="40">40%</option>
+	            <option value="50">50%</option>            
+	        </select>        
+	    </p>
+	</div>
     <p>
         <label for="box-cubiertas_desgaste_auxilio">Desg. Aux. *</label>
         <select name="box-cubiertas_desgaste_auxilio" id="box-cubiertas_desgaste_auxilio" class="ui-widget-content required" style="width:90px">
@@ -451,30 +460,38 @@
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">GNC</legend> 
+    <div style="float:left;width:50%">
+		<p>
+	        <label for="box-nro_oblea">Nº Oblea</label>
+	        <input type="text" name="box-nro_oblea" id="box-nro_oblea" maxlength="50" class="ui-widget-content" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-marca_cilindro">Marca Cilindro</label>
+	        <input type="text" name="box-marca_cilindro" id="box-marca_cilindro" maxlength="50" class="ui-widget-content" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-venc_oblea">Vencimiento Oblea</label>
+	        <input type="text" name="box-venc_oblea" id="box-venc_oblea" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
+	    </p>
+	</div>
+	<div style="float:left;width:50%">
+	    <p>
+	        <label for="box-nro_regulador">Nº Regulador</label>
+	        <input type="text" name="box-nro_regulador" id="box-nro_regulador" maxlength="50" class="ui-widget-content" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-marca_regulador">Marca Regulador</label>
+	        <input type="text" name="box-marca_regulador" id="box-marca_regulador" maxlength="50" class="ui-widget-content" style="width:220px" />
+	    </p>
+	    <p>
+	        <label for="box-nro_tubo">Nº Tubo</label>
+	        <input type="text" name="box-nro_tubo" id="box-nro_tubo" maxlength="50" class="ui-widget-content" style="width:220px" />
+	    </p>                        
+	</div>
     <p>
-        <label for="box-nro_oblea">Nº Oblea</label>
-        <input type="text" name="box-nro_oblea" id="box-nro_oblea" maxlength="50" class="ui-widget-content" style="width:220px" />
+        <label for="box-valor_gnc">Valor GNC *</label>
+        <input type="text" name="box-valor_gnc" id="box-valor_gnc" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" /> <span style="color:red">(Cargar acá el valor asegurador del GNC)</span>
     </p>
-    <p>
-        <label for="box-nro_regulador">Nº Regulador</label>
-        <input type="text" name="box-nro_regulador" id="box-nro_regulador" maxlength="50" class="ui-widget-content" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-marca_regulador">Marca Regulador</label>
-        <input type="text" name="box-marca_regulador" id="box-marca_regulador" maxlength="50" class="ui-widget-content" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-marca_cilindro">Marca Cilindro</label>
-        <input type="text" name="box-marca_cilindro" id="box-marca_cilindro" maxlength="50" class="ui-widget-content" style="width:220px" />
-    </p>
-    <p>
-        <label for="box-venc_oblea">Vencimiento Oblea</label>
-        <input type="text" name="box-venc_oblea" id="box-venc_oblea" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
-    </p>
-    <p>
-        <label for="box-nro_tubo">Nº Tubo</label>
-        <input type="text" name="box-nro_tubo" id="box-nro_tubo" maxlength="50" class="ui-widget-content" style="width:220px" />
-    </p>                        
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">Accesorios</legend> 
@@ -486,54 +503,54 @@
 	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
-    <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura</legend>
-    <?php if($row_Recordset1['seguro_id']==4):?>
-	<p>
-        <label for="box-producto_id">Producto *</label>
-        <select name="box-producto_id" id="box-producto_id" class="ui-widget-content required" style="width:160px">
-        	<option value="">Seleccione</option>
-			<?php showProducto(); ?>
-        </select>        
-    </p>
-	<?php endif;?>
-	<p>
-        <label for="box-seguro_cobertura_tipo_id">Cobertura *</label>
-        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:160px">
-        	<option value="">Seleccione</option>
-			<?php showCobertura($row_Recordset1['productor_seguro_id']); ?>
-        </select>        
-    </p>
-    <p>
-        <label for="box-franquicia">Franquicia</label>
-        <input type="text" name="box-franquicia" id="box-franquicia" maxlength="5" class="ui-widget-content" style="width:120px" digits="true" min="0" max="99999" readonly="readonly" />
-    </p>    
-    <p>
-        <label for="box-seguro_cobertura_tipo_limite_rc_id">Límite Resp. Civil *</label>
-        <select name="box-seguro_cobertura_tipo_limite_rc_id" id="box-seguro_cobertura_tipo_limite_rc_id" class="ui-widget-content required" style="width:120px">
-        	<option value="">Seleccione</option>
-            <?php showLimiteRC(); ?>
-        </select>        
-    </p>    
-    <p>
-        <label for="box-servicio_grua">Servicio de Grúa</label>
-        <input type="text" name="box-servicio_grua" id="box-servicio_grua" maxlength="3" class="ui-widget-content" style="width:60px" digits="true" min="1" max="255" />
-    </p> 
-    <p>
-        <label for="box-valor_vehiculo">Valor Vehículo *</label>
-        <input type="text" name="box-valor_vehiculo" id="box-valor_vehiculo" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" />
-    </p>
-    <p>
-        <label for="box-valor_gnc">Valor GNC *</label>
-        <input type="text" name="box-valor_gnc" id="box-valor_gnc" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" />
-    </p>
-    <p>
-        <label for="box-valor_accesorios">Valor Accesorios *</label>
-        <input type="number" name="box-valor_accesorios" id="box-valor_accesorios" class="ui-widget-content required calculator" style="width:120px" min="0" max="16777215" value="0" readonly />
-    </p>
-    <p>
-        <label for="box-valor_total">Valor Total ^</label>
-        <input type="text" name="box-valor_total" id="box-valor_total" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
-    </p>                            
+    <legend class="ui-widget ui-widget-header ui-corner-all">Cobertura y sumas aseguradas</legend>
+	<div style="float:left;width:50%">
+	    <?php if($row_Recordset1['seguro_id']==4):?>
+		<p>
+	        <label for="box-producto_id">Producto *</label>
+	        <select name="box-producto_id" id="box-producto_id" class="ui-widget-content required" style="width:160px">
+	        	<option value="">Seleccione</option>
+				<?php showProducto(); ?>
+	        </select>        
+	    </p>
+		<?php endif;?>
+		<p>
+	        <label for="box-seguro_cobertura_tipo_id">Cobertura *</label>
+	        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:160px">
+	        	<option value="">Seleccione</option>
+				<?php showCobertura($row_Recordset1['productor_seguro_id']); ?>
+	        </select>        
+	    </p>
+	    <p>
+	        <label for="box-franquicia">Franquicia</label>
+	        <input type="text" name="box-franquicia" id="box-franquicia" maxlength="5" class="ui-widget-content" style="width:120px" digits="true" min="0" max="99999" readonly="readonly" />
+	    </p>    
+	    <p>
+	        <label for="box-seguro_cobertura_tipo_limite_rc_id">Límite Resp. Civil *</label>
+	        <select name="box-seguro_cobertura_tipo_limite_rc_id" id="box-seguro_cobertura_tipo_limite_rc_id" class="ui-widget-content required" style="width:120px">
+	        	<option value="">Seleccione</option>
+	            <?php showLimiteRC(); ?>
+	        </select>        
+	    </p>    
+	    <p>
+	        <label for="box-servicio_grua">Servicio de Grúa</label>
+	        <input type="text" name="box-servicio_grua" id="box-servicio_grua" maxlength="3" class="ui-widget-content" style="width:60px" digits="true" min="1" max="255" />
+	    </p> 
+	</div>
+	<div style="float:left;width:50%">
+	    <p>
+	        <label for="box-valor_vehiculo">Valor Vehículo *</label>
+	        <input type="text" name="box-valor_vehiculo" id="box-valor_vehiculo" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" />
+	    </p>
+	    <p>
+	        <label for="box-valor_accesorios">Valor Accesorios *</label>
+	        <input type="number" name="box-valor_accesorios" id="box-valor_accesorios" class="ui-widget-content required calculator" style="width:120px" min="0" max="16777215" value="0" readonly />
+	    </p>
+	    <p>
+	        <label for="box-valor_total">Valor Total ^</label>
+	        <input type="text" name="box-valor_total" id="box-valor_total" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
+	    </p>                            
+	</div>
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
 	<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de inspección</legend>
