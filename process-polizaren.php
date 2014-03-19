@@ -105,7 +105,7 @@
 				// Insert: Cuotas
 				$monto = $poliza_premio / $poliza_cant_cuotas;
 				for ($i=0; $i<$poliza_cant_cuotas; $i++) {
-					$insertSQL = sprintf("INSERT INTO cuota (poliza_id, cuota_nro, cuota_periodo, cuota_monto, cuota_vencimiento, cuota_estado_id, cuota_pfc) VALUES (%s, %s, DATE_FORMAT(DATE_ADD(%s, INTERVAL %s MONTH),'%%Y-%%m-01'), %s, DATE_ADD(%s, INTERVAL %s MONTH), 1, IF(%s=1,1,0))",
+					$insertSQL = sprintf("INSERT INTO cuota (poliza_id, cuota_nro, cuota_periodo, cuota_monto, cuota_vencimiento, cuota_estado_id, cuota_pfc) VALUES (%s, %s, DATE_FORMAT(DATE_ADD(%s, INTERVAL %s MONTH),'%%Y-%%m-01'), %s, DATE_ADD(%s, INTERVAL %s MONTH), 1, %s)",
 									GetSQLValueString($new_id, "int"),
 									GetSQLValueString($i+1, "int"),
 									GetSQLValueString($poliza_validez_desde, "date"),									
@@ -113,7 +113,7 @@
 									GetSQLValueString($monto, "double"),
 									GetSQLValueString($poliza_validez_desde, "date"),
 									GetSQLValueString($i, "int"),
-									GetSQLValueString($i+1, "int"));
+									0);
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 				}
 
