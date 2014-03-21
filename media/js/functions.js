@@ -6066,4 +6066,31 @@ $(document).ready(function () {
 			
 		});
 	}
+	
+	
+	$( "#stats" ).dialog({
+		position: {
+			at: "right"
+		},
+		width: 180
+	});
+	$.ajax({
+		url: "get-json-stats.php",
+		dataType: 'json',
+		success: function (j) {
+			var output = '';
+			$.each(j, function (key, object) {
+				output += '<strong>Vigentes '+object.seguro_nombre+': '+object.vigentes+'</strong>';
+				output += '<br />';
+				output += 'Directo: '+object.directo;
+				output += '<br />';
+				output += 'TC: '+object.tc;
+				output += '<br />';
+				output += 'Cup: '+object.cup;
+				output += '<br /><br />';
+				
+			});
+			$('#stats').html(output);
+		}
+	});
 });

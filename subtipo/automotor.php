@@ -143,6 +143,11 @@
 	$('#box-cert_rodamiento').change(function() {
 		$('#box-cert_rodamiento_foto').prop('disabled', !$(this).prop('checked'));
 	});
+	$('#box-valor_gnc').keyup(function() {
+		if (!isNaN(parseInt($('#box-valor_gnc').val()))) {
+			$('#box-valor_gnc2').val(parseInt($('#box-valor_gnc').val()));
+		}
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
@@ -167,9 +172,9 @@
 			</select>
 	    </p>
 	    <p>
-	        <label for="box-suma_asegurada">Suma Asegurada ^</label>
-	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:95px" readonly="readonly" value="0" />
-	    </p> 
+	        <label for="box-valor_vehiculo">Valor Vehículo *</label>
+	        <input type="text" name="box-valor_vehiculo" id="box-valor_vehiculo" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" /> <span style="color:red">(Cargar acá el valor del vehículo)</span>
+	    </p>
 		<p> 
 			<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
 			<label for="box-infoauto" style="margin-left:10px">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
@@ -323,40 +328,44 @@
             </tr>
         </table>
 </fieldset>
-<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
-    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
-    <p>
-        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
-	</p>
-	<p>
-		<label for="box-equipo_rastreo_pedido_id">Pedir</label>
-		<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
-			<option value="">Ninguno</option>
-			<?php showEquipoRastreoPedido(); ?>
-		</select>
-	<p>
-        <label for="box-equipo_rastreo_id">Marca</label>
-        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
-            <option value="">Ninguno</option>    
-            <?php showEquipoRastreo(); ?>
-        </select>
-    </p>
+<div style="float:left;width:50%">
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
+	    <p>
+	        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
+		</p>
+		<p>
+			<label for="box-equipo_rastreo_pedido_id">Pedir</label>
+			<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
+				<option value="">Ninguno</option>
+				<?php showEquipoRastreoPedido(); ?>
+			</select>
+		<p>
+	        <label for="box-equipo_rastreo_id">Marca</label>
+	        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
+	            <option value="">Ninguno</option>    
+	            <?php showEquipoRastreo(); ?>
+	        </select>
+	    </p>
     
-</fieldset>	
-<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
-    <p>
-		<label for="box-micro_grabado">Micro Grabado</label>
-		<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
-	<p>
-        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
-        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:220px" />
-    </p>
-	<p>
-		<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
-        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
-	</p>
-</fieldset>
+	</fieldset>	
+</div>
+<div style="float:left;width:50%">
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
+	    <p>
+			<label for="box-micro_grabado">Micro Grabado</label>
+			<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
+		<p>
+	        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
+	        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:200px" />
+	    </p>
+		<p>
+			<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
+	        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
+		</p>
+	</fieldset>
+</div>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
     <p>
@@ -539,15 +548,19 @@
 	</div>
 	<div style="float:left;width:50%">
 	    <p>
-	        <label for="box-valor_vehiculo">Valor Vehículo *</label>
-	        <input type="text" name="box-valor_vehiculo" id="box-valor_vehiculo" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" />
+	        <label for="box-suma_asegurada">Valor Vehículo ^</label>
+	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
 	    </p>
 	    <p>
-	        <label for="box-valor_accesorios">Valor Accesorios *</label>
+	        <label for="box-valor_gnc2">Valor GNC ^</label>
+	        <input type="text" name="box-valor_gnc2" id="box-valor_gnc2" maxlength="8" class="ui-widget-content" style="width:120px" digits="true" min="0" max="16777215" value="0" readonly />
+	    </p>
+	    <p>
+	        <label for="box-valor_accesorios">Valor Accesorios ^</label>
 	        <input type="number" name="box-valor_accesorios" id="box-valor_accesorios" class="ui-widget-content required calculator" style="width:120px" min="0" max="16777215" value="0" readonly />
 	    </p>
 	    <p>
-	        <label for="box-valor_total">Valor Total ^</label>
+	        <label for="box-valor_total"><strong>Suma Asegurada Total ^</strong></label>
 	        <input type="text" name="box-valor_total" id="box-valor_total" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />
 	    </p>                            
 	</div>

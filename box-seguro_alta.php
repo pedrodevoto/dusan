@@ -26,7 +26,7 @@
                 <input type="text" name="box-seguro_email_emision_vida" id="box-seguro_email_emision_vida" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
             </p>
             <p>
-                <label for="box-seguro_email_patrimoniales_otras">E-mail Patrimoniales</label>
+                <label for="box-seguro_email_patrimoniales_otras">E-mail Otros Riesgos</label>
                 <input type="text" name="box-seguro_email_patrimoniales_otras" id="box-seguro_email_patrimoniales_otras" maxlength="255" class="ui-widget-content" style="width:220px" placeholder="Separados por coma" />
             </p>
             <p>
