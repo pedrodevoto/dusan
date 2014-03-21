@@ -504,3 +504,6 @@ color: #3c763d !important;
 background: #dff0d8 !important;
 border-color: #d6e9c6 !important;
 }
+.fixedpos {
+	position:fixed !important;
+}

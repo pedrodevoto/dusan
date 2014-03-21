@@ -6072,7 +6072,8 @@ $(document).ready(function () {
 		position: {
 			at: "right"
 		},
-		width: 180
+		width: 180,
+		dialogClass: 'fixedpos'
 	});
 	$.ajax({
 		url: "get-json-stats.php",
