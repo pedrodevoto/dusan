@@ -6067,11 +6067,8 @@ $(document).ready(function () {
 		});
 	}
 	
-	
 	$( "#stats" ).dialog({
-		position: {
-			at: "right"
-		},
+		position: [$(document).width()-180-20],
 		width: 180,
 		dialogClass: 'fixedpos'
 	});
@@ -6081,15 +6078,19 @@ $(document).ready(function () {
 		success: function (j) {
 			var output = '';
 			$.each(j, function (key, object) {
-				output += '<strong>Vigentes '+object.seguro_nombre+': '+object.vigentes+'</strong>';
-				output += '<br />';
-				output += 'Directo: '+object.directo;
-				output += '<br />';
-				output += 'TC: '+object.tc;
-				output += '<br />';
-				output += 'Cup: '+object.cup;
-				output += '<br /><br />';
-				
+				if (key=='total') {
+					output += '<strong>TOTAL VIGENTES: '+object+'</strong>'
+				}
+				else {
+					output += '<strong>Vigentes '+object.seguro_nombre+': '+object.vigentes+'</strong>';
+					output += '<br />';
+					output += 'Directo: '+object.directo;
+					output += '<br />';
+					output += 'TC: '+object.tc;
+					output += '<br />';
+					output += 'Cup: '+object.cup;
+					output += '<br /><br />';
+				}
 			});
 			$('#stats').html(output);
 		}
