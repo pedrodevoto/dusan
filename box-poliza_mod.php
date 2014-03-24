@@ -108,16 +108,6 @@
                 <label for="box-poliza_recargo">Recargo (%) *</label>
 				<input type="text" name="box-poliza_recargo" id="box-poliza_recargo" maxlength="5" class="ui-widget-content" style="width:45px" />
             </p>
-            <p>
-                <label for="box-poliza_ajuste">Ajuste *</label>
-                <select name="box-poliza_ajuste" id="box-poliza_ajuste" class="ui-widget-content required" style="width:130px">
-                    <option value="">Seleccione</option>
-                    <option value="0">0%</option>                                    
-                    <option value="10">10%</option>
-                    <option value="20">20%</option>
-                    <option value="30">30%</option>
-				</select>				
-            </p>
        	</fieldset>                   
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">

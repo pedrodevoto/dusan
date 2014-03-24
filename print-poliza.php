@@ -774,7 +774,7 @@
 								// Misc
 								$txt_misc_c1 = array(
 									array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-									array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
+									array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset2['ajuste'],0)." %")
 								);
 								$txt_misc_c2 = array(
 									array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
@@ -1519,7 +1519,6 @@
 						// Misc
 						$txt_misc_c1 = array(
 							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
 						);
 						$txt_misc_c2 = array(
 							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
@@ -2369,7 +2368,6 @@
 						// Misc
 						$txt_misc_c1 = array(
 							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
 						);
 						$txt_misc_c2 = array(
 							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
@@ -2849,7 +2847,6 @@
 						// Misc
 						$txt_misc_c1 = array(
 							array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-							array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
 						);
 						$txt_misc_c2 = array(
 							array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
@@ -3445,7 +3442,6 @@
 							// Misc
 							$txt_misc_c1 = array(
 								array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
-								array('maxwidth' => 95, 'text' => "AJUSTE: ".formatNumber($row_Recordset1['poliza_ajuste'],0)." %")
 							);
 							$txt_misc_c2 = array(
 								array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),

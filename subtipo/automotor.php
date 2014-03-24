@@ -547,6 +547,16 @@
 	    </p> 
 	</div>
 	<div style="float:left;width:50%">
+        <p>
+            <label for="box-ajuste">Ajuste *</label>
+            <select name="box-ajuste" id="box-ajuste" class="ui-widget-content required" style="width:130px">
+                <option value="">Seleccione</option>                
+                <option value="0">0%</option>
+                <option value="10" selected>10%</option>
+                <option value="20">20%</option>
+                <option value="30">30%</option>
+			</select>				
+        </p>
 	    <p>
 	        <label for="box-suma_asegurada">Valor Vehículo ^</label>
 	        <input type="text" name="box-suma_asegurada" id="box-suma_asegurada" maxlength="8" class="ui-widget-content required" style="width:120px" readonly="readonly" value="0" />

@@ -1358,10 +1358,6 @@ $(document).ready(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-						// Si la poliza no es Automotor, ocultar campo ajuste
-						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').removeClass('required').parent().hide();
-						}
 						// Resolve
 						dfd.resolve();
 					});
@@ -1393,10 +1389,6 @@ $(document).ready(function () {
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
-						// Si la poliza no es Automotor, ocultar campo ajuste
-						if (j.subtipo_poliza_nombre.toUpperCase() != 'AUTOMOTOR') {
-							$('#box-poliza_ajuste').removeClass('required').parent().hide();
-						}
 						// Resolve
 						dfd.resolve();
 					});
@@ -4643,15 +4635,6 @@ $(document).ready(function () {
 					$('#box-subtipo_poliza_id, #box-seguro_id').change(function() {
 						switch ($(this).attr('id')) {
 							case 'box-subtipo_poliza_id':
-								// Si el subtipo de poliza es Automotor habilitar campo AJUSTE
-								switch ($(this).val()) {
-								case '6':
-									$('#box-poliza_ajuste').addClass('required').parent().show();
-									break;
-								default:
-									$('#box-poliza_ajuste').val('').removeClass('required').parent().hide();
-									break;
-								}
 								break;
 							case 'box-seguro_id':
 								$('#box-productor_seguro_id').html(loading);
@@ -4933,15 +4916,6 @@ $(document).ready(function () {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
-					// Si el tipo de póliza es PERSONAS, deshabilitar campo AJUSTE y ampliar rango de selección de vigencia
-					switch ($("#box-tipo_poliza_nombre").val()) {
-					case 'Personas':
-						$('#box-poliza_ajuste').prop('disabled', true);
-						break;
-					default:
-						$('#box-poliza_ajuste').prop('disabled', false);
-						break;
-					}
 					populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $("#box-tipo_poliza_nombre").val());
 
 					// On Change: Selects
