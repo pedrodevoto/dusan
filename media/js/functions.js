@@ -6067,6 +6067,7 @@ $(document).ready(function () {
 		});
 	}
 	
+	// Globo flotante de stats
 	$( "#stats" ).dialog({
 		position: [$(document).width()-180-20],
 		width: 180,
