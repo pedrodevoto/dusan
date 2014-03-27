@@ -316,8 +316,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
