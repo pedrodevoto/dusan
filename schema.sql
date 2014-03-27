@@ -772,6 +772,7 @@ CREATE TABLE `poliza` (
   `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo','Tarjeta de Credito / CBU - 1 Cuota','1 Pago Cupon Contado','1 Pago Tarjeta de Credito / CBU','6 Cuotas Pago Cupones','6 Cuotas Pago Tarj/CBU') COLLATE utf8_unicode_ci NOT NULL,
   `poliza_pago_detalle` blob,
   `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
+  `poliza_descuento` int(10) unsigned DEFAULT NULL,
   `poliza_observaciones` text COLLATE utf8_unicode_ci,
   `poliza_plan_flag` tinyint(4) NOT NULL DEFAULT '0',
   `poliza_plan_id` int(11) DEFAULT NULL,
@@ -1057,4 +1058,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-03-24 11:29:45
+-- 2014-03-27 01:37:35

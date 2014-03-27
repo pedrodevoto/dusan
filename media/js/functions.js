@@ -4637,6 +4637,15 @@ $(document).ready(function () {
 							case 'box-subtipo_poliza_id':
 								break;
 							case 'box-seguro_id':
+								if ($(this).val()==4) {
+									// si es allianz, prima obligatoria y mostrar campo de descuento
+									$('#box-poliza_prima').addClass('required');
+									$('#poliza_descuento').show();
+								}
+								else {
+									$('#box-poliza_prima').removeClass('required');
+									$('#poliza_descuento').hide();
+								}
 								$('#box-productor_seguro_id').html(loading);
 								populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 								populateListPoliza_Cuotas('box-poliza_cuotas', 'box', $(this).val());
@@ -4835,11 +4844,29 @@ $(document).ready(function () {
 						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
 					})
 					$("#box-seguro_id").change(function () {
+						if ($(this).val()==4) {
+							// si es allianz, prima obligatoria y mostrar campo de descuento
+							$('#box-poliza_prima').addClass('required');
+							$('#poliza_descuento').show();
+						}
+						else {
+							$('#box-poliza_prima').removeClass('required');
+							$('#poliza_descuento').hide();
+						}
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 					});
 
-
+					if ($("#box-seguro_id").val()==4) {
+						// si es allianz, prima obligatoria y mostrar campo de descuento
+						$('#box-poliza_prima').addClass('required');
+						$('#poliza_descuento').show();
+					}
+					else {
+						$('#box-poliza_prima').removeClass('required');
+						$('#poliza_descuento').hide();
+					}
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -4921,6 +4948,15 @@ $(document).ready(function () {
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function () {
+						if ($(this).val()==4) {
+							// si es allianz, prima obligatoria y mostrar campo de descuento
+							$('#box-poliza_prima').addClass('required');
+							$('#poliza_descuento').show();
+						}
+						else {
+							$('#box-poliza_prima').removeClass('required');
+							$('#poliza_descuento').hide();
+						}
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 						

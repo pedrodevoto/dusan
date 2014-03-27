@@ -37,8 +37,8 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_email, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_plan_flag, poliza_plan_id, poliza_pack_id, poliza_flota)
-		 					  VALUES (%s, %s, %s, %s, TRIM(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_email, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_descuento, poliza_plan_flag, poliza_plan_id, poliza_pack_id, poliza_flota)
+		 					  VALUES (%s, %s, %s, %s, TRIM(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 								GetSQLValueString($_POST['box-sucursal_id'], "int"),
 								GetSQLValueString($_POST['box-cliente_id'], "int"),
 								GetSQLValueString($_POST['box-subtipo_poliza_id'], "int"),
@@ -64,6 +64,7 @@
 								GetSQLValueString($_POST['box-poliza_medio_pago'], "text"),
 								GetSQLValueString($poliza_pago_detalle, "text"),
 								GetSQLValueString($_POST['box-poliza_recargo'], "double"),
+								GetSQLValueString($_POST['box-poliza_descuento'], "int"),
 								GetSQLValueString($_POST['box-poliza_plan_flag'], "int"),
 								$_POST['box-poliza_plan_flag']=='1'? 
 									GetSQLValueString($_POST['box-poliza_plan_id'], "int"):'NULL',

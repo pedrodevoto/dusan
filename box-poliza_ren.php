@@ -113,6 +113,10 @@
                 <label for="box-poliza_recargo">Recargo (%)</label>
 				<input type="text" name="box-poliza_recargo" id="box-poliza_recargo" maxlength="5" class="ui-widget-content" style="width:45px" />
             </p>
+			<p id="poliza_descuento" style="display:none">
+                <label for="box-poliza_descuento">Descuento (%)</label>
+				<input type="text" name="box-poliza_descuento" id="box-poliza_descuento" maxlength="2" class="ui-widget-content" style="width:45px" />
+			</p>
        	</fieldset>                   
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
