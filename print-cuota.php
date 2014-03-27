@@ -304,6 +304,19 @@
 		}
 	}
 	else {
+		// Header
+		$txthead = array(
+			array('text'=>iconv('UTF-8', 'windows-1252', date('d/m/Y', strtotime($row_Recordset1['cuota_fe_pago']))."\n")),
+			array('text'=>iconv('UTF-8', 'windows-1252', $row_Recordset1['cuota_recibo']))
+		);
+		
+		$pdf->SetFont('Arial', '', 8);
+		$pdf->SetXY(175, 53);
+		foreach ($txthead as $array) {
+			error_log('jara');
+			printText($array['text'], $pdf, 10, 4.4);
+		}
+		
 		// Date
 		$date = date('d/m/Y', strtotime($row_Recordset1['cuota_fe_pago']));
 		$pdf->SetXY(160, 142);
