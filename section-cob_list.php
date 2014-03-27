@@ -145,11 +145,6 @@
                         </tr>
                         <tr>                                
                             <td colspan="5" align="center">
-                            	<label for="export2">Mostrar resultados</label><input name="export" id="export2" type="radio" value="0" checked />
-                            </td>  
-                        </tr>                                 
-                        <tr>                                
-                            <td colspan="5" align="center">
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    
