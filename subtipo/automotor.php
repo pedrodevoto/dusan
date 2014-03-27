@@ -552,8 +552,8 @@
             <select name="box-ajuste" id="box-ajuste" class="ui-widget-content required" style="width:130px">
                 <option value="">Seleccione</option>                
                 <option value="0">0%</option>
-                <option value="10" selected>10%</option>
-                <option value="20">20%</option>
+                <option value="10">10%</option>
+                <option value="20" selected>20%</option>
                 <option value="30">30%</option>
 			</select>				
         </p>
