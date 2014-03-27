@@ -58,6 +58,10 @@ $query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_nombre, ''),
 	if (!empty($_GET['poliza_anulada'])) {
 		$query_Recordset1_having .= ' AND COUNT(endoso_id) > 0';
 	}
+	// Filter by: vence_manana
+	if (!empty($_GET['vence_manana']) && $_GET['vence_manana']==1) {
+		$query_Recordset1_where .= sprintf(" AND (cuota_vencimiento = DATE_ADD(DATE(NOW()), INTERVAL 1 DAY) AND cuota_estado_id=1)");
+	}
 	// Filter by: poliza_medio_pago
 	if(isset($_GET['poliza_medio_pago']) && $_GET['poliza_medio_pago']!=""){	
 		$query_Recordset1_where .= sprintf(" AND poliza.poliza_medio_pago = %s",GetSQLValueString($_GET['poliza_medio_pago'], "text"));

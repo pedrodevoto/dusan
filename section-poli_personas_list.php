@@ -244,6 +244,9 @@
 								
 								<label for="poliza_anulada">Anulada</label>
 								<input type="checkbox" name="poliza_anulada" id="poliza_anulada" value="1"></input>
+								
+								<label for="vence_manana">Vence mañana?</label>
+								<input type="checkbox" name="vence_manana" id="vence_manana" value="1"></input>
 							</td>
 						</tr>
                         <tr>                                
