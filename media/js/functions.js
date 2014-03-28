@@ -6096,7 +6096,7 @@ $(document).ready(function () {
 					output += '<br />';
 					output += 'Directo: '+object.directo;
 					output += '<br />';
-					output += 'TC: '+object.tc;
+					output += 'TC + DC: '+object.tc;
 					output += '<br />';
 					output += 'Cup: '+object.cup;
 					output += '<br /><br />';
