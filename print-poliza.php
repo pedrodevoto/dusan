@@ -141,7 +141,6 @@
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
-			$txt_pago_c4 = "Descuento: ".intval($row_Recordset1['poliza_descuento']).'%';
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
 				array('maxwidth' => 95, 'text' => "Premio:")
@@ -346,7 +345,6 @@
 					$pdf->SetXY(70, 205);
 					$pdf->SetXY(102, 205);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					printText($txt_pago_c4, $pdf, 30, 3.8);
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								
@@ -506,7 +504,6 @@
 						$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
 						$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
 						$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
-						$txt_pago_c4 = "Descuento: ".intval($row_Recordset1['poliza_descuento']).'%';
 						$txt_imp_c1 = array(
 							array('maxwidth' => 95, 'text' => "Prima:"),
 							array('maxwidth' => 95, 'text' => "Premio:")
@@ -763,7 +760,6 @@
 								$pdf->SetXY(70, 250);
 								$pdf->SetXY(102, 250);
 								printText($txt_pago_c2, $pdf, 30, 3.8);
-								printText($txt_pago_c4, $pdf, 30, 3.8);
 								// Importes
 								$pdf->SetFont('Arial', '', 8);
 								$pdf->SetTextColor(0,0,0);								
@@ -778,6 +774,7 @@
 								// Misc
 								$txt_misc_c1 = array(
 									array('maxwidth' => 95, 'text' => "RECARGO: ".formatNumber($row_Recordset1['poliza_recargo'])." %"),
+									array('maxwidth' => 95, 'text' => "DESCUENTO: ".intval($row_Recordset1['poliza_descuento']).'%'),
 								);
 								$txt_misc_c2 = array(
 									array('maxwidth' => 95, 'text' => "PRODUCTOR: ".strtoupper($row_Recordset1['productor_nombre'])),
