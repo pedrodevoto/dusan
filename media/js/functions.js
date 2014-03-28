@@ -664,6 +664,7 @@ $(document).ready(function () {
 		var options = '<option value=\'\'>Todos</option>';
 		switch (tipo_poliza) {
 		case '3':
+		case 3:
 		case 'Personas':
 			vigencia = ['Mensual', 'Bimestral', 'Trimestral', 'Cuatrimestral', 'Semestral', 'Anual', 'Otra'];
 			break;
@@ -1383,7 +1384,7 @@ $(document).ready(function () {
 					$.when(
 						populateListSeguro('box-seguro_id', 'box'),
 						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
-						populateListPoliza_Vigencia('box-poliza_vigencia', 'box'),
+						populateListPoliza_Vigencia('box-poliza_vigencia', 'box', j.tipo_poliza_id),
 						populateListPoliza_Cuotas('box-poliza_cuotas', 'box'),
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
 					).then(function () {
@@ -4942,8 +4943,6 @@ $(document).ready(function () {
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-
-					populateListPoliza_Vigencia('box-poliza_vigencia', 'box', $("#box-tipo_poliza_nombre").val());
 
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
