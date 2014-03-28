@@ -126,14 +126,14 @@
 				array('maxwidth' => 95, 'text' => "Suma Asegurada del Vehículo"),
 				array('maxwidth' => 95, 'text' => "Equipo GNC"),
 				array('maxwidth' => 95, 'text' => "Accesorios"),
-				array('maxwidth' => 95, 'text' => "Ajuste"),
+				array('maxwidth' => 95, 'text' => "Ajuste ".intval($row_Recordset2['ajuste'])."%"),
 				array('maxwidth' => 95, 'text' => "TOTAL:")
 			);
 			$txt_sumas_c2 = array(
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_vehiculo'])." "),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_gnc'])." "),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_accesorios'])." "),
-				array('maxwidth' => 95, 'text' => intval($row_Recordset2['ajuste'])."%"),
+				array('maxwidth' => 95, 'text' => ''),
 				array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 			);
 			$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
@@ -240,14 +240,14 @@
 								array('maxwidth' => 95, 'text' => "Suma Asegurada del Vehículo"),
 								array('maxwidth' => 95, 'text' => "Equipo GNC"),
 								array('maxwidth' => 95, 'text' => "Accesorios"),
-								array('maxwidth' => 95, 'text' => "Ajuste"),
+								array('maxwidth' => 95, 'text' => "Ajuste ".intval($row_Recordset2['ajuste'])."%"),
 								array('maxwidth' => 95, 'text' => "TOTAL:")
 							);
 							$txt_sumas_c2 = array(
 								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_vehiculo'])." "),
 								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_gnc'])." "),
 								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_accesorios'])." "),
-								array('maxwidth' => 95, 'text' => intval($row_Recordset2['ajuste'])."%"),
+								array('maxwidth' => 95, 'text' => ''),
 								array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 							);
 							$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
@@ -489,14 +489,14 @@
 							array('maxwidth' => 95, 'text' => "Suma Asegurada del Vehículo"),
 							array('maxwidth' => 95, 'text' => "Equipo GNC"),
 							array('maxwidth' => 95, 'text' => "Accesorios"),
-							array('maxwidth' => 95, 'text' => "Ajuste"),
+							array('maxwidth' => 95, 'text' => "Ajuste ".intval($row_Recordset2['ajuste'])."%"),
 							array('maxwidth' => 95, 'text' => "TOTAL:")
 						);
 						$txt_sumas_c2 = array(
 							array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_vehiculo'])." "),
 							array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_gnc'])." "),
 							array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_accesorios'])." "),
-							array('maxwidth' => 95, 'text' => intval($row_Recordset2['ajuste'])."%"),
+							array('maxwidth' => 95, 'text' => ''),
 							array('maxwidth' => 95, 'text' => formatNumber($row_Recordset2['valor_total'])." ")
 						);
 						$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
