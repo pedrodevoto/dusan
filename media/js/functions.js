@@ -4947,6 +4947,7 @@ $(document).ready(function () {
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function () {
+						populateFormFlota($(this).val());
 						if ($(this).val()==4) {
 							// si es allianz, prima obligatoria y mostrar campo de descuento
 							$('#box-poliza_prima').addClass('required');

@@ -62,8 +62,8 @@
 		}
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_email, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_descuento, poliza_plan_flag, poliza_plan_id, poliza_pack_id)
-		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
+		$insertSQL = sprintf("INSERT INTO poliza (sucursal_id, cliente_id, subtipo_poliza_id, poliza_estado_id, poliza_numero, poliza_renueva_num, productor_seguro_id, poliza_vigencia, poliza_vigencia_dias, poliza_validez_desde, poliza_validez_hasta, poliza_cuotas, poliza_cant_cuotas, poliza_fecha_solicitud, poliza_fecha_emision, poliza_fecha_recepcion, poliza_fecha_entrega, poliza_correo, poliza_email, poliza_entregada, poliza_prima, poliza_premio, poliza_medio_pago, poliza_pago_detalle, poliza_recargo, poliza_descuento, poliza_plan_flag, poliza_plan_id, poliza_pack_id, poliza_flota)
+		 					  (SELECT poliza.sucursal_id, poliza.cliente_id, poliza.subtipo_poliza_id, %s, TRIM(%s), poliza_numero, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s FROM poliza WHERE poliza.poliza_id=%s)",
 								GetSQLValueString($estado, "int"),
 								GetSQLValueString($_POST['box-poliza_numero'], "text"),
 								GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
@@ -141,25 +141,27 @@
 									$row_Recordset1['poliza_id']);
 				$Recordset3 = mysql_query($query_Recordset3, $connection) or die(mysql_die());
 				$totalRows_Recordset3 = mysql_num_rows($Recordset3);
-				mysql_free_result($Recordset3);
 
-				// If Record exists, insert
-				if ($totalRows_Recordset3 === 1) {
-					$insertSQL = sprintf("INSERT INTO automotor (poliza_id, automotor_marca_id, modelo, patente_0, patente_1, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, cert_rodamiento, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, zona_riesgo_id, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo, equipo_rastreo_pedido_id, equipo_rastreo_id, micro_grabado, cupon_vintrak, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, producto_id, seguro_cobertura_tipo_id, franquicia, seguro_cobertura_tipo_limite_rc_id, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total) 
-										  (SELECT %s, automotor_marca_id, modelo, patente_0, patente_1, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, cert_rodamiento, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, zona_riesgo_id, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo, equipo_rastreo_pedido_id, equipo_rastreo_id, micro_grabado, cupon_vintrak, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, producto_id, seguro_cobertura_tipo_id, franquicia, seguro_cobertura_tipo_limite_rc_id, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total FROM automotor WHERE automotor.poliza_id=%s)",
+				while ($row = mysql_fetch_array($Recordset3)) {
+					$insertSQL = sprintf("INSERT INTO automotor (poliza_id, automotor_marca_id, modelo, patente_0, patente_1, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, cert_rodamiento, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, zona_riesgo_id, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo, equipo_rastreo_pedido_id, equipo_rastreo_id, micro_grabado, cupon_vintrak, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, producto_id, seguro_cobertura_tipo_id, franquicia, seguro_cobertura_tipo_limite_rc_id, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total, ajuste) 
+										  (SELECT %s, automotor_marca_id, modelo, patente_0, patente_1, automotor_tipo_id, uso, ano, automotor_carroceria_id, combustible, 0km, cert_rodamiento, importado, nro_motor, nro_chasis, chapa, pintura, tipo_pintura, tapizado, color, zona_riesgo_id, prendado, acreedor_rs, acreedor_cuit, infoauto, observaciones, alarma, corta_corriente, corta_nafta, traba_volante, matafuego, tuercas, equipo_rastreo, equipo_rastreo_pedido_id, equipo_rastreo_id, micro_grabado, cupon_vintrak, antena, estereo, parlantes, aire, cristales_electricos, faros_adicionales, cierre_sincro, techo_corredizo, direccion_hidraulica, frenos_abs, airbag, cristales_tonalizados, gps, cubiertas_medidas, cubiertas_marca, cubiertas_desgaste_di, cubiertas_desgaste_dd, cubiertas_desgaste_ti, cubiertas_desgaste_td, cubiertas_desgaste_1ei, cubiertas_desgaste_1ed, cubiertas_desgaste_auxilio, nro_oblea, nro_regulador, marca_regulador, marca_cilindro, venc_oblea, nro_tubo, producto_id, seguro_cobertura_tipo_id, franquicia, seguro_cobertura_tipo_limite_rc_id, servicio_grua, valor_vehiculo, valor_gnc, valor_accesorios, valor_total, ajuste FROM automotor WHERE automotor_id=%s)",
 											$new_id,
-											$row_Recordset1['poliza_id']);																		
+											$row[0]);																		
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 					
-					// Copiar fotos
-					// temporalmente deshabilitar el copiado de fotos porque ahora apuntan a automotor en vez de poliza
- 					// $insertSQL = sprintf("INSERT INTO automotor_foto (automotor_id, automotor_foto_url, automotor_foto_thumb_url, automotor_foto_width, automotor_foto_height) 
-					// 					  (SELECT automotor_foto.automotor_id, automotor_foto_url, automotor_foto_thumb_url, automotor_foto_width, automotor_foto_height FROM automotor_foto JOIN automotor ON automotor.automotor_id = automotor_foto.automotor_id WHERE poliza_id=%s)",
-					// 						$row_Recordset1['poliza_id']);																		
-					// $Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
+					$automotor_id = mysql_insert_id();
 					
-				}																						
-			
+					if ($automotor_id) {
+						
+						$types = array('automotor', 'automotor_micrograbado', 'automotor_gnc', 'automotor_cedula_verde');
+						foreach ($types as $type) {
+							$sql = sprintf('INSERT INTO %1$s_foto (automotor_id, %1$s_foto_url, %1$s_foto_thumb_url, %1$s_foto_width, %1$s_foto_height) SELECT %2$s, %1$s_foto_url, %1$s_foto_thumb_url, %1$s_foto_width, %1$s_foto_height FROM %1$s_foto WHERE automotor_id=%3$s', $type, $automotor_id, $row[0]);
+							mysql_query($sql, $connection) or die(mysql_error());
+						}
+					}
+					
+				}
+
 				// Break
 				break;
 				
