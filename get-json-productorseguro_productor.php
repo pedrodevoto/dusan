@@ -15,7 +15,7 @@
 		$colname_Recordset1 = $_GET['id'];
 		$sucursal_id = $_GET['id2'];
 	}
-	$query_Recordset1 = sprintf("SELECT productor_seguro_id, CONCAT(productor_nombre,' [',productor_seguro_codigo,']') AS productor_nombre FROM productor_seguro JOIN (productor) ON (productor_seguro.productor_id=productor.productor_id) WHERE productor_seguro.seguro_id=%s AND sucursal_id = %s",
+	$query_Recordset1 = sprintf("SELECT productor_seguro.productor_seguro_id, CONCAT(productor_nombre,' [',productor_seguro_codigo,']') AS productor_nombre FROM productor_seguro JOIN (productor, productor_seguro_sucursal) ON (productor_seguro.productor_id=productor.productor_id AND productor_seguro.productor_seguro_id = productor_seguro_sucursal.productor_seguro_id) WHERE productor_seguro.seguro_id=%s AND sucursal_id = %s",
 						GetSQLValueString($colname_Recordset1, "int"),
 						GetSQLValueString($sucursal_id, "int"));
 	

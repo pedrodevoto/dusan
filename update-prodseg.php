@@ -24,6 +24,16 @@
 		$Result1 = mysql_query($updateSQL, $connection);
 		switch (mysql_errno()) {
 				case 0:
+				$deleteSQL = sprintf("DELETE FROM productor_seguro_sucursal WHERE productor_seguro_id = %s",
+					GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
+				mysql_query($deleteSQL, $connection);
+				foreach ($_POST['box-sucursal_id'] as $sucursal_id) {
+					$insertSQL = sprintf("INSERT INTO productor_seguro_sucursal (productor_seguro_id, sucursal_id) VALUES (%s, %s)",
+						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
+						GetSQLValueString($sucursal_id, "int"));
+						error_log($insertSQL);
+					mysql_query($insertSQL, $connection) or die(mysql_error());
+				}
 				$deleteSQL = sprintf("DELETE FROM productor_seguro_cobertura_tipo WHERE productor_seguro_id = %s",
 					GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
 				mysql_query($deleteSQL, $connection);

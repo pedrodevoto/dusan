@@ -27,6 +27,12 @@
 		switch (mysql_errno()) {
 			case 0:
 				$productor_seguro_id = mysql_insert_id($connection);
+				foreach ($_POST['box-sucursal_id'] as $sucursal_id) {
+					$insertSQL = sprintf("INSERT INTO productor_seguro_sucursal (productor_seguro_id, sucursal_id) VALUES (%s, %s)",
+						GetSQLValueString($productor_seguro_id, "int"),
+						GetSQLValueString($sucursal_id, "int"));
+					mysql_query($insertSQL, $connection);
+				}
 				foreach ($_POST['box-seguro_cobertura_tipo_id'] as $cobertura_id) {
 					$insertSQL = sprintf("INSERT INTO productor_seguro_cobertura_tipo (productor_seguro_id, seguro_cobertura_tipo_id) VALUES (%s, %s)",
 						GetSQLValueString($productor_seguro_id, "int"),

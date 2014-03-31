@@ -17,8 +17,10 @@
                     <input type="text" name="box-seguro_nombre" id="box-seguro_nombre" class="ui-widget-content" style="width:180px" readonly />                   
                 </p>
                 <p>
-                    <label for="box-sucursal_nombre">Sucursal ^</label>
-                    <input type="text" name="box-sucursal_nombre" id="box-sucursal_nombre" class="ui-widget-content" style="width:180px" readonly />                    
+                    <label for="box-sucursal_id">Sucursal *</label>
+					<select multiple="multiple" name="box-sucursal_id[]" id="box-sucursal_id" class="ui-widget-content" style="width:180px">
+						<option value="">Cargando</option>
+					</select>
                 </p>                                                     
                 <p>
                     <label for="box-productor_seguro_codigo">Código *</label>

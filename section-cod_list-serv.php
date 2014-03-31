@@ -11,8 +11,8 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " productor_seguro_id, productor_nombre, seguro_nombre, sucursal_nombre, productor_seguro_codigo";
-	$query_Recordset1_tables = " FROM productor_seguro JOIN (seguro, productor, sucursal) ON productor.productor_id = productor_seguro.productor_id AND seguro.seguro_id = productor_seguro.seguro_id AND sucursal.sucursal_id = productor_seguro.sucursal_id ";
+	$query_Recordset1_fields = " productor_seguro.productor_seguro_id as productor_seguro_id, productor_nombre, seguro_nombre, sucursal_nombre, productor_seguro_codigo";
+	$query_Recordset1_tables = " FROM productor_seguro JOIN (seguro, productor, productor_seguro_sucursal, sucursal) ON productor.productor_id = productor_seguro.productor_id AND seguro.seguro_id = productor_seguro.seguro_id AND productor_seguro.productor_seguro_id = productor_seguro_sucursal.productor_seguro_id AND sucursal.sucursal_id = productor_seguro_sucursal.sucursal_id ";
 	
 	$query_Recordset1_where = " WHERE 1";
 	
@@ -43,7 +43,7 @@
 			$aColumns = array('productor_seguro_id', 'productor_nombre', 'seguro_nombre', 'sucursal_nombre', 'productor_seguro_codigo', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
-			$sIndexColumn = "productor_seguro_id";		
+			$sIndexColumn = "productor_seguro.productor_seguro_id";		
 			
 			/* Paging */
 			$sLimit = "";
