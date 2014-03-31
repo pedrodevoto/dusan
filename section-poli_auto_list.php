@@ -45,6 +45,10 @@
 						this.reset();
 					});
 				});	
+				$('#btnSortReset').click(function() {
+					oTable.fnSort([[0, 'desc']]);
+					return false;
+				});
 				
 				$('#poliza_anulada').change(function() {
 					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
@@ -86,7 +90,7 @@
 						{"sWidth": "7%"},
 						{"sWidth": "9%"},
 						{"sWidth": "9%"},
-						{"sWidth": "7%", "bSearchable": false},
+						{"sWidth": "7%", "bSearchable": false, "bSortable": true},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "7%", "bSearchable": false},
 						{"sWidth": "5%", "bSearchable": false},
@@ -114,7 +118,7 @@
 							return returnval;
 						}}
 					],
-					"aaSorting": [[0,'desc']],
+					"aaSorting": [[10,'desc']],
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
@@ -295,6 +299,11 @@
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    
+						<tr>
+							<td colspan="7" align="center">
+								<input type="button" name="btnSortReset" id="btnSortReset" value="Ordenar por entrada">
+							</td>
+						</tr>
                     </table>
                 </form>                 
             </div>                
