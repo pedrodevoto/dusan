@@ -3574,7 +3574,7 @@ $(document).ready(function () {
 					if ((data.toLowerCase().indexOf("error") === -1)) {
 						// If user comes from creation process
 						if (fromcreate === true) {
-							if (flota!=undefined) 
+							if (flota!=false) 
 								openBoxPolizaFlota('detalle', id, true);
 							else {
 								// Open next box
@@ -5148,7 +5148,7 @@ $(document).ready(function () {
 		});
 	}
 	openBoxPolizaDet = function (id, fromcreate, flota) {
-		flota = flota || 0;
+		flota = flota || false;
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-polizadet.php?section=2&id=' + id,
