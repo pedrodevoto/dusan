@@ -38,6 +38,7 @@
 					var newsource = sourceURL+'?action=view&' + filtersource;
 					oTable.fnSettings().sAjaxSource = newsource;
 					oTable.fnDraw();
+					oTable.fnSort([[$('#table_sort').val(), 'desc']]);
 				});	
 				// Filter: Reset handler							
 				$('#btnReset').click(function() {								
@@ -110,7 +111,7 @@
 							return returnval;
 						}}
 					],
-					"aaSorting": [[0,'desc']],
+					"aaSorting": [[9,'desc']],
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
@@ -222,6 +223,15 @@
 								<input type="text" name="poliza_vigencia_dia" maxlength="2" />
                             </td>
                         </tr>
+						<tr>
+							<td>
+								<label for="table_sort">Orden</label>
+								<select name="table_sort" id="table_sort">
+									<option value="9" selected>Vigencia</option>
+									<option value="0">Entrada</option> 
+								</select>
+							</td>
+						</tr>
 						<tr>
 							<td colspan="6">
 								<label for="poliza_vigente">Vigente</label>

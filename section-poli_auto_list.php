@@ -38,6 +38,7 @@
 					newsource = sourceURL+'?action=view&' + filtersource;
 					oTable.fnSettings().sAjaxSource = newsource;
 					oTable.fnDraw();
+					oTable.fnSort([[$('#table_sort').val(), 'desc']]);
 				});	
 				// Filter: Reset handler							
 				$('#btnReset').click(function() {								
@@ -45,10 +46,6 @@
 						this.reset();
 					});
 				});	
-				$('#btnSortReset').click(function() {
-					oTable.fnSort([[0, 'desc']]);
-					return false;
-				});
 				
 				$('#poliza_anulada').change(function() {
 					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
@@ -212,6 +209,11 @@
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
                             <td width="14%">
+								<label for="table_sort">Orden</label>
+								<select name="table_sort" id="table_sort">
+									<option value="10" selected>Vigencia</option>
+									<option value="0">Entrada</option> 
+								</select>
                             </td>
                         </tr>
                         <tr>                   
@@ -299,11 +301,6 @@
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    
-						<tr>
-							<td colspan="7" align="center">
-								<input type="button" name="btnSortReset" id="btnSortReset" value="Ordenar por entrada">
-							</td>
-						</tr>
                     </table>
                 </form>                 
             </div>                
