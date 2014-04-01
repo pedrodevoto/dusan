@@ -11,7 +11,7 @@
 		</p>
 		<p>
 			<label for="box-otros_riesgos_detalle_riesgo" style="width:200px">Detalle del riesgo *</label>
-			<textarea name="box-otros_riesgos_detalle_riesgo" id="box-otros_riesgos_detalle_riesgo" class="ui-widget-content required" style="width:220px" rows="5"></textarea>
+			<textarea name="box-otros_riesgos_detalle_riesgo" id="box-otros_riesgos_detalle_riesgo" class="ui-widget-content required" style="width:420px" rows="10"></textarea>
 		</p>
 	</fieldset>
 </form>
