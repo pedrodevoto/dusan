@@ -92,7 +92,7 @@
 									GetSQLValueString($_POST['box-poliza_plan_id'], "int"):'NULL',
 								$_POST['box-poliza_plan_flag']=='1'? 
 									GetSQLValueString($_POST['box-poliza_pack_id'], "int"):'NULL',
-								$_POST['box-poliza_flota']=='1'?
+								(isset($_POST['box-poliza_flota']) && $_POST['box-poliza_flota']=='1')?
 									GetSQLValueString($_POST['box-poliza_flota'], "int"):'NULL',
 								$row_Recordset1['poliza_id']);								
 		$Result1 = mysql_query($insertSQL, $connection);
