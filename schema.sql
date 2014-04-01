@@ -744,6 +744,19 @@ CREATE TABLE `libros_rubricados_ros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `otros_riesgos`;
+CREATE TABLE `otros_riesgos` (
+  `otros_riesgos_id` int(11) NOT NULL AUTO_INCREMENT,
+  `poliza_id` int(10) unsigned NOT NULL,
+  `otros_riesgos_riesgo` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `otros_riesgos_datos_riesgo` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `otros_riesgos_detalle_riesgo` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`otros_riesgos_id`),
+  UNIQUE KEY `poliza_id` (`poliza_id`),
+  CONSTRAINT `otros_riesgos_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `poliza`;
 CREATE TABLE `poliza` (
   `poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1068,4 +1081,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-03-31 18:16:08
+-- 2014-04-01 18:09:52

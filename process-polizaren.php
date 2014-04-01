@@ -292,6 +292,16 @@
 					
 					$integral_consorcio_id = mysql_insert_id();
 					break;
+				case 'otros_riesgos':
+					$insertSQL = sprintf('INSERT INTO otros_riesgos (poliza_id, otros_riesgos_riesgo, otros_riesgos_datos_riesgo, otros_riesgos_detalle_riesgo)
+					(SELECT %s, otros_riesgos_riesgo, otros_riesgos_datos_riesgo, otros_riesgos_detalle_riesgo FROM otros_riesgos WHERE poliza_id=%s)',
+					$new_id,
+					$row_Recordset1['poliza_id']);
+					
+					mysql_query($insertSQL) or die(mysql_error());
+					
+					$otros_riesgos_id = mysql_insert_id();
+					break;
 			default:
 				// ---------------------------------- UNDEFINED ---------------------------------- //
 				die("Error: Subtipo no habilitado.");

@@ -468,6 +468,18 @@
 				$integral_consorcio_id = mysql_insert_id();
 				
 			break;
+		case 'otros_riesgos':
+			// ---------------------------------- OTROS RIESGOS ---------------------------------- //
+			$upsertSQL = sprintf('INSERT INTO otros_riesgos (poliza_id, otros_riesgos_riesgo, otros_riesgos_datos_riesgo, otros_riesgos_detalle_riesgo)
+				VALUES (%1$s, UPPER(TRIM(%2$s)), UPPER(TRIM(%3$s)), UPPER(TRIM(%4$s)))
+				ON DUPLICATE KEY UPDATE otros_riesgos_riesgo=UPPER(TRIM(%2$s)), otros_riesgos_datos_riesgo=UPPER(TRIM(%3$s)), otros_riesgos_detalle_riesgo=UPPER(TRIM(%4$s)), otros_riesgos_id=LAST_INSERT_ID(otros_riesgos_id)',
+				$poliza_id,
+				GetSQLValueString($_POST['box-otros_riesgos_riesgo'], 'text'),
+				GetSQLValueString($_POST['box-otros_riesgos_datos_riesgo'], 'text'),
+				GetSQLValueString($_POST['box-otros_riesgos_detalle_riesgo'], 'text'));
+			$Result1 = mysql_query($upsertSQL, $connection) or die(mysql_error());
+			$otros_riesgos_id = mysql_insert_id();
+			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
 			die("Error: Subtipo no habilitado.");
