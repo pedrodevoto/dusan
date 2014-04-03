@@ -4509,7 +4509,7 @@ $(document).ready(function () {
 						$('#box-productor_seguro_id').html(loading);
 						populateListProductorSeguro_Productor($("#box-seguro_id").val(), $(this).val(), 'box-productor_seguro_id', 'box');
 						populateFormPFC($(this).val());
-						$('#box-poliza_cant_cuotas').attr('readonly', $(this).val()==1);
+						$('#box-poliza_cant_cuotas').attr('readonly', $(this).val()==1 && $('#box-subtipo_poliza_id').val()==6);
 					})
 					$("#box-poliza_vigencia").change(function () {
 						var months;
