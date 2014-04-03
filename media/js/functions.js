@@ -2679,7 +2679,8 @@ $(document).ready(function () {
 						result += '<td>' + object.endoso_fecha_compania + '</td>';
 						result += '<td><span title="' + object.endoso_tipo + '">' + object.endoso_tipo + '</span></td>';
 						result += '<td>' + object.endoso_completo + '</td>';
-						result += '<td><span onClick="openBoxModEndoso(' + object.endoso_id + ')" style="cursor: pointer;" class="ui-icon ui-icon-extlink" title="Ir al endoso"></span></td>';
+						result += '<td><span onClick="openBoxModEndoso(' + object.endoso_id + ')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Ir al endoso"></span>';
+						result += '<span onclick="$.when(deleteViaLink(\'endoso\','+object.endoso_id+')).then(function(){populateDiv_Endosos('+id+', '+poliza_numero+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
 						result += '</tr>';
 					});
 					// Close Table
