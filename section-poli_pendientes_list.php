@@ -159,6 +159,7 @@
 					}
 												
 				});		
+				$('#btnFiltro').click();
 
 			});	
 		</script>      
@@ -222,10 +223,10 @@
 						<tr>
 							<td colspan="6">
 								<label for="poliza_vigente">Vigente</label>
-								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" />
+								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" checked />
 							
 								<label for="poliza_vigente_a_renovar">Vigente a Renovar</label>
-								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4"></input>
+								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4" checked></input>
 							
 								<label for="poliza_cumplida">Cumplida</label>
 								<input type="checkbox" name="poliza_cumplida" id="poliza_cumplida" value="6"></input>
