@@ -234,7 +234,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6">
+							<td colspan="7">
 								<label for="poliza_vigente">Vigente</label>
 								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" checked />
 							
