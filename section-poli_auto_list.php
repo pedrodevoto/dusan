@@ -277,6 +277,9 @@
 							
 								<label for="poliza_vigente_a_renovar">Vigente a Renovar</label>
 								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4" checked></input>
+								
+								<label for="poliza_vigente_renovada">Vigente Renovada</label>
+								<input type="checkbox" name="poliza_vigente_renovada" id="poliza_vigente_renovada" value="7" checked></input>
 							
 								<label for="poliza_cumplida">Cumplida</label>
 								<input type="checkbox" name="poliza_cumplida" id="poliza_cumplida" value="6"></input>

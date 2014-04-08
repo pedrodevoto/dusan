@@ -43,8 +43,8 @@
 		$query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))) LIKE %s", GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
 	}
 	// Filter by: poliza_estado_id
-	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
-		$estados = array('poliza_vigente', 'poliza_vigente_a_renovar', 'poliza_cumplida', 'poliza_cumplida_renovada', 'poliza_pendiente', 'poliza_mc');
+	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_vigente_renovada']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
+		$estados = array('poliza_vigente', 'poliza_vigente_a_renovar', 'poliza_vigente_renovada', 'poliza_cumplida', 'poliza_cumplida_renovada', 'poliza_pendiente', 'poliza_mc');
 		$estados_id = array();
 		foreach ($estados as $estado) {
 			if (!empty($_GET[$estado])) {
