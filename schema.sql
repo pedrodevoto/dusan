@@ -930,7 +930,7 @@ CREATE TABLE `productor_seguro_zonas_riesgo` (
   PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `zona_riesgo_id` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`),
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
   CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
