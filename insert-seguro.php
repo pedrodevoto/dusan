@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO seguro (seguro_nombre, seguro_email_siniestro, seguro_email_emision, seguro_email_emision_vida, seguro_email_patrimoniales_otras, seguro_email_endosos, seguro_email_rastreador, seguro_email_fotos, seguro_email_inspeccion, seguro_cuit, seguro_direccion, seguro_localidad, seguro_cp, seguro_flota) VALUES (UPPER(TRIM(%s)), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s)",
+		$insertSQL = sprintf("INSERT INTO seguro (seguro_nombre, seguro_email_siniestro, seguro_email_emision, seguro_email_emision_vida, seguro_email_patrimoniales_otras, seguro_email_endosos, seguro_email_rastreador, seguro_email_fotos, seguro_email_inspeccion, seguro_cuit, seguro_direccion, seguro_localidad, seguro_cp, seguro_flota, seguro_codigo_lr) VALUES (UPPER(TRIM(%s)), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), TRIM(%s), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)))",
 						GetSQLValueString($_POST['box-seguro_nombre'], "text"),												
 						GetSQLValueString($_POST['box-seguro_email_siniestro'], "text"),						
 						GetSQLValueString($_POST['box-seguro_email_emision'], "text"),
@@ -26,7 +26,8 @@
 						GetSQLValueString($_POST['box-seguro_direccion'], "text"),
 						GetSQLValueString($_POST['box-seguro_localidad'], "text"),
 						GetSQLValueString($_POST['box-seguro_cp'], "text"),
-						GetSQLValueString(isset($_POST['box-seguro_flota']) ? 'true' : '', 'defined','1','0'));								
+						GetSQLValueString(isset($_POST['box-seguro_flota']) ? 'true' : '', 'defined','1','0'),
+						GetSQLValueString($_POST['box-seguro_codigo_lr'], "text"));								
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
 			case 0:

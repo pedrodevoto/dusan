@@ -55,6 +55,7 @@
 				</li>
 				<li><a href="section-endosos_list.php">Endosos</a></li>
 				<li><a href="section-facturacion.php">Facturación</a></li>
+               	<li><a href="section-libros_rubricados.php">Libros Rubricados</a></li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Configuración</a>
                     <ul>

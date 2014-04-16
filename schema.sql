@@ -559,6 +559,7 @@ CREATE TABLE `endoso` (
   `endoso_numero` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `endoso_fecha_compania` date DEFAULT NULL,
   `endoso_completo` tinyint(1) NOT NULL,
+  `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`endoso_id`),
   KEY `poliza_id` (`poliza_id`),
   KEY `endoso_tipo_id` (`endoso_tipo_id`),
@@ -717,25 +718,31 @@ CREATE TABLE `libros_rubricados_ros` (
   `libros_rubricados_ros_id` int(11) NOT NULL AUTO_INCREMENT,
   `productor_id` int(10) unsigned NOT NULL,
   `poliza_id` int(10) unsigned NOT NULL,
+  `entidad_id` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_version` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_tipo_persona` tinyint(3) unsigned NOT NULL,
+  `libros_rubricados_ros_matricula` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_cuit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_nro_orden` int(10) unsigned NOT NULL,
-  `libros_rubricados_ros_fecha_registro` datetime NOT NULL,
+  `libros_rubricados_ros_fecha_registro` date NOT NULL,
   `libros_rubricados_ros_asegurado_tipo` int(10) unsigned NOT NULL,
   `libros_rubricados_ros_asegurado_tipo_doc` int(10) unsigned NOT NULL,
   `libros_rubricados_ros_asegurado_nro_doc` int(10) unsigned NOT NULL,
   `libros_rubricados_ros_asegurado_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_cpa_proponente` int(10) unsigned NOT NULL,
   `libros_rubricados_ros_obs_proponente` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `libros_rubricados_ros_cpa` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `libros_rubricados_ros_cia_id` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_cpa` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_ros_cia_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_bien_asegurado` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_ramo` int(11) NOT NULL,
   `libros_rubricados_ros_suma_asegurada` decimal(10,2) NOT NULL,
   `libros_rubricados_ros_suma_asegurada_tipo` int(11) NOT NULL,
-  `libros_rubricados_ros_cobertura_desde` datetime NOT NULL,
-  `libros_rubricados_ros_cobertura_hasta` datetime NOT NULL,
-  `libros_rubricados_ros_observacion_tipo` int(11) NOT NULL,
+  `libros_rubricados_ros_cobertura_desde` date NOT NULL,
+  `libros_rubricados_ros_cobertura_hasta` date NOT NULL,
+  `libros_rubricados_ros_tipo` int(11) NOT NULL,
   `libros_rubricados_ros_flota` int(11) NOT NULL,
   `libros_rubricados_ros_operacion_origen` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL,
   PRIMARY KEY (`libros_rubricados_ros_id`),
   KEY `productor_id` (`productor_id`),
   KEY `poliza_id` (`poliza_id`),
@@ -792,6 +799,7 @@ CREATE TABLE `poliza` (
   `poliza_pack_id` int(11) DEFAULT NULL,
   `poliza_archivada` tinyint(4) DEFAULT NULL,
   `poliza_flota` tinyint(4) DEFAULT NULL,
+  `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
@@ -871,6 +879,8 @@ CREATE TABLE `productor` (
   `productor_matricula` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `productor_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `productor_telefono` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `productor_exportar_lr` tinyint(4) DEFAULT NULL,
+  `productor_lr_numeracion` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`productor_id`),
   UNIQUE KEY `productor_cuit` (`productor_cuit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -930,8 +940,8 @@ CREATE TABLE `productor_seguro_zonas_riesgo` (
   PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `zona_riesgo_id` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`)
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`),
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -952,6 +962,7 @@ CREATE TABLE `seguro` (
   `seguro_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_cp` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `seguro_flota` tinyint(4) DEFAULT NULL,
+  `seguro_codigo_lr` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`seguro_id`),
   UNIQUE KEY `seguro_nombre` (`seguro_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1081,4 +1092,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-04-01 18:09:52
+-- 2014-04-16 16:22:46

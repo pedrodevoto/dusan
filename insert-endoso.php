@@ -12,8 +12,8 @@
 	if ((isset($_POST["box-poliza_id"])) && ($_POST["box-poliza_id"] !== "")) {
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO endoso (poliza_id, endoso_fecha_pedido, endoso_tipo_id, endoso_cuerpo, endoso_premio, endoso_numero, endoso_fecha_compania, endoso_completo)
-		 					  VALUES (%s, %s, %s, TRIM(%s), %s, TRIM(%s), %s, %s)",
+		$insertSQL = sprintf("INSERT INTO endoso (poliza_id, endoso_fecha_pedido, endoso_tipo_id, endoso_cuerpo, endoso_premio, endoso_numero, endoso_fecha_compania, endoso_completo, timestamp)
+		 					  VALUES (%s, %s, %s, TRIM(%s), %s, TRIM(%s), %s, %s, NOW())",
 								GetSQLValueString($_POST['box-poliza_id'], "int"),
 								GetSQLValueString($_POST['box-endoso_fecha_pedido'], "date"),
 								GetSQLValueString($_POST['box-endoso_tipo_id'], "int"),

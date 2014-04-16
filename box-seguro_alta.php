@@ -65,6 +65,10 @@
 				<label for="box-seguro_flota">Flota</label>
 				<input type="checkbox" name="box-seguro_flota" id="box-seguro_flota" class="ui-widget-content" />
 			</p>
+            <p>
+                <label for="box-seguro_codigo_lr">Código (L.R.)</label>
+                <input type="text" name="box-seguro_codigo_lr" id="box-seguro_codigo_lr" maxlength="15" class="ui-widget-content" style="width:220px" />
+            </p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     

@@ -33,6 +33,14 @@
                 <label for="box-productor_telefono">Teléfono</label>
                 <input type="text" name="box-productor_telefono" id="box-productor_telefono" maxlength="25" class="ui-widget-content" style="width:220px" />
             </p>                                    
+			<p>
+				<label for="box-productor_exportar_lr">Exportar LR</label>
+				<input type="checkbox" name="box-productor_exportar_lr" id="box-productor_exportar_lr" />
+			</p>
+			<p>
+				<label for="box-productor_lr_numeracion">Numeración LR</label>
+				<input type="text" name="box-productor_lr_numeracion" id="box-productor_lr_numeracion" class="ui-widget-content" />
+			</p>
        	</fieldset>            
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     

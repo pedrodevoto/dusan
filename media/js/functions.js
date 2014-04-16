@@ -1034,6 +1034,35 @@ $(document).ready(function () {
 	/* ---------------------------- DIALOG FUNCTIONS ----------------------------------- */
 
 	// Use this space for dialog related functions
+	// Globo flotante de stats
+	$( "#stats" ).dialog({
+		position: [$(document).width()-180-20],
+		width: 180,
+		dialogClass: 'fixedpos'
+	});
+	$.ajax({
+		url: "get-json-stats.php",
+		dataType: 'json',
+		success: function (j) {
+			var output = '';
+			$.each(j, function (key, object) {
+				if (key=='total') {
+					output += '<strong>TOTAL VIGENTES: '+object+'</strong>'
+				}
+				else {
+					output += '<strong>Vigentes '+object.seguro_nombre+': '+object.vigentes+'</strong>';
+					output += '<br />';
+					output += 'Directo: '+object.directo;
+					output += '<br />';
+					output += 'TC + DC: '+object.tc;
+					output += '<br />';
+					output += 'Cup: '+object.cup;
+					output += '<br /><br />';
+				}
+			});
+			$('#stats').html(output);
+		}
+	});
 
 	/* --------------------------------- BOX FUNCTIONS --------------------------------- */
 
@@ -3648,7 +3677,18 @@ $(document).ready(function () {
 			}
 		});
 	}
-
+	processLibrosRubricados = function() {
+		$.ajax({
+			url: 'process-libros_rubricados.php',
+			success: function(data) {
+				showBoxConf(data, false, 'always', 3000, function () {});
+			},
+			error: function() {
+				showBoxConf('Error. Intente nuevamente.', false, 'always', 3000, function () {});
+			}
+		});
+	}
+	
 	/* Delete via Link functions */
 	deleteProdSeg = function (id, productor_id) {
 		$.when(
@@ -6078,33 +6118,4 @@ $(document).ready(function () {
 		});
 	}
 	
-	// Globo flotante de stats
-	$( "#stats" ).dialog({
-		position: [$(document).width()-180-20],
-		width: 180,
-		dialogClass: 'fixedpos'
-	});
-	$.ajax({
-		url: "get-json-stats.php",
-		dataType: 'json',
-		success: function (j) {
-			var output = '';
-			$.each(j, function (key, object) {
-				if (key=='total') {
-					output += '<strong>TOTAL VIGENTES: '+object+'</strong>'
-				}
-				else {
-					output += '<strong>Vigentes '+object.seguro_nombre+': '+object.vigentes+'</strong>';
-					output += '<br />';
-					output += 'Directo: '+object.directo;
-					output += '<br />';
-					output += 'TC + DC: '+object.tc;
-					output += '<br />';
-					output += 'Cup: '+object.cup;
-					output += '<br /><br />';
-				}
-			});
-			$('#stats').html(output);
-		}
-	});
 });
