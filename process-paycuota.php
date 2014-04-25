@@ -39,6 +39,15 @@
 					$cuota_id);
 	mysql_query($sql, $connection) or die(mysql_error());
 	
+	// Log
+	$sql = sprintf('SELECT poliza_id FROM cuota WHERE cuota_id = %s', $cuota_id);
+	$res = mysql_query($sql, $connection) or die(mysql_error());
+	$row = mysql_fetch_array($res);
+	$poliza_id = $row[0];
+	$sql = sprintf('INSERT INTO cuota_log (cuota_id, poliza_id, cuota_log_tipo, usuario_id, timestamp) VALUES (%s, %s, 1, %s, NOW())', $cuota_id, $poliza_id, $_SESSION['ADM_UserId']);
+	
+	mysql_query($sql, $connection) or die(mysql_error());
+	
 	if (isset($_POST['box-cuota_vencimiento']) and $_POST['box-cuota_vencimiento'] != '') {
 		$sql = sprintf('SELECT poliza_id, cuota_nro FROM cuota WHERE cuota_id = %s', $cuota_id);
 		$res = mysql_query($sql, $connection);

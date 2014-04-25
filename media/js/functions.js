@@ -2921,6 +2921,28 @@ $(document).ready(function () {
 			}
 		});
 	}
+	populateDiv_CuotasOperaciones = function (id, suffix) {
+		$.getJSON("get-json-fich_cuota_log.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// General variables
+					var result = '';
+					console.log(j);
+					$.each(j, function (i, object) {
+						result += '<p>Se '+(object.cuota_log_tipo==1?'emite':'anula')+' recibo '+object.cuota_recibo+' (cuota número '+object.cuota_nro+') por el usuario '+object.usuario_nombre+' el día '+object.dia+' a las '+object.hora+'</p>';
+					});
+					// Populate DIV
+					$('#divBoxList'+suffix).html(result);
+				}
+			}
+		});
+	}
 
 	/* Insert via form functions */
 	insertFormUsuario = function () {
@@ -5380,6 +5402,7 @@ $(document).ready(function () {
 				populateDiv_Poliza_Info(id);
 				populateDiv_Cuotas(id);
 				populateDiv_Envios('6', id, '1');
+				populateDiv_CuotasOperaciones(id, '2');
 
 				formDisable('frmBox', 'ui', true);
 

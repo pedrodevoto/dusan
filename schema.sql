@@ -524,6 +524,18 @@ CREATE TABLE `cuota_estado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `cuota_log`;
+CREATE TABLE `cuota_log` (
+  `cuota_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cuota_id` int(11) NOT NULL,
+  `poliza_id` int(11) NOT NULL,
+  `cuota_log_tipo` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`cuota_log_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `email_log`;
 CREATE TABLE `email_log` (
   `email_log_id` int(11) NOT NULL AUTO_INCREMENT,
