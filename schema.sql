@@ -294,8 +294,8 @@ CREATE TABLE `cliente` (
   `cliente_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_email_alt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`cliente_id`),
+  UNIQUE KEY `cliente_nro_doc` (`cliente_nro_doc`),
   KEY `cliente_nombre` (`cliente_nombre`),
-  KEY `cliente_nro_doc` (`cliente_nro_doc`),
   KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
