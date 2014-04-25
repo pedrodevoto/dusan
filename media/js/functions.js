@@ -1413,6 +1413,30 @@ $(document).ready(function () {
 						populateListProductorSeguro_Productor(j.seguro_id, j.sucursal_id, 'box-productor_seguro_id', 'box'),
 						populateListPoliza_MP('box-poliza_medio_pago', 'box')
 					).then(function () {
+						// Medio pago (allianz)
+						if (j.seguro_id==4) {
+							var mp;
+							switch (j.poliza_cuotas) {
+							case 'Mensual':
+								mp = ['Tarjeta de Credito / CBU - 1 Cuota'];
+								var options = '';
+								for (var i = 0; i < mp.length; i++) {
+									options += '<option value="' + mp[i] + '">' + mp[i] + '</option>';
+								}
+								$('#box-poliza_medio_pago').html(options);
+								$('#box-poliza_medio_pago').val('Tarjeta de Credito / CBU - 1 Cuota').change();
+								break;
+							case 'Semestral':
+								mp = ['1 Pago Cupon Contado', '1 Pago Tarjeta de Credito', '6 Cuotas Pago Cupones', '6 Cuotas Pago Tarj/CBU'];
+								var options = '';
+								for (var i = 0; i < mp.length; i++) {
+									options += '<option value="' + mp[i] + '">' + mp[i] + '</option>';
+								}
+								$('#box-poliza_medio_pago').html(options);
+								$('#box-poliza_medio_pago').val('6 Cuotas Pago Cupones').change();
+								break;
+							}
+						}
 						// Populate Form
 						populateFormGeneric(j, "box");
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
