@@ -34,6 +34,11 @@
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
+				$('#frmFiltro select').keypress(function(event) {
+					if (event.which == 13 ) {
+						$('#btnFiltro').click();
+					}
+				});
 				// Filter: Submit handler
 				$('#btnFiltro').click(function() {						
 					filtersource = $('#frmFiltro').serialize();					
