@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cliente.cliente_id, TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) as cliente_nombre FROM cliente WHERE cliente.cliente_id=%s", GetSQLValueString($colname_Recordset1, "int"));
+	$query_Recordset1 = sprintf("SELECT cliente.cliente_id, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre FROM cliente WHERE cliente.cliente_id=%s", GetSQLValueString($colname_Recordset1, "int"));
 	
 	// Recordset	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
