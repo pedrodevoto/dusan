@@ -188,6 +188,7 @@
 	        <label for="box-patente_0">Patente *</label>
 	        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
 			<input type="text" name="box-patente_1" id="box-patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
+			<span id="msg_patente" style="color:orange"></span>
 	    </p>
 	    <p>
 	        <label for="box-automotor_tipo_id">Tipo *</label>

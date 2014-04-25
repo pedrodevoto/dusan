@@ -1592,6 +1592,15 @@ $(document).ready(function () {
 					populateDiv_Fotos('poliza', id);
 				}
 			});
+			$("#box-patente_0, #box-patente_1").change(function() {
+				$.ajax({
+					url: 'get-json-patente.php?patente_0='+$("#box-patente_0").val()+'&patente_1='+$("#box-patente_1").val(),
+					dataType: 'json',
+					success: function(j) {
+						$('#msg_patente').text(j?'Patente existente':'');
+					}
+				});
+			});
 			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
 			break;
 		case 'accidentes':
