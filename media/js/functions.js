@@ -3813,7 +3813,7 @@ $(document).ready(function () {
 							},
 							"box-usuario_usuario": {
 								required: true,
-								minlength: 6
+								minlength: 4
 							},
 							"box-usuario_clave": {
 								required: true,
@@ -3883,7 +3883,7 @@ $(document).ready(function () {
 							},
 							"box-usuario_usuario": {
 								required: true,
-								minlength: 6
+								minlength: 4
 							},
 							"box-usuario_clave": {
 								minlength: 8
