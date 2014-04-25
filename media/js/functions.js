@@ -1008,6 +1008,34 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateListClientes = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-cliente.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + value[0] + '">' + value[1] + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();

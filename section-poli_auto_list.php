@@ -28,6 +28,9 @@
 				populateListPlizaEstado('poliza_estado_id', 'main');
 				populateListCoberturaTipo('seguro_cobertura_tipo_nombre', 'main');
 				populateListSuc('sucursal_id', 'main');
+				populateListClientes('cliente_id', 'main');
+				populateListSeguro('seguro_id', 'main');
+				populateListProductor('productor_id', 'main');
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -50,6 +53,20 @@
 				$('#poliza_anulada').change(function() {
 					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
 				});
+				
+				$("#filter_advanced_toggle").click(function() {
+					if ($(this).attr('togglestate')=="0") {
+						$(".filter_advanced").children().show();
+						$(this).attr('togglestate', "1");
+						$(this).text("▲Búsqueda Básica▲")
+					}
+					else {
+						$(".filter_advanced").children().hide();
+						$(this).attr('togglestate', "0");
+						$(this).text("▼Búsqueda Avanzada▼")
+					}
+				});
+				$(".filter_advanced").children().hide();
 				
 				// Filter: Get focus
 				$("#patente").focus();				
@@ -183,93 +200,93 @@
             <div id="divFilter" class="ui-corner-all">                
                 <form id="frmFiltro" name="frmFiltro">
                     <table cellpadding="5" cellspacing="0" border="0" width="100%">
-                        <tr>                   
-                            <td width="14%">
-                                <label for="poliza_numero">Poliza N°</label>                                
-                                <input type="text" name="poliza_numero" id="poliza_numero" maxlength="20" />
-                            </td>
-                            <td width="14%">
-                                <label for="patente">Patente</label>                                
-                                <input type="text" name="patente" id="patente" maxlength="20" />
-                            </td>
-                            <td width="14%">
-                                <label for="seguro_nombre">Compañía</label>                                
-                                <input type="text" name="seguro_nombre" id="seguro_nombre" maxlength="255" />
-                            </td>
-                            <td width="14%">
-                                <label for="sucursal_nombre">Sucursal</label>                                
-                                <select name="sucursal_id" id="sucursal_id">
+						<tr>
+							<td colspan="2">
+								<label for="cliente_id">Cliente</label>
+								<select name="cliente_id" id="cliente_id">
 								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="productor_nombre">Productor</label>                                
-                                <input type="text" name="productor_nombre" id="productor_nombre" maxlength="255" />
-                            </td>
-                            <td width="14%">
-                                <label for="cliente_nombre">Cliente</label>                                
-                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
-                            </td>
-                            <td width="14%">
-								<label for="table_sort">Orden</label>
-								<select name="table_sort" id="table_sort">
-									<option value="10" selected>Vigencia</option>
-									<option value="0">Entrada</option> 
+							</td>
+							<td width="14%">
+								<label for="poliza_numero">Poliza N°</label>                                
+								<input type="text" name="poliza_numero" id="poliza_numero" maxlength="20" />
+							</td>
+							<td width="14%">
+								<label for="patente">Patente</label>                                
+								<input type="text" name="patente" id="patente" maxlength="20" />
+							</td>
+							<td width="14%">
+								<label for="seguro_id">Compañía</label>                                
+								<select name="seguro_id" id="seguro_id">
 								</select>
-                            </td>
-                        </tr>
-                        <tr>                   
-                            <td width="14%">
-                                <label for="poliza_medio_pago">Forma de pago</label>                                
-                                <select name="poliza_medio_pago" id="poliza_medio_pago">
+							</td>
+							<td width="14%">
+								<label for="sucursal_id">Sucursal</label>                                
+								<select name="sucursal_id" id="sucursal_id">
+								</select>
+							</td>
+							<td width="14%" class="filter_advanced">
+								<label for="productor_id">Productor</label>
+								<select name="productor_id" id="productor_id">
+								</select>
+							</td>
+						</tr>
+						<tr class="filter_advanced">
+							<td width="14%">
+								<label for="fotos">Fotos</label>
+								<select name="fotos" id="fotos">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+							</td>
+							<td width="14%">
+								<label for="castigado">Castigado</label>
+								<select name="castigado" id="castigado">
+									<option value="">Indistinto</option>
+									<option value="1">Sí</option>
+									<option value="0">No</option>
+								</select>
+							</td>
+							<td width="14%">
+								<label for="seguro_cobertura_tipo_nombre">Cobertura</label>
+								<select name="seguro_cobertura_tipo_nombre" id="seguro_cobertura_tipo_nombre">
+								</select>
+							</td>
+							<td width="14%">
+								<label for="poliza_medio_pago">Forma de pago</label>
+								<select name="poliza_medio_pago" id="poliza_medio_pago">
 									<option value="">Todos</option>
 									<option value="Tarjeta de Crédito">TC</option>
 									<option value="Débito Bancario">Débito Bancario</option>
 									<option value="Cuponera">Cup</option>
 									<option value="Directo">Directo</option>
 								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="fotos">Fotos</label>                                
-                                <select name="fotos" id="fotos">
+							</td>
+							<td width="14%">
+								<label for="poliza_al_dia">Pago al día</label>
+								<select name="poliza_al_dia" id="poliza_al_dia">
 									<option value="">Indistinto</option>
 									<option value="1">Sí</option>
 									<option value="0">No</option>
 								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="castigado">Castigado</label>                                
-                                <select name="castigado" id="castigado">
-									<option value="">Indistinto</option>
-									<option value="1">Sí</option>
-									<option value="0">No</option>
-								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="micro_grabado">Micrograbado</label>                                
-                                <select name="micro_grabado" id="micro_grabado">
-									<option value="">Indistinto</option>
-									<option value="1">Sí</option>
-									<option value="0">No</option>
-								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="seguro_cobertura_tipo_nombre">Cobertura</label>                                
-                                <select name="seguro_cobertura_tipo_nombre" id="seguro_cobertura_tipo_nombre">
-								</select>
-                            </td>
-                            <td width="14%">
-                                <label for="poliza_al_dia">Pago al día</label>                                
-                                <select name="poliza_al_dia" id="poliza_al_dia">
-									<option value="">Indistinto</option>
-									<option value="1">Sí</option>
-									<option value="0">No</option>
-								</select>
-                            </td>
-                            <td width="14%">
+							</td>
+							<td width="14%">
 								<label for="poliza_vigencia_dia">Día de vigencia</label>
 								<input type="text" name="poliza_vigencia_dia" maxlength="2" />
-                            </td>
-                        </tr>
+							</td>
+							<td width="14%">
+								<label for="table_sort">Orden</label>
+								<select name="table_sort" id="table_sort">
+									<option value="10" selected>Vigencia</option>
+									<option value="0">Entrada</option> 
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="7" align="center">
+								<span id="filter_advanced_toggle" style="cursor:pointer" togglestate="0">▼Búsqueda Avanzada▼</span>
+							</td>
+						</tr>
 						<tr>
 							<td colspan="6">
 								<label for="poliza_vigente">Vigente</label>
@@ -300,14 +317,14 @@
 								<input type="checkbox" name="vence_manana" id="vence_manana" value="1"></input>
 							</td>
 						</tr>
-                        <tr>                                
-                            <td colspan="7" align="center">
-                                <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
-                            </td>
-                        </tr>                                    
-                    </table>
-                </form>                 
-            </div>                
+						<tr>
+							<td colspan="7" align="center">
+								<input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
             <!-- Form End -->             
 
             <!-- Table Start (custom padding No-Filter) -->                              	

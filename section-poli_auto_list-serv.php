@@ -30,20 +30,20 @@
 		$query_Recordset1_where .= sprintf(" AND CONCAT(IF(automotor_carroceria_id=17, '101', ''), patente_0, patente_1) LIKE %s",GetSQLValueString('%' . $_GET['patente'] . '%', "text"));
 	}
 	// Filter by: seguro_nombre
-	if(isset($_GET['seguro_nombre']) && $_GET['seguro_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
+	if(isset($_GET['seguro_id']) && $_GET['seguro_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND productor_seguro.seguro_id = %s",GetSQLValueString($_GET['seguro_id'], "int"));
 	}
 	// Filter by: sucursal_id
 	if(isset($_GET['sucursal_id']) && $_GET['sucursal_id']!=""){	
 		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
 	}
 	// Filter by: productor_nombre
-	if(isset($_GET['productor_nombre']) && $_GET['productor_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND productor_nombre LIKE %s",GetSQLValueString('%' . $_GET['productor_nombre'] . '%', "text"));
+	if(isset($_GET['productor_id']) && $_GET['productor_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND productor_seguro.productor_id = %s",GetSQLValueString($_GET['productor_id'], "int"));
 	}
 	// Filter by: cliente_nombre
-	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))) LIKE %s", GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+	if(isset($_GET['cliente_id']) && $_GET['cliente_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND poliza.cliente_id = %s", GetSQLValueString($_GET['cliente_id'], "int"));
 	}
 	// Filter by: poliza_estado_id
 	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_vigente_renovada']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
