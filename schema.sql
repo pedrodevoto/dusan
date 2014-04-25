@@ -801,6 +801,7 @@ CREATE TABLE `poliza` (
   `poliza_flota` tinyint(4) DEFAULT NULL,
   `timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
+  UNIQUE KEY `poliza_numero` (`poliza_numero`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
