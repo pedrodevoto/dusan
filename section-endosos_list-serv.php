@@ -11,8 +11,8 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " endoso_id, poliza.cliente_id as cliente_id, poliza_numero, CONCAT(endoso_tipo_grupo_nombre, ' (', endoso_tipo_nombre, ')') as endoso_tipo, cliente_nombre, sucursal_nombre, DATE_FORMAT(endoso_fecha_pedido, '%d/%m/%y') as endoso_fecha_pedido, IF(endoso_completo = 1, 'SÍ', 'NO') as endoso_completo";
-	$query_Recordset1_tables = " FROM endoso JOIN (poliza, endoso_tipo, endoso_tipo_grupo, cliente, sucursal) ON (poliza.poliza_id = endoso.poliza_id AND endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id AND endoso_tipo.endoso_tipo_grupo_id = endoso_tipo_grupo.endoso_tipo_grupo_id AND poliza.cliente_id = cliente.cliente_id AND poliza.sucursal_id = sucursal.sucursal_id) ";
+	$query_Recordset1_fields = " endoso_id, poliza.cliente_id as cliente_id, poliza_numero, CONCAT(endoso_tipo_grupo_nombre, ' (', endoso_tipo_nombre, ')') as endoso_tipo, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre, seguro_nombre, sucursal_nombre, DATE_FORMAT(endoso_fecha_pedido, '%d/%m/%y') as endoso_fecha_pedido_formateada, IF(endoso_completo = 1, 'SÍ', 'NO') as endoso_completo";
+	$query_Recordset1_tables = " FROM endoso JOIN (poliza, productor_seguro, seguro, endoso_tipo, endoso_tipo_grupo, cliente, sucursal) ON (poliza.poliza_id = endoso.poliza_id AND productor_seguro.productor_seguro_id = poliza.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id AND endoso_tipo.endoso_tipo_id = endoso.endoso_tipo_id AND endoso_tipo.endoso_tipo_grupo_id = endoso_tipo_grupo.endoso_tipo_grupo_id AND poliza.cliente_id = cliente.cliente_id AND poliza.sucursal_id = sucursal.sucursal_id) ";
 	
 	$query_Recordset1_where = " WHERE 1";
 	
@@ -50,7 +50,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('endoso_id', 'cliente_id', 'poliza_numero', 'endoso_tipo', 'cliente_nombre', 'sucursal_nombre', 'endoso_fecha_pedido', 'endoso_completo', ' ');
+			$aColumns = array('endoso_id', 'cliente_id', 'poliza_numero', 'endoso_tipo', 'cliente_nombre', 'seguro_nombre', 'sucursal_nombre', 'endoso_fecha_pedido_formateada', 'endoso_completo', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "endoso.endoso_id";		
@@ -66,7 +66,7 @@
 				$sOrder = "ORDER BY  ";
 				for ($i=0; $i<intval($_GET['iSortingCols']); $i++){
 					if ($_GET['bSortable_'.intval($_GET['iSortCol_'.$i])] == "true"){
-						$sOrder .= $aColumns[intval($_GET['iSortCol_'.$i])] . " " . mysql_real_escape_string($_GET['sSortDir_'.$i]) . ", ";
+						$sOrder .= reset(preg_split('/_formateada$/', $aColumns[intval($_GET['iSortCol_'.$i])])) . " " . mysql_real_escape_string($_GET['sSortDir_'.$i]) . ", ";
 					}
 				}
 				$sOrder = substr_replace($sOrder, "", -2);

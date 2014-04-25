@@ -77,6 +77,7 @@
 						null,
 						null,
 						null,
+						null,
 						{"sWidth": "10%"},
 						{"sWidth": "8%", "bSearchable": false},
 						{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
@@ -93,7 +94,7 @@
 							return returnval;
 						}}
 					],	
-					"aaSorting": [[1,'asc']],					
+					"aaSorting": [[7,'desc']],					
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
@@ -174,6 +175,7 @@
                             <th>Póliza</th>
                             <th>Tipo</th> 
 							<th>Nombre del Asegurado</th>
+							<th>Compañía</th>
 							<th>Sucursal</th>
 							<th>Fecha de pedido</th>
                             <th>Completo</th>
@@ -187,6 +189,7 @@
                         <tr>
                             <th></th>
                             <th></th>   
+							<th></th>                         
 							<th></th>                         
                             <th></th> 
                             <th></th>
