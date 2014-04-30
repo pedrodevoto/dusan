@@ -31,7 +31,7 @@
 		list($cuota_nro_factura) = mysql_fetch_array($res);
 	}
 	
-	$sql = sprintf('UPDATE cuota SET cuota_estado_id=2, cuota_fe_pago=%s, cuota_monto=%s, cuota_recibo=%s, cuota_nro_factura = %s WHERE cuota_id=%s', 
+	$sql = sprintf('UPDATE cuota SET cuota_estado_id=2, cuota_fe_pago=%s, cuota_fe_anulada=NULL, cuota_monto=%s, cuota_recibo=%s, cuota_nro_factura = %s WHERE cuota_id=%s', 
 					GetSQLValueString($_POST['box-cuota_fe_pago'], "date"),
 					GetSQLValueString($_POST['box-cuota_monto'], "double"),
 					$recibo,
@@ -44,7 +44,7 @@
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	$row = mysql_fetch_array($res);
 	$poliza_id = $row[0];
-	$sql = sprintf('INSERT INTO cuota_log (cuota_id, poliza_id, cuota_log_tipo, usuario_id, timestamp) VALUES (%s, %s, 1, %s, NOW())', $cuota_id, $poliza_id, $_SESSION['ADM_UserId']);
+	$sql = sprintf('INSERT INTO cuota_log (cuota_id, poliza_id, cuota_log_tipo, cuota_log_fecha, cuota_recibo, usuario_id, timestamp) VALUES (%s, %s, 1, %s, %s, %s, NOW())', $cuota_id, $poliza_id, GetSQLValueString($_POST['box-cuota_fe_pago'], "date"), $recibo, $_SESSION['ADM_UserId']);
 	
 	mysql_query($sql, $connection) or die(mysql_error());
 	

@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cuota_log_tipo, cuota_nro, cuota_recibo, DATE_FORMAT(cl.timestamp, '%%e/%%m/%%Y') as dia, DATE_FORMAT(cl.timestamp, '%%H:%%i:%%s') as hora, usuario_nombre FROM cuota_log cl JOIN (cuota c, usuario u) ON cl.cuota_id = c.cuota_id AND u.usuario_id = cl.usuario_id WHERE cl.poliza_id=%s ORDER BY cl.timestamp DESC",
+	$query_Recordset1 = sprintf("SELECT cuota_log_tipo, cuota_nro, cl.cuota_recibo, DATE_FORMAT(cl.timestamp, '%%e/%%m/%%Y') as dia, DATE_FORMAT(cl.timestamp, '%%H:%%i:%%s') as hora, usuario_nombre FROM cuota_log cl JOIN (cuota c, usuario u) ON cl.cuota_id = c.cuota_id AND u.usuario_id = cl.usuario_id WHERE cl.poliza_id=%s ORDER BY cl.timestamp DESC",
 							GetSQLValueString($colname_Recordset1, "int"));
 							
 	// Recordset: Main

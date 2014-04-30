@@ -9,6 +9,9 @@
 	require_once('inc/db_functions.php');
 ?>
 <?php
+
+// Operaciones (ROS)
+
 $items = array();
 
 $sql = 'SELECT p.poliza_id, p.timestamp FROM poliza p LEFT JOIN libros_rubricados_ros lr ON p.poliza_id = lr.entidad_id JOIN (productor_seguro ps, productor pr) ON (p.productor_seguro_id = ps.productor_seguro_id AND ps.productor_id = pr.productor_id) WHERE libros_rubricados_ros_id IS NULL AND productor_exportar_lr = 1 AND poliza_numero <> "" AND poliza_entregada = 1 AND DATE(p.timestamp) < DATE(NOW())';
@@ -132,5 +135,92 @@ foreach ($items as $item) {
 
 	$res4 = mysql_query($sql, $connection) or die(mysql_error());
 }
+
+// Cobranzas (RCR)
+
+$sql = 'SELECT COALESCE(MAX(libros_rubricados_log_hasta), "2014-01-01") FROM libros_rubricados_log WHERE libros_rubricados_log_tipo = 2';
+$res = mysql_query($sql, $connection);
+$row = mysql_fetch_array($res);
+$last_rcr = $row[0];
+
+$items = array();
+
+$sql = sprintf('SELECT cl.cuota_id, cuota_log_fecha, SUM(IF(cuota_log_tipo=1,1,-1)) as estado FROM cuota_log cl JOIN (cuota c, poliza p, productor_seguro ps, productor pr) ON (cl.cuota_id = c.cuota_id AND p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.productor_id = pr.productor_id) WHERE DATE(cuota_log_fecha) BETWEEN DATE("%s")+INTERVAL 1 DAY AND DATE(NOW()) - INTERVAL 1 DAY AND p.timestamp IS NOT NULL AND productor_exportar_lr = 1 GROUP BY cl.cuota_id HAVING estado<>0', $last_rcr);
+$res = mysql_query($sql, $connection);
+while ($row = mysql_fetch_array($res)) {
+	$items[] = array('type'=>$row[2], 'id'=>$row[0], 'timestamp'=>$row[1]);
+}
+
+usort($items, function($a, $b) {
+    return strtotime($a['timestamp']) - strtotime($b['timestamp']);
+});
+
+foreach ($items as $item) {
+	$sql = sprintf('SELECT ps.productor_id as productor_id, productor_matricula, productor_cuit, cuota_nro, cuota_recibo, poliza_cant_cuotas, poliza_numero, seguro_codigo_lr, productor_seguro_organizacion_flag, productor_seguro_organizacion_tipo_persona, productor_seguro_organizacion_matricula, productor_seguro_organizacion_cuit, cuota_monto FROM cuota c JOIN (poliza p, productor_seguro ps, seguro s, productor pr) ON (p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.seguro_id = s.seguro_id AND ps.productor_id = pr.productor_id) WHERE cuota_id = %s', $item['id']);
+	
+	$res = mysql_query($sql, $connection);
+	$row = mysql_fetch_assoc($res);
+	
+	$productor_id = $row['productor_id'];
+	$cuota_id = $item['id'];
+	$libros_rubricados_rcr_version = 1;
+	$libros_rubricados_rcr_tipo_persona = 1;
+	$libros_rubricados_rcr_matricula = $row['productor_matricula'];
+	$libros_rubricados_rcr_cuit = $row['productor_cuit'];
+	
+	switch ($item['type']) {
+		case 1:
+		$libros_rubricados_rcr_tipo_registro = 1;
+		$libros_rubricados_rcr_anula = '';
+		break;
+		case -1:
+		$libros_rubricados_rcr_tipo_registro = 5;
+		$libros_rubricados_rcr_anula = $row['cuota_recibo'];
+		break;
+	}
+	
+	$libros_rubricados_rcr_fecha_registro = $item['timestamp'];
+	$libros_rubricados_rcr_concepto = sprintf('Cuota No %s/%s. Recibo No %s', $row['cuota_nro'], $row['poliza_cant_cuotas'], $row['cuota_recibo']);
+	$libros_rubricados_rcr_polizas = $row['poliza_numero'];
+	$libros_rubricados_rcr_cia_id = $row['seguro_codigo_lr'];
+	$libros_rubricados_rcr_organizador_flag = $row['productor_seguro_organizacion_flag'];
+	$libros_rubricados_rcr_organizador_tipo_persona = $row['productor_seguro_organizacion_tipo_persona'];
+	$libros_rubricados_rcr_organizador_matricula = $row['productor_seguro_organizacion_matricula'];
+	$libros_rubricados_rcr_organizador_cuit = $row['productor_seguro_organizacion_cuit'];
+	$libros_rubricados_rcr_importe = $row['cuota_monto'];
+	$libros_rubricados_rcr_importe_tipo = 1;
+	
+	$sql = sprintf('INSERT INTO libros_rubricados_rcr (productor_id, entidad_id, libros_rubricados_rcr_version, libros_rubricados_rcr_tipo_persona, libros_rubricados_rcr_matricula, libros_rubricados_rcr_cuit, libros_rubricados_rcr_tipo_registro, libros_rubricados_rcr_fecha_registro, libros_rubricados_rcr_concepto, libros_rubricados_rcr_polizas, libros_rubricados_rcr_cia_id, libros_rubricados_rcr_organizador_flag, libros_rubricados_rcr_organizador_tipo_persona, libros_rubricados_rcr_organizador_matricula, libros_rubricados_rcr_organizador_cuit, libros_rubricados_rcr_importe, libros_rubricados_rcr_importe_tipo, timestamp)
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())',
+	GetSQLValueString($productor_id, 'int'),
+	GetSQLValueString($cuota_id, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_version, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_tipo_persona, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_matricula, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_cuit, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_tipo_registro, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_fecha_registro, 'date'),
+	GetSQLValueString($libros_rubricados_rcr_concepto, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_polizas, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_cia_id, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_organizador_flag, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_organizador_tipo_persona, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_organizador_matricula, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_organizador_cuit, 'text'),
+	GetSQLValueString($libros_rubricados_rcr_importe, 'double'),
+	GetSQLValueString($libros_rubricados_rcr_importe_tipo, 'int')
+	);
+	
+	mysql_query($sql, $connection) or die(mysql_error());
+	$libros_rubricados_rcr_id = mysql_insert_id();
+	
+	if ($item['type']==1 and $libros_rubricados_rcr_id) {
+		$sql = sprintf('INSERT INTO libros_rubricados_rcr_rendiciones (libros_rubricados_rcr_id) VALUES (%s)', $libros_rubricados_rcr_id);
+		mysql_query($sql, $connection);
+	}
+}
+
+$sql = 'INSERT INTO libros_rubricados_log (libros_rubricados_log_tipo, libros_rubricados_log_hasta, timestamp) VALUES (1, DATE(NOW()-INTERVAL 1 DAY), NOW()), (2, DATE(NOW()-INTERVAL 1 DAY), NOW())';
+mysql_query($sql, $connection) or die(mysql_error());
 
 ?>

@@ -1,8 +1,8 @@
--- Adminer 4.0.3 MySQL dump
+-- Adminer 4.1.0 MySQL dump
 
 SET NAMES utf8;
+SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
-SET time_zone = '-03:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `accidentes`;
@@ -503,6 +503,7 @@ CREATE TABLE `cuota` (
   `cuota_vencimiento` date NOT NULL,
   `cuota_estado_id` int(11) NOT NULL,
   `cuota_fe_pago` datetime DEFAULT NULL,
+  `cuota_fe_anulada` datetime DEFAULT NULL,
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
   `cuota_nro_factura` int(11) unsigned DEFAULT NULL,
@@ -530,6 +531,8 @@ CREATE TABLE `cuota_log` (
   `cuota_id` int(11) NOT NULL,
   `poliza_id` int(11) NOT NULL,
   `cuota_log_tipo` int(11) NOT NULL,
+  `cuota_log_fecha` datetime NOT NULL,
+  `cuota_recibo` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`cuota_log_id`)
@@ -722,6 +725,45 @@ CREATE TABLE `integral_consorcio` (
   `integral_consorcio_robo_exp` decimal(10,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`integral_consorcio_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `libros_rubricados_log`;
+CREATE TABLE `libros_rubricados_log` (
+  `libros_rubricados_log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `libros_rubricados_log_tipo` int(11) NOT NULL,
+  `libros_rubricados_log_hasta` datetime NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`libros_rubricados_log_id`),
+  UNIQUE KEY `libros_rubricados_log_hasta_libros_rubricados_log_tipo` (`libros_rubricados_log_hasta`,`libros_rubricados_log_tipo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `libros_rubricados_rcr`;
+CREATE TABLE `libros_rubricados_rcr` (
+  `libros_rubricados_rcr_id` int(11) NOT NULL AUTO_INCREMENT,
+  `productor_id` int(10) unsigned NOT NULL,
+  `entidad_id` int(11) NOT NULL,
+  `libros_rubricados_rcr_version` int(11) NOT NULL,
+  `libros_rubricados_rcr_tipo_persona` tinyint(4) NOT NULL,
+  `libros_rubricados_rcr_matricula` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_cuit` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_tipo_registro` tinyint(4) NOT NULL,
+  `libros_rubricados_rcr_fecha_registro` datetime NOT NULL,
+  `libros_rubricados_rcr_concepto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_polizas` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_cia_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_organizador_flag` tinyint(4) NOT NULL,
+  `libros_rubricados_rcr_organizador_tipo_persona` tinyint(4) DEFAULT NULL,
+  `libros_rubricados_rcr_organizador_matricula` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `libros_rubricados_rcr_organizador_cuit` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `libros_rubricados_rcr_importe` float DEFAULT NULL,
+  `libros_rubricados_rcr_importe_tipo` tinyint(4) DEFAULT NULL,
+  `libros_rubricados_rcr_anula` int(11) DEFAULT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`libros_rubricados_rcr_id`),
+  KEY `productor_id` (`productor_id`),
+  CONSTRAINT `libros_rubricados_rcr_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1105,4 +1147,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-04-16 16:22:46
+-- 2014-04-30 20:50:50

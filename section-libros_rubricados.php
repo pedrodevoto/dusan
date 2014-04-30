@@ -32,7 +32,7 @@
 					alert('Seleccione un período');
 				}
 				else {
-					
+					window.open('export-libros_rubricados.php?fecha='+$('#exportar-libros-rubricados-periodo').val());
 				}
 			});
 		});

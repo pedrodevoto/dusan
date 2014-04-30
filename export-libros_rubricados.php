@@ -18,6 +18,9 @@ $zip = new ZipArchive();
 if($zip->open($zipname, ZIPARCHIVE::CREATE) !== true) {
 	die('could not create zip file');
 }
+
+// Operaciones (ROS)
+
 $sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_ros lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(timestamp) = "%s" GROUP BY lr.productor_id', $fecha);
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
@@ -33,8 +36,8 @@ while ($row = mysql_fetch_array($res)) {
 		<CantidadRegistros>'.$registros.'</CantidadRegistros>
 	</Cabecera>
 	<Detalle>';
-while ($row2 = mysql_fetch_assoc($res2)) {
-$output .= '
+	while ($row2 = mysql_fetch_assoc($res2)) {
+		$output .= '
 		<Registro>
 			<NroOrden>'.$row2['libros_rubricados_ros_nro_orden'].'</NroOrden>
 			<FechaRegistro>'.$row2['libros_rubricados_ros_fecha_registro'].'</FechaRegistro>
@@ -62,6 +65,55 @@ $output .= '
 	</Detalle>
 </SSN>';
 	$filename = 'ROS-'.str_replace(' ', '_', $row[3]).'-'.str_replace('-', '_', $fecha).'.xml';
+	$zip->addFromString($filename, $output);
+}
+
+// Cobranzas (RCR)
+
+$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_rcr lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(timestamp) = "%s" GROUP BY lr.productor_id', $fecha);
+$res = mysql_query($sql, $connection) or die(mysql_error());
+
+while ($row = mysql_fetch_array($res)) {
+	$sql = sprintf('SELECT * FROM libros_rubricados_rcr WHERE DATE(timestamp) = "%s" AND productor_id=%s ORDER BY libros_rubricados_rcr_fecha_registro ASC', $fecha, $row[0]);
+	$res2 = mysql_query($sql, $connection);
+	$registros = mysql_num_rows($res2);
+
+	$output = '<?xml version="1.0" encoding="utf-8" ?>
+<SSN>
+	<Cabecera>
+		<Version>1</Version>
+		<Productor TipoPersona="1" Matricula="'.$row[1].'" CUIT="'.$row[2].'" />
+		<CantidadRegistros>'.$registros.'</CantidadRegistros>
+	</Cabecera>
+	<Detalle>';
+	while ($row2 = mysql_fetch_assoc($res2)) {
+		$output .= '
+		<Registro>
+			<TipoRegistro>'.$row2['libros_rubricados_rcr_tipo_registro'].'</TipoRegistro>
+			<FechaRegistro>'.date('d/m/Y', strtotime($row2['libros_rubricados_rcr_fecha_registro'])).'</FechaRegistro>
+			<Concepto>'.$row2['libros_rubricados_rcr_concepto'].'</Concepto>
+			<Polizas>';
+			foreach (explode(',', $row2['libros_rubricados_rcr_polizas']) as $poliza) {
+				$output .= '
+				<Poliza>'.$poliza.'</Poliza>';
+			}
+			$output .= '
+			</Polizas>
+			<CiaID>'.$row2['libros_rubricados_rcr_cia_id'].'</CiaID>';
+			if ($row2['libros_rubricados_rcr_organizador_flag']) {
+				$output .= '
+			<Organizador TipoPersona="'.$row2['libros_rubricados_rcr_organizador_tipo_persona'].'" Matricula="'.$row2['libros_rubricados_rcr_organizador_matricula'].'" CUIT="'.$row2['libros_rubricados_rcr_organizador_cuit'].'"/>';
+			}
+			$output .= '
+			<Importe>'.number_format($row2['libros_rubricados_rcr_importe'], 2).'</Importe>
+			<ImporteTipo>'.$row2['libros_rubricados_rcr_importe_tipo'].'</ImporteTipo>
+			<NroRegistroAnulaModifica>'.$row['libros_rubricados_rcr_anula'].'</NroRegistroAnulaModifica>
+		</Registro>';
+	}
+	$output .= '
+	</Detalle>
+</SSN>';
+	$filename = 'RCR-'.str_replace(' ', '_', $row[3]).'-'.str_replace('-', '_', $fecha).'.xml';
 	$zip->addFromString($filename, $output);
 }
 
