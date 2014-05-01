@@ -1,7 +1,6 @@
 <?php
 	$MM_authorizedUsers = "master";
 ?>
-<?php require_once('inc/security-html.php'); ?>
 <?php
 	// Require connection
 	require_once('Connections/connection.php');
@@ -190,8 +189,8 @@ foreach ($items as $item) {
 	$libros_rubricados_rcr_importe = $row['cuota_monto'];
 	$libros_rubricados_rcr_importe_tipo = 1;
 	
-	$sql = sprintf('INSERT INTO libros_rubricados_rcr (productor_id, entidad_id, libros_rubricados_rcr_version, libros_rubricados_rcr_tipo_persona, libros_rubricados_rcr_matricula, libros_rubricados_rcr_cuit, libros_rubricados_rcr_tipo_registro, libros_rubricados_rcr_fecha_registro, libros_rubricados_rcr_concepto, libros_rubricados_rcr_polizas, libros_rubricados_rcr_cia_id, libros_rubricados_rcr_organizador_flag, libros_rubricados_rcr_organizador_tipo_persona, libros_rubricados_rcr_organizador_matricula, libros_rubricados_rcr_organizador_cuit, libros_rubricados_rcr_importe, libros_rubricados_rcr_importe_tipo, timestamp)
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())',
+	$sql = sprintf('INSERT INTO libros_rubricados_rcr (productor_id, entidad_id, libros_rubricados_rcr_version, libros_rubricados_rcr_tipo_persona, libros_rubricados_rcr_matricula, libros_rubricados_rcr_cuit, libros_rubricados_rcr_tipo_registro, libros_rubricados_rcr_fecha_registro, libros_rubricados_rcr_concepto, libros_rubricados_rcr_polizas, libros_rubricados_rcr_cia_id, libros_rubricados_rcr_organizador_flag, libros_rubricados_rcr_organizador_tipo_persona, libros_rubricados_rcr_organizador_matricula, libros_rubricados_rcr_organizador_cuit, libros_rubricados_rcr_importe, libros_rubricados_rcr_importe_tipo, libros_rubricados_rcr_anula, libros_rubricados_rcr_rendicion_flag, timestamp)
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, NOW())',
 	GetSQLValueString($productor_id, 'int'),
 	GetSQLValueString($cuota_id, 'int'),
 	GetSQLValueString($libros_rubricados_rcr_version, 'int'),
@@ -208,17 +207,24 @@ foreach ($items as $item) {
 	GetSQLValueString($libros_rubricados_rcr_organizador_matricula, 'text'),
 	GetSQLValueString($libros_rubricados_rcr_organizador_cuit, 'text'),
 	GetSQLValueString($libros_rubricados_rcr_importe, 'double'),
-	GetSQLValueString($libros_rubricados_rcr_importe_tipo, 'int')
+	GetSQLValueString($libros_rubricados_rcr_importe_tipo, 'int'),
+	GetSQLValueString($libros_rubricados_rcr_anula, 'text')
 	);
 	
 	mysql_query($sql, $connection) or die(mysql_error());
-	$libros_rubricados_rcr_id = mysql_insert_id();
-	
-	if ($item['type']==1 and $libros_rubricados_rcr_id) {
-		$sql = sprintf('INSERT INTO libros_rubricados_rcr_rendiciones (libros_rubricados_rcr_id) VALUES (%s)', $libros_rubricados_rcr_id);
-		mysql_query($sql, $connection);
-	}
 }
+
+// Rendiciones (RCR)
+
+$sql = 'SELECT * FROM libros_rubricados_rcr WHERE date(libros_rubricados_rcr_fecha_registro) < date(now()) and ((extract(day from now()) >= 25 and (extract(day from libros_rubricados_rcr_fecha_registro) <= 25 or extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now()))) or (extract(day from now() < 25 and extract(day from libros_rubricados_rcr_fecha_registro) < 25 and extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now())))) and libros_rubricados_rcr_rendicion_flag = 0';
+$res = mysql_query($sql, $connection) or die(mysql_error());
+
+$sql = 'INSERT INTO libros_rubricados_rcr (productor_id, entidad_id, libros_rubricados_rcr_version, libros_rubricados_rcr_tipo_persona, libros_rubricados_rcr_matricula, libros_rubricados_rcr_cuit, libros_rubricados_rcr_tipo_registro, libros_rubricados_rcr_fecha_registro, libros_rubricados_rcr_concepto, libros_rubricados_rcr_polizas, libros_rubricados_rcr_cia_id, libros_rubricados_rcr_organizador_flag, libros_rubricados_rcr_organizador_tipo_persona, libros_rubricados_rcr_organizador_matricula, libros_rubricados_rcr_organizador_cuit, libros_rubricados_rcr_importe, libros_rubricados_rcr_importe_tipo, libros_rubricados_rcr_anula, libros_rubricados_rcr_rendicion_flag, timestamp)
+	SELECT productor_id, entidad_id, libros_rubricados_rcr_version, libros_rubricados_rcr_tipo_persona, libros_rubricados_rcr_matricula, libros_rubricados_rcr_cuit, 2, date_format(now() - interval IF(extract(day from now())<25,1,0) month, "%Y-%m-25"), libros_rubricados_rcr_concepto, libros_rubricados_rcr_polizas, libros_rubricados_rcr_cia_id, libros_rubricados_rcr_organizador_flag, libros_rubricados_rcr_organizador_tipo_persona, libros_rubricados_rcr_organizador_matricula, libros_rubricados_rcr_organizador_cuit, libros_rubricados_rcr_importe, libros_rubricados_rcr_importe_tipo, libros_rubricados_rcr_anula, libros_rubricados_rcr_rendicion_flag, NOW() FROM libros_rubricados_rcr WHERE date(libros_rubricados_rcr_fecha_registro) < date(now()) and ((extract(day from now()) >= 25 and (extract(day from libros_rubricados_rcr_fecha_registro) <= 25 or extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now()))) or (extract(day from now() < 25 and extract(day from libros_rubricados_rcr_fecha_registro) < 25 and extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now())))) and libros_rubricados_rcr_rendicion_flag = 0 and libros_rubricados_rcr_tipo_registro = 1';
+mysql_query($sql, $connection) or die(mysql_error());
+
+$sql = 'UPDATE libros_rubricados_rcr SET libros_rubricados_rcr_rendicion_flag = 1 WHERE date(libros_rubricados_rcr_fecha_registro) < date(now()) and ((extract(day from now()) >= 25 and (extract(day from libros_rubricados_rcr_fecha_registro) <= 25 or extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now()))) or (extract(day from now() < 25 and extract(day from libros_rubricados_rcr_fecha_registro) < 25 and extract(month from libros_rubricados_rcr_fecha_registro) < extract(month from now())))) and libros_rubricados_rcr_rendicion_flag = 0 and libros_rubricados_rcr_tipo_registro = 1';
+mysql_query($sql, $connection) or die(mysql_error());
 
 $sql = 'INSERT INTO libros_rubricados_log (libros_rubricados_log_tipo, libros_rubricados_log_hasta, timestamp) VALUES (1, DATE(NOW()-INTERVAL 1 DAY), NOW()), (2, DATE(NOW()-INTERVAL 1 DAY), NOW())';
 mysql_query($sql, $connection) or die(mysql_error());

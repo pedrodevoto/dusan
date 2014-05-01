@@ -760,6 +760,7 @@ CREATE TABLE `libros_rubricados_rcr` (
   `libros_rubricados_rcr_importe` float DEFAULT NULL,
   `libros_rubricados_rcr_importe_tipo` tinyint(4) DEFAULT NULL,
   `libros_rubricados_rcr_anula` int(11) DEFAULT NULL,
+  `libros_rubricados_rcr_rendicion_flag` tinyint(4) DEFAULT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`libros_rubricados_rcr_id`),
   KEY `productor_id` (`productor_id`),
@@ -1147,4 +1148,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-04-30 20:50:50
+-- 2014-05-01 00:20:28
