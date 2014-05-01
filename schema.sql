@@ -549,9 +549,7 @@ CREATE TABLE `email_log` (
   `email_log_timestamp` datetime NOT NULL,
   PRIMARY KEY (`email_log_id`),
   KEY `usuario_id` (`usuario_id`),
-  KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `email_log_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION,
-  CONSTRAINT `email_log_ibfk_2` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE
+  KEY `poliza_id` (`poliza_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1148,4 +1146,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-05-01 00:20:28
+-- 2014-05-01 00:36:28
