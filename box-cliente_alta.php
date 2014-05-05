@@ -122,6 +122,15 @@ $('.addFoto').click(function() {
 				</p>
 			</div>
 		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Sucursales</legend>
+			<p>
+				<label for="box-sucursal_id">Sucursales *</label>
+				<select multiple="multiple" name="box-sucursal_id[]" id="box-sucursal_id" class="ui-widget-content" style="width:180px">
+					<option value="">Cargando</option>
+				</select>
+			</p>
+		</fieldset>
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">     
             <input type="hidden" name="box-insert" id="box-insert" value="1" />            

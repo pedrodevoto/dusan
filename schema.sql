@@ -351,6 +351,19 @@ CREATE TABLE `cliente_reg_tipo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `cliente_sucursal`;
+CREATE TABLE `cliente_sucursal` (
+  `cliente_sucursal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente_id` int(10) unsigned NOT NULL,
+  `sucursal_id` int(11) NOT NULL,
+  PRIMARY KEY (`cliente_sucursal_id`),
+  KEY `cliente_id` (`cliente_id`),
+  KEY `sucursal_id` (`sucursal_id`),
+  CONSTRAINT `cliente_sucursal_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_sucursal_ibfk_2` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `cliente_tipo_sociedad`;
 CREATE TABLE `cliente_tipo_sociedad` (
   `cliente_tipo_sociedad_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1146,4 +1159,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-05-01 00:36:28
+-- 2014-05-05 21:22:50

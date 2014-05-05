@@ -42,6 +42,14 @@
 					$sql = sprintf('INSERT INTO cliente_cliente_reg_tipo (cliente_id, cliente_reg_tipo_id) VALUES (%s, %s)', GetSQLValueString($_POST['box-cliente_id'], "int"), $cliente_reg_tipo_id);
 					mysql_query($sql, $connection) or die(mysql_error());
 				}
+				$sql = sprintf('DELETE FROM cliente_sucursal WHERE cliente_id = %s', GetSQLValueString($_POST['box-cliente_id'], "int"));
+				mysql_query($sql, $connection);
+				foreach ($_POST['box-sucursal_id'] as $sucursal_id) {
+					$insertSQL = sprintf("INSERT INTO cliente_sucursal (cliente_id, sucursal_id) VALUES (%s, %s)",
+						GetSQLValueString($_POST['box-cliente_id']),
+						GetSQLValueString($sucursal_id, "int"));
+					mysql_query($insertSQL, $connection);
+				}
 				
 				// Fotos
 				$types = array('cliente');

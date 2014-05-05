@@ -1380,7 +1380,8 @@ $(document).ready(function () {
 						populateListCliente_CF('box-cliente_cf_id', 'box'),
 						populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
 						populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
-						populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')
+						populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box'),
+						populateListSuc("box-sucursal_id", "box")
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
@@ -4349,7 +4350,8 @@ $(document).ready(function () {
 					populateListCliente_CF('box-cliente_cf_id', 'box'),
 					populateListCliente_TipoDoc('box-cliente_tipo_doc', 'box'),
 					populateListCliente_RegTipo('box-cliente_reg_tipo_id', 'box'),
-					populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box')
+					populateListCliente_TipoSociedad('box-cliente_tipo_sociedad_id', 'box'),
+					populateListSuc("box-sucursal_id", "box")
 				).then(function () {
 
 					// Init Datepickers

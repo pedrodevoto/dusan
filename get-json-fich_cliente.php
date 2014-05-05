@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cliente.cliente_id, cliente_tipo_persona, cliente_nombre, cliente_apellido, cliente_razon_social, cliente_tipo_sociedad_id, cliente_nacimiento, cliente_sexo, cliente_tipo_doc, cliente_nro_doc, cliente_nacionalidad_id, cliente_cf_id, GROUP_CONCAT(cliente_reg_tipo_id) as cliente_reg_tipo_id, cliente_registro, cliente_reg_vencimiento, cliente_cuit_0, cliente_cuit_1, cliente_cuit_2, cliente_email, cliente_email_alt FROM cliente LEFT JOIN cliente_cliente_reg_tipo ON cliente_cliente_reg_tipo.cliente_id = cliente.cliente_id WHERE cliente.cliente_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT cliente.cliente_id, cliente_tipo_persona, cliente_nombre, cliente_apellido, cliente_razon_social, cliente_tipo_sociedad_id, cliente_nacimiento, cliente_sexo, cliente_tipo_doc, cliente_nro_doc, cliente_nacionalidad_id, cliente_cf_id, GROUP_CONCAT(cliente_reg_tipo_id) as cliente_reg_tipo_id, cliente_registro, cliente_reg_vencimiento, cliente_cuit_0, cliente_cuit_1, cliente_cuit_2, cliente_email, cliente_email_alt, GROUP_CONCAT(sucursal_id) as sucursal_id FROM cliente LEFT JOIN cliente_sucursal ON cliente_sucursal.cliente_id = cliente.cliente_id LEFT JOIN cliente_cliente_reg_tipo ON cliente_cliente_reg_tipo.cliente_id = cliente.cliente_id WHERE cliente.cliente_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 		
 	// Recordset: Cliente
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
