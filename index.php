@@ -40,7 +40,7 @@ if (isset($_POST['Usuario'])) {
 			$loginIntLastUpdate = mysql_result($LoginRS,0,'last_update');	
 			
 			// If password is not temporary, user is not new and last password update happened recently
-			if ($loginIntPasswordReset==0 && !is_null($loginIntLastUpdate) && $loginIntLastUpdate<90) {			
+			if ($loginIntPasswordReset==0) {			
 			
 				if (PHP_VERSION >= 5.1) {
 					session_regenerate_id(true);
