@@ -96,7 +96,7 @@
 							}
 						}
 					],	
-					"aaSorting": [[2,'asc'],[1,'asc']],					
+					"aaSorting": [[1,'asc'],[2,'asc']],
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
