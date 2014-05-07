@@ -306,31 +306,31 @@
 		
 		$y = 56.5;
 		foreach ($txthead as $array) {
-			$pdf->RotatedText($y, 20 + 116, $array['text'], 50);
+			$pdf->RotatedText($y, 20 + 126, $array['text'], 50);
 			$y += 4.5;
 		}
 		
 		$y = 90;
 		foreach ($txt1 as $array) {
-			$pdf->RotatedText($y, 101 + 101, $array['text'], $array['maxwidth']);
+			$pdf->RotatedText($y, 101 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 		
 		$y = 90;
 		foreach ($txt2 as $array) {
-			$pdf->RotatedText($y, 50 + 101, $array['text'], $array['maxwidth']);
+			$pdf->RotatedText($y, 50 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 		
 		$y = 119;
 		foreach ($txt3 as $array) {
-			$pdf->RotatedText($y, 101 + 101, $array['text'], $array['maxwidth']);
+			$pdf->RotatedText($y, 101 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 		
 		$y = 119;
 		foreach ($txt4 as $array) {
-			$pdf->RotatedText($y, 50 + 101, $array['text'], $array['maxwidth']);
+			$pdf->RotatedText($y, 50 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 	}
