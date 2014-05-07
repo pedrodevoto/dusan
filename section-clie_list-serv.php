@@ -37,7 +37,7 @@
 	}	
 	// Filter by: sucursal_id
 	if(isset($_GET['sucursal_id']) && $_GET['sucursal_id']!=""){	
-		$query_Recordset1_where .= sprintf(" AND sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
+		$query_Recordset1_where .= sprintf(" AND cliente_sucursal.sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
 	}
 	// Filter by: cliente_tipo_persona
 	if(isset($_GET['cliente_tipo_persona']) && $_GET['cliente_tipo_persona']!=""){	
