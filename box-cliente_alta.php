@@ -76,6 +76,14 @@ $('.addFoto').click(function() {
 				</select>
             </p>
             <p class="persona_fisica">
+                <label for="box-cliente_tipo_doc">Tipo Doc. *</label>
+                <select name="box-cliente_tipo_doc" id="box-cliente_tipo_doc" class="ui-widget-content" style="width:100px"></select>
+            </p>
+            <p class="persona_fisica">
+                <label for="box-cliente_nro_doc">Nro de Doc. *</label>
+                <input type="text" name="box-cliente_nro_doc" id="box-cliente_nro_doc" maxlength="15" class="ui-widget-content" style="width:220px" />
+            </p>
+            <p class="persona_fisica">
                 <label for="box-cliente_cf_id">Condición Fiscal *</label>
                 <select name="box-cliente_cf_id" id="box-cliente_cf_id" class="ui-widget-content" style="width:180px"></select>
             </p>                                    
@@ -83,14 +91,6 @@ $('.addFoto').click(function() {
                 <label for="box-cliente_cuit">CUIT</label>
 				<input type="text" name="box-cliente_cuit_0" id="box-cliente_cuit_0" maxlength="2" class="ui-widget-content" style="width:20px" /> <input type="text" name="box-cliente_cuit_1" id="box-cliente_cuit_1" maxlength="8" class="ui-widget-content" style="width:75px" /> <input type="text" name="box-cliente_cuit_2" id="box-cliente_cuit_2" maxlength="1" class="ui-widget-content" style="width:20px" />
             </p>
-            <p class="persona_fisica">
-                <label for="box-cliente_tipo_doc">Tipo Doc. *</label>
-                <select name="box-cliente_tipo_doc" id="box-cliente_tipo_doc" class="ui-widget-content" style="width:100px"></select>
-            </p>
-            <p class="persona_fisica">
-                <label for="box-cliente_nro_doc">Nro de Doc. *</label>
-                <input type="text" name="box-cliente_nro_doc" id="box-cliente_nro_doc" maxlength="15" class="ui-widget-content" style="width:220px" />
-            </p>                                                           
             <p>
                 <label for="box-cliente_email">E-mail</label>
                 <input type="text" name="box-cliente_email" id="box-cliente_email" maxlength="255" class="ui-widget-content" style="width:220px" />
