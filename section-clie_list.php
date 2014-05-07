@@ -78,7 +78,6 @@
 						},					
 						{"bSearchable": false, "bVisible": false},					
 						{"sWidth": "10%"},
-						{"sWidth": "25%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { 
@@ -126,7 +125,6 @@
 						{type: "text"},
 						{type: "text"},
 						{type: "text"},
-						null,
 						null,
 						null,
 						null
@@ -189,9 +187,8 @@
                             <th>Nombre</th>                            
                             <th>Apellido</th>                            
                             <th>Documento</th> 
-                            <th>E-mail</th>
-                            <th>Teléfono 1</th>
-                            <th>Teléfono 2</th>
+                            <th>Teléfono</th>
+                            <th>Celular</th>
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -204,7 +201,6 @@
                             <th>Nombre</th>                            
                             <th></th>
 							<th>Documento</th> 
-                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>                                                        
