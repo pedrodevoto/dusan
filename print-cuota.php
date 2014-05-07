@@ -306,7 +306,7 @@
 		
 		$y = 56.5;
 		foreach ($txthead as $array) {
-			$pdf->RotatedText($y, 20 + 116, $array['text'], 50);
+			$pdf->RotatedText($y, 20 + 111, $array['text'], 50);
 			$y += 4.5;
 		}
 		
