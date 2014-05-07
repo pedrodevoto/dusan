@@ -24,6 +24,7 @@
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
+				populateListSuc('sucursal_id', 'main');
 							
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -156,8 +157,9 @@
                                 <input type="text" name="cliente_nro_doc" id="cliente_nro_doc" maxlength="15" />
                             </td>
                             <td width="33%">
-                                <label for="cliente_email">E-mail</label>                                
-                                <input type="text" name="cliente_email" id="cliente_email" maxlength="255" />
+								<label for="sucursal_id">Sucursal</label>                                
+								<select name="sucursal_id" id="sucursal_id">
+								</select>
                             </td>          
                         </tr>
                         <tr>                                

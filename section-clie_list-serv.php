@@ -12,7 +12,7 @@
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
 	$query_Recordset1_fields = " cliente.cliente_id, IF(cliente_tipo_persona=1, cliente_nombre, '') as cliente_nombre, IF(cliente_tipo_persona=1, cliente_apellido, cliente_razon_social) as cliente_apellido, cliente_nro_doc, cliente_email, contacto_telefono1, contacto_telefono2";
-	$query_Recordset1_tables = " FROM cliente LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
+	$query_Recordset1_tables = " FROM cliente LEFT JOIN cliente_sucursal ON cliente.cliente_id = cliente_sucursal.cliente_id LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
 	$query_Recordset1_where = " WHERE 1";
 		
 	
@@ -28,10 +28,10 @@
 	if(isset($_GET['cliente_nro_doc']) && $_GET['cliente_nro_doc']!=""){	
 		$query_Recordset1_where .= sprintf(" AND cliente_nro_doc LIKE %s",GetSQLValueString('%' . $_GET['cliente_nro_doc'] . '%', "text"));
 	}	
-	// Filter by: cliente_email
-	if(isset($_GET['cliente_email']) && $_GET['cliente_email']!=""){	
-		$query_Recordset1_where .= sprintf(" AND cliente_email LIKE %s",GetSQLValueString('%' . $_GET['cliente_email'] . '%', "text"));
-	}	
+	// Filter by: sucursal_id
+	if(isset($_GET['sucursal_id']) && $_GET['sucursal_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
+	}
 ?>
 <?php
 
