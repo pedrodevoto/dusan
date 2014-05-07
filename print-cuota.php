@@ -93,7 +93,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo) ON automotor_tipo.automotor_tipo_id = automotor.automotor_tipo_id AND seguro_cobertura_tipo.seguro_cobertura_tipo_id = automotor.seguro_cobertura_tipo_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);					
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -141,7 +141,7 @@
 			$cuota_servicios = $row_Recordset1['cuota_monto'] * $percent_serv;
 			$txt3 = array(
 						array('maxwidth' => 96, 'text' => "Vehículo: ".$row_Recordset2['marca']." - ".$row_Recordset2['modelo']),
-						array('maxwidth' => 47, 'text' => "Tipo: ".strtoupper($row_Recordset2['tipo'])),
+						array('maxwidth' => 47, 'text' => "Tipo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 						array('maxwidth' => 47, 'text' => "Uso: ".$row_Recordset2['uso']),
 						array('maxwidth' => 47, 'text' => "SSN: ".formatNumber($cuota_ssn)." Servicios: ".formatNumber($cuota_servicios))
 			);
@@ -150,7 +150,7 @@
 			$txt4 = array(
 						array('maxwidth' => 0, 'text' => ""),
 						array('maxwidth' => 47, 'text' => "Año: ".formatNumber($row_Recordset2['ano'],0)." Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1']),
-						array('maxwidth' => 47, 'text' => "Cobertura: ".$row_Recordset2['cobertura_tipo']),
+						array('maxwidth' => 47, 'text' => "Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']),
 						array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 			);
 
