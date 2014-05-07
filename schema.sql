@@ -293,10 +293,11 @@ CREATE TABLE `cliente` (
   `cliente_cuit_2` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_email_alt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `old_ids` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`cliente_id`),
-  UNIQUE KEY `cliente_nro_doc` (`cliente_nro_doc`),
   KEY `cliente_nombre` (`cliente_nombre`),
-  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`)
+  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`),
+  KEY `cliente_nro_doc` (`cliente_nro_doc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -496,13 +497,24 @@ CREATE TABLE `contacto` (
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_telefono2_compania` int(11) DEFAULT NULL,
   `contacto_telefono_laboral` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono_alt` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_observaciones` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_default` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),
+  KEY `contacto_telefono2_compania` (`contacto_telefono2_compania`),
+  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`contacto_telefono2_compania`) REFERENCES `contacto_telefono_compania` (`contacto_telefono_compania_id`),
   CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `contacto_telefono_compania`;
+CREATE TABLE `contacto_telefono_compania` (
+  `contacto_telefono_compania_id` int(11) NOT NULL AUTO_INCREMENT,
+  `contacto_telefono_compania_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`contacto_telefono_compania_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1159,4 +1171,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-05-05 21:22:50
+-- 2014-05-07 14:03:51

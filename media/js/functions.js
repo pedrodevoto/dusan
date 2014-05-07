@@ -1036,6 +1036,34 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	
+	populateListTelefonoCompania = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-contacto_telefono_compania.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + value[0] + '">' + value[1] + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Elegir');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id) {
 		var dfd = new $.Deferred();
@@ -4487,7 +4515,8 @@ $(document).ready(function () {
 
 				// Populate drop-downs, then initialize form
 				$.when(
-					populateListContacto_Tipo('box-contacto_tipo', 'box')
+					populateListContacto_Tipo('box-contacto_tipo', 'box'),
+					populateListTelefonoCompania('box-contacto_telefono2_compania', 'box')
 				).then(function () {
 					
 					$('#box-contacto_tipo').val('Particular');

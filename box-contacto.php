@@ -67,6 +67,10 @@
 	                    <label for="box-contacto_telefono2">Tel. Celular</label>
 	                    <input type="text" name="box-contacto_telefono2" id="box-contacto_telefono2" maxlength="25" class="ui-widget-content" style="width:200px" />
 	                </p>                                                                     
+					<p>
+						<label for="box-contacto_telefono2_compania">Compañía</label>
+						<select name="box-contacto_telefono2_compania" id="box-contacto_telefono2_compania"><option value="">Elegir</option></select>	
+					</p>
 	                <p>
 	                    <label for="box-contacto_telefono_laboral">Tel. Laboral</label>
 	                    <input type="text" name="box-contacto_telefono_laboral" id="box-contacto_telefono_laboral" maxlength="25" class="ui-widget-content" style="width:200px" />
