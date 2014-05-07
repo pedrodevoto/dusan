@@ -80,6 +80,7 @@
 						{"sWidth": "10%"},
 						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "15%", "bSearchable": false},
+						{"sWidth": "15%", "bSearchable": false},
 						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) { 
 								var returnval = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 								
@@ -125,6 +126,7 @@
 						{type: "text"},
 						{type: "text"},
 						{type: "text"},
+						null,
 						null,
 						null,
 						null
@@ -189,6 +191,7 @@
                             <th>Documento</th> 
                             <th>Teléfono</th>
                             <th>Celular</th>
+							<th>Sucursal</th>
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
@@ -201,6 +204,7 @@
                             <th>Nombre</th>                            
                             <th></th>
 							<th>Documento</th> 
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>                                                        

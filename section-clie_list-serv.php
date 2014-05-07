@@ -11,10 +11,11 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " cliente.cliente_id, IF(cliente_tipo_persona=1, cliente_nombre, '') as cliente_nombre, IF(cliente_tipo_persona=1, cliente_apellido, cliente_razon_social) as cliente_apellido, cliente_nro_doc, contacto_telefono1, contacto_telefono2";
-	$query_Recordset1_tables = " FROM cliente LEFT JOIN cliente_sucursal ON cliente.cliente_id = cliente_sucursal.cliente_id LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
+	$query_Recordset1_fields = " cliente.cliente_id, IF(cliente_tipo_persona=1, cliente_nombre, '') as cliente_nombre, IF(cliente_tipo_persona=1, cliente_apellido, cliente_razon_social) as cliente_apellido, cliente_nro_doc, contacto_telefono1, contacto_telefono2, GROUP_CONCAT(sucursal_nombre SEPARATOR ', ') as sucursal";
+	$query_Recordset1_tables = " FROM cliente LEFT JOIN (cliente_sucursal, sucursal) ON cliente.cliente_id = cliente_sucursal.cliente_id AND sucursal.sucursal_id = cliente_sucursal.sucursal_id LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
 	$query_Recordset1_where = " WHERE 1";
 		
+	$query_Recordset1_group = " GROUP BY cliente.cliente_id";
 	
 	// Filter by: cliente_nombre
 	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
@@ -55,7 +56,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('cliente_id', 'cliente_apellido', 'cliente_nombre', 'cliente_nro_doc', 'contacto_telefono1', 'contacto_telefono2', ' ');
+			$aColumns = array('cliente_id', 'cliente_apellido', 'cliente_nombre', 'cliente_nro_doc', 'contacto_telefono1', 'contacto_telefono2', 'sucursal', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "cliente.cliente_id";		
@@ -103,7 +104,7 @@
 			}			
 		
 			/* SQL queries: Get data to display */			
-			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $sOrder $sLimit";
+			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $query_Recordset1_group $sOrder $sLimit";
 			$Recordset1 = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());	
 		
 			/* Data set length after filtering */
