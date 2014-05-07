@@ -13,8 +13,14 @@
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
 	$query_Recordset1_fields = " cliente.cliente_id, IF(cliente_tipo_persona=1, cliente_nombre, '') as cliente_nombre, IF(cliente_tipo_persona=1, cliente_apellido, cliente_razon_social) as cliente_apellido, cliente_nro_doc, contacto_telefono1, contacto_telefono2, GROUP_CONCAT(sucursal_nombre SEPARATOR ', ') as sucursal";
 	$query_Recordset1_tables = " FROM cliente LEFT JOIN (cliente_sucursal, sucursal) ON cliente.cliente_id = cliente_sucursal.cliente_id AND sucursal.sucursal_id = cliente_sucursal.sucursal_id LEFT JOIN contacto ON cliente.cliente_id = contacto.cliente_id AND contacto_default = 1";
+	
 	$query_Recordset1_where = " WHERE 1";
-		
+	
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1_tables .= ' JOIN usuario_sucursal ON usuario_sucursal.sucursal_id = cliente_sucursal.sucursal_id';
+		$query_Recordset1_where .= sprintf(' AND usuario_id = %s', GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
+			
 	$query_Recordset1_group = " GROUP BY cliente.cliente_id";
 	
 	// Filter by: cliente_nombre
@@ -115,7 +121,7 @@
 			$iFilteredTotal = $aResultFilterTotal[0];	
 			
 			/* Total data set length */
-			$query_Recordset1_final = "SELECT COUNT(".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where;
+			$query_Recordset1_final = "SELECT COUNT(DISTINCT ".$sIndexColumn.")" . $query_Recordset1_tables . $query_Recordset1_where;
 			$rResultTotal = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());
 			$aResultTotal = mysql_fetch_array($rResultTotal);
 			mysql_free_result($rResultTotal);							

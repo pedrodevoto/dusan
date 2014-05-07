@@ -10,7 +10,13 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT DISTINCT TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) as cliente_nombre FROM cliente WHERE 1";
+	$query_Recordset1 = "SELECT DISTINCT TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) as cliente_nombre FROM cliente";
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1 .= sprintf(' JOIN (cliente_sucursal, usuario_sucursal) ON cliente.cliente_id = cliente_sucursal.cliente_id AND usuario_sucursal.sucursal_id = cliente_sucursal.sucursal_id WHERE usuario_id = %s', GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
+	else {
+		$query_Recordset1 .= ' WHERE 1';
+	}
 	// Append Search
 	if (isset($_GET['term']) && $_GET['term'] !== "") {
 		$query_Recordset1 .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente.cliente_apellido, ''), ' ', IFNULL(cliente.cliente_nombre, ''))) LIKE %s",

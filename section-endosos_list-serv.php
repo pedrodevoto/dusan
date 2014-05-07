@@ -16,6 +16,11 @@
 	
 	$query_Recordset1_where = " WHERE 1";
 	
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id IN (SELECT sucursal_id FROM usuario_sucursal WHERE usuario_id = %s)",
+			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
+	
 	// Filter by: poliza_numero
 	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
 		$query_Recordset1_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));

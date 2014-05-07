@@ -10,7 +10,14 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT cliente.cliente_id, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre, cliente_tipo_doc, cliente_nro_doc FROM cliente WHERE 1";
+	$query_Recordset1 = "SELECT cliente.cliente_id, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre, cliente_tipo_doc, cliente_nro_doc FROM cliente";
+
+	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
+		$query_Recordset1 .= sprintf(' JOIN (cliente_sucursal, usuario_sucursal) ON cliente.cliente_id = cliente_sucursal.cliente_id AND usuario_sucursal.sucursal_id = cliente_sucursal.sucursal_id WHERE usuario_id = %s', GetSQLValueString($_SESSION['ADM_UserId'], "int"));
+	}
+	else {
+		$query_Recordset1 .= ' WHERE 1';
+	}
 	
 	// Query Where	
 	if (isset($_GET['box0-cliente_nombre']) || isset($_GET['box0-cliente_nro_doc'])) {
