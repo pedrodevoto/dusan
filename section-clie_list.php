@@ -148,22 +148,30 @@
                 <form id="frmFiltro" name="frmFiltro">
                     <table cellpadding="5" cellspacing="0" border="0" width="100%">
                         <tr>                   
-                            <td width="33%">
+                            <td width="25%">
                                 <label for="cliente_nombre">Nombre</label>                                
                                 <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
                             </td>
-                            <td width="33%">
+                            <td width="25%">
                                 <label for="cliente_nro_doc">Documento</label>                                
                                 <input type="text" name="cliente_nro_doc" id="cliente_nro_doc" maxlength="15" />
                             </td>
-                            <td width="33%">
+                            <td width="25%">
 								<label for="sucursal_id">Sucursal</label>                                
 								<select name="sucursal_id" id="sucursal_id">
 								</select>
                             </td>          
+							<td width="25%">
+								<label for="cliente_tipo_persona">Tipo de Persona</label>
+								<select name="cliente_tipo_persona" id="cliente_tipo_persona">
+									<option value="">Elegir</option>
+									<option value="1">Persona Física</option>
+									<option value="2">Persona Jurídica</option>
+								</select>
+							</td>
                         </tr>
                         <tr>                                
-                            <td colspan="3" align="center">
+                            <td colspan="4" align="center">
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="FILTRAR">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >                            
                             </td>
                         </tr>                                    
