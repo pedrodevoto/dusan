@@ -282,7 +282,7 @@ CREATE TABLE `cliente` (
   `cliente_tipo_sociedad_id` int(11) DEFAULT NULL,
   `cliente_nacimiento` date DEFAULT NULL,
   `cliente_sexo` enum('F','M') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cliente_tipo_doc` enum('Pasaporte','LC','LE','DNI') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cliente_tipo_doc` enum('Pasaporte','LC','LE','DNI','CI') COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_nro_doc` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cliente_nacionalidad_id` int(10) DEFAULT NULL,
   `cliente_cf_id` int(10) DEFAULT NULL,
@@ -317,8 +317,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -487,16 +487,16 @@ CREATE TABLE `contacto` (
   `contacto_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cliente_id` int(10) unsigned NOT NULL,
   `contacto_tipo` enum('Particular','Laboral') COLLATE utf8_unicode_ci NOT NULL,
-  `contacto_domicilio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `contacto_nro` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `contacto_piso` varchar(4) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contacto_dpto` varchar(3) COLLATE utf8_unicode_ci DEFAULT '0',
-  `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `contacto_cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `contacto_domicilio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_nro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_piso` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_dpto` varchar(255) COLLATE utf8_unicode_ci DEFAULT '0',
+  `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_cp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contacto_telefono1` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contacto_telefono2` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_telefono1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_telefono2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono2_compania` int(11) DEFAULT NULL,
   `contacto_telefono_laboral` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono_alt` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -504,8 +504,6 @@ CREATE TABLE `contacto` (
   `contacto_default` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),
-  KEY `contacto_telefono2_compania` (`contacto_telefono2_compania`),
-  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`contacto_telefono2_compania`) REFERENCES `contacto_telefono_compania` (`contacto_telefono_compania_id`),
   CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -869,7 +867,7 @@ CREATE TABLE `poliza` (
   `poliza_premio` decimal(10,2) unsigned NOT NULL,
   `poliza_medio_pago` enum('Tarjeta de Crédito','Débito Bancario','Cuponera','Directo','Tarjeta de Credito / CBU - 1 Cuota','1 Pago Cupon Contado','1 Pago Tarjeta de Credito / CBU','6 Cuotas Pago Cupones','6 Cuotas Pago Tarj/CBU') COLLATE utf8_unicode_ci NOT NULL,
   `poliza_pago_detalle` blob,
-  `poliza_recargo` decimal(5,2) unsigned DEFAULT NULL,
+  `poliza_recargo` decimal(10,2) unsigned DEFAULT NULL,
   `poliza_descuento` int(10) unsigned DEFAULT NULL,
   `poliza_observaciones` text COLLATE utf8_unicode_ci,
   `poliza_plan_flag` tinyint(4) NOT NULL DEFAULT '0',
@@ -878,6 +876,7 @@ CREATE TABLE `poliza` (
   `poliza_archivada` tinyint(4) DEFAULT NULL,
   `poliza_flota` tinyint(4) DEFAULT NULL,
   `timestamp` datetime DEFAULT NULL,
+  `old_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`poliza_id`),
   UNIQUE KEY `poliza_numero` (`poliza_numero`),
   KEY `subtipo_poliza_id` (`subtipo_poliza_id`),
@@ -1019,8 +1018,8 @@ CREATE TABLE `productor_seguro_zonas_riesgo` (
   PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `zona_riesgo_id` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1171,4 +1170,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-05-07 14:03:51
+-- 2014-05-10 00:12:35
