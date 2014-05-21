@@ -53,11 +53,12 @@
 				$('#btnReset').click(function() {								
 					$('#frmFiltro').each(function(){
 						this.reset();
+						$('#poliza_anulada').change();
 					});
 				});	
 				
 				$('#poliza_anulada').change(function() {
-					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
+					$('#poliza_vigente, #poliza_vigente_a_renovar, #poliza_vigente_renovada, #poliza_cumplida, #poliza_cumplida_renovada, #poliza_pendiente, #poliza_mc').prop('disabled', $(this).prop('checked'));
 				});
 				
 				$("#filter_advanced_toggle").click(function() {
@@ -294,32 +295,32 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6">
+							<td colspan="7">
 								<label for="poliza_vigente">Vigente</label>
 								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" checked />
 							
-								<label for="poliza_vigente_a_renovar">Vigente a Renovar</label>
+								<label class="filtros_estado" for="poliza_vigente_a_renovar">Vigente a Renovar</label>
 								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4" checked></input>
 								
-								<label for="poliza_vigente_renovada">Vigente Renovada</label>
+								<label class="filtros_estado" for="poliza_vigente_renovada">Vigente Renovada</label>
 								<input type="checkbox" name="poliza_vigente_renovada" id="poliza_vigente_renovada" value="7" checked></input>
 							
-								<label for="poliza_cumplida">Cumplida</label>
+								<label class="filtros_estado" for="poliza_cumplida">Cumplida</label>
 								<input type="checkbox" name="poliza_cumplida" id="poliza_cumplida" value="6"></input>
 							
-								<label for="poliza_cumplida_renovada">Cumplida Renovada</label>
+								<label class="filtros_estado" for="poliza_cumplida_renovada">Cumplida Renovada</label>
 								<input type="checkbox" name="poliza_cumplida_renovada" id="poliza_cumplida_renovada" value="5"></input>
 							
-								<label for="poliza_pendiente">Pendiente</label>
+								<label class="filtros_estado" for="poliza_pendiente">Pendiente</label>
 								<input type="checkbox" name="poliza_pendiente" id="poliza_pendiente" value="2"></input>
 							
-								<label for="poliza_mc">M/C</label>
+								<label class="filtros_estado" for="poliza_mc">M/C</label>
 								<input type="checkbox" name="poliza_mc" id="poliza_mc" value="1"></input>
 								
-								<label for="poliza_anulada">Anulada</label>
+								<label class="filtros_estado" for="poliza_anulada">Anulada</label>
 								<input type="checkbox" name="poliza_anulada" id="poliza_anulada" value="1"></input>
 								
-								<label for="vence_manana">Vence mañana?</label>
+								<label class="filtros_estado" for="vence_manana">Vence mañana?</label>
 								<input type="checkbox" name="vence_manana" id="vence_manana" value="1"></input>
 							</td>
 						</tr>
