@@ -53,6 +53,10 @@
 		<!-- Date functions -->
 		<script type="text/javascript" language="javascript" src="media/js/date.js"></script>        
 		<script type="text/javascript" language="javascript" src="media/js/jquery.datetimepicker.js"></script>    	
+		
+		<!-- Chosen -->
+		<script src="jquery-plugins/chosen/chosen.jquery.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="jquery-plugins/chosen/chosen.css" />
         
         <!-- Base Style -->                     
         <link rel="stylesheet" href="media/css/base.css" />

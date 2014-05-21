@@ -28,9 +28,12 @@
 				populateListPlizaEstado('poliza_estado_id', 'main');
 				populateListCoberturaTipo('seguro_cobertura_tipo_nombre', 'main');
 				populateListSuc('sucursal_id', 'main');
-				populateListClientes('cliente_id', 'main');
 				populateListSeguro('seguro_id', 'main');
 				populateListProductor('productor_id', 'main');
+				
+				$.when(populateListClientes('cliente_id', 'main')).then(function() {
+					$('#cliente_id').chosen();
+				});
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -54,6 +57,7 @@
 					$('#frmFiltro').each(function(){
 						this.reset();
 						$('#poliza_anulada').change();
+						$('#cliente_id').trigger("chosen:updated");
 					});
 				});	
 				
@@ -210,7 +214,7 @@
 						<tr>
 							<td colspan="2">
 								<label for="cliente_id">Cliente</label>
-								<select name="cliente_id" id="cliente_id">
+								<select style="height:10px" name="cliente_id" id="cliente_id">
 								</select>
 							</td>
 							<td width="14%">
