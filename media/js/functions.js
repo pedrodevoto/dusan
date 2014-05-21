@@ -2657,13 +2657,15 @@ $(document).ready(function () {
 					var result = '';
 					/* Open Table and Row */
 					result += '<table class="tblBox2">';
-					result += '<tr>';
-					/* Table Data */
-					result += '<td>' + j.cliente_nombre + '</td>';
-					result += '<td><strong>Documento:</strong> ' + j.cliente_tipo_doc + ' ' + j.cliente_nro_doc + '</td>';
-					result += '<td><a href="javascript:assignClientToPoliza(' + j.cliente_id + ')">SELECCIONAR</a></td>';
-					/* Close Row and Table */
-					result += '</tr>';
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						/* Table Data */
+						result += '<td>' + object.cliente_nombre + '</td>';
+						result += '<td><strong>Documento:</strong> ' + object.cliente_tipo_doc + ' ' + object.cliente_nro_doc + '</td>';
+						result += '<td><a href="javascript:assignClientToPoliza(' + object.cliente_id + ')">SELECCIONAR</a></td>';
+						/* Close Row and Table */
+						result += '</tr>';
+					});
 					result += '</table>';
 					$('#divBoxClienteSearchResults').html(result);
 				}

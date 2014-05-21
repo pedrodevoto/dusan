@@ -22,8 +22,8 @@
 	// Query Where	
 	if (isset($_GET['box0-cliente_nombre']) || isset($_GET['box0-cliente_nro_doc'])) {
 		if (isset($_GET['box0-cliente_nombre']) && $_GET['box0-cliente_nombre'] !== '') {
-			$query_Recordset1 .= sprintf(" AND IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social)=%s",
-									GetSQLValueString($_GET['box0-cliente_nombre'], "text"));			
+			$query_Recordset1 .= sprintf(" AND IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) LIKE %s",
+									GetSQLValueString('%'.$_GET['box0-cliente_nombre'].'%', "text"));			
 		}
 		if (isset($_GET['box0-cliente_nro_doc']) && $_GET['box0-cliente_nro_doc'] !== '') {
 			$query_Recordset1 .= sprintf(" AND cliente.cliente_nro_doc=%s",
@@ -33,17 +33,22 @@
 		$query_Recordset1 .= " AND 1=2";
 	}
 	
+	$query_Recordset1 .= ' LIMIT 5';
+	error_log($query_Recordset1);
 	// Recordset	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_error());
-	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
 	$totalRows_Recordset1 = mysql_num_rows($Recordset1);	
 	
 	// Output
 	$output = array();
+	$i = 0;
 	if ($totalRows_Recordset1 > 0) {
-		foreach ($row_Recordset1 as $key=>$value) {
-			$output[$key] = strip_tags($value);
-		}	
+		while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)) {
+			foreach ($row_Recordset1 as $key=>$value) {
+				$output[$i][$key] = strip_tags($value);
+			}
+			$i++;
+		}
 	} else {
 		$output["empty"] = true;
 	}
