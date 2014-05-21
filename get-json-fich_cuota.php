@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT cuota.cuota_id, cuota_nro, DATE_FORMAT(cuota_periodo,'%%Y-%%m') AS cuota_periodo, cuota_monto, DATE_FORMAT(cuota_vencimiento, '%%d/%%m/%%y') as cuota_vencimiento, cuota_estado_nombre, DATE_FORMAT(cuota_fe_pago, '%%d/%%m/%%y %%H:%%i') as cuota_fe_pago, cuota_recibo, cuota_pfc FROM cuota JOIN cuota_estado ON cuota_estado.cuota_estado_id = cuota.cuota_estado_id WHERE cuota.poliza_id=%s",
+	$query_Recordset1 = sprintf("SELECT cuota.cuota_id, cuota_nro, DATE_FORMAT(cuota_periodo,'%%Y-%%m') AS cuota_periodo, cuota_monto, DATE_FORMAT(cuota_vencimiento, '%%d/%%m/%%y') as cuota_vencimiento, cuota_estado_nombre, DATE_FORMAT(cuota_fe_pago, '%%d/%%m/%%y %%H:%%i') as cuota_fe_pago, cuota_recibo, cuota_pfc FROM cuota JOIN cuota_estado ON cuota_estado.cuota_estado_id = cuota.cuota_estado_id WHERE cuota.poliza_id=%s ORDER BY cuota_nro ASC",
 							GetSQLValueString($colname_Recordset1, "int"));
 							
 	// Recordset: Main

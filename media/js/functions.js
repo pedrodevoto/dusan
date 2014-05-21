@@ -2682,13 +2682,9 @@ $(document).ready(function () {
 					// Record not found
 					$.colorbox.close();
 				} else {
-					// Sort data
-					j.sort(function (a, b) {
-						var aValue = parseInt(a.cuota_nro);
-						var bValue = parseInt(b.cuota_nro);
-						return aValue == bValue ? 0 : aValue < bValue ? -1 : 1;
-					});
 					// General variables
+					var pagado = 0;
+					var a_pagar = 0;
 					var result = '';
 					// Open Table and Headers
 					result += '<table class="tblBox">';
@@ -2722,15 +2718,20 @@ $(document).ready(function () {
 							if (object.master) {
 								result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
 							}
+							pagado += parseFloat(object.cuota_monto);
 							break;
 						case 'No Pagado':
 						case 'Anulado':
 							result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+							a_pagar += parseFloat(object.cuota_monto);
 							break;
 						}
 						result += '</td>';
 						result += '</tr>';
 					});
+					result += '<tr>';
+					result += '<td colspan="9" style="text-align:right"><b>Total pagado: '+pagado+', total a pagar: '+a_pagar+'</b></td>';
+					result += '</tr>'
 					// Close Table
 					result += '</table>';
 					// Populate DIV
