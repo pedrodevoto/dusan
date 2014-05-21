@@ -2683,6 +2683,7 @@ $(document).ready(function () {
 					$.colorbox.close();
 				} else {
 					// General variables
+					var total = 0;
 					var pagado = 0;
 					var a_pagar = 0;
 					var result = '';
@@ -2695,6 +2696,7 @@ $(document).ready(function () {
 					result += '<th width="95">F. Venc.</th>';
 					result += '<th width="160">Estado</th>';
 					result += '<th>F. de Pago</th>';
+					result += '<th>Pagado</th>';
 					result += '<th>Recibo</th>';
 					result += '<th>PFC</th>';
 					result += '<th>Acc.</th>';
@@ -2708,6 +2710,7 @@ $(document).ready(function () {
 						result += '<td><span class="jeditrow2" id="vencimiento_' + object.cuota_id + '">' + object.cuota_vencimiento + '</span></td>';
 						result += '<td>' + object.cuota_estado_nombre + '</td>';
 						result += '<td>' + object.cuota_fe_pago + '</td>';
+						result += '<td>' + (object.cuota_estado_nombre=='Pagado'?object.cuota_monto:'') + '</td>';
 						result += '<td>' + object.cuota_recibo + '</td>';
 						result += '<td>' + (object.cuota_pfc==1?'Sí':'&nbsp;') + '</td>';
 						result += '<td>';
@@ -2728,9 +2731,12 @@ $(document).ready(function () {
 						}
 						result += '</td>';
 						result += '</tr>';
+						total += parseFloat(object.cuota_monto);
 					});
 					result += '<tr>';
-					result += '<td colspan="9" style="text-align:right"><b>Total pagado: '+pagado+', total a pagar: '+a_pagar+'</b></td>';
+					result += '<td colspan="3" style="text-align:center	"><b>Premio total: '+parseFloat(total).toFixed(2)+'</b></td>';
+					result += '<td colspan="4" style="text-align:right"><b>Total pagado: '+parseFloat(pagado).toFixed(2)+'</b></td>';
+					result += '<td colspan="3" style="text-align:right"><b>Total a pagar: '+parseFloat(a_pagar).toFixed(2)+'</b></td>';
 					result += '</tr>'
 					// Close Table
 					result += '</table>';
