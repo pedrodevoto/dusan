@@ -32,7 +32,9 @@
 				populateListProductor('productor_id', 'main');
 				
 				$.when(populateListClientes('cliente_id', 'main')).then(function() {
-					$('#cliente_id').chosen();
+					$('#cliente_id').chosen().change(function() {
+						$('#btnFiltro').click();
+					});
 				});
 				
 				// Filter: Assign listening functions to input-text for Submit
