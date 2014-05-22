@@ -107,7 +107,7 @@
 		}
 	});	
 	$('#box-seguro_cobertura_tipo_id').change(function(){
-		if ($(this).find(':selected').text() === 'DP') {
+		if ($(this).find(':selected').text().trim().match(/(^DP|^D2|^D4|^D)[$\s]/g)) {
 			$('#box-franquicia').attr("readonly", false).addClass('required');
 		} else {
 			$('#box-franquicia').val('').attr("readonly", true).removeClass('required');			
