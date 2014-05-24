@@ -10,17 +10,16 @@
 ?>
 <?php
 	// Obtain URL parameter
-	$cuota_id = intval($_POST['box-cuota_id']);
+	$cuota_id = intval($_POST['box-cuota_id']);	
 	
-	// Determinar recibo
-	$sql = "SELECT COALESCE(MAX(cuota_recibo)+1,1) AS val_max FROM cuota";
-	$res = mysql_query($sql, $connection) or die(mysql_die());
-	list($recibo) = mysql_fetch_array($res);		
-	
-	// Determinar factura
+	// Determinar factura y recibo
 	$sql = sprintf('SELECT poliza.sucursal_id, sucursal_num_factura, cuota_pfc  FROM cuota JOIN (poliza, sucursal) ON cuota.poliza_id = poliza.poliza_id AND poliza.sucursal_id = sucursal.sucursal_id WHERE cuota_id = %s', $cuota_id);
 	$res = mysql_query($sql, $connection) or die(mysql_die());
 	list($sucursal_id, $sucursal_num_factura, $cuota_pfc) = mysql_fetch_array($res);
+	
+	$sql = sprintf("SELECT COALESCE(MAX(cuota_recibo)+1,1) AS val_max FROM cuota JOIN poliza ON cuota.poliza_id = poliza.poliza_id WHERE sucursal_id = %s", $sucursal_id);
+	$res = mysql_query($sql, $connection) or die(mysql_die());
+	list($recibo) = mysql_fetch_array($res);	
 	
 	if ($cuota_pfc==1) {
 		$cuota_nro_factura = 'NULL';
