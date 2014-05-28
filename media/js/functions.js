@@ -3791,7 +3791,7 @@ $(document).ready(function () {
 					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 3000, function () {
+				showBoxConf(data, false, 'always', 0, function () {
 					openBoxCuota(poliza_id);
 					window.open('print-cuota.php?print&id=' + cuota_id);
 				});
