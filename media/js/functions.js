@@ -3794,7 +3794,8 @@ $(document).ready(function () {
 					openBoxCuota(poliza_id);
 					var recibo = window.open('print-cuota.php?print&id=' + cuota_id);
 					window.setTimeout(function() {
-						recibo.print(false);
+						console.log('?');
+						// recibo.print(false);
 					}, 3000);
 					// recibo.close();
 				});
