@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>JARVIS - Endosos - Listado</title>
+		<title>JARVIS - Coberturas - Listado</title>
 
 		<?php require_once('inc/library.php'); ?>               
 
