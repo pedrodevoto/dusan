@@ -2971,7 +2971,6 @@ $(document).ready(function () {
 				} else {
 					// General variables
 					var result = '';
-					console.log(j);
 					$.each(j, function (i, object) {
 						result += '<p>Se '+(object.cuota_log_tipo==1?'emite':'anula')+' recibo '+object.cuota_recibo+' (cuota número '+object.cuota_nro+') por el usuario '+object.usuario_nombre+' el día '+object.dia+' a las '+object.hora+'</p>';
 					});
@@ -3791,9 +3790,10 @@ $(document).ready(function () {
 					oTable.fnStandingRedraw();
 				}
 				// Show message
-				showBoxConf(data, false, 'always', 0, function () {
+				showBoxConf(data, false, 'always', 10, function () {
 					openBoxCuota(poliza_id);
-					window.open('print-cuota.php?print&id=' + cuota_id);
+					var recibo = window.open('print-cuota.php?print&id=' + cuota_id);
+					recibo.print(false);
 				});
 			}
 		});
