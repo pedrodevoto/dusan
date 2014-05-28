@@ -65,8 +65,8 @@ CREATE TABLE `automotor` (
   `automotor_marca_id` int(11) NOT NULL,
   `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `castigado` tinyint(1) NOT NULL DEFAULT '0',
-  `patente_0` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
-  `patente_1` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `patente_0` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `patente_1` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `automotor_tipo_id` int(11) NOT NULL,
   `uso` enum('Particular','Comercial','Comercial / Particular') COLLATE utf8_unicode_ci NOT NULL,
   `ano` smallint(5) unsigned NOT NULL,
@@ -142,7 +142,8 @@ CREATE TABLE `automotor` (
   `pedido_instalacion_horario` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pedido_instalacion_telefono` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pedido_instalacion_observaciones` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `ajuste` tinyint(4) DEFAULT NULL,
+  `ajuste` int(11) DEFAULT NULL,
+  `old` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`automotor_id`),
   KEY `automotor_tipo_id` (`automotor_tipo_id`),
   KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
@@ -295,9 +296,9 @@ CREATE TABLE `cliente` (
   `cliente_email_alt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `old_ids` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`cliente_id`),
+  UNIQUE KEY `cliente_nro_doc` (`cliente_nro_doc`),
   KEY `cliente_nombre` (`cliente_nombre`),
-  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`),
-  KEY `cliente_nro_doc` (`cliente_nro_doc`)
+  KEY `cliente_tipo_sociedad_id` (`cliente_tipo_sociedad_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -533,8 +534,8 @@ CREATE TABLE `cuota` (
   PRIMARY KEY (`cuota_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`,`cuota_nro`),
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),
-  UNIQUE KEY `cuota_recibo` (`cuota_recibo`),
   KEY `cuota_estado_id` (`cuota_estado_id`),
+  KEY `cuota_recibo` (`cuota_recibo`),
   CONSTRAINT `cuota_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
   CONSTRAINT `cuota_ibfk_2` FOREIGN KEY (`cuota_estado_id`) REFERENCES `cuota_estado` (`cuota_estado_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1018,8 +1019,8 @@ CREATE TABLE `productor_seguro_zonas_riesgo` (
   PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
   KEY `productor_seguro_id` (`productor_seguro_id`),
   KEY `zona_riesgo_id` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`)
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`),
+  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1170,4 +1171,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-05-10 00:12:35
+-- 2014-05-28 19:27:33
