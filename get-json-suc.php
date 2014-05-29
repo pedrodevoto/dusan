@@ -11,7 +11,7 @@
 	// Recordset: Main	
 	
 	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
-		$query_Recordset1 = sprintf("SELECT sucursal.sucursal_id, sucursal_nombre FROM usuario_sucursal JOIN sucursal ON sucursal.sucursal_id = usuario_sucursal.sucursal_id = sucursal.sucursal_id WHERE usuario_id = %s",
+		$query_Recordset1 = sprintf("SELECT sucursal.sucursal_id, sucursal_nombre FROM usuario_sucursal JOIN sucursal ON sucursal.sucursal_id = usuario_sucursal.sucursal_id WHERE usuario_id = %s",
 			GetSQLValueString($_SESSION['ADM_UserId'], "int"));
 	}
 	else {
