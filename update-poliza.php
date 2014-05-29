@@ -50,11 +50,11 @@
 	
 				if (floatval($_POST['box-poliza_premio'])!=floatval($premio)) {
 					if ($_SESSION['ADM_UserGroup']=='master') {
-						$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 2', GetSQLValueString($_POST['box-poliza_id'], "int"));
+						$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 2 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
 						$res = mysql_query($sql, $connection);
 						list($pagado) = mysql_fetch_array($res);
 			
-						$sql =  sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 1', GetSQLValueString($_POST['box-poliza_id'], "int"));
+						$sql =  sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 1 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
 						$res = mysql_query($sql, $connection);
 						list($no_pagado_cant) = mysql_fetch_array($res);
 			
