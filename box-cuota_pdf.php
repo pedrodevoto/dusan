@@ -41,13 +41,10 @@
 	});
 	
 </script>
-<div class="dontprint" >
-    <form><input type="button" onClick="printObjectPdf()" class="btn" value="Print"/></form>
-</div>
 
-<iframe id="printf" name="printf" src="print-cuota.php?print&id=<?=$_GET['id']?>" frameborder="0" width="440" height="580" style="width: 440px; height: 580px;display: none;"></iframe>
+<iframe id="printf" name="printf" src="print-cuota.php?print&id=<?=$_GET['id']?>" frameborder="0" width="100%" height="100%" style="width: 440px; height: 580px;display: none;"></iframe>
 <object id="idPdf" onreadystatechange="idPdf_onreadystatechange()"
-    width="440" height="580" style="width: 440px; height: 580px;" type="application/pdf"
+    width="100%" height="100%" style="width: 100%; height: 100%;" type="application/pdf"
     data="print-cuota.php?print&id=<?=$_GET['id']?>">
     <embed src="print-cuota.php?print&id=<?=$_GET['id']?>" width="440" height="580" style="width: 440px; height: 580px;" type="application/pdf">
     </embed>
