@@ -5085,7 +5085,7 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-cuota_pfc').prop('disabled', true);
 				});
 
 			}

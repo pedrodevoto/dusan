@@ -107,7 +107,7 @@
 	                <label for="box-poliza_medio_pago">Medio de Pago *</label>
 	                <select name="box-poliza_medio_pago" id="box-poliza_medio_pago" class="ui-widget-content" style="width:180px"></select>
 	                Cant. Cuotas ^
-	                <input type="text" name="box-poliza_cant_cuotas" id="box-poliza_cant_cuotas" maxlength="3" class="ui-widget-content" style="width:80px" readonly="readonly">
+	                <input type="text" name="box-poliza_cant_cuotas" id="box-poliza_cant_cuotas" maxlength="3" class="ui-widget-content" style="width:80px" readonly="readonly"> + <input type="checkbox" name="box-cuota_pfc" id="box-cuota_pfc" class="ui-widget-content" />PFC
 	            </p>
 	            <p>
 	                <label for="box-poliza_pago_detalle">Det. de Pago</label>
