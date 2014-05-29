@@ -2731,7 +2731,7 @@ $(document).ready(function () {
 						}
 						result += '</td>';
 						result += '</tr>';
-						total += parseFloat(object.cuota_monto);
+						total += object.cuota_pfc==1?0:parseFloat(object.cuota_monto);
 					});
 					result += '<tr>';
 					result += '<td colspan="3" style="text-align:center	"><b>Premio total: '+parseFloat(total).toFixed(2)+'</b></td>';
