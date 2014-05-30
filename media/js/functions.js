@@ -4422,8 +4422,10 @@ $(document).ready(function () {
 					$("#box-cliente_nro_doc").keyup(function () {
 						$('#box-cliente_registro').val($(this).val());
 					});
-					$("#box-cliente_cuit_1").keyup(function() {
-						$("#box-cliente_nro_doc").val($(this).val()).keyup();
+					$("#box-cliente_cuit_1").keyup(function(event) {
+						if (event.keyCode!=9) {
+							$("#box-cliente_nro_doc").val($(this).val()).keyup();
+						}
 					});
 					
 					// Validate form
