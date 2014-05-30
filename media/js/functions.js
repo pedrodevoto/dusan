@@ -91,6 +91,7 @@ $(document).ready(function () {
 		}
 		$(validator.errorList[0].element).focus();
 	}
+	$.colorbox.settings.overlayClose = false;
 
 	/* List functions */
 	sortListAlpha = function (field) {
