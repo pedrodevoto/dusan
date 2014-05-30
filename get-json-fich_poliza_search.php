@@ -33,6 +33,9 @@
 		if (!empty($_GET['box0-patente'])) {
 			$query_Recordset1 .= sprintf(" AND CONCAT(IF(automotor_carroceria_id=17, '101', ''), patente_0, patente_1) LIKE %s",GetSQLValueString('%' . $_GET['box0-patente'] . '%', "text"));
 		}
+		if (!empty($_GET['box0-cliente_id'])) {
+			$query_Recordset1 .= sprintf(" AND poliza.cliente_id = %s", GetSQLValueString($_GET['box0-cliente_id'], "int"));
+		}
 	} else 	{
 		$query_Recordset1 .= " AND 1=2";
 	}

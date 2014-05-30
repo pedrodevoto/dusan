@@ -6286,7 +6286,7 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Endoso',
 			href: 'box-emitirrecibo.php',
-			width: '700px',
+			width: '900px',
 			height: '100%',
 			onComplete: function () {
 
@@ -6296,6 +6296,13 @@ $(document).ready(function () {
 				// FORM SELECT POLIZA
 				// Initialize special fields
 				initAutocompletePoliza('box0-poliza_numero', 'box');
+				
+				$.when(populateListClientes('box0-cliente_id', 'main')).then(function() {
+					$('#box0-cliente_id').chosen().change(function() {
+						$("#BtnSearchPoliza").click();
+					});
+				});
+				
 				// Assign functions to buttons
 				$("#BtnSearchPoliza").click(function () {
 					// If a field was completed

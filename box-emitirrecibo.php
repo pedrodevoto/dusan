@@ -11,7 +11,7 @@
 			<div id="divBoxPolizaSearch" style="min-height:30px">
 				<div style="padding:5px">
 					<div style="float:left">
-						<input class="ui-widget-content" id="box0-poliza_numero" maxlength="255" name="box0-poliza_numero" style="width:100px" type="text" placeholder="Número de póliza"> <input class="ui-widget-content" id="box0-patente" maxlength="255" name="box0-patente" style="width:100px" type="text" placeholder="Patente"> <input class="ui-widget-content" id="box0-cliente_nombre" maxlength="15" name="box0-cliente_nombre" style="width:200px" type="text" placeholder="Nombre">
+						<input class="ui-widget-content" id="box0-poliza_numero" maxlength="255" name="box0-poliza_numero" style="width:100px" type="text" placeholder="Número de póliza"> <input class="ui-widget-content" id="box0-patente" maxlength="255" name="box0-patente" style="width:100px" type="text" placeholder="Patente"> <select style="height:10px" name="box0-cliente_id" id="box0-cliente_id"></select>
 					</div>
 
 					<div style="float:right">
