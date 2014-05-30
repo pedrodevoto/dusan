@@ -55,7 +55,7 @@ $('.addFoto').click(function() {
                 <input type="text" name="box-cliente_nombre" id="box-cliente_nombre" maxlength="255" class="ui-widget-content" style="width:220px" />
             </p>
 			<p class="persona_juridica">
-				<label for="box-cliente_razon_social">Razón Social</label>
+				<label for="box-cliente_razon_social">Razón Social *</label>
 				<input type="text" name="box-cliente_razon_social" id="box-cliente_razon_social" maxlength="255" class="ui-widget-content" style="width:220px" />
 			</p>
 			<p class="persona_juridica">
@@ -64,7 +64,7 @@ $('.addFoto').click(function() {
 			</p>
             <p class="persona_fisica">
                 <label for="box-cliente_nacimiento">Nacimiento *</label>
-                <input type="text" name="box-cliente_nacimiento" id="box-cliente_nacimiento" maxlength="10" class="ui-widget-content box-date" style="width:220px" />
+                <input type="text" name="box-cliente_nacimiento" id="box-cliente_nacimiento" maxlength="10" class="ui-widget-content box-date" style="width:220px" autocomplete="off" />
             </p>                        
             <p class="persona_fisica">
                 <label for="box-cliente_sexo">Sexo *</label>

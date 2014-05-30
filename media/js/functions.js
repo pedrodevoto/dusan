@@ -4427,7 +4427,43 @@ $(document).ready(function () {
 					});
 					
 					// Validate form
-					var validateForm = $("#frmBox").validate();
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-cliente_apellido": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nombre": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_razon_social": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_nacimiento": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_sexo": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nacionalidad_id": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_tipo_doc": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nro_doc": {
+								required: true
+							},
+							"box-cliente_cuit_0": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_cuit_1": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_cuit_2": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							}
+						}
+					});
 
 					// Button action
 					$("#btnBox").click(function () {
@@ -4482,7 +4518,43 @@ $(document).ready(function () {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
 					// Validate form
-					var validateForm = $("#frmBox").validate();
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-cliente_apellido": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nombre": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_razon_social": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_nacimiento": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_sexo": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nacionalidad_id": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_tipo_doc": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							},
+							"box-cliente_nro_doc": {
+								required: true
+							},
+							"box-cliente_cuit_0": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_cuit_1": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							},
+							"box-cliente_cuit_2": {
+								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
+							}
+						}
+					});
 
 					// Button action
 					$("#btnBox").click(function () {
