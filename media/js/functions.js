@@ -2981,6 +2981,104 @@ $(document).ready(function () {
 			}
 		});
 	}
+	populateDiv_SeguroCodigos = function (id) {
+		$.getJSON("get-json-fich_segurocodigos.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				var result = '';
+				// Check if empty
+				if (j.length > 0) {
+
+					// Open Table
+					result += '<table class="tblBox">';
+					// Table Head
+					result += '<tr>';
+					result += '<th width="23%">Productor</th>';
+					result += '<th width="23%">Organizador</th>';
+					result += '<th width="23%">Código</th>';
+					result += '<th width="23%">Sucursal</th>';
+					result += '<th width="5%">Acciones</th>';
+					result += '</tr>';
+					// Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td>' + object.productor_nombre + '</td>';
+						result += '<td>' + object.productor_seguro_organizacion_nombre + '</td>';
+						result += '<td>' + object.productor_seguro_codigo + '</td>';
+						result += '<td>' + object.sucursal_nombre + '</td>';
+						result += '<td><span onClick="openBoxModCod(' + object.productor_seguro_id + ')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Editar código"></span>';
+						result += '<span onclick="$.when(deleteViaLink(\'prodseg\','+object.productor_seguro_id+')).then(function(){populateDiv_SeguroCodigos('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no posee endosos.';
+				}
+				// Populate DIV
+				$('#divSeguroCodigos').html(result);
+				$('#btnNuevoEndoso').click(function() {
+					if (poliza_numero) {
+						$.when(openBoxAltaEndoso()).then(function() {
+							assignPolizaToEndoso(id, poliza_numero);
+							
+						});
+					}
+				})
+			}
+		});
+	}
+	populateDiv_SeguroCoberturas = function (id) {
+		$.getJSON("get-json-fich_segurocoberturas.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				var result = '';
+				// Check if empty
+				if (j.length > 0) {
+
+					// Open Table
+					result += '<table class="tblBox">';
+					// Table Head
+					result += '<tr>';
+					result += '<th width="19%">Tipo</th>';
+					result += '<th width="19%">Rango</th>';
+					result += '<th width="19%">Responsabilidad Civil</th>';
+					result += '<th width="19%">Franquicia</th>';
+					result += '<th width="19%">Grúa</th>';
+					result += '<th width="5%">Acciones</th>';
+					result += '</tr>';
+					// Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td>' + object.seguro_cobertura_tipo_nombre + '</td>';
+						result += '<td>De ' + object.seguro_cobertura_tipo_anios_de + ' a ' + object.seguro_cobertura_tipo_anios_a + '</td>';
+						result += '<td>' + object.seguro_cobertura_tipo_limite_rc_valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>';
+						result += '<td>' + '' + '</td>';
+						result += '<td>' + object.seguro_cobertura_tipo_gruas + '</td>';
+						result += '<td><span onClick="openBoxModCob(' + object.seguro_cobertura_tipo_id + ')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Editar cobertura"></span>';
+						result += '<span onclick="$.when(deleteViaLink(\'segcob\','+object.seguro_cobertura_tipo_id+')).then(function(){openBoxModCob('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no posee endosos.';
+				}
+				// Populate DIV
+				$('#divSeguroCoberturas').html(result);
+				$('#btnNuevoEndoso').click(function() {
+					if (poliza_numero) {
+						$.when(openBoxAltaEndoso()).then(function() {
+							assignPolizaToEndoso(id, poliza_numero);
+							
+						});
+					}
+				})
+			}
+		});
+	}
 
 	/* Insert via form functions */
 	insertFormUsuario = function () {
@@ -4048,7 +4146,7 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-seguro_mod.php',
-			width: '700px',
+			width: '900px',
 			height: '550px',
 			onComplete: function () {
 
@@ -4059,7 +4157,11 @@ $(document).ready(function () {
 				formDisable('frmBox', 'ui', true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxSeguro(id)).then(function () {
+				$.when(
+					populateFormBoxSeguro(id),
+					populateDiv_SeguroCodigos(id),
+					populateDiv_SeguroCoberturas(id)
+				).then(function () {
 
 					// Validate form
 					var validateForm = $("#frmBox").validate({
