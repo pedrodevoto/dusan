@@ -2726,7 +2726,7 @@ $(document).ready(function () {
 							break;
 						case 'No Pagado':
 						case 'Anulado':
-							result += '<span onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-check" title="Pagar"></span>';
+							result += '<a href="#" onclick="openBoxPayCuota(' + id + ', ' + object.cuota_id + ')">PAGAR</a>';
 							a_pagar += parseFloat(object.cuota_monto);
 							break;
 						}
