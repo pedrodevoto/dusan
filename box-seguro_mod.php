@@ -92,7 +92,18 @@
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Coberturas</legend>
-			<div id="divSeguroCoberturas"></div>
+			<table id="seguroCoberturas" style="width:100%">
+				
+				<thead>	
+					<th>ID</th>
+					<th>Tipo</th>
+					<th>Rango</th>
+					<th>Responsabilidad Civil</th>
+					<th>Franquicia</th>
+					<th>Grúa</th>
+					<th>Acciones</th>
+				</thead>
+			</table>
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Zonas de riesgo</legend>

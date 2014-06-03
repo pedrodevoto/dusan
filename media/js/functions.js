@@ -3029,57 +3029,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_SeguroCoberturas = function (id) {
-		$.getJSON("get-json-fich_segurocoberturas.php?id=" + id, {}, function (j) {
-			if (j.error == 'expired') {
-				sessionExpire('box');
-			} else {
-				var result = '';
-				// Check if empty
-				if (j.length > 0) {
-
-					// Open Table
-					result += '<table class="tblBox">';
-					// Table Head
-					result += '<tr>';
-					result += '<th width="19%">Tipo</th>';
-					result += '<th width="19%">Rango</th>';
-					result += '<th width="19%">Responsabilidad Civil</th>';
-					result += '<th width="19%">Franquicia</th>';
-					result += '<th width="19%">Grúa</th>';
-					result += '<th width="5%">Acciones</th>';
-					result += '</tr>';
-					// Data
-					$.each(j, function (i, object) {
-						result += '<tr>';
-						result += '<td>' + object.seguro_cobertura_tipo_nombre + '</td>';
-						result += '<td>De ' + object.seguro_cobertura_tipo_anios_de + ' a ' + object.seguro_cobertura_tipo_anios_a + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_limite_rc_valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>';
-						result += '<td>' + '' + '</td>';
-						result += '<td>' + object.seguro_cobertura_tipo_gruas + '</td>';
-						result += '<td><span onClick="openBoxModCob(' + object.seguro_cobertura_tipo_id + ')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Editar cobertura"></span>';
-						result += '<span onclick="$.when(deleteViaLink(\'segcob\','+object.seguro_cobertura_tipo_id+')).then(function(){openBoxModCob('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
-						result += '</tr>';
-					});
-					// Close Table
-					result += '</table>';
-				} else {
-					result += 'La póliza no posee endosos.';
-				}
-				// Populate DIV
-				$('#divSeguroCoberturas').html(result);
-				$('#btnNuevoEndoso').click(function() {
-					if (poliza_numero) {
-						$.when(openBoxAltaEndoso()).then(function() {
-							assignPolizaToEndoso(id, poliza_numero);
-							
-						});
-					}
-				})
-			}
-		});
-	}
-
+	
 	/* Insert via form functions */
 	insertFormUsuario = function () {
 		// Disable button
@@ -4159,10 +4109,34 @@ $(document).ready(function () {
 				// Populate form, then initialize
 				$.when(
 					populateFormBoxSeguro(id),
-					populateDiv_SeguroCodigos(id),
-					populateDiv_SeguroCoberturas(id)
+					populateDiv_SeguroCodigos(id)
 				).then(function () {
-
+					
+					$('#seguroCoberturas').dataTable({
+						"sPaginationType": "full_numbers",
+						"processing": true,
+						"bServerSide": true,
+						"sAjaxSource": "datatables-segurocoberturas.php"+'?action=view&seguro='+id,
+						"aoColumns": [
+							{"bSearchable": false, "bVisible": false},
+							null,
+							{"fnRender": function(oObj) {
+								return oObj.aData[2]+(oObj.aData[2]!=''&&oObj.aData[3]!=''?' a ':'')+oObj.aData[3];
+							}},
+							{"bSearchable": false, "bVisible": false},
+							null,
+							null,
+							{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
+								var returnval = '';
+								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+								returnval += '<li title="Editar" onclick="openBoxModCob('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
+								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'segcob\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+								returnval += '</ul>';
+								return returnval;
+							}}
+						]
+					});
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
