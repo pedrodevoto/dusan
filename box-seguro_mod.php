@@ -2,7 +2,10 @@
 	$MM_authorizedUsers = "administrativo,master";	
 ?>
 <?php require_once('inc/security-colorbox.php'); ?>
-
+<script>
+var seguroCoberturasTable = '';
+var seguroCodigosTable = '';
+</script>
 <div class="divBoxContainer" style="width:94%">
 
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
@@ -88,12 +91,20 @@
        	</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Códigos</legend>
-			<div id="divSeguroCodigos"></div>
+			<table id="seguroCodigos" style="width:100%">
+				<thead>	
+					<th>ID</th>
+					<th>Productor</th>
+					<th>Organizador</th>
+					<th>Código</th>
+					<th>Sucursal</th>
+					<th>Acciones</th>
+				</thead>
+			</table>
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Coberturas</legend>
 			<table id="seguroCoberturas" style="width:100%">
-				
 				<thead>	
 					<th>ID</th>
 					<th>Tipo</th>

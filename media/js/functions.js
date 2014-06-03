@@ -1066,15 +1066,16 @@ $(document).ready(function () {
 	}
 	
 	/* Delete via Link functions */
-	deleteViaLink = function (section, id) {
+	deleteViaLink = function (section, id, table) {
+		table = table || oTable;
 		var dfd = new $.Deferred();
 		if (confirm('Está seguro que desea eliminar el registro?\n\nEsta acción no puede deshacerse.')) {
 			$.post('delete-' + section + '.php', {
 				id: id
 			}, function (data) {
 				// Table standing redraw
-				if (typeof oTable != 'undefined') {
-					oTable.fnStandingRedraw();
+				if (typeof table != 'undefined') {
+					table.fnStandingRedraw();
 				}
 				// Show message if error ocurred
 				if (data.toLowerCase().indexOf("error") != -1) {
@@ -2981,54 +2982,6 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_SeguroCodigos = function (id) {
-		$.getJSON("get-json-fich_segurocodigos.php?id=" + id, {}, function (j) {
-			if (j.error == 'expired') {
-				sessionExpire('box');
-			} else {
-				var result = '';
-				// Check if empty
-				if (j.length > 0) {
-
-					// Open Table
-					result += '<table class="tblBox">';
-					// Table Head
-					result += '<tr>';
-					result += '<th width="23%">Productor</th>';
-					result += '<th width="23%">Organizador</th>';
-					result += '<th width="23%">Código</th>';
-					result += '<th width="23%">Sucursal</th>';
-					result += '<th width="5%">Acciones</th>';
-					result += '</tr>';
-					// Data
-					$.each(j, function (i, object) {
-						result += '<tr>';
-						result += '<td>' + object.productor_nombre + '</td>';
-						result += '<td>' + object.productor_seguro_organizacion_nombre + '</td>';
-						result += '<td>' + object.productor_seguro_codigo + '</td>';
-						result += '<td>' + object.sucursal_nombre + '</td>';
-						result += '<td><span onClick="openBoxModCod(' + object.productor_seguro_id + ')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Editar código"></span>';
-						result += '<span onclick="$.when(deleteViaLink(\'prodseg\','+object.productor_seguro_id+')).then(function(){populateDiv_SeguroCodigos('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
-						result += '</tr>';
-					});
-					// Close Table
-					result += '</table>';
-				} else {
-					result += 'La póliza no posee endosos.';
-				}
-				// Populate DIV
-				$('#divSeguroCodigos').html(result);
-				$('#btnNuevoEndoso').click(function() {
-					if (poliza_numero) {
-						$.when(openBoxAltaEndoso()).then(function() {
-							assignPolizaToEndoso(id, poliza_numero);
-							
-						});
-					}
-				})
-			}
-		});
-	}
 	
 	/* Insert via form functions */
 	insertFormUsuario = function () {
@@ -4097,7 +4050,7 @@ $(document).ready(function () {
 			title: 'Registro',
 			href: 'box-seguro_mod.php',
 			width: '900px',
-			height: '550px',
+			height: '100%',
 			onComplete: function () {
 
 				// Initialize buttons
@@ -4108,11 +4061,9 @@ $(document).ready(function () {
 
 				// Populate form, then initialize
 				$.when(
-					populateFormBoxSeguro(id),
-					populateDiv_SeguroCodigos(id)
+					populateFormBoxSeguro(id)
 				).then(function () {
-					
-					$('#seguroCoberturas').dataTable({
+					seguroCoberturasTable = $('#seguroCoberturas').dataTable({
 						"oLanguage": {
 							"sUrl": "jquery-plugins/dataTables/media/language/es_AR.txt"						
 						},
@@ -4133,7 +4084,32 @@ $(document).ready(function () {
 								var returnval = '';
 								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 								returnval += '<li title="Editar" onclick="openBoxModCob('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
-								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'segcob\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'segcob\','+oObj.aData[0]+', seguroCoberturasTable);"><span class="ui-icon ui-icon-trash"></span></li>';
+								returnval += '</ul>';
+								return returnval;
+							}}
+						]
+					});
+					
+					seguroCodigosTable = $('#seguroCodigos').dataTable({
+						"oLanguage": {
+							"sUrl": "jquery-plugins/dataTables/media/language/es_AR.txt"						
+						},
+						"sPaginationType": "full_numbers",
+						"processing": true,
+						"bServerSide": true,
+						"sAjaxSource": "datatables-segurocodigos.php"+'?action=view&seguro='+id,
+						"aoColumns": [
+							{"bSearchable": false, "bVisible": false},
+							null,
+							null,
+							null,
+							null,
+							{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
+								var returnval = '';
+								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+								returnval += '<li title="Editar" onclick="openBoxModCod('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
+								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'prodseg\','+oObj.aData[0]+', seguroCodigosTable);"><span class="ui-icon ui-icon-trash"></span></li>';
 								returnval += '</ul>';
 								return returnval;
 							}}
