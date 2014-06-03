@@ -4113,6 +4113,9 @@ $(document).ready(function () {
 				).then(function () {
 					
 					$('#seguroCoberturas').dataTable({
+						"oLanguage": {
+							"sUrl": "jquery-plugins/dataTables/media/language/es_AR.txt"						
+						},
 						"sPaginationType": "full_numbers",
 						"processing": true,
 						"bServerSide": true,
