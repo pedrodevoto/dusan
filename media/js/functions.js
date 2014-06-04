@@ -1502,6 +1502,13 @@ $(document).ready(function () {
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
+						if (j.sucursal_pfc==1) {
+							$("#pfc").show();
+							$("#box-sucursal_pfc").prop("checked", j.sucursal_pfc_default==1);
+						}
+						else {
+							$("#pfc").hide();
+						}
 						// Resolve
 						dfd.resolve();
 					});
@@ -5355,7 +5362,7 @@ $(document).ready(function () {
 							cuotas = 5;
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
-					});
+					}).change();
 					$('#box-poliza_plan_id').change(function() {
 						$('#box-poliza_pack_id').html(loading);
 						populateListPoliza_Pack('box-poliza_pack_id', 'box', $(this).val());

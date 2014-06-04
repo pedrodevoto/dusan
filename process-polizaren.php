@@ -103,7 +103,10 @@
 
 				// Get New ID
 				$new_id = mysql_insert_id();				
-			
+				
+				$pfc = (isset($_POST['box-sucursal_pfc'])?1:0);
+				$poliza_cant_cuotas += $pfc;
+				
 				// Insert: Cuotas
 				$monto = $poliza_premio / $poliza_cant_cuotas;
 				for ($i=0; $i<$poliza_cant_cuotas; $i++) {
@@ -115,7 +118,7 @@
 									GetSQLValueString($monto, "double"),
 									GetSQLValueString($poliza_validez_desde, "date"),
 									GetSQLValueString($i, "int"),
-									0);
+									(($i==0 and $pfc==1)?'1':'0'));
 					$Result1 = mysql_query($insertSQL, $connection) or die(mysql_die());
 				}
 
