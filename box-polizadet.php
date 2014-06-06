@@ -41,15 +41,18 @@
     </div>
 	<?php
 	// Require form by type
+	$exclude_save_button = false;
             require_once('subtipo/'.$row_Recordset1['subtipo_poliza_tabla'].'.php');
         ?>          
 	</form>         
+	<?php if(!$exclude_save_button): ?>
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">     
         <input type="button" name="btnBox" class="btnBox" value="Cargando" />
     </p>      
     <!-- Nota -->
     <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>  
+	<?php endif;?>
     <div id="divBoxMessage" class="ui-state-highlight alert-success ui-corner-all divBoxMessage"> 
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>

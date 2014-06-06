@@ -1,3 +1,4 @@
+<?php $exclude_save_button = true; ?>
 <script language="javascript" type="text/javascript">
 <!--
 	// Functions
