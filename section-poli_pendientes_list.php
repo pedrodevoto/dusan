@@ -223,13 +223,13 @@
 						<tr>
 							<td colspan="8">
 								<label for="poliza_vigente">Vigente</label>
-								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" checked />
+								<input type="checkbox" name="poliza_vigente" id="poliza_vigente" value="3" />
 							
 								<label class="filtros_estado" for="poliza_vigente_a_renovar">Vigente a Renovar</label>
-								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4" checked></input>
+								<input type="checkbox" name="poliza_vigente_a_renovar" id="poliza_vigente_a_renovar" value="4"></input>
 								
 								<label class="filtros_estado" for="poliza_vigente_renovada">Vigente Renovada</label>
-								<input type="checkbox" name="poliza_vigente_renovada" id="poliza_vigente_renovada" value="7" checked></input>
+								<input type="checkbox" name="poliza_vigente_renovada" id="poliza_vigente_renovada" value="7"></input>
 							
 								<label class="filtros_estado" for="poliza_cumplida">Cumplida</label>
 								<input type="checkbox" name="poliza_cumplida" id="poliza_cumplida" value="6"></input>
