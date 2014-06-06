@@ -384,7 +384,24 @@
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
     <p>
         <label for="box-cubiertas_marca">Marca</label>
-        <input type="text" name="box-cubiertas_marca" id="box-cubiertas_marca" maxlength="100" class="ui-widget-content" style="width:215px" />
+		<select name="box-cubiertas_marca" id="box-cubiertas_marca" class="ui-widget-content" style="width:215px">
+			<option>Seleccione</option>
+			<option value="PIRELLI">PIRELLI</option>
+			<option value="FATE">FATE</option>
+			<option value="CONTINENTAL">CONTINENTAL</option>
+			<option value="MICHELIN">MICHELIN</option>
+			<option value="DUNLOP">DUNLOP</option>
+			<option value="GOODYEAR">GOODYEAR</option>
+			<option value="HANKOOK">HANKOOK</option>
+			<option value="MAXISPORT">MAXISPORT</option>
+			<option value="FIRESTONE">FIRESTONE</option>
+			<option value="CARREFOUR">CARREFOUR</option>
+			<option value="BF GOODRICH">BF GOODRICH</option>
+			<option value="Kumho">Kumho</option>
+			<option value="Bridgestone">Bridgestone</option>
+			<option value="Yokohama">Yokohama</option>
+			<option value="Sumitomo">Sumitomo</option>
+		</select>
     </p>           
     <p>
         <label for="box-cubiertas_medidas">Medidas</label>
