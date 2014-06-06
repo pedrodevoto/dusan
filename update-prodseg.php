@@ -34,25 +34,6 @@
 						error_log($insertSQL);
 					mysql_query($insertSQL, $connection) or die(mysql_error());
 				}
-				$deleteSQL = sprintf("DELETE FROM productor_seguro_cobertura_tipo WHERE productor_seguro_id = %s",
-					GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
-				mysql_query($deleteSQL, $connection);
-				foreach ($_POST['box-seguro_cobertura_tipo_id'] as $cobertura_id) {
-					$insertSQL = sprintf("INSERT INTO productor_seguro_cobertura_tipo (productor_seguro_id, seguro_cobertura_tipo_id) VALUES (%s, %s)",
-						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
-						GetSQLValueString($cobertura_id, "int"));
-						error_log($insertSQL);
-					mysql_query($insertSQL, $connection) or die(mysql_error());
-				}
-				$deleteSQL = sprintf("DELETE FROM productor_seguro_zonas_riesgo WHERE productor_seguro_id = %s",
-					GetSQLValueString($_POST['box-productor_seguro_id'], "int"));
-				mysql_query($deleteSQL, $connection);
-				foreach ($_POST['box-zona_riesgo_id'] as $zona_riesgo_id) {
-					$insertSQL = sprintf("INSERT INTO productor_seguro_zonas_riesgo (productor_seguro_id, zona_riesgo_id) VALUES (%s, %s)",
-						GetSQLValueString($_POST['box-productor_seguro_id'], "int"),
-						GetSQLValueString($zona_riesgo_id, "int"));
-						mysql_query($insertSQL, $connection) or die(mysql_error());
-				}
 				echo "El registro ha sido actualizado.";							
 				break;								
 			case 1062:

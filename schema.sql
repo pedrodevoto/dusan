@@ -318,8 +318,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -985,19 +985,6 @@ CREATE TABLE `productor_seguro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `productor_seguro_cobertura_tipo`;
-CREATE TABLE `productor_seguro_cobertura_tipo` (
-  `productor_seguro_cobertura_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `productor_seguro_id` int(10) unsigned NOT NULL,
-  `seguro_cobertura_tipo_id` int(11) NOT NULL,
-  PRIMARY KEY (`productor_seguro_cobertura_tipo_id`),
-  KEY `productor_seguro_id` (`productor_seguro_id`),
-  KEY `seguro_cobertura_tipo_id` (`seguro_cobertura_tipo_id`),
-  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
-  CONSTRAINT `productor_seguro_cobertura_tipo_ibfk_2` FOREIGN KEY (`seguro_cobertura_tipo_id`) REFERENCES `seguro_cobertura_tipo` (`seguro_cobertura_tipo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `productor_seguro_sucursal`;
 CREATE TABLE `productor_seguro_sucursal` (
   `productor_seguro_sucursal_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1008,19 +995,6 @@ CREATE TABLE `productor_seguro_sucursal` (
   KEY `sucursal_id` (`sucursal_id`),
   CONSTRAINT `productor_seguro_sucursal_ibfk_1` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
   CONSTRAINT `productor_seguro_sucursal_ibfk_2` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-DROP TABLE IF EXISTS `productor_seguro_zonas_riesgo`;
-CREATE TABLE `productor_seguro_zonas_riesgo` (
-  `productor_seguro_zonas_riesgo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `productor_seguro_id` int(10) unsigned NOT NULL,
-  `zona_riesgo_id` int(11) NOT NULL,
-  PRIMARY KEY (`productor_seguro_zonas_riesgo_id`),
-  KEY `productor_seguro_id` (`productor_seguro_id`),
-  KEY `zona_riesgo_id` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_2` FOREIGN KEY (`zona_riesgo_id`) REFERENCES `zona_riesgo` (`zona_riesgo_id`),
-  CONSTRAINT `productor_seguro_zonas_riesgo_ibfk_3` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1069,6 +1043,18 @@ CREATE TABLE `seguro_cobertura_tipo_limite_rc` (
   `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL AUTO_INCREMENT,
   `seguro_cobertura_tipo_limite_rc_valor` int(11) NOT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_limite_rc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `seguro_zona_riesgo`;
+CREATE TABLE `seguro_zona_riesgo` (
+  `seguro_zona_riesgo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `seguro_id` int(10) unsigned NOT NULL,
+  `seguro_zona_riesgo_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seguro_zona_riesgo_default` tinyint(4) NOT NULL,
+  PRIMARY KEY (`seguro_zona_riesgo_id`),
+  KEY `seguro_id` (`seguro_id`),
+  CONSTRAINT `seguro_zona_riesgo_ibfk_1` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1163,12 +1149,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `zona_riesgo`;
-CREATE TABLE `zona_riesgo` (
-  `zona_riesgo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `zona_riesgo_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`zona_riesgo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
--- 2014-05-28 19:27:33
+-- 2014-06-06 19:27:31

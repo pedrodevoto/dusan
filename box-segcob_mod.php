@@ -32,6 +32,7 @@
             	<p align="center" style="margin-top:10px">
 		            <input type="hidden" name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" />            
 					<input type="button" name="btnBox" id="btnBox" value="Guardar" />
+					<button id="btnBoxCancelar">Cancelar</button>
                 </p>
             </fieldset>
         </form>

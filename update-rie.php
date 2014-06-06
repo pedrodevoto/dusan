@@ -12,7 +12,7 @@
 	if ((isset($_POST["box-zona_riesgo_id"])) && ($_POST["box-zona_riesgo_id"] != "")) {		
 		
 		// Update
-		$updateSQL = sprintf("UPDATE zona_riesgo SET zona_riesgo_nombre=UPPER(TRIM(%s)) WHERE zona_riesgo_id=%s LIMIT 1",
+		$updateSQL = sprintf("UPDATE seguro_zona_riesgo SET seguro_zona_riesgo_nombre=UPPER(TRIM(%s)) WHERE seguro_zona_riesgo_id=%s LIMIT 1",
 						GetSQLValueString($_POST['box-zona_riesgo_nombre'], "text"),
 						GetSQLValueString($_POST['box-zona_riesgo_id'], "int"));			
 		$Result1 = mysql_query($updateSQL, $connection);

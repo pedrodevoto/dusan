@@ -24,7 +24,7 @@
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
 			case 0:
-				echo 'El registro ha sido insertado con éxito | <a href="javascript:openBoxProdSeg('.mysql_insert_id().')" class="lnkBox">RELACIONAR SEGUROS</a>';
+				echo 'El registro ha sido insertado con éxito';
 				break;
 			case 1062:
 				echo 'Error: Registro duplicado (CUIT).';

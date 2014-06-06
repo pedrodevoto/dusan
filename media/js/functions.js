@@ -2989,6 +2989,42 @@ $(document).ready(function () {
 			}
 		});
 	}
+	populateDiv_SeguroZonasRiesgo = function (id) {
+		$.getJSON("get-json-fich_segurozonasriesgo.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// General variables
+					var result = '';
+					result += '<table>';
+					// Table Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td style="min-width:100px">'+object.seguro_zona_riesgo_nombre+'</td>';
+						result += '<td style="min-width:80px"><input class="seguro_zona_riesgo_default_btn" type="radio" name="box-seguro_zona_riesgo_default" value="'+object.seguro_zona_riesgo_id+'"'+(object.seguro_zona_riesgo_default==1?' checked':'')+'> <span>'+(object.seguro_zona_riesgo_default==1?'DEFAULT':'')+'</span></td>';
+						
+						result += '<td><span onClick="openBoxModZonaRiesgo(' + object.seguro_zona_riesgo_id + ', '+id+')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Editar zona de riesgo"></span>';
+						result += '<span onclick="$.when(deleteViaLink(\'segurozonariesgo\','+object.seguro_zona_riesgo_id+')).then(function(){populateDiv_SeguroZonasRiesgo('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
+						
+						result += '</tr>';
+					});
+					// Populate DIV
+					$('#divSeguroZonasRiesgo').html(result);
+					$('.seguro_zona_riesgo_default_btn').change(function() {
+						$(this).next().text('DEFAULT');
+						$(this).parent().parent().siblings().each(function(i,e) {
+							$(e).children().eq(1).children().eq(1).text('');
+						});
+					});
+				}
+			}
+		});
+	}
 	
 	/* Insert via form functions */
 	insertFormUsuario = function () {
@@ -3072,9 +3108,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function () {
 					// Clear form
-					$('#frmBox').each(function () {
-						this.reset();
-					});
+					openBoxModSeguro(id);
 				});
 			}
 		});
@@ -3271,7 +3305,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	insertFormSegCob = function () {
+	insertFormSegCob = function (id) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		// Post
@@ -3284,16 +3318,12 @@ $(document).ready(function () {
 				}
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function () {
-					
-					// Clear form
-					$('#frmBox').each(function () {
-						this.reset();
-					});
+					openBoxModSeguro(id);
 				});
 			}
 		});
 	}
-	insertFormRie = function() {
+	insertFormRie = function(id, seguro_id) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		// Post
@@ -3308,9 +3338,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function () {
 					// Clear form
-					$('#frmBox').each(function () {
-						this.reset();
-					});
+					openBoxModSeguro(id);
 				});
 			}
 		});
@@ -3524,7 +3552,7 @@ $(document).ready(function () {
 					// Show message
 					showBoxConf(data, false, 'always', 3000, function () {
 						// Repopulate form
-						populateFormBoxCob(id);
+						openBoxModSeguro(id);
 					});
 				}
 				// Enable button
@@ -3581,7 +3609,7 @@ $(document).ready(function () {
 					// Show message
 					showBoxConf(data, false, 'always', 3000, function () {
 						// Repopulate form
-						populateFormBoxCod(id);
+						openBoxModSeguro(id);
 					});
 				}
 				// Enable button
@@ -3604,7 +3632,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, false, 'always', 3000, function () {
 					// Repopulate form
-					populateFormBoxSuc($('#box-sucursal_id').val());
+					openBoxModSeguro(id);
 				});
 			}
 		});
@@ -4090,12 +4118,16 @@ $(document).ready(function () {
 							{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
 								var returnval = '';
 								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
-								returnval += '<li title="Editar" onclick="openBoxModCob('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
+								returnval += '<li title="Editar" onclick="openBoxModCob('+oObj.aData[0]+', '+id+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
 								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'segcob\','+oObj.aData[0]+', seguroCoberturasTable);"><span class="ui-icon ui-icon-trash"></span></li>';
 								returnval += '</ul>';
 								return returnval;
 							}}
 						]
+					});
+					$('#btnSeguroCoberturas').button().click(function(event) {
+						event.preventDefault();
+						openBoxAltaCob(id);
 					});
 					
 					seguroCodigosTable = $('#seguroCodigos').dataTable({
@@ -4115,12 +4147,22 @@ $(document).ready(function () {
 							{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
 								var returnval = '';
 								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
-								returnval += '<li title="Editar" onclick="openBoxModCod('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
+								returnval += '<li title="Editar" onclick="openBoxModCod('+oObj.aData[0]+', '+id+');"><span class="ui-icon ui-icon-pencil"></span></li>';							
 								returnval += '<li title="Eliminar" onclick="deleteViaLink(\'prodseg\','+oObj.aData[0]+', seguroCodigosTable);"><span class="ui-icon ui-icon-trash"></span></li>';
 								returnval += '</ul>';
 								return returnval;
 							}}
 						]
+					});
+					$('#btnSeguroCodigos').button().click(function(event) {
+						event.preventDefault();
+						openBoxAltaCod(id);
+					});
+					
+					populateDiv_SeguroZonasRiesgo(id);
+					$('#btnSeguroZonasRiesgo').button().click(function(event) {
+						event.preventDefault();
+						openBoxAltaZonaRiesgo(id);
 					});
 					
 					// Validate form
@@ -4268,64 +4310,6 @@ $(document).ready(function () {
 							if (confirm('Está seguro que desea modificar el registro?')) {
 								updateFormProd();
 							}
-						};
-					});
-
-					// Enable form
-					formDisable('frmBox', 'ui', false);
-
-				});
-
-			}
-		});
-	}
-	openBoxProdSeg = function (id) {
-		$.colorbox({
-			title: 'Productor/Seguros',
-			href: 'box-prodseg.php',
-			width: '700px',
-			height: '600px',
-			onComplete: function () {
-
-				// -------------------- GENERAL ---------------------
-
-				// Initialize buttons
-				$("#btnBox").button();
-
-				// Disable forms
-				formDisable('frmBox', 'ui', true);
-
-				// Populate DIVs
-				populateDiv_Prod_Info(id);
-				populateDiv_ProdSeg(id);
-
-				// -------------------- FORM 1 ----------------------
-
-				// Populate drop-downs, then initialize form
-				$.when(
-					populateListSeguro('box-seguro_id', 'box'),
-					populateListUsuario_Sucursal('box-sucursal_id', 'box', true)
-				).then(function () {
-
-					// Validate form
-					var validateForm = $("#frmBox").validate({
-						rules: {
-							"box-seguro_id": {
-								required: true
-							},
-							"box-sucursal_id": {
-								required: true
-							},
-							"box-productor_seguro_codigo": {
-								required: true
-							}
-						}
-					});
-
-					// Button action
-					$("#btnBox").click(function () {
-						if (validateForm.form()) {
-							insertFormProdSeg(id);
 						};
 					});
 
@@ -5948,7 +5932,7 @@ $(document).ready(function () {
 			$("#box-contacto_domicilio").focus();
 		});
 	}
-	openBoxAltaCob = function () {
+	openBoxAltaCob = function (id) {
 		$.colorbox({
 			title: 'Seguro/Cobertura',
 			href: 'box-segcob_alta.php',
@@ -5961,10 +5945,19 @@ $(document).ready(function () {
 				$("#btnBox").button();
 				
 				formDisable('frmBox', 'ui', false);
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(id);
+				});
+				
+				$('<input>').prop({
+					type: 'hidden',
+					id: 'box-seguro_id',
+					name: 'box-seguro_id'
+				}).val(id).appendTo($('#frmBox'));
 
 				$.when(
-					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box'),
-					populateListSeguro('box-seguro_id', 'box')
+					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box')
 				).then(function() {
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -5983,7 +5976,7 @@ $(document).ready(function () {
 
 					// Button action
 					$("#btnBox").click(function () {
-						insertFormSegCob();
+						insertFormSegCob(id);
 					});
 
 					// Enable form
@@ -5992,7 +5985,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxModCob = function(id) {
+	openBoxModCob = function(id, seguro_id) {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-segcob_mod.php',
@@ -6002,6 +5995,10 @@ $(document).ready(function () {
 
 				// Initialize buttons
 				$("#btnBox").button();
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(seguro_id);
+				});
 
 				// Disable form
 				formDisable('frmBox', 'ui', true);
@@ -6027,7 +6024,7 @@ $(document).ready(function () {
 					// Button action
 					$("#btnBox").click(function () {
 						if (validateForm.form()) {
-							updateFormSegCob(id);
+							updateFormSegCob(seguro_id);
 						};
 					});
 
@@ -6039,7 +6036,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxAltaCod = function () {
+	openBoxAltaCod = function (id) {
 		$.colorbox({
 			title: 'Productor/Seguro/Código',
 			href: 'box-prodseg_alta.php',
@@ -6052,21 +6049,25 @@ $(document).ready(function () {
 				$("#btnBox").button();
 				
 				formDisable('frmBox', 'ui', false);
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(id);
+				});
+				
+				$('<input>').prop({
+					type: 'hidden',
+					id: 'box-seguro_id',
+					name: 'box-seguro_id'
+				}).val(id).appendTo($('#frmBox'));
 
 				$.when(
 					populateListProductor("box-productor_id", "box"),
-					populateListSeguro("box-seguro_id", "box"),
-					populateListSuc("box-sucursal_id", "box"),
-					populateListZonaRiesgo("box-zona_riesgo_id", "box"),
-					populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true)
+					populateListSuc("box-sucursal_id", "box")
 				).then(function() {
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
 							"box-productor_id": {
-								required: true
-							},
-							"box-seguro_id": {
 								required: true
 							},
 							"box-sucursal_id": {
@@ -6078,13 +6079,6 @@ $(document).ready(function () {
 						}
 					});
 
-					$('#box-seguro_id').change(function() {
-						$("#box-seguro_cobertura_tipo_id").attr("disabled", true);
-						$.when(populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true, $(this).val())).then(function() {
-							$("#box-seguro_cobertura_tipo_id").attr("disabled", false);
-						});
-					})
-					
 					$('#box-productor_seguro_organizacion_flag').change(function() {
 						$('#box-productor_seguro_organizacion_nombre, #box-productor_seguro_organizacion_tipo_persona, #box-productor_seguro_organizacion_matricula, #box-productor_seguro_organizacion_cuit').prop('disabled', !$(this).prop('checked'));
 						if ($(this).prop('checked')) $('#box-productor_seguro_organizacion_nombre').focus();
@@ -6092,7 +6086,7 @@ $(document).ready(function () {
 					
 					// Button action
 					$("#btnBox").click(function () {
-						insertFormProdSeg();
+						insertFormProdSeg(id);
 					});
 
 					// Enable form
@@ -6103,7 +6097,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxModCod = function(id) {
+	openBoxModCod = function(id, seguro_id) {
 		$.colorbox({
 			title: 'Productor/Seguro/Código',
 			href: 'box-prodseg_mod.php',
@@ -6113,7 +6107,11 @@ $(document).ready(function () {
 
 				// Initialize buttons
 				$("#btnBox").button();
-
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(seguro_id);
+				});
+				
 				// Disable form
 				formDisable('frmBox', 'ui', true);
 
@@ -6260,7 +6258,7 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxAltaZonaRiesgo = function() {
+	openBoxAltaZonaRiesgo = function(id) {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-rie_alta.php',
@@ -6270,10 +6268,19 @@ $(document).ready(function () {
 
 				// Initialize buttons
 				$("#btnBox").button();
-
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(id);
+				});
+				
 				// Disable form
 				formDisable('frmBox', 'ui', true);
 
+				$('<input>').prop({
+					type: 'hidden',
+					id: 'box-seguro_id',
+					name: 'box-seguro_id'
+				}).val(id).appendTo($('#frmBox'));
 
 				// Validate form
 				var validateForm = $("#frmBox").validate({
@@ -6287,18 +6294,16 @@ $(document).ready(function () {
 				// Button action
 				$("#btnBox").click(function () {
 					if (validateForm.form()) {
-						if (confirm('Está seguro que desea crear el registro?')) {
-							insertFormRie();
-						}
+						insertFormRie(id);
 					};
 				});
-
+				
 				// Enable form
 				formDisable('frmBox', 'ui', false);
 			}
 		});
 	}
-	openBoxModZonaRiesgo = function(id) {
+	openBoxModZonaRiesgo = function(id, seguro_id) {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-rie_mod.php',
@@ -6308,20 +6313,21 @@ $(document).ready(function () {
 
 				// Initialize buttons
 				$("#btnBox").button();
-
+				$("#btnBoxCancelar").button().click(function(event) {
+					event.preventDefault();
+					openBoxModSeguro(seguro_id);
+				});
+				
 				// Disable form
 				formDisable('frmBox', 'ui', true);
 
 				// Populate form, then initialize
 				$.when(populateFormBoxRie(id)).then(function () {
-					$('#box-sucursal_pfc').change(function() {
-						$('#box-sucursal_pfc_default').attr('disabled', !$(this).prop('checked'));
-					})
 					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
-							"box-sucursal_nombre": {
+							"box-zona_riesgo_nombre": {
 								required: true
 							}
 						}
@@ -6330,15 +6336,12 @@ $(document).ready(function () {
 					// Button action
 					$("#btnBox").click(function () {
 						if (validateForm.form()) {
-							if (confirm('Está seguro que desea modificar el registro?')) {
-								updateFormRie();
-							}
+							updateFormRie(seguro_id);
 						};
 					});
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-					$('#box-sucursal_pfc').change();
 				});
 
 			}

@@ -1,6 +1,6 @@
 <?php
 function showCobertura($id) {
-	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo.seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre FROM productor_seguro_cobertura_tipo JOIN seguro_cobertura_tipo ON seguro_cobertura_tipo.seguro_cobertura_tipo_id = productor_seguro_cobertura_tipo.seguro_cobertura_tipo_id WHERE productor_seguro_id=%s", 
+	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre FROM seguro_cobertura_tipo WHERE seguro_id=%s", 
 		GetSQLValueString($id, "int"));
 
 	// Recordset: Main
@@ -80,7 +80,7 @@ function showLimiteRC() {
 }
 
 function showZonasRiesgo($id) {
-	$query_Recordset1 = sprintf("SELECT productor_seguro_zonas_riesgo.zona_riesgo_id, zona_riesgo_nombre FROM productor_seguro_zonas_riesgo JOIN zona_riesgo ON zona_riesgo.zona_riesgo_id = productor_seguro_zonas_riesgo.zona_riesgo_id WHERE productor_seguro_id=%s", 
+	$query_Recordset1 = sprintf("SELECT seguro_zona_riesgo_id, seguro_zona_riesgo_nombre FROM seguro_zona_riesgo WHERE seguro_id=%s", 
 		GetSQLValueString($id, "int"));
 
 	// Recordset: Main

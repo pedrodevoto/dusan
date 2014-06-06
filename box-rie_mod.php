@@ -18,6 +18,7 @@
         <p align="center" style="margin-top:20px">     
             <input type="hidden" name="box-zona_riesgo_id" id="box-zona_riesgo_id" value="" />            
             <input type="button" name="btnBox" id="btnBox" value="Aceptar" />
+			<button id="btnBoxCancelar">Cancelar</button>
         </p>
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio</p>

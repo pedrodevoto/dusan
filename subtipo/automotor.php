@@ -276,7 +276,7 @@
 	        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
 	            <option value="">Seleccione</option>    
 	            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
-				<?php showZonasRiesgo($row_Recordset1['productor_seguro_id']); ?>
+				<?php showZonasRiesgo($row_Recordset1['seguro_id']); ?>
 	        </select>
 	    </p>
 	    <p>
@@ -528,7 +528,7 @@
 	        <label for="box-seguro_cobertura_tipo_id">Cobertura *</label>
 	        <select name="box-seguro_cobertura_tipo_id" id="box-seguro_cobertura_tipo_id" class="ui-widget-content required" style="width:160px">
 	        	<option value="">Seleccione</option>
-				<?php showCobertura($row_Recordset1['productor_seguro_id']); ?>
+				<?php showCobertura($row_Recordset1['seguro_id']); ?>
 	        </select>        
 	    </p>
 	    <p>

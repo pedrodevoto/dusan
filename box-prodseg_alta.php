@@ -12,12 +12,6 @@
 	                <label for="box-productor_id">Productor *</label>
 	                <select name="box-productor_id" id="box-productor_id" class="ui-widget-content" style="width:180px"></select>
 	            </p>
-				<p>
-                    <label for="box-seguro_id">Seguro *</label>
-                    <select name="box-seguro_id" id="box-seguro_id" class="ui-widget-content" style="width:180px">
-                        <option value="">Cargando</option>                
-                    </select>                        
-                </p>
                 <p>
                     <label for="box-sucursal_id">Sucursal *</label>
 					<select multiple="multiple" name="box-sucursal_id[]" id="box-sucursal_id" class="ui-widget-content" style="width:180px">
@@ -28,18 +22,6 @@
                     <label for="box-productor_seguro_codigo">Código *</label>
                     <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" required/>
                 </p>
-				<p>
-					<label for="box-zona_riesgo_id">Zona de riesgo</label>
-					<select multiple="multiple" name="box-zona_riesgo_id[]" id="box-zona_riesgo_id" class="ui-widget-content" style="width:180px">
-						<option value="">Cargando</option>
-					</select>
-				</p>
-			    <p>
-			        <label for="box-seguro_cobertura_tipo_id[]">Coberturas *</label>
-	                <select multiple="multiple" name="box-seguro_cobertura_tipo_id[]" id="box-seguro_cobertura_tipo_id" class="ui-widget-content" style="width:180px">
-	                	<option value="">Cargando</option>                
-	                </select>
-			    </p>
             </fieldset>    
 			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 				<legend class="ui-widget ui-widget-header ui-corner-all">Organización</legend>
@@ -69,6 +51,7 @@
 			</fieldset>
         	<p align="center" style="margin-top:10px">
 				<input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
+				<button id="btnBoxCancelar">Cancelar</button>
             </p>     
         </form>
 	    <div id="divBoxMessage" class="ui-state-highlight alert-success ui-corner-all divBoxMessage"> 

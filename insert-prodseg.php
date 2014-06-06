@@ -32,18 +32,6 @@
 						GetSQLValueString($sucursal_id, "int"));
 					mysql_query($insertSQL, $connection);
 				}
-				foreach ($_POST['box-seguro_cobertura_tipo_id'] as $cobertura_id) {
-					$insertSQL = sprintf("INSERT INTO productor_seguro_cobertura_tipo (productor_seguro_id, seguro_cobertura_tipo_id) VALUES (%s, %s)",
-						GetSQLValueString($productor_seguro_id, "int"),
-						GetSQLValueString($cobertura_id, "int"));
-					mysql_query($insertSQL, $connection);
-				}
-				foreach ($_POST['box-zona_riesgo_id'] as $zona_riesgo_id) {
-					$insertSQL = sprintf("INSERT INTO productor_seguro_zonas_riesgo (productor_seguro_id, zona_riesgo_id) VALUES (%s, %s)",
-						GetSQLValueString($productor_seguro_id, "int"),
-						GetSQLValueString($zona_riesgo_id, "int"));
-						mysql_query($insertSQL, $connection);
-				}
 				echo "El registro ha sido insertado con éxito.";
 				break;
 			case 1062:

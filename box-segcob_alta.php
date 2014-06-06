@@ -10,10 +10,6 @@
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
                 <legend class="ui-widget ui-widget-header ui-corner-all">Agregar Cobertura</legend>
 	            <p>
-	                <label for="box-seguro_id">Aseguradora *</label>
-	                <select name="box-seguro_id" id="box-seguro_id" class="ui-widget-content" style="width:180px"></select>
-	            </p>
-                <p>
                     <label for="box-seguro_cobertura_tipo_nombre">Nombre *</label>
                     <input type="text" name="box-seguro_cobertura_tipo_nombre" id="box-seguro_cobertura_tipo_nombre" maxlength="20" class="ui-widget-content" style="width:220px" />
                 </p>
@@ -31,6 +27,7 @@
                 </p>
             	<p align="center" style="margin-top:10px">
 					<input type="button" name="btnBox" id="btnBox" value="Guardar" />
+					<button id="btnBoxCancelar">Cancelar</button>
                 </p>
             </fieldset>         
         </form>

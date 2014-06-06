@@ -91,6 +91,7 @@ var seguroCodigosTable = '';
        	</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Códigos</legend>
+			<button id="btnSeguroCodigos">CREAR</button>
 			<table id="seguroCodigos" style="width:100%">
 				<thead>	
 					<th>ID</th>
@@ -104,6 +105,7 @@ var seguroCodigosTable = '';
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Coberturas</legend>
+			<button id="btnSeguroCoberturas">CREAR</button>
 			<table id="seguroCoberturas" style="width:100%">
 				<thead>	
 					<th>ID</th>
@@ -118,6 +120,7 @@ var seguroCodigosTable = '';
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Zonas de riesgo</legend>
+			<button id="btnSeguroZonasRiesgo">CREAR</button>
 			<div id="divSeguroZonasRiesgo"></div>
 		</fieldset>
         <!-- Acciones -->

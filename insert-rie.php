@@ -9,11 +9,18 @@
 	require_once('inc/db_functions.php');	
 ?>
 <?php
-	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1")) {	
+	if ((isset($_POST["box-insert"])) && ($_POST["box-insert"] == "1") && !empty($_POST['box-seguro_id'])) {	
+		
+		$sql = sprintf("SELECT COALESCE(MAX(seguro_zona_riesgo_default), 0) FROM seguro_zona_riesgo WHERE seguro_id = %s", GetSQLValueString($_POST['box-seguro_id'], "int"));
+		$res = mysql_query($sql) or die(mysql_error());
+		$row = mysql_fetch_array($res);
+		$default = $row[0];
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO zona_riesgo (zona_riesgo_nombre) VALUES (UPPER(TRIM(%s)))",
-						GetSQLValueString($_POST['box-zona_riesgo_nombre'], "text"));								
+		$insertSQL = sprintf("INSERT INTO seguro_zona_riesgo (seguro_id, seguro_zona_riesgo_nombre, seguro_zona_riesgo_default) VALUES (%s, UPPER(TRIM(%s)), %s)",
+						GetSQLValueString($_POST['box-seguro_id'], "int"),
+						GetSQLValueString($_POST['box-zona_riesgo_nombre'], "text"),
+						$default==1?0:1);
 		$Result1 = mysql_query($insertSQL, $connection);
 		switch (mysql_errno()) {
 			case 0:
