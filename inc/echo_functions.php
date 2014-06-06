@@ -22,7 +22,7 @@ function showCarroceria($id) {
 }
 
 function showAutomotorTipo() {
-	$query_Recordset1 = sprintf("SELECT automotor_tipo_id, automotor_tipo_nombre FROM automotor_tipo");
+	$query_Recordset1 = sprintf("SELECT automotor_tipo_id, automotor_tipo_nombre FROM automotor_tipo ORDER BY automotor_tipo_orden");
 
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
