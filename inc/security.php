@@ -41,5 +41,5 @@ if (!((isset($_SESSION['ADM_Username'])) && (isAuthorized("",$MM_authorizedUsers
   header("Location: ". $MM_restrictGoTo); 
   exit;
 }
-die('Por 10 minutos el sitio estara en mantenimiento por actualizacion');
+// die('Por 10 minutos el sitio estara en mantenimiento por actualizacion');
 ?>
