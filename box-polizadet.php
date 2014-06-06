@@ -46,7 +46,7 @@
 	</form>         
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">     
-        <input type="button" name="btnBox" id="btnBox" value="Cargando" />
+        <input type="button" name="btnBox" class="btnBox" value="Cargando" />
     </p>      
     <!-- Nota -->
     <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>  

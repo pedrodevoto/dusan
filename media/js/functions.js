@@ -5442,19 +5442,19 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-polizadet.php?section=2&id=' + id,
-			width: '830px',
+			width: '900px',
 			height: '100%',
 			onComplete: function () {
 
 				// Set button text
 				if (fromcreate === true) {
-					$("#btnBox").val('Siguiente');
+					$(".btnBox").val('Siguiente');
 				} else {
-					$("#btnBox").val('Aceptar');
+					$(".btnBox").val('Aceptar');
 				}
 
 				// Initialize buttons
-				$("#btnBox").button();
+				$(".btnBox").button();
 
 				// Disable form
 				formDisable('frmBox', 'ui', true);
@@ -5471,7 +5471,7 @@ $(document).ready(function () {
 					var validateForm = $("#frmBox").validate();
 
 					// Button action
-					$("#btnBox").click(function () {
+					$(".btnBox").click(function () {
 						// if (customValidations()) {
 						if (validateForm.form() && customValidations()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');

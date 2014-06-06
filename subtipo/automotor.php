@@ -174,10 +174,11 @@
 	    <p>
 	        <label for="box-valor_vehiculo">Valor Vehículo *</label>
 	        <input type="text" name="box-valor_vehiculo" id="box-valor_vehiculo" maxlength="8" class="ui-widget-content required calculator" style="width:120px" digits="true" min="0" max="16777215" value="0" /> <span style="color:red">(Cargar acá el valor del vehículo)</span>
+			<label for="box-infoauto" style="margin-left:10px;vertical-align:middle">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
 	    </p>
 		<p> 
 			<label for="box-castigado">Castigado </label><input type="checkbox" name="box-castigado" id="box-castigado" />
-			<label for="box-infoauto" style="margin-left:10px">Infoauto *</label><input type="checkbox" name="box-infoauto" id="box-infoauto" value="1" />
+	        <label for="box-importado" style="margin-left:20px;vertical-align:middle">Importado</label><input type="checkbox" name="box-importado" id="box-importado" value="1" />
 		</p>
 	</fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
@@ -191,7 +192,15 @@
 			<span id="msg_patente" style="color:red"></span>
 	    </p>
 	    <p>
-	        <label for="box-automotor_tipo_id">Tipo *</label>
+	        <label for="box-nro_motor">Nº Motor *</label>
+	        <input type="text" name="box-nro_motor" id="box-nro_motor" maxlength="255" class="ui-widget-content required" style="width:200px" />
+	    </p>
+	    <p>
+	        <label for="box-nro_chasis">Nº Chasis *</label>
+	        <input type="text" name="box-nro_chasis" id="box-nro_chasis" maxlength="255" class="ui-widget-content required" style="width:200px" />
+	    </p>
+	    <p>
+	        <label for="box-automotor_tipo_id">Tipo de vehículo *</label>
 	        <select name="box-automotor_tipo_id" id="box-automotor_tipo_id" class="ui-widget-content required" style="width:160px">    
 	            <option value="">Seleccione</option>    
 	            <?php showAutomotorTipo(); ?>
@@ -225,20 +234,25 @@
 	        <label for="box-0km" style="width:30px">0 KM</label>
 	        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
 		</p>
-	    <p>
-	        <label for="box-importado">Importado</label>
-	        <input type="checkbox" name="box-importado" id="box-importado" value="1" />
-	    </p>
-	    <p>
-	        <label for="box-nro_motor">Nº Motor *</label>
-	        <input type="text" name="box-nro_motor" id="box-nro_motor" maxlength="255" class="ui-widget-content required" style="width:200px" />
-	    </p>
-	    <p>
-	        <label for="box-nro_chasis">Nº Chasis *</label>
-	        <input type="text" name="box-nro_chasis" id="box-nro_chasis" maxlength="255" class="ui-widget-content required" style="width:200px" />
-	    </p>
 	</div>
 	<div style="float:left;width:50%">
+	    <p>
+	        <label for="box-color">Color *</label>
+			<select name="box-color" id="box-color" class="ui-widget-content required" style="width:106px">
+				<option>Seleccione</option>
+				<option value="BLANCO">BLANCO</option>
+				<option value="NEGRO">NEGRO</option>
+				<option value="GRIS">GRIS</option>
+				<option value="ROJO">ROJO</option>
+				<option value="AZUL">AZUL</option>
+				<option value="AMARILLO">AMARILLO</option>
+				<option value="VERDE">VERDE</option>
+				<option value="NARANJA">NARANJA</option>
+				<option value="MARRON">MARRON</option>
+				<option value="VIOLETA">VIOLETA</option>
+				<option value="CELESTE">CELESTE</option>
+			</select>
+	    </p>
 	    <p>
 	        <label for="box-chapa">Chapa</label>
 	        <select name="box-chapa" id="box-chapa" class="ui-widget-content" style="width:110px">    
@@ -265,31 +279,6 @@
 	        <select name="box-tapizado" id="box-tapizado" class="ui-widget-content" style="width:110px">    
 	            <option value="">No Definido</option>    
 	            <?php enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'tapizado', 'select', 'Tela'); ?>   
-	        </select>
-	    </p>
-	    <p>
-	        <label for="box-color">Color *</label>
-			<select name="box-color" id="box-color" class="ui-widget-content required" style="width:106px">
-				<option>Seleccione</option>
-				<option value="BLANCO">BLANCO</option>
-				<option value="NEGRO">NEGRO</option>
-				<option value="GRIS">GRIS</option>
-				<option value="ROJO">ROJO</option>
-				<option value="AZUL">AZUL</option>
-				<option value="AMARILLO">AMARILLO</option>
-				<option value="VERDE">VERDE</option>
-				<option value="NARANJA">NARANJA</option>
-				<option value="MARRON">MARRON</option>
-				<option value="VIOLETA">VIOLETA</option>
-				<option value="CELESTE">CELESTE</option>
-			</select>
-	    </p>
-	    <p>
-	        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
-	        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
-	            <option value="">Seleccione</option>    
-	            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
-				<?php showZonasRiesgo($row_Recordset1['seguro_id']); ?>
 	        </select>
 	    </p>
 	    <p>
@@ -342,44 +331,6 @@
             </tr>
         </table>
 </fieldset>
-<div style="float:left;width:50%">
-	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
-	    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
-	    <p>
-	        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
-		</p>
-		<p>
-			<label for="box-equipo_rastreo_pedido_id">Pedir</label>
-			<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
-				<option value="">Ninguno</option>
-				<?php showEquipoRastreoPedido(); ?>
-			</select>
-		<p>
-	        <label for="box-equipo_rastreo_id">Marca</label>
-	        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
-	            <option value="">Ninguno</option>    
-	            <?php showEquipoRastreo(); ?>
-	        </select>
-	    </p>
-    
-	</fieldset>	
-</div>
-<div style="float:left;width:50%">
-	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-	    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
-	    <p>
-			<label for="box-micro_grabado">Micro Grabado</label>
-			<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
-		<p>
-	        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
-	        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:200px" />
-	    </p>
-		<p>
-			<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
-	        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
-		</p>
-	</fieldset>
-</div>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
     <legend class="ui-widget ui-widget-header ui-corner-all">Cubiertas</legend>
     <p>
@@ -580,6 +531,14 @@
 	        <label for="box-servicio_grua">Servicio de Grúa</label>
 	        <input type="text" name="box-servicio_grua" id="box-servicio_grua" maxlength="3" class="ui-widget-content" style="width:60px" digits="true" min="1" max="255" />
 	    </p> 
+	    <p>
+	        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
+	        <select name="box-zona_riesgo_id" id="box-zona_riesgo_id" class="ui-widget-content required" style="width:110px">    
+	            <option value="">Seleccione</option>    
+	            <?php //enumToForm($row_Recordset1['subtipo_poliza_tabla'], 'zona_riesgo', 'select'); ?>   
+				<?php showZonasRiesgo($row_Recordset1['seguro_id']); ?>
+	        </select>
+	    </p>
 	</div>
 	<div style="float:left;width:50%">
         <p>
@@ -610,6 +569,49 @@
 	    </p>                            
 	</div>
 </fieldset>
+<p align="center" style="margin-top:20px">     
+    <input type="button" name="btnBox" class="btnBox" value="Cargando" />
+</p>      
+<!-- Nota -->
+<p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>  
+<div style="float:left;width:50%">
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
+	    <p>
+	        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
+		</p>
+		<p>
+			<label for="box-equipo_rastreo_pedido_id">Pedir</label>
+			<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
+				<option value="">Ninguno</option>
+				<?php showEquipoRastreoPedido(); ?>
+			</select>
+		<p>
+	        <label for="box-equipo_rastreo_id">Marca</label>
+	        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
+	            <option value="">Ninguno</option>    
+	            <?php showEquipoRastreo(); ?>
+	        </select>
+	    </p>
+    
+	</fieldset>	
+</div>
+<div style="float:left;width:50%">
+	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+	    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
+	    <p>
+			<label for="box-micro_grabado">Micro Grabado</label>
+			<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
+		<p>
+	        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
+	        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:200px" />
+	    </p>
+		<p>
+			<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
+	        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
+		</p>
+	</fieldset>
+</div>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
 	<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de inspección</legend>
     <p>
