@@ -397,10 +397,10 @@
 			<option value="FIRESTONE">FIRESTONE</option>
 			<option value="CARREFOUR">CARREFOUR</option>
 			<option value="BF GOODRICH">BF GOODRICH</option>
-			<option value="Kumho">Kumho</option>
-			<option value="Bridgestone">Bridgestone</option>
-			<option value="Yokohama">Yokohama</option>
-			<option value="Sumitomo">Sumitomo</option>
+			<option value="KUMHO">KUMHO</option>
+			<option value="BRIDGESTONE">BRIDGESTONE</option>
+			<option value="YOKOHAMA">YOKOHAMA</option>
+			<option value="SUMITOMO">SUMITOMO</option>
 		</select>
     </p>           
     <p>
