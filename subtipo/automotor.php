@@ -188,7 +188,7 @@
 	        <label for="box-patente_0">Patente *</label>
 	        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
 			<input type="text" name="box-patente_1" id="box-patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
-			<span id="msg_patente" style="color:orange"></span>
+			<span id="msg_patente" style="color:red"></span>
 	    </p>
 	    <p>
 	        <label for="box-automotor_tipo_id">Tipo *</label>
@@ -269,7 +269,20 @@
 	    </p>
 	    <p>
 	        <label for="box-color">Color *</label>
-	        <input type="text" name="box-color" id="box-color" maxlength="35" class="ui-widget-content required" style="width:106px" />
+			<select name="box-color" id="box-color" class="ui-widget-content required" style="width:106px">
+				<option>Seleccione</option>
+				<option value="BLANCO">BLANCO</option>
+				<option value="NEGRO">NEGRO</option>
+				<option value="GRIS">GRIS</option>
+				<option value="ROJO">ROJO</option>
+				<option value="AZUL">AZUL</option>
+				<option value="AMARILLO">AMARILLO</option>
+				<option value="VERDE">VERDE</option>
+				<option value="NARANJA">NARANJA</option>
+				<option value="MARRON">MARRON</option>
+				<option value="VIOLETA">VIOLETA</option>
+				<option value="CELESTE">CELESTE</option>
+			</select>
 	    </p>
 	    <p>
 	        <label for="box-zona_riesgo_id">Zona de Riesgo *</label>
@@ -470,6 +483,10 @@
 </fieldset>
 <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
     <legend class="ui-widget ui-widget-header ui-corner-all">GNC</legend> 
+	<p>
+		<label for="box-gnc_flag"><b>Tiene GNC?</b></label>
+		<input type="checkbox" name="box-gnc_flag" id="box-gnc_flag" class="ui-widget-content" />
+	</p>
     <div style="float:left;width:50%">
 		<p>
 	        <label for="box-nro_oblea">Nº Oblea</label>

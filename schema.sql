@@ -68,7 +68,7 @@ CREATE TABLE `automotor` (
   `patente_0` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `patente_1` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `automotor_tipo_id` int(11) NOT NULL,
-  `uso` enum('Particular','Comercial','Comercial / Particular') COLLATE utf8_unicode_ci NOT NULL,
+  `uso` enum('Particular','Comercial','Comercial / Particular','Remise') COLLATE utf8_unicode_ci NOT NULL,
   `ano` smallint(5) unsigned NOT NULL,
   `automotor_carroceria_id` int(11) NOT NULL,
   `combustible` enum('Nafta','Diesel') COLLATE utf8_unicode_ci NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `automotor` (
   `chapa` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `pintura` enum('Bueno','Regular','Malo') COLLATE utf8_unicode_ci DEFAULT NULL,
   `tipo_pintura` enum('Común','Bicapa','Tricapa') COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tapizado` enum('Tela','Pana','Cuero') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tapizado` enum('Tela','Pana','Cuero','Combinado') COLLATE utf8_unicode_ci DEFAULT NULL,
   `color` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zona_riesgo_id` int(11) DEFAULT NULL,
   `prendado` tinyint(3) unsigned NOT NULL,
@@ -134,6 +134,7 @@ CREATE TABLE `automotor` (
   `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL,
   `servicio_grua` tinyint(3) unsigned DEFAULT NULL,
   `valor_vehiculo` mediumint(8) unsigned NOT NULL,
+  `gnc_flag` tinyint(3) unsigned NOT NULL,
   `valor_gnc` mediumint(8) unsigned NOT NULL,
   `valor_accesorios` mediumint(8) unsigned NOT NULL,
   `valor_total` int(10) unsigned NOT NULL,
@@ -1149,4 +1150,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-06 19:27:31
+-- 2014-06-06 20:28:28

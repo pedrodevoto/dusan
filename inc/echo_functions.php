@@ -50,7 +50,7 @@ function showEquipoRastreo() {
 	}
 }
 
-function showYears($future = 0, $start = 1974) {
+function showYears($future = 0, $start = 1954) {
 	foreach(range(date('Y') + $future, $start, -1) as $year) {
 		echo '<option value="'.$year.'">'.$year.'</option>';
 	}
