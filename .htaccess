@@ -1,5 +1,2 @@
-php_value session.gc_maxlifetime 10800
-php_value session.cookie_lifetime 10800
-RewriteEngine On 
-RewriteCond %{SERVER_PORT} 80 
-# RewriteRule ^(.*)$ https://jarvis.dusanasegurador.com.ar/$1 [R,L]
+php_value session.gc_maxlifetime 86400
+php_value session.cookie_lifetime 86400
