@@ -62,7 +62,7 @@
                 <li><a href="#">Configuración</a>
                     <ul>
                         <li><a href="section-usr_list.php">Usuarios</a></li>
-                        <li><a href="section-seg_list.php">Seguros</a></li>
+                        <li><a href="section-seg_list.php">Compañías</a></li>
                         <li><a href="section-pro_list.php">Productores</a></li>
 						<li><a href="section-suc_list.php">Sucursales</a></li>
                     </ul>
