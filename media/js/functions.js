@@ -5522,6 +5522,10 @@ $(document).ready(function () {
 				$("#navegacion-datos").click(function() {
 					openBoxModPoliza(id);
 				});
+				
+				$('#btnFinalizar').button().click(function() {
+					$.colorbox.close();
+				});
 
 				populateDiv_Envios('1,2,3,4,7,8', id);
 

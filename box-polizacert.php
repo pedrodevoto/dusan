@@ -58,6 +58,9 @@ list($state, $cliente_nombre, $cliente_email, $seguro_email_emision, $seguro_ema
         <p><span class="ui-icon spnBoxMessage" id="spnBoxIcon"></span>
         <span id="spnBoxMessage"></span></p>
     </div>
+	<p>
+		<div style="width:100%;text-align:right"><button class="alert-error" id="btnFinalizar">Finalizar</button></div>
+	</p>
     <div style="margin-top:10px">
         <fieldset class="ui-widget ui-widget-content ui-corner-all">
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Registro de envíos</legend> 
