@@ -5119,7 +5119,15 @@ $(document).ready(function () {
 			width: '700px',
 			height: '100%',
 			onComplete: function () {
-
+				
+				// Navegación
+				$("#navegacion-detalle").click(function() {
+					openBoxPolizaDet(id, false);
+				});
+				$('#navegacion-cert').click(function() {
+					openBoxPolizaCert(id);
+				});
+				
 				// Initialize buttons
 				$("#btnBox").button();
 
@@ -5454,6 +5462,13 @@ $(document).ready(function () {
 				} else if(fromcreate == 'ren') {
 					$(".btnBox").val('Renovar');
 				} else {
+					// Navegación
+					$("#navegacion-datos").click(function() {
+						openBoxModPoliza(id);
+					});
+					$('#navegacion-cert').click(function() {
+						openBoxPolizaCert(id);
+					});
 					$(".btnBox").val('Aceptar');
 				}
 
@@ -5499,6 +5514,14 @@ $(document).ready(function () {
 			width: '750px',
 			height: '600px',
 			onComplete: function () {
+
+				// Navegación
+				$("#navegacion-detalle").click(function() {
+					openBoxPolizaDet(id, false);
+				});
+				$("#navegacion-datos").click(function() {
+					openBoxModPoliza(id);
+				});
 
 				populateDiv_Envios('1,2,3,4,7,8', id);
 
