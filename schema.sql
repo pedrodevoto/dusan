@@ -133,7 +133,7 @@ CREATE TABLE `automotor` (
   `franquicia` mediumint(8) unsigned DEFAULT NULL,
   `seguro_cobertura_tipo_limite_rc_id` int(11) NOT NULL,
   `servicio_grua` tinyint(3) unsigned DEFAULT NULL,
-  `valor_vehiculo` mediumint(8) unsigned NOT NULL,
+  `valor_vehiculo` mediumint(8) unsigned DEFAULT NULL,
   `gnc_flag` tinyint(3) unsigned NOT NULL,
   `valor_gnc` mediumint(8) unsigned NOT NULL,
   `valor_accesorios` mediumint(8) unsigned NOT NULL,
@@ -257,6 +257,7 @@ DROP TABLE IF EXISTS `automotor_tipo`;
 CREATE TABLE `automotor_tipo` (
   `automotor_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
   `automotor_tipo_nombre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_tipo_orden` int(11) NOT NULL,
   PRIMARY KEY (`automotor_tipo_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -1150,4 +1151,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-06 20:28:28
+-- 2014-06-09 12:49:29

@@ -135,7 +135,7 @@
         <p align="center" style="margin-top:20px">
 			<input type="hidden" name="box-poliza_id" id="box-poliza_id" />			
 			<input type="hidden" name="box-poliza_plan_flag" id="box-poliza_plan_flag" value="0" />
-			<input type="button" name="btnBox" id="btnBox" value="Renovar" />
+			<input type="button" name="btnBox" id="btnBox" value="Siguiente" />
         </p>
         <!-- Nota -->
 	    <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>

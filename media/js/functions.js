@@ -3804,7 +3804,7 @@ $(document).ready(function () {
 				if ((data.toLowerCase().indexOf("error") === -1)) {
 					// Open next box
 					var newid = parseInt(data);
-					openBoxPolizaDet(newid, true);
+					openBoxPolizaDet(newid, 'ren');
 				} else {
 					// Show message
 					showBoxConf(data, true, 'always', 3000, function () {
@@ -5251,8 +5251,6 @@ $(document).ready(function () {
 							$('#box-poliza_prima').removeClass('required');
 							$('#poliza_descuento').hide();
 						}
-						$('#box-productor_seguro_id').html(loading);
-						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 						
 						if ($('#box-subtipo_poliza_id').val()=='15' && $('#box-seguro_id').val()=='1') {
 							$('#box-poliza_vigencia').val('Anual').change().children().each(function() {
@@ -5453,6 +5451,8 @@ $(document).ready(function () {
 				// Set button text
 				if (fromcreate === true) {
 					$(".btnBox").val('Siguiente');
+				} else if(fromcreate == 'ren') {
+					$(".btnBox").val('Renovar');
 				} else {
 					$(".btnBox").val('Aceptar');
 				}
