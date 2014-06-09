@@ -18,8 +18,24 @@
 			$poliza_pago_detalle = '';
 		}		
 		
+		$poliza_validez_desde = $_POST['box-poliza_validez_desde'];
+		$poliza_validez_hasta = $_POST['box-poliza_validez_hasta'];
+		
+		// Determine state
+		$query_Recordset1 = sprintf("SELECT DATEDIFF(NOW(),%s) AS startdiff, DATEDIFF(NOW(),%s) AS enddiff, poliza_estado_id FROM poliza WHERE poliza_id = %s",
+								GetSQLValueString($poliza_validez_desde, "date"),
+								GetSQLValueString($poliza_validez_hasta, "date"),
+								GetSQLValueString($_POST['box-poliza_id'], "int"));	
+		$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
+		$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+		$estado = determineState($row_Recordset1['startdiff'], $row_Recordset1['enddiff'], $row_Recordset1['poliza_estado_id']);
+		if (is_null($estado)) {
+			die("Error: No se pudo determinar el Estado de la póliza.");
+		}
+		
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_numero=TRIM(%s), poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_descuento=%s",
+		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s, poliza_numero=TRIM(%s), poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_descuento=%s",
+						GetSQLValueString($estado, "int"),
 						GetSQLValueString($_POST['box-poliza_numero'], "text"),							
 						GetSQLValueString($_POST['box-poliza_validez_desde'], "date"),						
 						GetSQLValueString($_POST['box-poliza_validez_hasta'], "date"),
