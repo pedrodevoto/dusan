@@ -13,9 +13,9 @@
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Poliza (General)</legend>  
 			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-	            <legend class="ui-widget ui-widget-header ui-corner-all">Cliente y Tipo Póliza</legend>
+	            <legend class="ui-widget ui-widget-header ui-corner-all">Asegurado y Tipo Póliza</legend>
 				<p>
-	                <label for="box-cliente_nombre">Cliente ^</label>
+	                <label for="box-cliente_nombre">Asegurado ^</label>
 	                <input type="text" name="box-cliente_nombre" id="box-cliente_nombre" maxlength="255" class="ui-widget-content" style="width:220px" readonly="readonly">
 				</p>
 				<p>
@@ -67,14 +67,14 @@
 					</select>
 				</p>
 	            <p>
-	                <label for="box-poliza_validez_desde">Vigencia Desde *</label>
-	                <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
-	            </p>            
-	            <p>
 	                <label for="box-poliza_vigencia">Vigencia *</label>
 	                <select name="box-poliza_vigencia" id="box-poliza_vigencia" class="ui-widget-content" style="width:130px"></select>
 					<input type="number" name="box-poliza_vigencia_dias" id="box-poliza_vigencia_dias" class="ui-widget-content" style="width:40px" readonly />
-	            </p> 
+	            </p>
+	            <p>
+	                <label for="box-poliza_validez_desde">Vigencia Desde *</label>
+	                <input type="text" name="box-poliza_validez_desde" id="box-poliza_validez_desde" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
+	            </p>            
 	            <p>
 	                <label for="box-poliza_validez_hasta">Vigencia Hasta *</label>
 	                <input type="text" name="box-poliza_validez_hasta" id="box-poliza_validez_hasta" maxlength="10" class="ui-widget-content box-date" style="width:80px" />

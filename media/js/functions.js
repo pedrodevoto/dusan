@@ -673,7 +673,7 @@ $(document).ready(function () {
 			vigencia = [];
 			break;
 		default:
-			vigencia = ['Bimestral', 'Semestral', 'Anual'];
+			vigencia = ['Mensual', 'Bimestral', 'Trimestral', 'Cuatrimestral', 'Semestral', 'Anual'];
 			break;
 		}
 		for (var i = 0; i < vigencia.length; i++) {
@@ -2162,6 +2162,7 @@ $(document).ready(function () {
 						// Populate main form
 						$('#box-cliente_nombre').val(j.cliente_nombre);
 						$('#box-cliente_id').val(j.cliente_id);
+						$("#box-sucursal_id").val(j.sucursal_id);
 						// Clear search form
 						$('#frmSelectClient').each(function () {
 							this.reset();
@@ -4985,6 +4986,9 @@ $(document).ready(function () {
 						$.when(populateListSubtipoPoliza(tipo, 'box-subtipo_poliza_id', 'box')).then(function() {
 							if (subtipo) {
 								$('#box-subtipo_poliza_id').val(subtipo).change();
+								if (subtipo==6) {
+									$('#box-poliza_vigencia').val('Semestral').change();
+								}
 							}
 						});
 					}
