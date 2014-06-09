@@ -504,6 +504,11 @@ color: #3c763d !important;
 background: #dff0d8 !important;
 border-color: #d6e9c6 !important;
 }
+.alert-error {
+	color: #cd0a0a !important;
+	background: #f2dede !important;
+	border-color: #cd0a0a !important;
+}
 .fixedpos {
 	position:fixed !important;
 }

@@ -86,7 +86,7 @@
 				</div>
 				<div style="clear:both">
 	            	<p align="center" style="margin-top:10px">
-						<input type="reset" name="btnBoxReset" id="btnBoxReset" value="Borrar" /> <input type="button" name="btnBox" id="btnBox" value="Agregar" />                                    
+						<input type="reset" name="btnBoxReset" id="btnBoxReset" value="Borrar" class="alert-error" /> <input type="button" name="btnBox" id="btnBox" value="Agregar" class="alert-success" />                                    
 	                </p>
 				</div>
             </fieldset>         
