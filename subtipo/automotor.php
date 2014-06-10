@@ -71,7 +71,12 @@
 					$.each(j, function(key, value) { 
 						$("#box-"+key).val(value);
 					});
-					
+					if (j.seguro_cobertura_tipo_todo_riesgo==1) {
+						$('#box-franquicia').attr("readonly", false).addClass('required');
+					}
+					else {
+						$('#box-franquicia').val('').attr("readonly", true).removeClass('required');
+					}
 					if (j.seguro_cobertura_tipo_antiguedad && $('#box-ano').val()<j.seguro_cobertura_tipo_antiguedad) {
 						alert('Advertencia: el año del automotor está fuera del rango de años recomendado por la cobertura');
 					}
@@ -95,11 +100,6 @@
 		}
 	});	
 	$('#box-seguro_cobertura_tipo_id').change(function(){
-		if ($(this).find(':selected').text().trim().match(/(^DP|^D2|^D4|^D)[$\s]/g)) {
-			$('#box-franquicia').attr("readonly", false).addClass('required');
-		} else {
-			$('#box-franquicia').val('').attr("readonly", true).removeClass('required');			
-		}
 		populateCobertura($('#box-seguro_cobertura_tipo_id').val());
 	});
 	$('#box-automotor_tipo_id').change(function(){

@@ -1045,6 +1045,8 @@ CREATE TABLE `seguro_cobertura_tipo` (
   `seguro_cobertura_tipo_gruas_km` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_gruas_desde` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_antiguedad` int(11) DEFAULT NULL,
+  `seguro_cobertura_tipo_todo_riesgo` tinyint(4) NOT NULL,
+  `seguro_cobertura_tipo_franquicia` int(11) DEFAULT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_id`),
   KEY `seguro_id` (`seguro_id`),
   CONSTRAINT `seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
@@ -1162,4 +1164,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-10 21:50:21
+-- 2014-06-10 23:26:36

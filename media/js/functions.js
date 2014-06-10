@@ -4214,6 +4214,7 @@ $(document).ready(function () {
 							{"bSearchable": false, "bVisible": false},
 							null,
 							null,
+							null,
 							{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
 								var returnval = '';
 								returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
@@ -6110,13 +6111,20 @@ $(document).ready(function () {
 							},
 							"box-seguro_cobertura_tipo_gruas": {
 								required: true
+							},
+							"box-seguro_cobertura_tipo_franquicia": {
+								required: function() {
+									return $('#box-seguro_cobertura_tipo_todo_riesgo').prop('checked');
+								}
 							}
 						}
 					});
 
 					// Button action
 					$("#btnBox").click(function () {
-						insertFormSegCob(id);
+						if (validateForm.form()) {
+							insertFormSegCob(id);
+						}
 					});
 
 					// Enable form
@@ -6167,6 +6175,11 @@ $(document).ready(function () {
 							},
 							"box-seguro_cobertura_tipo_gruas": {
 								required: true
+							},
+							"box-seguro_cobertura_tipo_franquicia": {
+								required: function() {
+									return $('#box-seguro_cobertura_tipo_todo_riesgo').prop('checked');
+								}
 							}
 						}
 					});

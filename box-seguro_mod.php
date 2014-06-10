@@ -111,6 +111,7 @@ var seguroCodigosTable = '';
 					<th>ID</th>
 					<th>Tipo</th>
 					<th>Rango</th>
+					<th>Rango2</th>
 					<th>Responsabilidad Civil</th>
 					<th>Franquicia</th>
 					<th>Grúa</th>

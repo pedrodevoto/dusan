@@ -14,7 +14,7 @@
 	if (isset($_GET['id'])) {
 		$colname_Recordset1 = $_GET['id'];
 	}
-	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_nombre, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc_id, seguro_cobertura_tipo_gruas, seguro_cobertura_tipo_gruas_km, seguro_cobertura_tipo_gruas_desde, seguro_cobertura_tipo_antiguedad FROM seguro_cobertura_tipo JOIN seguro ON seguro_cobertura_tipo.seguro_id = seguro.seguro_id WHERE seguro_cobertura_tipo_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
+	$query_Recordset1 = sprintf("SELECT seguro_cobertura_tipo_id, seguro_nombre, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_limite_rc_id, seguro_cobertura_tipo_gruas, seguro_cobertura_tipo_gruas_km, seguro_cobertura_tipo_gruas_desde, seguro_cobertura_tipo_antiguedad, seguro_cobertura_tipo_todo_riesgo, seguro_cobertura_tipo_franquicia FROM seguro_cobertura_tipo JOIN seguro ON seguro_cobertura_tipo.seguro_id = seguro.seguro_id WHERE seguro_cobertura_tipo_id=%s", GetSQLValueString($colname_Recordset1, "int"));	
 	
 	// Recordset: Seguro
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
