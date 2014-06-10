@@ -27,7 +27,7 @@ function showAutomotorTipo() {
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
 	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
-		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
+		echo '<option value="'.$row_Recordset1[0].'"'.($row_Recordset1[1]=='AUTOMOTOR'?' selected':'').'>'.$row_Recordset1[1].'</option>';
 	}
 }
 function showEquipoRastreoPedido() {
