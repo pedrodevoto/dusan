@@ -6088,6 +6088,17 @@ $(document).ready(function () {
 				$.when(
 					populateListLimiteRC('box-seguro_cobertura_tipo_limite_rc_id', 'box')
 				).then(function() {
+					
+					$("#box-seguro_cobertura_tipo_antiguedad").keyup(function() {
+						if ($(this).val() != '') {
+							var d = new Date;
+							$('#antiguedad').text('('+d.getFullYear() + ' - ' + (d.getFullYear()-parseInt($(this).val())).toString() + ')');
+						}
+						else {
+							$('#antiguedad').text('');
+						}
+					});
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -6134,7 +6145,17 @@ $(document).ready(function () {
 
 				// Populate form, then initialize
 				$.when(populateFormBoxCob(id)).then(function () {
-
+					
+					$("#box-seguro_cobertura_tipo_antiguedad").keyup(function() {
+						if ($(this).val() != '') {
+							var d = new Date;
+							$('#antiguedad').text('('+d.getFullYear() + ' - ' + (d.getFullYear()-parseInt($(this).val())).toString() + ')');
+						}
+						else {
+							$('#antiguedad').text('');
+						}
+					}).keyup();
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {

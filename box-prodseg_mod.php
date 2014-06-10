@@ -16,9 +16,9 @@
 					<label for="box-organizador_id">Organizador</label>
 					<select name="box-organizador_id" id="box-organizador_id" class="ui-widget-content" style="width:180px"></select>
 				</p>
-				<p>
-                    <label for="box-seguro_nombre">Seguro ^</label>
-                    <input type="text" name="box-seguro_nombre" id="box-seguro_nombre" class="ui-widget-content" style="width:180px" readonly />                   
+                <p>
+                    <label for="box-productor_seguro_codigo">Código *</label>
+                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" required />
                 </p>
                 <p>
                     <label for="box-sucursal_id">Sucursal *</label>
@@ -26,10 +26,6 @@
 						<option value="">Cargando</option>
 					</select>
                 </p>                                                     
-                <p>
-                    <label for="box-productor_seguro_codigo">Código *</label>
-                    <input type="text" name="box-productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="20" class="ui-widget-content" style="width:180px" required />
-                </p>     
             </fieldset>       
         	<p align="center" style="margin-top:10px">
 	            <input type="hidden" name="box-productor_seguro_id" id="box-productor_seguro_id" />            

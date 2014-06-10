@@ -376,14 +376,6 @@ CREATE TABLE `cliente_tipo_sociedad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `cobertura_tipo`;
-CREATE TABLE `cobertura_tipo` (
-  `cobertura_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cobertura_tipo_nombre` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`cobertura_tipo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `combinado_familiar`;
 CREATE TABLE `combinado_familiar` (
   `combinado_familiar_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1052,8 +1044,7 @@ CREATE TABLE `seguro_cobertura_tipo` (
   `seguro_cobertura_tipo_gruas` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_gruas_km` int(11) DEFAULT NULL,
   `seguro_cobertura_tipo_gruas_desde` int(11) DEFAULT NULL,
-  `seguro_cobertura_tipo_anios_de` int(11) DEFAULT NULL,
-  `seguro_cobertura_tipo_anios_a` int(11) DEFAULT NULL,
+  `seguro_cobertura_tipo_antiguedad` int(11) DEFAULT NULL,
   PRIMARY KEY (`seguro_cobertura_tipo_id`),
   KEY `seguro_id` (`seguro_id`),
   CONSTRAINT `seguro_cobertura_tipo_ibfk_1` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
@@ -1171,4 +1162,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-10 12:59:40
+-- 2014-06-10 21:50:21

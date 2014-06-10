@@ -11,7 +11,7 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre, seguro_cobertura_tipo_anios_de, seguro_cobertura_tipo_anios_a, seguro_cobertura_tipo_limite_rc_valor, seguro_cobertura_tipo_gruas";
+	$query_Recordset1_fields = " seguro_cobertura_tipo_id, seguro_cobertura_tipo_nombre, YEAR(NOW()) - seguro_cobertura_tipo_antiguedad as seguro_cobertura_tipo_anios_de, YEAR(NOW()) as seguro_cobertura_tipo_anios_a, seguro_cobertura_tipo_limite_rc_valor, seguro_cobertura_tipo_gruas";
 	$query_Recordset1_tables = " FROM seguro_cobertura_tipo LEFT JOIN  seguro_cobertura_tipo_limite_rc ON seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = seguro_cobertura_tipo.seguro_cobertura_tipo_limite_rc_id ";
 	
 	$query_Recordset1_where = " WHERE seguro_id = ".mysql_real_escape_string($_GET['seguro']);

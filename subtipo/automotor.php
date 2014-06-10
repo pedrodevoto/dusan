@@ -69,23 +69,10 @@
 					var options = ''; 
 					var valid = true;
 					$.each(j, function(key, value) { 
-						switch (key) {
-							case 'seguro_cobertura_tipo_anios_de':
-								if (value && $("#box-ano").val() < value) {
-									valid = false;
-								}
-								break;
-							case 'seguro_cobertura_tipo_anios_a':
-								if (value && $("#box-ano").val() > value) {
-									valid = false;
-								}
-								break;
-							default:
-								$("#box-"+key).val(value);
-								break;
-						}
+						$("#box-"+key).val(value);
 					});
-					if (!valid) {
+					
+					if (j.seguro_cobertura_tipo_antiguedad && $('#box-ano').val()<j.seguro_cobertura_tipo_antiguedad) {
 						alert('Advertencia: el año del automotor está fuera del rango de años recomendado por la cobertura');
 					}
 					dfd.resolve();								
