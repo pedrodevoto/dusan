@@ -830,6 +830,28 @@ CREATE TABLE `libros_rubricados_ros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `localidad`;
+CREATE TABLE `localidad` (
+  `localidad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `localidad_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `localidad_cp` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`localidad_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `organizador`;
+CREATE TABLE `organizador` (
+  `organizador_id` int(11) NOT NULL AUTO_INCREMENT,
+  `organizador_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `organizador_iva` int(11) NOT NULL,
+  `organizador_cuit` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
+  `organizador_matricula` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `organizador_email` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `organizador_telefono` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`organizador_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `otros_riesgos`;
 CREATE TABLE `otros_riesgos` (
   `otros_riesgos_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -973,17 +995,15 @@ CREATE TABLE `productor_seguro` (
   `productor_id` int(10) unsigned NOT NULL,
   `seguro_id` int(10) unsigned NOT NULL,
   `productor_seguro_codigo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `productor_seguro_organizacion_flag` tinyint(4) DEFAULT NULL,
-  `productor_seguro_organizacion_nombre` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `productor_seguro_organizacion_tipo_persona` tinyint(4) DEFAULT NULL,
-  `productor_seguro_organizacion_matricula` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `productor_seguro_organizacion_cuit` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `organizador_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`productor_seguro_id`),
   UNIQUE KEY `code` (`productor_id`,`seguro_id`,`productor_seguro_codigo`) USING BTREE,
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
+  KEY `organizador_id` (`organizador_id`),
   CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
-  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`)
+  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`),
+  CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`organizador_id`) REFERENCES `organizador` (`organizador_id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1151,4 +1171,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-09 12:49:29
+-- 2014-06-10 12:59:40

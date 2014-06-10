@@ -11,13 +11,10 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " productor_seguro.productor_seguro_id as productor_seguro_id, productor_nombre, organizador_nombre, productor_seguro_codigo, GROUP_CONCAT(sucursal_nombre) as sucursal_nombre";
-	$query_Recordset1_tables = " FROM productor_seguro JOIN (productor) ON productor_seguro.productor_id = productor.productor_id LEFT JOIN (organizador, productor_seguro_sucursal, sucursal) ON (organizador.organizador_id = productor_seguro.organizador_id AND productor_seguro.productor_seguro_id = productor_seguro_sucursal.productor_seguro_id AND sucursal.sucursal_id = productor_seguro_sucursal.sucursal_id) ";
-	
-	$query_Recordset1_where = " WHERE seguro_id = ".mysql_real_escape_string($_GET['seguro']);
-	
-	$query_Recordset1_group = " GROUP BY productor_seguro.productor_seguro_id";
-	
+	$query_Recordset1_fields = " organizador_id, organizador_nombre, IF(organizador_iva=1, 'CF', 'RI') as organizador_iva, organizador_cuit, organizador_matricula, organizador_email";
+	$query_Recordset1_tables = " FROM organizador";
+	$query_Recordset1_where = " WHERE 1";
+		
 ?>
 <?php
 
@@ -37,10 +34,10 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('productor_seguro_id', 'productor_nombre', 'organizador_nombre', 'productor_seguro_codigo', 'sucursal_nombre', ' ');
+			$aColumns = array('organizador_id', 'organizador_nombre', 'organizador_iva', 'organizador_cuit', 'organizador_matricula', 'organizador_email', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
-			$sIndexColumn = "productor_seguro.productor_seguro_id";		
+			$sIndexColumn = "organizador.organizador_id";		
 			
 			/* Paging */
 			$sLimit = "";
@@ -85,7 +82,7 @@
 			}			
 		
 			/* SQL queries: Get data to display */			
-			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $query_Recordset1_group $sOrder $sLimit";
+			$query_Recordset1_final = "SELECT SQL_CALC_FOUND_ROWS" . $query_Recordset1_base . " $sWhere $sOrder $sLimit";
 			$Recordset1 = mysql_query($query_Recordset1_final, $connection) or die(mysql_die());	
 		
 			/* Data set length after filtering */

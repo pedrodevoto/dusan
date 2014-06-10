@@ -12,15 +12,11 @@
 	if (isset($_POST["box-productor_id"]) && $_POST["box-productor_id"]!="") {
 		
 		// Insert
-		$insertSQL = sprintf("INSERT INTO productor_seguro (productor_id, seguro_id, productor_seguro_codigo, productor_seguro_organizacion_flag, productor_seguro_organizacion_nombre, productor_seguro_organizacion_tipo_persona, productor_seguro_organizacion_matricula, productor_seguro_organizacion_cuit) VALUES (%s, %s, UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), %s, UPPER(TRIM(%s)), UPPER(TRIM(%s)))",
+		$insertSQL = sprintf("INSERT INTO productor_seguro (productor_id, seguro_id, productor_seguro_codigo, organizador_id) VALUES (%s, %s, UPPER(TRIM(%s)), %s)",
 						GetSQLValueString($_POST['box-productor_id'], "int"),
 						GetSQLValueString($_POST['box-seguro_id'], "int"),						
 						GetSQLValueString($_POST['box-productor_seguro_codigo'], "text"),
-						GetSQLValueString(isset($_POST['box-productor_seguro_organizacion_flag']) ? 'true' : '', 'defined','1','0'),
-						GetSQLValueString($_POST['box-productor_seguro_organizacion_nombre'], "text"),
-						GetSQLValueString($_POST['box-productor_seguro_organizacion_tipo_persona'], "int"),
-						GetSQLValueString($_POST['box-productor_seguro_organizacion_matricula'], "text"),
-						GetSQLValueString($_POST['box-productor_seguro_organizacion_cuit'], "text"));						
+						GetSQLValueString($_POST['box-organizador_id'], "int"));						
 		$Result1 = mysql_query($insertSQL, $connection);
 
 		switch (mysql_errno()) {

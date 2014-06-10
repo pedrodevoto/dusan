@@ -60,7 +60,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = zona_riesgo.zona_riesgo_id LEFT JOIN producto ON producto.producto_id = automotor.producto_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, seguro_zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = seguro_zona_riesgo.seguro_zona_riesgo_id LEFT JOIN producto ON producto.producto_id = automotor.producto_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -106,7 +106,7 @@
 				array('maxwidth' => 67, 'text' => "Uso: ".$row_Recordset2['uso']),
 				array('maxwidth' => 67, 'text' => "Importado: ".formatCB($row_Recordset2['importado'],'W')),
 				array('maxwidth' => 67, 'text' => "Accesorios: ".formatCB($row_Recordset2['accesorios'],'W')),
-				array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo_nombre']),
+				array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['seguro_zona_riesgo_nombre']),
 				array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
 			);
 			$txt_patente = "Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];
@@ -220,7 +220,7 @@
 								array('maxwidth' => 67, 'text' => "Uso: ".$row_Recordset2['uso']),
 								array('maxwidth' => 67, 'text' => "Importado: ".formatCB($row_Recordset2['importado'],'W')),
 								array('maxwidth' => 67, 'text' => "Accesorios: ".formatCB($row_Recordset2['accesorios'],'W')),
-								array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo_nombre']),
+								array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['seguro_zona_riesgo_nombre']),
 								array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
 							);
 							$txt_patente = "Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];
@@ -469,7 +469,7 @@
 							array('maxwidth' => 67, 'text' => "Uso: ".$row_Recordset2['uso']),
 							array('maxwidth' => 67, 'text' => "Importado: ".formatCB($row_Recordset2['importado'],'W')),
 							array('maxwidth' => 67, 'text' => "Accesorios: ".formatCB($row_Recordset2['accesorios'],'W')),
-							array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['zona_riesgo_nombre']),
+							array('maxwidth' => 67, 'text' => "Zona Riesgo: ".$row_Recordset2['seguro_zona_riesgo_nombre']),
 							array('maxwidth' => 130, 'text' => "Acreedor: ".($row_Recordset2['prendado'] == 1 ? "Prendario (".$row_Recordset2['acreedor_rs']." / CUIT: ".$row_Recordset2['acreedor_cuit'].")" : "No"))
 						);
 						$txt_patente = "Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1'];

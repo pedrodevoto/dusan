@@ -1064,6 +1064,36 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+
+	populateListOrg = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-org.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					// Sort options alphabetically
+					sortListAlpha(field);
+					// Append option: "all"
+					appendListItem(field, '', 'Sin organizador');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id, table) {
@@ -1285,7 +1315,34 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-
+	populateFormBoxOrg = function (id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_org.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	
 	populateFormBoxSuc = function (id) {
 		var dfd = new $.Deferred();
 		$.ajax({
@@ -1354,8 +1411,7 @@ $(document).ready(function () {
 						populateListProductor("box-productor_id", "box"),
 						populateListSeguro("box-seguro_id", "box"),
 						populateListSuc("box-sucursal_id", "box"),
-						populateListZonaRiesgo("box-zona_riesgo_id", "box"),
-						populateListCoberturaTipo("box-seguro_cobertura_tipo_id", "box", true, j.seguro_id)
+						populateListOrg("box-organizador_id", "box")
 					).then(function () {
 						// Populate Form
 						populateFormGeneric(j, "box");
@@ -3344,6 +3400,28 @@ $(document).ready(function () {
 			}
 		});
 	}
+	insertFormOrg = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-org.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'onerror', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
+			}
+		});
+	}
 
 	/* Update via form functions */
 	updateFormUsuario = function () {
@@ -3634,6 +3712,26 @@ $(document).ready(function () {
 				showBoxConf(data, false, 'always', 3000, function () {
 					// Repopulate form
 					openBoxModSeguro(id);
+				});
+			}
+		});
+	}
+	updateFormOrg = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-org.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxOrg($('#box-organizador_id').val());
 				});
 			}
 		});
@@ -6072,7 +6170,7 @@ $(document).ready(function () {
 			title: 'Productor/Seguro/Código',
 			href: 'box-prodseg_alta.php',
 			width: '700px',
-			height: '600px',
+			height: '400px',
 			onComplete: function () {
 
 				// -------------------- GENERAL ---------------------
@@ -6093,7 +6191,8 @@ $(document).ready(function () {
 
 				$.when(
 					populateListProductor("box-productor_id", "box"),
-					populateListSuc("box-sucursal_id", "box")
+					populateListSuc("box-sucursal_id", "box"),
+					populateListOrg("box-organizador_id", "box")
 				).then(function() {
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -6133,7 +6232,7 @@ $(document).ready(function () {
 			title: 'Productor/Seguro/Código',
 			href: 'box-prodseg_mod.php',
 			width: '700px',
-			height: '500px',
+			height: '400px',
 			onComplete: function () {
 
 				// Initialize buttons
@@ -6424,5 +6523,116 @@ $(document).ready(function () {
 			
 		});
 	}
-	
+	openBoxAltaOrg = function() {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-org_alta.php',
+			width: '700px',
+			height: '520px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate drop-downs, then initialize form
+				$.when(
+					
+				).then(function () {
+
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-organizador_nombre": {
+								required: true
+							},
+							"box-organizador_iva": {
+								required: true
+							},
+							"box-organizador_cuit": {
+								required: true
+							},
+							"box-organizador_matricula": {
+								required: true
+							},
+							"box-organizador_email": {
+								email: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea crear el registro?')) {
+								insertFormOrg();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+
+				});
+
+			}
+		});
+	}
+	openBoxModOrg = function(id) {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-org_mod.php',
+			width: '700px',
+			height: '520px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxOrg(id)).then(function () {
+
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-organizador_nombre": {
+								required: true
+							},
+							"box-organizador_iva": {
+								required: true
+							},
+							"box-organizador_cuit": {
+								required: true
+							},
+							"box-organizador_matricula": {
+								required: true
+							},
+							"box-organizador_email": {
+								email: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormOrg();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+
+				});
+
+			}
+		});
+	}
 });
