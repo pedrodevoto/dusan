@@ -72,6 +72,7 @@
 					"bJQueryUI": true,				
 					"bAutoWidth": true,
 					"sPaginationType": "full_numbers",	
+					"bProcessing": true,
 					"bServerSide": true,				
 					"sAjaxSource": sourceURL+'?action=view',
 					"iDisplayLength": 25,
@@ -261,6 +262,12 @@
 								
 								<label class="filtros_estado" for="vence_manana">Vence mañana?</label>
 								<input type="checkbox" name="vence_manana" id="vence_manana" value="1"></input>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="8" align="center">
+								<label for="mostrar_todas">Mostrar todas</label>
+								<input type="checkbox" name="mostrar_todas" id="mostrar_todas" value="1"></input>
 							</td>
 						</tr>
                         <tr>                                

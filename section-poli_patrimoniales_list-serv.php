@@ -21,26 +21,29 @@
 	$query_Recordset1_group = " GROUP BY poliza.poliza_id";
 	$query_Recordset1_having = " HAVING 1";
 	
+	$filter_where = '';
+	$filter_having = '';
+	
 	// Filter by: poliza_numero
 	if(isset($_GET['poliza_numero']) && $_GET['poliza_numero']!=""){	
-		$query_Recordset1_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
+		$filter_where .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
 	}
 	// Filter by: seguro_nombre
 	if(isset($_GET['seguro_nombre']) && $_GET['seguro_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
+		$filter_where .= sprintf(" AND seguro_nombre LIKE %s",GetSQLValueString('%' . $_GET['seguro_nombre'] . '%', "text"));
 	}
 	// Filter by: sucursal_id
 	if(isset($_GET['sucursal_id']) && $_GET['sucursal_id']!=""){	
-		$query_Recordset1_where .= sprintf(" AND poliza.sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
+		$filter_where .= sprintf(" AND poliza.sucursal_id = %s",GetSQLValueString($_GET['sucursal_id'], "int"));
 	}
 
 	// Filter by: productor_nombre
 	if(isset($_GET['productor_nombre']) && $_GET['productor_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND productor_nombre LIKE %s",GetSQLValueString('%' . $_GET['productor_nombre'] . '%', "text"));
+		$filter_where .= sprintf(" AND productor_nombre LIKE %s",GetSQLValueString('%' . $_GET['productor_nombre'] . '%', "text"));
 	}
 	// Filter by: cliente_nombre
 	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
-		$query_Recordset1_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))) LIKE %s", GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
+		$filter_where .= sprintf(" AND TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))) LIKE %s", GetSQLValueString('%' . $_GET['cliente_nombre'] . '%', "text"));
 	}
 	// Filter by: poliza_estado_id
 	if(!empty($_GET['poliza_vigente']) or !empty($_GET['poliza_vigente_a_renovar']) or !empty($_GET['poliza_vigente_renovada']) or !empty($_GET['poliza_cumplida'])  or !empty($_GET['poliza_cumplida_renovada'])  or !empty($_GET['poliza_pendiente'])  or !empty($_GET['poliza_mc'])){
@@ -51,28 +54,36 @@
 				$estados_id[] = GetSQLValueString($_GET[$estado], 'int');
 			}
 		}
-		$query_Recordset1_where .= sprintf(" AND poliza.poliza_estado_id IN (%s)", implode(',', $estados_id));
-		$query_Recordset1_having .= ' AND COUNT(endoso_id) = 0';
+		$filter_where .= sprintf(" AND poliza.poliza_estado_id IN (%s)", implode(',', $estados_id));
+		$filter_having .= ' AND COUNT(endoso_id) = 0';
 	}
 	// Filter by: poliza_anulada
 	if (!empty($_GET['poliza_anulada'])) {
-		$query_Recordset1_having .= ' AND COUNT(endoso_id) > 0';
+		$filter_having .= ' AND COUNT(endoso_id) > 0';
 	}
 	// Filter by: vence_manana
 	if (!empty($_GET['vence_manana']) && $_GET['vence_manana']==1) {
-		$query_Recordset1_having .= ' AND vence_manana > 0';
+		$filter_having .= ' AND vence_manana > 0';
 	}
 	// Filter by: poliza_medio_pago
 	if(isset($_GET['poliza_medio_pago']) && $_GET['poliza_medio_pago']!=""){	
-		$query_Recordset1_where .= sprintf(" AND poliza.poliza_medio_pago = %s",GetSQLValueString($_GET['poliza_medio_pago'], "text"));
+		$filter_where .= sprintf(" AND poliza.poliza_medio_pago = %s",GetSQLValueString($_GET['poliza_medio_pago'], "text"));
 	}
 	// Filter by: poliza_al_dia
 	if(isset($_GET['poliza_al_dia']) && $_GET['poliza_al_dia']!=""){	
-		$query_Recordset1_having .= sprintf(" AND poliza_al_dia = %s", GetSQLValueString($_GET['poliza_al_dia']=='1'?'Sí':'No', "text"));
+		$filter_having .= sprintf(" AND poliza_al_dia = %s", GetSQLValueString($_GET['poliza_al_dia']=='1'?'Sí':'No', "text"));
 	}
 	// Filter by: poliza_vigencia_dia
 	if(isset($_GET['poliza_vigencia_dia']) && $_GET['poliza_vigencia_dia']!=""){	
-		$query_Recordset1_where .= sprintf(" AND DATE_FORMAT(poliza_validez_desde, '%%e') = %s", GetSQLValueString($_GET['poliza_vigencia_dia'], "int"));
+		$filter_where .= sprintf(" AND DATE_FORMAT(poliza_validez_desde, '%%e') = %s", GetSQLValueString($_GET['poliza_vigencia_dia'], "int"));
+	}
+	
+	if (!empty($filter_where) or !empty($filter_having) or !empty($_GET['mostrar_todas'])) {
+		$query_Recordset1_where .= $filter_where;
+		$query_Recordset1_having .= $filter_having;
+	}
+	else {
+		$query_Recordset1_where = ' WHERE 1=2';
 	}
 ?>
 <?php
