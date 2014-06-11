@@ -17,7 +17,7 @@ $date_from = mysql_real_escape_string($_GET['fecha_desde']);
 $date_to = mysql_real_escape_string($_GET['fecha_hasta']);
 $sucursal_id = mysql_real_escape_string($_GET['sucursal_id']);
 
-$sql = sprintf('SELECT DATE_FORMAT(cuota_fe_pago, \'%%d/%%m/%%y\') as cuota_fe_pago, IF(cliente_tipo_persona=1, CONCAT(IFNULL(cliente_nombre, \'\'), \'\', IFNULL(cliente_apellido, \'\')), cliente_razon_social) as cliente_nombre, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, contacto_localidad, contacto_cp, cliente_cuit, cliente_cf, CONCAT(automotor_marca_nombre, \' \', modelo, \'    Patente: \', CONCAT(IF(automotor_carroceria_id=17, "101", ""), patente_0, patente_1)) as detalle_poliza, cuota_monto FROM cuota JOIN (poliza, cliente, contacto) ON cuota.poliza_id = poliza.poliza_id AND poliza.cliente_id = cliente.cliente_id AND contacto.cliente_id = cliente.cliente_id LEFT JOIN (automotor, automotor_marca) ON automotor.poliza_id = cuota.poliza_id AND automotor_marca.automotor_marca_id = automotor.automotor_marca_id WHERE DATE(cuota_fe_pago) BETWEEN \'%s\' AND \'%s\' AND cuota_estado_id = 2 AND contacto_default = 1 AND sucursal_id=\'%s\'', $date_from, $date_to, $sucursal_id);
+$sql = sprintf('SELECT DATE_FORMAT(cuota_fe_pago, \'%%d/%%m/%%y\') as cuota_fe_pago, IF(cliente_tipo_persona=1, CONCAT(IFNULL(cliente_nombre, \'\'), \'\', IFNULL(cliente_apellido, \'\')), cliente_razon_social) as cliente_nombre, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, localidad_nombre, localidad_cp, cliente_cuit, cliente_cf, CONCAT(automotor_marca_nombre, \' \', modelo, \'    Patente: \', CONCAT(IF(automotor_carroceria_id=17, "101", ""), patente_0, patente_1)) as detalle_poliza, cuota_monto FROM cuota JOIN (poliza, cliente, contacto) ON cuota.poliza_id = poliza.poliza_id AND poliza.cliente_id = cliente.cliente_id AND contacto.cliente_id = cliente.cliente_id LEFT JOIN localidad ON localidad.localidad_id = contacto.localidad_id LEFT JOIN (automotor, automotor_marca) ON automotor.poliza_id = cuota.poliza_id AND automotor_marca.automotor_marca_id = automotor.automotor_marca_id WHERE DATE(cuota_fe_pago) BETWEEN \'%s\' AND \'%s\' AND cuota_estado_id = 2 AND contacto_default = 1 AND sucursal_id=\'%s\'', $date_from, $date_to, $sucursal_id);
 $res = mysql_query($sql) or die(mysql_error());
 
 $percent_serv = 0.13045;
@@ -51,7 +51,7 @@ switch ($type) {
 				$pdf->SetXY(25,46+($first?0:148.5));
 				$pdf->Write(5,$row['contacto_domicilio'].' '.$row['contacto_nro'].' '.$row['contacto_piso'].' '.$row['contacto_dpto']);
 				$pdf->SetX(132);
-				$pdf->Write(5,$row['contacto_localidad'].' ('.$row['contacto_cp'].')');
+				$pdf->Write(5,$row['localidad_nombre'].' ('.$row['localidad_cp'].')');
 				$pdf->SetXY(132, 55+($first?0:148.5));
 				$pdf->Write(5,$row['cliente_cuit']);
 			

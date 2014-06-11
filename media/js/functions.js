@@ -1094,6 +1094,33 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateListLocalidades = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-localidad.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + value[0] + '">' + value[1] + '</option>';
+					});
+					$('#' + field).html(options);
+					// Append option: "all"
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id, table) {
@@ -2426,10 +2453,10 @@ $(document).ready(function () {
 						result += '<td>' + object.contacto_nro + '</td>';
 						result += '<td>' + object.contacto_piso + '</td>';
 						result += '<td>' + object.contacto_dpto + '</td>';
-						result += '<td>' + object.contacto_localidad + '</td>';
+						result += '<td>' + object.localidad_nombre + '</td>';
 						result += '<td>' + object.contacto_country + '</td>';
 						result += '<td>' + object.contacto_lote + '</td>';
-						result += '<td>' + object.contacto_cp + '</td>';
+						result += '<td>' + object.localidad_cp + '</td>';
 						result += '<td>' + object.contacto_telefono1 + '</td>';
 						result += '<td>' + object.contacto_telefono2 + '</td>';
 						result += '<td><ul class="listInlineIcons">';
@@ -3247,6 +3274,7 @@ $(document).ready(function () {
 					$('#frmBox').each(function () {
 						this.reset();
 					});
+					$('#box-localidad_id').trigger('chosen:updated');
 					$('box-contacto_tipo').val('Particular');
 					// Refresh DIVs
 					populateDiv_Contacto(id);
@@ -3655,6 +3683,7 @@ $(document).ready(function () {
 					$('#frmBox').each(function () {
 						this.reset();
 					});
+					$('#box-localidad_id').trigger('chosen:updated');
 					$("#box-contacto_id").remove();
 					$("#box-action").val('insert');
 					$("#btnBoxReset").button('option', 'label', 'Borrar');
@@ -4753,6 +4782,9 @@ $(document).ready(function () {
 					populateListContacto_Tipo('box-contacto_tipo', 'box'),
 					populateListTelefonoCompania('box-contacto_telefono2_compania', 'box')
 				).then(function () {
+					$.when(populateListLocalidades('box-localidad_id', 'box')).then(function() {
+						$('#box-localidad_id').chosen();
+					});
 					
 					$('#box-contacto_tipo').val('Particular');
 
@@ -4767,12 +4799,6 @@ $(document).ready(function () {
 							},
 							"box-contacto_nro": {
 								required: true
-							},
-							"box-contacto_localidad": {
-								required: true
-							},
-							"box-contacto_cp": {
-								required: true
 							}
 						}
 					});
@@ -4785,6 +4811,19 @@ $(document).ready(function () {
 								updateFormContacto(id);
 							}
 						};
+					});
+					
+					$("#btnBoxReset").click(function () {
+						// Clear form
+						$('#frmBox').each(function () {
+							this.reset();
+						});
+						$('#box-localidad_id').trigger('chosen:updated');
+						$("#box-contacto_id").remove();
+						$("#box-action").val('insert');
+						$("#btnBoxReset").button('option', 'label', 'Borrar');
+						$("#btnBox").button('option', 'label', 'Agregar');
+						$("#box-contacto_domicilio").focus();
 					});
 					
 					$('#btnAtras').click(function() {
@@ -6046,19 +6085,10 @@ $(document).ready(function () {
 				name: 'box-contacto_id'
 			}).val(id).appendTo($('#frmBox'));
 			$("#box-action").val('edit');
-			$("#btnBoxReset").button('option', 'label', 'Cancelar').click(function () {
-				// Clear form
-				$('#frmBox').each(function () {
-					this.reset();
-				});
-				$("#box-contacto_id").remove();
-				$("#box-action").val('insert');
-				$("#btnBoxReset").button('option', 'label', 'Borrar');
-				$("#btnBox").button('option', 'label', 'Agregar');
-				$("#box-contacto_domicilio").focus();
-			});
+			$("#btnBoxReset").button('option', 'label', 'Cancelar');
 			$("#btnBox").button('option', 'label', 'Guardar');
 			formDisable('frmBox', 'ui', false);
+			$('#box-localidad_id').trigger('chosen:updated');
 			$("#box-contacto_domicilio").focus();
 		});
 	}

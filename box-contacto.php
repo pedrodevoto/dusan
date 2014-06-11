@@ -42,13 +42,9 @@
 	                    <input type="text" name="box-contacto_dpto" id="box-contacto_dpto" maxlength="3" class="ui-widget-content" style="width:40px" />
 	                </p>
 					<p>
-	                    <label for="box-contacto_localidad">Localidad *</label>
-	                    <input type="text" name="box-contacto_localidad" id="box-contacto_localidad" maxlength="255" class="ui-widget-content" style="width:200px" />
-	                </p>
-	                <p>
-	                    <label for="box-contacto_cp">Código Postal *</label>
-	                    <input type="text" name="box-contacto_cp" id="box-contacto_cp" maxlength="10" class="ui-widget-content" style="width:100px" />
-	                </p>
+						<label for="box-localidad_id">Localidad/CP *</label>
+						<select style="height:10px;width:200px" name="box-localidad_id" id="box-localidad_id"></select>
+					</p>
 					<p>
 						<label for="box-contacto_country">Barrio Cerrado / Country </label>
 						<input type="text" name="box-contacto_country" id="box-contacto_country" maxlength="255" class="ui-widget-content" style="width:200px" />

@@ -30,7 +30,7 @@ usort($items, function($a, $b) {
 });
 
 foreach ($items as $item) {
-	$sql = 'SELECT ps.productor_id as productor_id, p.poliza_id as poliza_id, productor_matricula, productor_cuit, DATE(p.timestamp) as timestamp, cliente_tipo_persona, cliente_tipo_doc, IF(cliente_tipo_persona=1, cliente_nro_doc, CONCAT(cliente_cuit_0, cliente_cuit_1, cliente_cuit_2)) as cliente_nro_doc, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ""), " ", IFNULL(cliente_nombre, ""))), cliente_razon_social) as cliente_nombre, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, contacto_localidad, contacto_cp, contacto_country, contacto_lote, seguro_codigo_lr, poliza_validez_desde, poliza_validez_hasta, poliza_renueva_num, poliza_flota, subtipo_poliza_id FROM poliza p JOIN (productor_seguro ps, seguro s, productor pr, cliente c, contacto co) ON (p.productor_seguro_id = ps.productor_seguro_id AND ps.seguro_id = s.seguro_id AND ps.productor_id = pr.productor_id AND p.cliente_id = c.cliente_id AND c.cliente_id = co.cliente_id AND contacto_default = 1)';
+	$sql = 'SELECT ps.productor_id as productor_id, p.poliza_id as poliza_id, productor_matricula, productor_cuit, DATE(p.timestamp) as timestamp, cliente_tipo_persona, cliente_tipo_doc, IF(cliente_tipo_persona=1, cliente_nro_doc, CONCAT(cliente_cuit_0, cliente_cuit_1, cliente_cuit_2)) as cliente_nro_doc, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ""), " ", IFNULL(cliente_nombre, ""))), cliente_razon_social) as cliente_nombre, contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, localidad_nombre, localidad_cp, contacto_country, contacto_lote, seguro_codigo_lr, poliza_validez_desde, poliza_validez_hasta, poliza_renueva_num, poliza_flota, subtipo_poliza_id FROM poliza p JOIN (productor_seguro ps, seguro s, productor pr, cliente c, contacto co) ON (p.productor_seguro_id = ps.productor_seguro_id AND ps.seguro_id = s.seguro_id AND ps.productor_id = pr.productor_id AND p.cliente_id = c.cliente_id AND c.cliente_id = co.cliente_id AND contacto_default = 1) LEFT JOIN localidad l ON l.localidad_id = co.localidad_id';
 	switch ($item['type']) {
 		case 'poliza':
 		$sql .= ' WHERE p.poliza_id = '.$item['id'];
@@ -63,7 +63,7 @@ foreach ($items as $item) {
 	$libros_rubricados_ros_asegurado_nro_doc = $row['cliente_nro_doc'];
 	$libros_rubricados_ros_asegurado_nombre = $row['cliente_nombre'];
 	$libros_rubricados_ros_cpa_proponente = $row['contacto_cp'];
-	$libros_rubricados_ros_obs_proponente = trim($row['contacto_domicilio'].' '.$row['contacto_nro'].' '.$row['contacto_piso'].' '.$row['contacto_dpto']).', '.trim($row['contacto_localidad'].' '.$row['contacto_cp'].' '.$row['contacto_country'].' '.$row['contacto_lote']);
+	$libros_rubricados_ros_obs_proponente = trim($row['contacto_domicilio'].' '.$row['contacto_nro'].' '.$row['contacto_piso'].' '.$row['contacto_dpto']).', '.trim($row['localidad_nombre'].' '.$row['localidad_cp'].' '.$row['contacto_country'].' '.$row['contacto_lote']);
 	$libros_rubricados_ros_cpa = $row['contacto_cp'];
 	$libros_rubricados_ros_cia_id = $row['seguro_codigo_lr'];
 	

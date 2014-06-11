@@ -486,8 +486,7 @@ CREATE TABLE `contacto` (
   `contacto_nro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_piso` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_dpto` varchar(255) COLLATE utf8_unicode_ci DEFAULT '0',
-  `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contacto_cp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `localidad_id` int(11) DEFAULT NULL,
   `contacto_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_telefono1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -499,7 +498,9 @@ CREATE TABLE `contacto` (
   `contacto_default` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),
-  CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`)
+  KEY `localidad_id` (`localidad_id`),
+  CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
+  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`localidad_id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1165,4 +1166,4 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-11 13:46:27
+-- 2014-06-11 17:47:44
