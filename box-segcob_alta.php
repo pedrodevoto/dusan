@@ -29,6 +29,16 @@
 					<label for="box-seguro_cobertura_tipo_todo_riesgo">Cobertura TODO RIESGO?</label>
 					<input type="checkbox" name="box-seguro_cobertura_tipo_todo_riesgo" id="box-seguro_cobertura_tipo_todo_riesgo"> <label for="box-seguro_cobertura_tipo_franquicia" style="margin-left:36px;width:initial">Franquicia</label> <input type="text" name="box-seguro_cobertura_tipo_franquicia" id="box-seguro_cobertura_tipo_franquicia" class="ui-widget-content" />
 				</p>
+				<p>
+					<label for="box-seguro_cobertura_tipo_ajuste">Ajuste</label>
+					<select name="box-seguro_cobertura_tipo_ajuste" id="box-seguro_cobertura_tipo_ajuste" class="ui-widget-content" style="width:130px">
+						<option value="">Seleccione</option>                
+						<option value="0">0%</option>
+						<option value="10">10%</option>
+						<option value="20">20%</option>
+						<option value="30">30%</option>
+					</select>
+				</p>
             	<p align="center" style="margin-top:10px">
 					<input type="button" name="btnBox" id="btnBox" value="Guardar" />
 					<button id="btnBoxCancelar">Cancelar</button>
