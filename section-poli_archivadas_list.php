@@ -263,7 +263,7 @@
                             <th>Poliza ID (Hide)</th>
 							<th>Cliente ID (Hide)</th>
                             <th>Póliza N°</th>                            
-                            <th>Tipo</th> 
+                            <th>Patente</th> 
                             <th>Compañía</th>
                             <th>Sucursal</th>
                             <th>Productor</th>
