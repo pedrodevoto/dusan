@@ -23,14 +23,14 @@ function getNameFromNumber($num) {
     }
 }
 
-$sql = 'SELECT cliente_apellido, cliente_nombre, cliente_razon_social, cliente_email, cliente_email_alt, MAX(poliza_validez_hasta) as ultima_vigencia, GROUP_CONCAT(DISTINCT CONCAT_WS(", ", contacto_telefono1, contacto_telefono2, contacto_telefono2_compania, contacto_telefono_laboral, contacto_telefono_alt) SEPARATOR "\n") as telefonos, GROUP_CONCAT(DISTINCT CONCAT_WS(" ", contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, ", ", contacto_country, contacto_lote) SEPARATOR "\n") as domicilios, GROUP_CONCAT(DISTINCT localidad_nombre SEPARATOR "\n") as localidades, GROUP_CONCAT(DISTINCT localidad_cp SEPARATOR "\n") as cp FROM cliente LEFT JOIN (contacto, localidad) ON contacto.cliente_id = cliente.cliente_id AND localidad.localidad_id = contacto.localidad_id LEFT JOIN poliza ON poliza.cliente_id = cliente.cliente_id WHERE poliza_estado_id NOT IN (3,4,7) GROUP BY cliente.cliente_id ORDER BY cliente_apellido, cliente_nombre, cliente_razon_social';
+$sql = 'SELECT cliente_apellido, cliente_nombre, cliente_razon_social, CONCAT_WS(" ", cliente_tipo_doc, cliente_nro_doc), CONCAT_WS("-", cliente_cuit_0, cliente_cuit_1, cliente_cuit_2), cliente_email, cliente_email_alt, MAX(poliza_validez_hasta) as ultima_vigencia, GROUP_CONCAT(DISTINCT CONCAT_WS(", ", contacto_telefono1, contacto_telefono2, contacto_telefono2_compania, contacto_telefono_laboral, contacto_telefono_alt) SEPARATOR "\n") as telefonos, GROUP_CONCAT(DISTINCT CONCAT_WS(" ", contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, ", ", contacto_country, contacto_lote) SEPARATOR "\n") as domicilios, GROUP_CONCAT(DISTINCT localidad_nombre SEPARATOR "\n") as localidades, GROUP_CONCAT(DISTINCT localidad_cp SEPARATOR "\n") as cp FROM cliente LEFT JOIN (contacto, localidad) ON contacto.cliente_id = cliente.cliente_id AND localidad.localidad_id = contacto.localidad_id LEFT JOIN poliza ON poliza.cliente_id = cliente.cliente_id WHERE poliza_estado_id NOT IN (3,4,7) GROUP BY cliente.cliente_id ORDER BY cliente_apellido, cliente_nombre, cliente_razon_social';
 
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
 $xls = new PHPExcel();
 $ws = $xls->getActiveSheet();
 
-$cols = array('Apellido', 'Nombre', 'Razón social', 'Email', 'Email alt.', 'Última póliza venció', 'Teléfonos', 'Domicilios', 'Localidades', 'CP');
+$cols = array('Apellido', 'Nombre', 'Razón social', 'Documento', 'CUIT', 'Email', 'Email alt.', 'Última póliza venció', 'Teléfonos', 'Domicilios', 'Localidades', 'CP');
 
 $ws->fromArray($cols, NULL, 'A1');
 
