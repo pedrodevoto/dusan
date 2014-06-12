@@ -20,7 +20,7 @@ if (isset($_POST['Usuario'])) {
 	$MM_fldUserAuthorization = "usuario_acceso";
 	$MM_redirectLoginSuccess = "main.php";
 	$MM_redirectLoginFailed = "error.php";
-	$MM_redirecttoReferrer = false;
+	$MM_redirecttoReferrer = true;
 
 	// Custom login query
 	$LoginRS__query=sprintf("SELECT usuario_id, usuario_acceso, (TO_DAYS(NOW())-TO_DAYS(usuario_cambioclave)) AS last_update, usuario_reseteado FROM usuario WHERE usuario_usuario=%s AND usuario_clave=md5(%s)",
