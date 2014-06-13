@@ -1774,7 +1774,7 @@ $(document).ready(function () {
 					}
 				});
 			});
-			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
+			$('#box-automotor_tipo_id, #box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado
