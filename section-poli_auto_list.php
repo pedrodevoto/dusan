@@ -35,6 +35,7 @@
 					$('#cliente_id').chosen().change(function() {
 						$('#btnFiltro').click();
 					});
+					$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
 				});
 				
 				// Filter: Assign listening functions to input-text for Submit
@@ -80,9 +81,6 @@
 					}
 				});
 				$(".filter_advanced").children().hide();
-				
-				// Filter: Get focus
-				$("#patente").focus();				
 				
 			});	
 		</script>   

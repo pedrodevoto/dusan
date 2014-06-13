@@ -52,7 +52,7 @@
 				});
 				
 				// Filter: Get focus
-				$("#poliza_numero").focus();				
+				$("#cliente_nombre").focus();				
 				
 			});	
 		</script>   
