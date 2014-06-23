@@ -1774,7 +1774,7 @@ $(document).ready(function () {
 					}
 				});
 			});
-			$('#box-automotor_tipo_id, #box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
+			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado
@@ -5623,6 +5623,10 @@ $(document).ready(function () {
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
 					$('#box-suma_asegurada').val($('#box-valor_total').val());
+					
+					if (fromcreate) {
+						$('#box-automotor_tipo_id').change();
+					}
 
 					// Validate form
 					var validateForm = $("#frmBox").validate();
