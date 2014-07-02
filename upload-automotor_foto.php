@@ -11,7 +11,6 @@
 ?>
 <?php
 if (isset($_POST['automotor_id'])) {
-	error_log(print_r($_FILES, true));
 	$automotor_id = intval($_POST['automotor_id']);
 	$types = array('automotor', 'automotor_micrograbado', 'automotor_gnc', 'automotor_cedula_verde');
 	foreach ($types as $type) {

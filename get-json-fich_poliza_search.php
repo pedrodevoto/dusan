@@ -10,7 +10,7 @@
 ?>
 <?php
 	// Main Query
-	$query_Recordset1 = "SELECT poliza.poliza_id, TRIM(CONCAT(IFNULL(cliente_nombre, ''), ' ', IFNULL(cliente_apellido, ''))) as cliente_nombre, poliza_numero, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%y'), ' - ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y')) AS validez, seguro_nombre FROM poliza JOIN (subtipo_poliza, productor_seguro, seguro, cliente) ON poliza.subtipo_poliza_id = subtipo_poliza.subtipo_poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id AND cliente.cliente_id = poliza.cliente_id LEFT JOIN automotor ON poliza.poliza_id = automotor.poliza_id";
+	$query_Recordset1 = "SELECT poliza.poliza_id, automotor_id, TRIM(CONCAT(IFNULL(cliente_nombre, ''), ' ', IFNULL(cliente_apellido, ''))) as cliente_nombre, poliza_numero, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%y'), ' - ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%y')) AS validez, seguro_nombre, productor_seguro_codigo, CONCAT(IF(automotor_carroceria_id=17, '101', ''), patente_0, patente_1) as patente FROM poliza JOIN (subtipo_poliza, productor_seguro, seguro, cliente) ON poliza.subtipo_poliza_id = subtipo_poliza.subtipo_poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id AND cliente.cliente_id = poliza.cliente_id LEFT JOIN automotor ON poliza.poliza_id = automotor.poliza_id";
 
 	if (in_array($_SESSION['ADM_UserGroup'], array('administrativo'))) {
 		$query_Recordset1 .= sprintf(' JOIN usuario_sucursal ON usuario_sucursal.sucursal_id = poliza.sucursal_id WHERE usuario_id = %s', GetSQLValueString($_SESSION['ADM_UserId'], "int"));
@@ -18,6 +18,8 @@
 	else {
 		$query_Recordset1 .= ' WHERE 1';
 	}
+	
+	$group = ' GROUP BY poliza.poliza_id, automotor_id';
 	
 	// Query Where	
 	if (isset($_GET['box0-poliza_numero']) or isset($_GET['box0-cliente_nombre'])) {
@@ -39,6 +41,8 @@
 	} else 	{
 		$query_Recordset1 .= " AND 1=2";
 	}
+	
+	$query_Recordset1 .= $group;
 	
 	// Recordset	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_error());

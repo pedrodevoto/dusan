@@ -92,6 +92,7 @@ $(document).ready(function () {
 		$(validator.errorList[0].element).focus();
 	}
 	$.colorbox.settings.overlayClose = false;
+	$.colorbox.settings.fixed = true;
 
 	/* List functions */
 	sortListAlpha = function (field) {
@@ -1252,7 +1253,7 @@ $(document).ready(function () {
 				switch ($(element).attr('type')) {
 				case 'checkbox':
 				case 'radio':
-					if (value == 1) {
+					if (value == 1 || value.toLowerCase() == 'on') {
 						$(element).attr('checked', true);
 					} else if (value == 0) {
 						$(element).attr('checked', false);
@@ -1740,6 +1741,89 @@ $(document).ready(function () {
 				}
 			}
 		})
+	}
+	populateFormBoxSiniestro = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_siniestro.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxSiniestroDatosTercero = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_siniestro_datos_tercero.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxSiniestroLesionesTercero = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_siniestro_lesiones_tercero.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
 	}
 	
 	populatePolizaDet = function (subtipo_poliza, id) {
@@ -2276,6 +2360,20 @@ $(document).ready(function () {
 		formDisable('frmBox', 'ui', false);
 		// Set focus
 		$("#box-endoso_tipo_id").focus();
+	}
+	assignPolizaToSiniestro = function (id, productor_seguro_codigo) {
+		$("#box-automotor_id").val(id);
+		$("#box-productor_seguro_codigo").val(productor_seguro_codigo);
+		// Clear search form
+		$('#frmSelectPoliza').each(function () {
+			this.reset();
+		});
+		// Clear search results
+		$('#divBoxPolizaSearchResults').html('');
+		// Enable main form
+		formDisable('frmBox', 'ui', false);
+		// Set focus
+		$("#box-fecha_denuncia").focus();
 	}
 
 	/* Populate DIV functions */
@@ -2864,6 +2962,10 @@ $(document).ready(function () {
 						case 'recibo':
 							f = 'openBoxCuota('+object.poliza_id+')';
 							break;
+						case 'siniestro':
+							result += '<td>' + object.patente + '</td>';
+							f = 'assignPolizaToSiniestro('+object.automotor_id+', '+object.productor_seguro_codigo+')';
+							break;
 						}
 						result += '<td style="text-align:right"><a href="javascript:'+f+'">SELECCIONAR</a></td>';
 						result += '</tr>';
@@ -3106,6 +3208,124 @@ $(document).ready(function () {
 						});
 					});
 				}
+			}
+		});
+	}
+	populateDiv_Siniestros = function(id) {
+		$.getJSON("get-json-fich_polisiniestros.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				var result = '';
+				// Check if empty
+				if (j.length > 0) {
+
+					// Open Table
+					result += '<table class="tblBox">';
+					// Table Head
+					result += '<tr>';
+					result += '<th width="15%">Fecha</th>';
+					result += '<th width="55%">Lugar</th>';
+					result += '<th width="20%">Número de siniestro</th>';
+					result += '<th width="10%">Acciones</th>';
+					result += '</tr>';
+					// Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td>' + object.fecha + '</td>';
+						result += '<td>' + object.lugar + '</td>';
+						result += '<td>' + object.siniestro_numero + '</td>';
+						result += '<td><span onClick="openBoxModSiniestro(' + object.id + ', false, '+id+')" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-extlink" title="Ir al siniestro"></span>';
+						result += '<span onclick="$.when(deleteViaLink(\'siniestro\','+object.id+')).then(function(){populateDiv_Siniestros('+id+');});" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-trash" title="Eliminar"></span></td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'La póliza no posee siniestros.';
+				}
+				// Populate DIV
+				$('#divBoxList').html(result);
+			}
+		});
+	}
+	populateDiv_SiniestroDatosTerceros = function(id) {
+		$.getJSON("get-json-fich_siniestros_datos_terceros.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				var result = '';
+				// Check if empty
+				if (j.length > 0) {
+					var count = 0;
+					// Open Table
+					result += '<table class="tblBox">';
+					// Table Head
+					result += '<tr>';
+					result += '<th>N° vehículo</th>';
+					result += '<th>Nombre y apellido</th>';
+					result += '<th>Patente</th>';
+					result += '<th>Acción</th>';
+					result += '</tr>';
+					// Data
+					$.each(j, function (i, object) {
+						count++;
+						result += '<tr>';
+						result += '<td>' + count + '</td>';
+						result += '<td>' + object.nombre + '</td>';
+						result += '<td>' + object.patente + '</td>';
+						result += '<td><ul class="listInlineIcons">';
+						result += '<li title="Editar datos de tercero" onClick="openBoxModSiniestroDatosTercero(' + object.id + ', '+id+');"><span class="ui-icon ui-icon-search"></span></li>';
+						result += '<li title="Eliminar datos de tercero" onClick="$.when(deleteViaLink(\'siniestro_datos_tercero\','+object.id+')).then(function(){populateDiv_SiniestroDatosTerceros('+id+');});"><span class="ui-icon ui-icon-trash"></span></li>';
+						result += '</ul></td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'El siniestro no posee datos de terceros.';
+				}
+				// Populate DIV
+				$('#divBoxListDatosTerceros').html(result);
+			}
+		});
+	}
+	populateDiv_SiniestroLesionesTerceros = function(id) {
+		$.getJSON("get-json-fich_siniestros_lesiones_terceros.php?id=" + id, {}, function (j) {
+			if (j.error == 'expired') {
+				sessionExpire('box');
+			} else {
+				var result = '';
+				// Check if empty
+				if (j.length > 0) {
+					// Open Table
+					result += '<table class="tblBox">';
+					// Table Head
+					result += '<tr>';
+					result += '<th>Nombre y apellido</th>';
+					result += '<th>DNI</th>';
+					result += '<th>Teléfono</th>';
+					result += '<th>Acción</th>';
+					result += '</tr>';
+					// Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td>' + object.nombre + '</td>';
+						result += '<td>' + object.nro_doc + '</td>';
+						result += '<td>' + object.tel + '</td>';
+						result += '<td><ul class="listInlineIcons">';
+						result += '<li title="Editar lesiones a tercero" onClick="openBoxModSiniestroLesionesTercero(' + object.id + ', '+id+');"><span class="ui-icon ui-icon-search"></span></li>';
+						result += '<li title="Eliminar lesiones a tercero" onClick="$.when(deleteViaLink(\'siniestro_lesiones_tercero\','+object.id+')).then(function(){populateDiv_SiniestroLesionesTerceros('+id+');});"><span class="ui-icon ui-icon-trash"></span></li>';
+						result += '</ul></td>';
+						result += '</tr>';
+					});
+					// Close Table
+					result += '</table>';
+				} else {
+					result += 'El siniestro no posee lesiones a terceros.';
+				}
+				// Populate DIV
+				$('#divBoxListLesionesTerceros').html(result);
 			}
 		});
 	}
@@ -3450,6 +3670,70 @@ $(document).ready(function () {
 			}
 		});
 	}
+	insertFormSiniestro = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-siniestro.php", $("#frmBox").serializeArray(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					var id = parseInt(data);
+					openBoxModSiniestro(id, true);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function () {});
+				}
+			}
+		});
+	}
+	insertFormSiniestroDatosTercero = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-siniestro_datos_tercero.php", $("#frmBox").serializeArray(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					openBoxModSiniestro(id);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function () {});
+				}
+			}
+		});
+	}
+	insertFormSiniestroLesionesTercero = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-siniestro_lesiones_tercero.php", $("#frmBox").serializeArray(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					openBoxModSiniestro(id);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function () {});
+				}
+			}
+		});
+	}
 
 	/* Update via form functions */
 	updateFormUsuario = function () {
@@ -3762,6 +4046,68 @@ $(document).ready(function () {
 					// Repopulate form
 					populateFormBoxOrg($('#box-organizador_id').val());
 				});
+			}
+		});
+	}
+	updateFormSiniestro = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-siniestro.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, true, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxSiniestro(id);
+				});
+			}
+		});
+	}
+	updateFormSiniestroDatosTercero = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-siniestro_datos_tercero.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					openBoxModSiniestro(id);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function () {});
+				}
+			}
+		});
+	}
+	updateFormSiniestroLesionesTercero = function(id) {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-siniestro_lesiones_tercero.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// If no error ocurred
+				if ((data.toLowerCase().indexOf("error") === -1)) {
+					openBoxModSiniestro(id);
+				} else {
+					showBoxConf(data, true, 'always', 3000, function () {});
+				}
 			}
 		});
 	}
@@ -6451,6 +6797,9 @@ $(document).ready(function () {
 					case 'imagenes':
 						openBoxPolizaFotos($(this).attr('polizadet'));
 						break;
+					case 'siniestros':
+						openBoxSiniestros($(this).attr('polizadet'));
+						break;
 					}
 				});
 			}
@@ -6702,5 +7051,408 @@ $(document).ready(function () {
 
 			}
 		});
+	}
+	openBoxSiniestros = function(id) {
+		$.colorbox({
+			title: 'Póliza/Siniestros',
+			href: 'box-polizasiniestros.php?section=1',
+			width: '700px',
+			height: '600px',
+			onComplete: function() {
+				
+				$('#btnNuevoSiniestro').button().click(function() {
+					openBoxSiniestrosAlta(id);
+				});
+				
+				// Populate DIVs
+				populateDiv_Poliza_Info(id);
+				populateDiv_Siniestros(id);
+			}
+		})
+	}
+	openBoxSiniestrosAlta = function(id) {
+		$.colorbox({
+			title: 'Siniestro',
+			href: 'box-siniestro_alta.php?section=2',
+			width: '900px',
+			height: '100%',
+			onComplete: function () {
+
+				$("#btnBox").button();
+
+
+				formDisable('frmSelectPoliza', 'normal', false);
+				formDisable('frmBox', 'ui', true);
+
+				// Populate drop-downs, then initialize form
+				$.when(
+					
+				).then(function () {
+
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-fecha_denuncia": {
+								required: true
+							},
+							"box-hora_denuncia": {
+								required: true
+							},
+							"box-lugar_denuncia": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea crear el registro?')) {
+								$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+								insertFormSiniestro();
+							}
+						};
+					});
+
+					// FORM SELECT POLIZA
+					// Initialize special fields
+					initAutocompletePoliza('box0-poliza_numero', 'box');
+					// Assign functions to buttons
+					$("#BtnSearchPoliza").click(function () {
+						// If a field was completed
+						if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_nombre').val() != '') {
+							populateDiv_Poliza_Results('siniestro');
+						} else {
+							$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');
+						}
+					});
+					// Submit on Enter
+					$("#frmSelectPoliza :input[type=text]").each(function () {
+						$(this).keypress(function (e) {
+							if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+								$("#BtnSearchPoliza").click();
+							}
+						});
+					});
+					// Enable form
+					formDisable('frmSelectPoliza', 'normal', false);
+					$('#box0-poliza_numero').focus();
+					if (id != undefined) {
+						assignPolizaToSiniestro(id);
+					}
+
+				});
+
+			}
+		});
+	}
+	openBoxModSiniestro = function(id) {
+		$.colorbox({
+			title: 'Siniestro',
+			href: 'box-siniestro_mod.php?section=2',
+			width: '900px',
+			height: '100%',
+			onComplete: function () {
+				$("#btnBox, #btnNuevoDatosTercero, #btnNuevoLesionesTercero").button();
+				$("#btnBoxExport").button();
+
+				formDisable('frmBox', 'ui', true);
+				
+				$.when(
+					populateFormBoxSiniestro(id)
+				).then(function () {
+					
+					populateDiv_SiniestroDatosTerceros(id);
+					populateDiv_SiniestroLesionesTerceros(id);
+					populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
+					populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
+					populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
+					
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
+					$('#box-siniestro_id').val(id);
+					
+					$('#box-conductor_asegurado').change(function() {
+						$('.conductor-vehiculo input, .conductor-vehiculo select').not(this).prop('disabled', $(this).val()==1);
+					}).change();
+					
+					// AJAX Forms
+					$('#cedula_verde').ajaxForm({
+						data: { automotor_id: $('#box-automotor_id').val() },
+						beforeSend: function () {
+							$("#fotosLoadingcedula_verde").show();
+						},
+						uploadProgress: function (event, position, total, percentComplete) {
+							
+						},
+						complete: function (xhr) {
+							if (xhr.responseText.indexOf('Error:') != -1) {
+								alert(xhr.responseText);
+							} else {
+								$("#fotosLoadingcedula_verde").show().hide();
+							}
+							populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
+						}
+					});
+					$('#cliente_foto').ajaxForm({
+						data: { cliente_id: $('#box-cliente_id').val() },
+						beforeSend: function () {
+							$("#fotosLoadingcliente_foto").show();
+						},
+						uploadProgress: function (event, position, total, percentComplete) {
+							
+						},
+						complete: function (xhr) {
+							if (xhr.responseText.indexOf('Error:') != -1) {
+								alert(xhr.responseText);
+							} else {
+								$("#fotosLoadingcliente_foto").show().hide();
+							}
+							populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
+						}
+					});
+					$('#denuncia_policial').ajaxForm({
+						data: { siniestro_id: id },
+						beforeSend: function () {
+							$("#fotosLoadingdenuncia_policial").show();
+						},
+						uploadProgress: function (event, position, total, percentComplete) {
+							
+						},
+						complete: function (xhr) {
+							if (xhr.responseText.indexOf('Error:') != -1) {
+								alert(xhr.responseText);
+							} else {
+								$("#fotosLoadingdenuncia_policial").show().hide();
+							}
+							populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
+						}
+					});
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-fecha_denuncia": {
+								required: true
+							},
+							"box-hora_denuncia": {
+								required: true
+							},
+							"box-lugar_denuncia": {
+								required: true
+							}
+						},
+						errorPlacement: function (error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							updateFormSiniestro(id);
+						}
+					});
+					// Navegación
+					$("#navegacion-siniestros").click(function() {
+						openBoxSiniestros($('#box-automotor_id').val());
+					});
+					$('#navegacion-cert_siniestros').click(function() {
+						
+					});
+					
+					$("#btnNuevoDatosTercero").click(function(event) {
+						openBoxAltaSiniestroDatosTercero(id);
+						event.preventDefault();
+					});
+					$("#btnNuevoLesionesTercero").click(function(event) {
+						openBoxAltaSiniestroLesionesTercero(id);
+						event.preventDefault();
+					});
+					
+					formDisable('frmBox', 'ui', false);
+				});
+			}
+		});
+	}
+	openBoxAltaSiniestroDatosTercero = function(id) {
+		$.colorbox({
+			title: 'Siniestro/Datos de tercero',
+			href: 'box-siniestrodatostercero_alta.php',
+			width: '900px',
+			height: '100%',
+			onComplete: function() {
+				$('#btnBox, #btnBoxCancelar').button();
+				
+				formDisable('frmBox', 'ui', true);
+				
+				initDatePickersDaily('box-date', false, null);
+				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+				
+				$('#box-siniestro_id').val(id);
+				
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						
+					},
+					errorPlacement: function (error, element) {
+						error.insertAfter(element.parent("p").children().last());
+					}
+				});
+				
+				// Button action
+				$("#btnBox").click(function () {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							insertFormSiniestroDatosTercero(id);
+						}
+					};
+				});
+				$("#btnBoxCancelar").click(function() {
+					openBoxModSiniestro(id);
+				});
+				
+				formDisable('frmBox', 'ui', false);
+			}
+		})
+	}
+	openBoxModSiniestroDatosTercero = function(id, siniestro_id) {
+		$.colorbox({
+			title: 'Siniestro/Datos de tercero',
+			href: 'box-siniestrodatostercero_mod.php',
+			width: '900px',
+			height: '100%',
+			onComplete: function() {
+				$('#btnBox, #btnBoxCancelar').button();
+				
+				formDisable('frmBox', 'ui', true);
+				
+				$.when(
+					populateFormBoxSiniestroDatosTercero(id)
+				).then(function() {
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
+					$('#box-siniestros_datos_terceros_id').val(id);
+					
+					var validateForm = $("#frmBox").validate({
+						rules: {
+						
+						},
+						errorPlacement: function (error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							updateFormSiniestroDatosTercero(siniestro_id);
+						};
+					});
+					$("#btnBoxCancelar").click(function() {
+						openBoxModSiniestro(siniestro_id);
+					});
+					
+					formDisable('frmBox', 'ui', false);
+					
+				});
+				
+			}
+		})
+	}
+	openBoxAltaSiniestroLesionesTercero = function(id) {
+		$.colorbox({
+			title: 'Siniestro/Lesiones a tercero',
+			href: 'box-siniestrolesionestercero_alta.php',
+			width: '900px',
+			height: '100%',
+			onComplete: function() {
+				$('#btnBox, #btnBoxCancelar').button();
+				
+				formDisable('frmBox', 'ui', true);
+				
+				initDatePickersDaily('box-date', false, null);
+				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+				
+				$('#box-siniestro_id').val(id);
+				
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						
+					},
+					errorPlacement: function (error, element) {
+						error.insertAfter(element.parent("p").children().last());
+					}
+				});
+				
+				// Button action
+				$("#btnBox").click(function () {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							insertFormSiniestroLesionesTercero(id);
+						}
+					};
+				});
+				$("#btnBoxCancelar").click(function() {
+					openBoxModSiniestro(id);
+				});
+				
+				formDisable('frmBox', 'ui', false);
+			}
+		})
+	}
+	openBoxModSiniestroLesionesTercero = function(id, siniestro_id) {
+		$.colorbox({
+			title: 'Siniestro/Datos de tercero',
+			href: 'box-siniestrolesionestercero_mod.php',
+			width: '900px',
+			height: '100%',
+			onComplete: function() {
+				$('#btnBox, #btnBoxCancelar').button();
+				
+				formDisable('frmBox', 'ui', true);
+				
+				$.when(
+					populateFormBoxSiniestroLesionesTercero(id)
+				).then(function() {
+					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
+					$('#box-siniestros_lesiones_terceros_id').val(id);
+					
+					var validateForm = $("#frmBox").validate({
+						rules: {
+						
+						},
+						errorPlacement: function (error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							updateFormSiniestroLesionesTercero(siniestro_id);
+						};
+					});
+					$("#btnBoxCancelar").click(function() {
+						openBoxModSiniestro(siniestro_id);
+					});
+					
+					formDisable('frmBox', 'ui', false);
+					
+				});
+				
+			}
+		})
 	}
 });

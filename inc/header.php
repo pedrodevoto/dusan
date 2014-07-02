@@ -50,7 +50,7 @@
 					</ul>
 				</li>
 				<li><a href="section-endosos_list.php">Endosos</a></li>
-                <li><a href="#">Siniestros</a></li>
+                <li><a href="section-siniestros_list.php">Siniestros</a></li>
 				<li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="#">Caja</a></li>
 				<li><a href="#">Administración</a>

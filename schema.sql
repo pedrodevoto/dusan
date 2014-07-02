@@ -486,6 +486,8 @@ CREATE TABLE `contacto` (
   `contacto_nro` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_piso` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_dpto` varchar(255) COLLATE utf8_unicode_ci DEFAULT '0',
+  `contacto_localidad` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contacto_cp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `localidad_id` int(11) DEFAULT NULL,
   `contacto_country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contacto_lote` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1077,24 +1079,85 @@ CREATE TABLE `seguro_zona_riesgo` (
 
 DROP TABLE IF EXISTS `siniestros`;
 CREATE TABLE `siniestros` (
-  `siniestro_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poliza_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`siniestro_id`),
-  KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `siniestros_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_id` int(10) unsigned NOT NULL,
+  `cliente_id` int(10) unsigned NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `automotor_id` (`automotor_id`),
+  KEY `cliente_id` (`cliente_id`),
+  CONSTRAINT `siniestros_ibfk_1` FOREIGN KEY (`automotor_id`) REFERENCES `automotor` (`automotor_id`) ON DELETE CASCADE,
+  CONSTRAINT `siniestros_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `siniestros_data`;
 CREATE TABLE `siniestros_data` (
-  `siniestros_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `siniestro_id` int(11) NOT NULL,
-  `siniestros_data_field` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `siniestros_data_data` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`siniestros_data_id`),
+  `key` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `value` mediumblob NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `siniestro_id_key` (`siniestro_id`,`key`),
   KEY `siniestro_id` (`siniestro_id`),
-  KEY `siniestros_data_field` (`siniestros_data_field`),
-  CONSTRAINT `siniestros_data_ibfk_1` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`siniestro_id`) ON DELETE CASCADE
+  KEY `siniestros_data_field` (`key`),
+  CONSTRAINT `siniestros_data_ibfk_1` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_datos_terceros`;
+CREATE TABLE `siniestros_datos_terceros` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestro_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `siniestro_id` (`siniestro_id`),
+  CONSTRAINT `siniestros_datos_terceros_ibfk_1` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_datos_terceros_data`;
+CREATE TABLE `siniestros_datos_terceros_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestros_datos_terceros_id` int(11) NOT NULL,
+  `key` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `value` mediumblob NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `siniestros_datos_terceros_id_key` (`siniestros_datos_terceros_id`,`key`),
+  KEY `key` (`key`),
+  CONSTRAINT `siniestros_datos_terceros_data_ibfk_1` FOREIGN KEY (`siniestros_datos_terceros_id`) REFERENCES `siniestros_datos_terceros` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_denuncia_policial_archivo`;
+CREATE TABLE `siniestros_denuncia_policial_archivo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestro_id` int(11) NOT NULL,
+  `siniestros_denuncia_policial_archivo_url` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `siniestros_denuncia_policial_archivo_nombre` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `siniestro_id` (`siniestro_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_lesiones_terceros`;
+CREATE TABLE `siniestros_lesiones_terceros` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestro_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `siniestro_id` (`siniestro_id`),
+  CONSTRAINT `siniestros_lesiones_terceros_ibfk_1` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `siniestros_lesiones_terceros_data`;
+CREATE TABLE `siniestros_lesiones_terceros_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestros_lesiones_terceros_id` int(11) NOT NULL,
+  `key` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `value` mediumblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `siniestros_lesiones_terceros_id` (`siniestros_lesiones_terceros_id`),
+  CONSTRAINT `siniestros_lesiones_terceros_data_ibfk_1` FOREIGN KEY (`siniestros_lesiones_terceros_id`) REFERENCES `siniestros_lesiones_terceros` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1166,4 +1229,12 @@ CREATE TABLE `usuario_sucursal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-06-11 17:47:44
+DROP TABLE IF EXISTS `zona_riesgo`;
+CREATE TABLE `zona_riesgo` (
+  `zona_riesgo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `zona_riesgo_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`zona_riesgo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+-- 2014-07-02 16:50:30
