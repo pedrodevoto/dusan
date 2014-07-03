@@ -49,6 +49,15 @@
 	            </p>
 			</div>
 			<div style="clear:both"></div>
+			<p>
+				<label for="box-tipo_siniestro">Tipo de siniestro</label>
+				<select name="box-tipo_siniestro" id="box-tipo_siniestro" class="ui-widget-content">
+					<option value="1">DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)</option>
+					<option value="2">DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)</option>
+					<option value="3">DENUNCIA DE ROBO/DAÑO (CON REPOSICION)</option>
+					<option value="4">DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)</option>
+				</select>
+			</p>
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del siniestro</legend>
@@ -171,7 +180,7 @@
 				<label for="box-asegurado_fec_nac">Fecha de nacimiento</label>
 				<input type="text" name="box-asegurado_fecha_nac" id="box-asegurado_fecha_nac" class="ui-widget-content box-date" style="width:80px" />
 				<label for="box-asegurado_registro" style="width:initial;margin-left:20px">N° de registro</label>
-				<input type="text" name="box-asegurado_resgistro" id="box-asegurado_registro" class="ui-widget-content" style="width:100px" />
+				<input type="text" name="box-asegurado_registro" id="box-asegurado_registro" class="ui-widget-content" style="width:100px" />
 				<label for="box-asegurado_registro_venc" style="width:initial;margin-left:20px">Fecha de vencimiento</label>
 				<input type="text" name="box-asegurado_registro_venc" id="box-asegurado_registro_venc" class="ui-widget-content box-date" style="width:80px" />
 			</p>
@@ -229,7 +238,7 @@
 				<label for="box-asegurado_modelo">Modelo</label>
 				<input type="text" name="box-asegurado_modelo" id="box-asegurado_modelo" class="ui-widget-content" />
 				<label for="box-asegurado_ano" style="width:initial">Año</label>
-				<input type="text" name="box-asegurado_ano" id="box-asegurado_marca" class="ui-widget-content" style="width:50px" />
+				<input type="text" name="box-asegurado_ano" id="box-asegurado_ano" class="ui-widget-content" style="width:50px" />
 				<label for="box-asegurado_patente_0" style="width:initial">Patente</label>
 		        <input type="text" name="box-asegurado_patente_0" id="box-asegurado_patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
 				<input type="text" name="box-asegurado_patente_1" id="box-asegurado_patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />

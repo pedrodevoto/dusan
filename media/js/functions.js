@@ -2364,6 +2364,13 @@ $(document).ready(function () {
 	assignPolizaToSiniestro = function (id, productor_seguro_codigo) {
 		$("#box-automotor_id").val(id);
 		$("#box-productor_seguro_codigo").val(productor_seguro_codigo);
+		var d = new Date();
+		var date = ('0' + d.getDate()).slice(-2) + '/'
+				+ ('0' + (d.getMonth()+1)).slice(-2) + '/'
+				+ d.getFullYear();
+		$('#box-fecha_denuncia').val(date);
+		$('#box-hora_denuncia').val(('0' + d.getHours()).slice(-2)+':'+('0' + d.getMinutes()).slice(-2));
+		
 		// Clear search form
 		$('#frmSelectPoliza').each(function () {
 			this.reset();
@@ -2373,7 +2380,7 @@ $(document).ready(function () {
 		// Enable main form
 		formDisable('frmBox', 'ui', false);
 		// Set focus
-		$("#box-fecha_denuncia").focus();
+		$("#box-lugar_denuncia").focus();
 	}
 
 	/* Populate DIV functions */
@@ -7143,7 +7150,20 @@ $(document).ready(function () {
 					formDisable('frmSelectPoliza', 'normal', false);
 					$('#box0-poliza_numero').focus();
 					if (id != undefined) {
-						assignPolizaToSiniestro(id);
+						$.ajax({
+							url: "get-json-prodseg_codigo.php?id="+id,
+							dataType: 'json',
+							success: function (j) {
+								if (j.error == 'expired') {
+									sessionExpire(context);
+								} else if (j.empty == true) {
+									// Record not found
+									$.colorbox.close();
+								} else {
+									assignPolizaToSiniestro(id, j.productor_seguro_codigo);
+								}
+							}
+						});
 					}
 
 				});

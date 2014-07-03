@@ -4,6 +4,7 @@
 <?php require_once('inc/security-colorbox.php'); ?>
 
 <div class="divBoxContainer" style="width:94%">  
+	<h2 style="text-align:center">DATOS DEL TERCERO</h2>
   	<!-- Siniestro -->        
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
@@ -281,7 +282,7 @@
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">
 		<button name="btnBox" id="btnBox">Guardar</button>
-		<button name="btnBoxCancelar" id="btnBoxCancelar">Cancelar</button>
+		<button name="btnBoxCancelar" id="btnBoxCancelar">Atrás</button>
     </p>
     <!-- Nota -->
     <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>

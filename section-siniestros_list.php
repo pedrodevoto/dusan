@@ -71,7 +71,26 @@
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)						
 						{"sWidth": "10%"},					
-						null,
+						{"sWidth": "8%"},
+						{"sWidth": "28%", "bSearchable": false, "fnRender": function (oObj) {
+							switch (oObj.aData[3]) {
+							case '1':
+								return 'DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)';
+								break;
+							case '2':
+								return 'DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)';
+								break;
+							case '3':
+								return 'DENUNCIA DE ROBO/DAÑO (CON REPOSICION)';
+								break;
+							case '4':
+								return 'DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)';
+								break;
+							default:
+								return '';
+								break;
+							}
+						}},
 						null,
 						null,
 						null,
@@ -130,7 +149,14 @@
                                 <input type="text" name="poliza_numero" id="poliza_numero" maxlength="255" />
                             </td>
                             <td width="20%">
-
+								<label for="tipo_siniestro">Tipo de siniestro</label>
+								<select name="tipo_siniestro" id="tipo_siniestro" class="ui-widget-content">
+									<option value="">Todos</option>
+									<option value="1">DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)</option>
+									<option value="2">DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)</option>
+									<option value="3">DENUNCIA DE ROBO/DAÑO (CON REPOSICION)</option>
+									<option value="4">DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)</option>
+								</select>
                             </td>      
 							<td width="20%">
 								
@@ -161,6 +187,7 @@
                             <th>Siniestro ID (Hide)</th>
 							<th>Fecha de la denuncia</th>
                             <th>Póliza</th>
+							<th>Tipo</th>
 							<th>Nombre del Asegurado</th>
 							<th>Patente</th>
 							<th>Lugar</th>
@@ -173,6 +200,7 @@
                     </tbody>
 	                <tfoot>
                         <tr>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>   

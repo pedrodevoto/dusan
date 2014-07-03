@@ -64,6 +64,15 @@
 	            </p>
 			</div>
 			<div style="clear:both"></div>
+			<p>
+				<label for="box-tipo_siniestro">Tipo de siniestro</label>
+				<select name="box-tipo_siniestro" id="box-tipo_siniestro" class="ui-widget-content">
+					<option value="1">DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)</option>
+					<option value="2">DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)</option>
+					<option value="3">DENUNCIA DE ROBO/DAÑO (CON REPOSICION)</option>
+					<option value="4">DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)</option>
+				</select>
+			</p>
 		</fieldset>
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
