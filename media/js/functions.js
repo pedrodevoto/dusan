@@ -5407,6 +5407,8 @@ $(document).ready(function () {
 							}
 							$('#box-poliza_cant_cuotas').val(cuotas);
 						}
+						if ($('#box-poliza_medio_pago').val()=='Directo') $('#cuota_monto').show();
+						else $('#cuota_monto').hide();
 					});
 					$('#box-subtipo_poliza_id, #box-seguro_id').change(function() {
 						switch ($(this).attr('id')) {

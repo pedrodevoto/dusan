@@ -82,7 +82,12 @@
 				$poliza_id = mysql_insert_id();
 			
 				// Insert: Cuotas
-				$monto = $poliza_premio / $poliza_cant_cuotas;
+				if (isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
+					$monto = intval($_POST['box-cuota_monto']);
+				}
+				else {
+					$monto = $poliza_premio / $poliza_cant_cuotas;
+				}
 				
 				$pfc = (isset($_POST['box-sucursal_pfc'])?1:0);
 				$poliza_cant_cuotas += $pfc;
