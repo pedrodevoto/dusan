@@ -7101,6 +7101,12 @@ $(document).ready(function () {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
+					$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+						if ($(this).val()!='') {
+							$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+						}
+					}).change();
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -7200,6 +7206,12 @@ $(document).ready(function () {
 					
 					$('#box-conductor_asegurado').change(function() {
 						$('.conductor-vehiculo input, .conductor-vehiculo select').not(this).prop('disabled', $(this).val()==1);
+					}).change();
+					
+					$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+						if ($(this).val()!='') {
+							$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+						}
 					}).change();
 					
 					// AJAX Forms
@@ -7315,6 +7327,12 @@ $(document).ready(function () {
 				initDatePickersDaily('box-date', false, null);
 				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 				
+				$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+					if ($(this).val()!='') {
+						$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+					}
+				}).change();
+				
 				$('#box-siniestro_id').val(id);
 				
 				var validateForm = $("#frmBox").validate({
@@ -7360,6 +7378,12 @@ $(document).ready(function () {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					
+					$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+						if ($(this).val()!='') {
+							$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+						}
+					}).change();
+					
 					$('#box-siniestros_datos_terceros_id').val(id);
 					
 					var validateForm = $("#frmBox").validate({
@@ -7402,6 +7426,12 @@ $(document).ready(function () {
 				
 				initDatePickersDaily('box-date', false, null);
 				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+				
+				$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+					if ($(this).val()!='') {
+						$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+					}
+				}).change();
 				
 				$('#box-siniestro_id').val(id);
 				
@@ -7447,6 +7477,12 @@ $(document).ready(function () {
 				).then(function() {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					
+					$('#frmBox input, #frmBox select').not('input[type="checkbox"]').change(function() { 
+						if ($(this).val()!='') {
+							$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
+						}
+					}).change();
 					
 					$('#box-siniestros_lesiones_terceros_id').val(id);
 					
