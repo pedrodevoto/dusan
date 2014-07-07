@@ -3713,7 +3713,7 @@ $(document).ready(function () {
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoDatosTercero');
 				} else {
 					showBoxConf(data, true, 'always', 3000, function () {});
 				}
@@ -3734,7 +3734,7 @@ $(document).ready(function () {
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoLesionesTercero');
 				} else {
 					showBoxConf(data, true, 'always', 3000, function () {});
 				}
@@ -4090,7 +4090,7 @@ $(document).ready(function () {
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoDatosTercero');
 				} else {
 					showBoxConf(data, true, 'always', 3000, function () {});
 				}
@@ -4111,7 +4111,7 @@ $(document).ready(function () {
 				}
 				// If no error ocurred
 				if ((data.toLowerCase().indexOf("error") === -1)) {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoLesionesTercero');
 				} else {
 					showBoxConf(data, true, 'always', 3000, function () {});
 				}
@@ -7177,7 +7177,8 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxModSiniestro = function(id) {
+	openBoxModSiniestro = function(id, focuselement) {
+		focuselement = focuselement || undefined;
 		$.colorbox({
 			title: 'Siniestro',
 			href: 'box-siniestro_mod.php?section=2',
@@ -7309,6 +7310,9 @@ $(document).ready(function () {
 					});
 					
 					formDisable('frmBox', 'ui', false);
+					if (focuselement!=undefined) {
+						$('#'+focuselement).focus();
+					}
 				});
 			}
 		});
@@ -7354,7 +7358,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoDatosTercero');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -7403,7 +7407,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id);
+						openBoxModSiniestro(siniestro_id, 'btnNuevoDatosTercero');
 					});
 					
 					formDisable('frmBox', 'ui', false);
@@ -7454,7 +7458,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id);
+					openBoxModSiniestro(id, 'btnNuevoLesionesTercero');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -7503,7 +7507,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id);
+						openBoxModSiniestro(siniestro_id, 'btnNuevoLesionesTercero');
 					});
 					
 					formDisable('frmBox', 'ui', false);
