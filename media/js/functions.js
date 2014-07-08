@@ -7468,10 +7468,10 @@ $(document).ready(function () {
 			width: '750px',
 			height: '100%',
 			onComplete: function () {
-
 				populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
 				populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
 				populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
+				populateDiv_Poliza_Info($('#box-automotor_id').val());
 
 				// Navegación
 				$("#navegacion-detalle").click(function() {
