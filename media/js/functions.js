@@ -7196,9 +7196,6 @@ $(document).ready(function () {
 					
 					populateDiv_SiniestroDatosTerceros(id);
 					populateDiv_SiniestroLesionesTerceros(id);
-					populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
-					populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
-					populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
 					
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
@@ -7214,59 +7211,6 @@ $(document).ready(function () {
 							$(this).css('box-shadow', '0px 0px 2pt 0.5pt limegreen');
 						}
 					}).change();
-					
-					// AJAX Forms
-					$('#cedula_verde').ajaxForm({
-						data: { automotor_id: $('#box-automotor_id').val() },
-						beforeSend: function () {
-							$("#fotosLoadingcedula_verde").show();
-						},
-						uploadProgress: function (event, position, total, percentComplete) {
-							
-						},
-						complete: function (xhr) {
-							if (xhr.responseText.indexOf('Error:') != -1) {
-								alert(xhr.responseText);
-							} else {
-								$("#fotosLoadingcedula_verde").show().hide();
-							}
-							populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
-						}
-					});
-					$('#cliente_foto').ajaxForm({
-						data: { cliente_id: $('#box-cliente_id').val() },
-						beforeSend: function () {
-							$("#fotosLoadingcliente_foto").show();
-						},
-						uploadProgress: function (event, position, total, percentComplete) {
-							
-						},
-						complete: function (xhr) {
-							if (xhr.responseText.indexOf('Error:') != -1) {
-								alert(xhr.responseText);
-							} else {
-								$("#fotosLoadingcliente_foto").show().hide();
-							}
-							populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
-						}
-					});
-					$('#denuncia_policial').ajaxForm({
-						data: { siniestro_id: id },
-						beforeSend: function () {
-							$("#fotosLoadingdenuncia_policial").show();
-						},
-						uploadProgress: function (event, position, total, percentComplete) {
-							
-						},
-						complete: function (xhr) {
-							if (xhr.responseText.indexOf('Error:') != -1) {
-								alert(xhr.responseText);
-							} else {
-								$("#fotosLoadingdenuncia_policial").show().hide();
-							}
-							populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
-						}
-					});
 					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
@@ -7296,8 +7240,8 @@ $(document).ready(function () {
 					$("#navegacion-siniestros").click(function() {
 						openBoxSiniestros($('#box-automotor_id').val());
 					});
-					$('#navegacion-cert_siniestros').click(function() {
-						
+					$('#navegacion-cert_siniestro').click(function() {
+						openBoxSiniestroCert(id);
 					});
 					
 					$("#btnNuevoDatosTercero").click(function(event) {
@@ -7516,5 +7460,142 @@ $(document).ready(function () {
 				
 			}
 		})
+	}
+	openBoxSiniestroCert = function(id) {
+		$.colorbox({
+			title: 'Registro',
+			href: 'box-siniestrocert.php?section=3&id=' + id,
+			width: '750px',
+			height: '100%',
+			onComplete: function () {
+
+				populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
+				populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
+				populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
+
+				// Navegación
+				$("#navegacion-detalle").click(function() {
+					openBoxPolizaDet(id, false);
+				});
+				$("#navegacion-datos").click(function() {
+					openBoxModPoliza(id);
+				});
+				
+				$('#btnFinalizar').button().click(function() {
+					$.colorbox.close();
+				});
+
+				populateDiv_Envios('1,2,3,4,7,8', id);
+
+				// Button action
+				$("#btnDE").button().click(function () {
+					// window.open('print-poliza.php?type=cc&id=' + id + '&print');
+				});
+				$("#btnCV").button().click(function () {
+					// window.open('print-poliza.php?type=cc&id=' + id);
+				});
+				$("#btnRE").button().click(function () {
+					// window.open('print-poliza.php?type=pe&mc=0&id=' + id);
+				});
+				
+				// Button email action
+				$('#doc').buttonset();
+				$("#btnBox1").button().click(function () {
+					return false;
+					$('#btnBox1').button("option", "disabled", true);
+					var url = '';
+					switch ($('input[name="type"]:checked', '#frmBox1').val()) {
+						case 'fotos':
+							url = 'send-fotos.php';
+							break;
+						case 'rast':
+							url = 'send-rastreo.php';
+							break;
+						case 'insp':
+							url = 'send-inspeccion.php';
+							break;
+						default:
+							url = 'print-poliza.php';
+							break;
+					}
+					$.ajax({
+						url: url,
+						data: $('#frmBox1').serializeArray(),
+						success: function(data) {
+							showBoxConf(data, false, 'always', 3000, function () {
+								$('#btnBox1').button("option", "disabled", false);
+								populateDiv_Envios('1,2,3,4,7,8', id);
+							});
+						},
+						error: function() {
+							showBoxConf('Error. Intente nuevamente.', false, 'always', 3000, function () {
+								$('#btnBox1').button("option", "disabled", false);
+							});
+						}
+					});
+					return false;
+				});
+				
+				$("#navegacion-siniestros").click(function() {
+					openBoxSiniestros($('#box-automotor_id').val());
+				});
+				$('#navegacion-detalle_siniestro').click(function() {
+					openBoxModSiniestro(id);
+				});
+				
+				// AJAX Forms
+				$('#cedula_verde').ajaxForm({
+					data: { automotor_id: $('#box-automotor_id').val() },
+					beforeSend: function () {
+						$("#fotosLoadingcedula_verde").show();
+					},
+					uploadProgress: function (event, position, total, percentComplete) {
+						
+					},
+					complete: function (xhr) {
+						if (xhr.responseText.indexOf('Error:') != -1) {
+							alert(xhr.responseText);
+						} else {
+							$("#fotosLoadingcedula_verde").show().hide();
+						}
+						populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
+					}
+				});
+				$('#cliente_foto').ajaxForm({
+					data: { cliente_id: $('#box-cliente_id').val() },
+					beforeSend: function () {
+						$("#fotosLoadingcliente_foto").show();
+					},
+					uploadProgress: function (event, position, total, percentComplete) {
+						
+					},
+					complete: function (xhr) {
+						if (xhr.responseText.indexOf('Error:') != -1) {
+							alert(xhr.responseText);
+						} else {
+							$("#fotosLoadingcliente_foto").show().hide();
+						}
+						populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
+					}
+				});
+				$('#denuncia_policial').ajaxForm({
+					data: { siniestro_id: id },
+					beforeSend: function () {
+						$("#fotosLoadingdenuncia_policial").show();
+					},
+					uploadProgress: function (event, position, total, percentComplete) {
+						
+					},
+					complete: function (xhr) {
+						if (xhr.responseText.indexOf('Error:') != -1) {
+							alert(xhr.responseText);
+						} else {
+							$("#fotosLoadingdenuncia_policial").show().hide();
+						}
+						populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
+					}
+				});
+			}
+		});
 	}
 });
