@@ -746,7 +746,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Select first item
-					selectFirstItem(field);
+					$('#' + field).val('Directo').change();
 					dfd.resolve();
 				}
 			}
@@ -5434,7 +5434,7 @@ $(document).ready(function () {
 								$('#box-productor_seguro_id').html(loading);
 								populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 								populateListPoliza_Cuotas('box-poliza_cuotas', 'box', $(this).val());
-								$('#box-poliza_cuotas, #box-poliza_medio_pago').change();
+								$('#box-poliza_cuotas, #box-poliza_medio_pago').change();								
 								populateFormFlota($(this).val());
 								break;
 						}
