@@ -83,8 +83,14 @@
 						mysql_query($sql, $connection) or die(mysql_error());
 					}
 					else {
-						echo 'Acceso denegado para modificar el premio.';
+						die('Acceso denegado para modificar el premio.');
 					}
+				}
+
+				if ($_POST['box-poliza_medio_pago']=='Directo' && isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
+					$cuota = intval($_POST['box-cuota_monto']);
+					$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
+					mysql_query($sql, $connection) or die(mysql_error());
 				}
 				echo "El registro ha sido actualizado.";							
 				break;								

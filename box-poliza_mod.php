@@ -109,6 +109,10 @@
 	                Cant. Cuotas ^
 	                <input type="text" name="box-poliza_cant_cuotas" id="box-poliza_cant_cuotas" maxlength="3" class="ui-widget-content" style="width:80px" readonly="readonly"> + <input type="checkbox" name="box-cuota_pfc" id="box-cuota_pfc" class="ui-widget-content" />PFC
 	            </p>
+				<p id="cuota_monto">
+					<label for="box-cuota_monto">Valor de cuota</label>
+					<input type="text" name="box-cuota_monto" id="box-cuota_monto" class="ui-widget-content" style="width:40px" /> (Dejar en blanco para que se calcule automáticamente)
+				</p>
 	            <p>
 	                <label for="box-poliza_pago_detalle">Det. de Pago</label>
 					<textarea name="box-poliza_pago_detalle" id="box-poliza_pago_detalle" rows="5" class="ui-widget-content" style="width:220px"></textarea>

@@ -82,7 +82,7 @@
 				$poliza_id = mysql_insert_id();
 			
 				// Insert: Cuotas
-				if (isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
+				if ($_POST['box-poliza_medio_pago']=='Directo' && isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
 					$monto = intval($_POST['box-cuota_monto']);
 				}
 				else {

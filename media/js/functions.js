@@ -5662,7 +5662,10 @@ $(document).ready(function () {
 						$('#box-poliza_prima').removeClass('required');
 						$('#poliza_descuento').hide();
 					}
-					
+					$('#box-poliza_medio_pago').change(function() {
+						if ($('#box-poliza_medio_pago').val()=='Directo') $('#cuota_monto').show();
+						else $('#cuota_monto').hide();
+					}).change();
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {

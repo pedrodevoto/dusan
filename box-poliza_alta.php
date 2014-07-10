@@ -142,7 +142,7 @@
 				</p>
 				<p id="cuota_monto">
 					<label for="box-cuota_monto">Valor de cuota</label>
-					<input type="text" name="box-cuota_monto" id="box-poliza_cant_cuotas" class="ui-widget-content" style="width:40px" /> (Dejar en blanco para que se calcule automáticamente)
+					<input type="text" name="box-cuota_monto" id="box-cuota_monto" class="ui-widget-content" style="width:40px" /> (Dejar en blanco para que se calcule automáticamente)
 				</p>
 	            <p>
 	                <label for="box-poliza_pago_detalle">Det. de Pago</label>
