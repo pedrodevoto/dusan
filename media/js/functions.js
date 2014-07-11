@@ -2620,8 +2620,9 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_Poliza_Info = function (id) {
-		$.getJSON("get-json-poliza_info.php?id=" + id, {}, function (j) {
+	populateDiv_Poliza_Info = function (id, tipo) {
+		tipo = tipo || 'poliza';
+		$.getJSON("get-json-poliza_info.php?id=" + id + "&tipo=" + tipo, {}, function (j) {
 			if (j.error == 'expired') {
 				// Session expired
 				sessionExpire('box');
@@ -7077,7 +7078,7 @@ $(document).ready(function () {
 				});
 				
 				// Populate DIVs
-				populateDiv_Poliza_Info(id);
+				populateDiv_Poliza_Info(id, 'automotor');
 				populateDiv_Siniestros(id);
 			}
 		})
@@ -7474,7 +7475,7 @@ $(document).ready(function () {
 				populateDiv_Fotos('automotor_cedula_verde', $('#box-automotor_id').val(), 'CedulaVerde');
 				populateDiv_Fotos('cliente', $('#box-cliente_id').val(), 'Registro');
 				populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
-				populateDiv_Poliza_Info($('#box-automotor_id').val());
+				populateDiv_Poliza_Info($('#box-automotor_id').val(), 'automotor');
 
 				// Navegación
 				$("#navegacion-detalle").click(function() {

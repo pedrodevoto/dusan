@@ -5,13 +5,14 @@
 <?php
 require_once('Connections/connection.php');
 $siniestro_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = sprintf('SELECT automotor_id, cliente_id FROM siniestros WHERE id=%s', $siniestro_id);
+$sql = sprintf('SELECT automotor_id, cliente_id, poliza_id FROM siniestros JOIN automotor USING(automotor_id) WHERE id=%s', $siniestro_id);
 $res = mysql_query($sql) or die(mysql_error());
-list($automotor_id, $cliente_id) = mysql_fetch_array($res);
+list($automotor_id, $cliente_id, $poliza_id) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
 	<input type="hidden" name="box-automotor_id" id="box-automotor_id" value="<?=$automotor_id?>" />
 	<input type="hidden" name="box-cliente_id" id="box-cliente_id" value="<?=$cliente_id?>" />
+	<input type="hidden" name="box-poliza_id" id="box-poliza_id" value="<?=$poliza_id?>" />
     
 	<!-- Progress Menu -->
     <?php $progress_bar = 'siniestro'; require_once('inc/progress.php'); ?>
