@@ -7216,6 +7216,13 @@ $(document).ready(function () {
 						}
 					}).change();
 					
+					$('.draggable').draggable({
+						drag: function() {
+							console.log('dragged');
+						}
+					});
+					// $('#droppable').droppable();
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -7493,7 +7500,7 @@ $(document).ready(function () {
 
 				// Button action
 				$("#btnDE").button().click(function () {
-					// window.open('print-poliza.php?type=cc&id=' + id + '&print');
+					window.open('print-siniestro.php?id=' + id);
 				});
 				$("#btnCV").button().click(function () {
 					// window.open('print-poliza.php?type=cc&id=' + id);

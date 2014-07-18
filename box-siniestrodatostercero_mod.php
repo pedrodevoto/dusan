@@ -38,7 +38,7 @@
 			</p>
 			<p>
 				<label for="box-registro">N° de registro</label>
-				<input type="text" name="box-resgistro" id="box-registro" class="ui-widget-content" style="width:100px" />
+				<input type="text" name="box-registro" id="box-registro" class="ui-widget-content" style="width:100px" />
 				<label for="box-registro_venc" style="width:initial;margin-left:20px">Fecha de vencimiento</label>
 				<input type="text" name="box-registro_venc" id="box-registro_venc" class="ui-widget-content box-date" style="width:80px" />
 				<label for="box-acompanantes" style="width:initial;margin-left:20px">Cuántas personas lo acompañaban?</label>
@@ -85,7 +85,7 @@
 				<label for="box-conductor_fec_nac">Fecha de nacimiento</label>
 				<input type="text" name="box-conductor_fecha_nac" id="box-conductor_fecha_nac" class="ui-widget-content box-date" style="width:80px" />
 				<label for="box-conductor_registro" style="width:initial;margin-left:20px">N° de registro</label>
-				<input type="text" name="box-conductor_resgistro" id="box-conductor_registro" class="ui-widget-content" style="width:100px" />
+				<input type="text" name="box-conductor_registro" id="box-conductor_registro" class="ui-widget-content" style="width:100px" />
 				<label for="box-conductor_registro_venc" style="width:initial;margin-left:20px">Fecha de vencimiento</label>
 				<input type="text" name="box-conductor_registro_venc" id="box-conductor_registro_venc" class="ui-widget-content box-date" style="width:80px" />
 			</p>

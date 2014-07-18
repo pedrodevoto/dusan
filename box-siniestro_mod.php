@@ -225,7 +225,7 @@
 				<label for="box-conductor_fec_nac">Fecha de nacimiento</label>
 				<input type="text" name="box-conductor_fecha_nac" id="box-conductor_fecha_nac" class="ui-widget-content box-date" style="width:80px" />
 				<label for="box-conductor_registro" style="width:initial;margin-left:20px">N° de registro</label>
-				<input type="text" name="box-conductor_resgistro" id="box-conductor_registro" class="ui-widget-content" style="width:100px" />
+				<input type="text" name="box-conductor_registro" id="box-conductor_registro" class="ui-widget-content" style="width:100px" />
 				<label for="box-conductor_registro_venc" style="width:initial;margin-left:20px">Fecha de vencimiento</label>
 				<input type="text" name="box-conductor_registro_venc" id="box-conductor_registro_venc" class="ui-widget-content box-date" style="width:80px" />
 			</p>
@@ -539,6 +539,40 @@
 					</tbody>
 				</table>
 			</p>
+			<div style="width:30%;float:left">
+				<div id="droppable" style="width:200px;height:200px;background: center no-repeat url('siniestros/croquis/plano.png');background-size:200px 200px"></div>
+				<div style="width:200px">
+					<div>
+						<div class="draggable" style="float:left;width:25px;height:13px;border:solid 1px black;background-color:white;text-align:center;cursor:move">
+						1
+						</div>
+					</div>
+					<div style="clear:both"></div>
+					<div>
+						<div class="draggable" style="float:left;width:25px;height:12px;background: center no-repeat url('siniestros/croquis/moto.png');background-size:20px 9px"></div>
+						<div class="draggable" style="float:left;width:12px;height:12px;background: center no-repeat url('siniestros/croquis/peaton.png');background-size:9px 9px"></div>
+					</div>
+					<div style="clear:both"></div>
+					<div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/ns.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/sn.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/eo.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/oe.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/en.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/es.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/ne.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/no.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/on.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/os.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/se.png');background-size:16px 15px"></div>
+						<div class="draggable" style="float:left;width:20px;height:20px;background: center no-repeat url('siniestros/croquis/so.png');background-size:16px 15px"></div>
+					</div>
+				</div>
+			</div>
+			<div style="width:70%;float:left">
+				<textarea class="ui-widget-content" style="width:98%" rows="15"></textarea>
+			</div>
+			
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Lesiones a terceros</legend>
