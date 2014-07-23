@@ -1757,8 +1757,16 @@ $(document).ready(function () {
 				} else {
 					// Populate drop-downs, then form
 					$.when(
-						
+						populateDiv_SiniestroDatosTerceros(id)
 					).then(function () {
+						// Populate croquis
+						$.each(j, function(k,v) {
+							if (k.substring(0, 7)=='croquis') {
+								var i = parseInt(k.substring(12));
+								var type = k.substring(8, 12);
+								croquisAddItem(type, i, v);
+							}
+						});
 						// Populate Form
 						populateFormGeneric(j, "box");
 						// Resolve
@@ -2314,6 +2322,46 @@ $(document).ready(function () {
 			total += (Number($(e).val()) * Number($(e).prev().prev().prev().prev().val()));
 		});
 		$("#bienes_de_uso_total").html(total);
+	}
+	croquisAddItem = function(type, i, data) {
+		data = data || false;
+		switch (type) {
+		case 'auto':
+			if (data) {
+				var pos = data.split('X');
+				$('#auto'+i).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'});
+			}
+			else {
+				var auto = '<div id="auto'+i+'" class="draggable-autos croquis-auto" style="width:25px;height:13px;border:solid 1px black;background-color:white;text-align:center;cursor:move">' + i + '</div>';
+				auto = '<div style="float:left;width:25px;padding:4px">'+auto+'</div>';
+				$('#croquis-autos').append(auto);
+			}
+			$('.draggable-autos').draggable();
+			break;
+		case 'moto':
+			if (data) {
+				var pos = data.split('X');
+				var moto = '<div class="croquis-moto" style="width:20px;height:9px;background: center no-repeat url(\'siniestros/croquis/moto.png\');background-size:20px 9px"></div>';
+				$(moto).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
+			}
+			break;
+		case 'peat':
+			if (data) {
+				var pos = data.split('X');
+				var peaton = '<div class="croquis-peaton" style="width:9px;height:9px;background: center no-repeat url(\'siniestros/croquis/peaton.png\');background-size:9px 9px"></div>';
+				$(peaton).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
+			}
+			break;
+		case 'dire':
+			if (data) {
+				data = data.split(',');
+				var dir = data[0].toLowerCase();
+				var pos = data[1].split('X');
+				var direccion = '<div class="croquis-direccion" style="width:16px;height:15px;background: center no-repeat url(\'siniestros/croquis/'+dir+'.png\');background-size:16px 15px" direction="'+dir+'"></div>';
+				$(direccion).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
+			}
+			break;
+		}
 	}
 	
 	/* Other form functions */
@@ -3258,14 +3306,15 @@ $(document).ready(function () {
 		});
 	}
 	populateDiv_SiniestroDatosTerceros = function(id) {
+		var dfd = new $.Deferred();
 		$.getJSON("get-json-fich_siniestros_datos_terceros.php?id=" + id, {}, function (j) {
 			if (j.error == 'expired') {
 				sessionExpire('box');
 			} else {
 				var result = '';
+				var count = 0;
 				// Check if empty
 				if (j.length > 0) {
-					var count = 0;
 					// Open Table
 					result += '<table class="tblBox">';
 					// Table Head
@@ -3288,6 +3337,7 @@ $(document).ready(function () {
 						result += '</ul></td>';
 						result += '</tr>';
 					});
+
 					// Close Table
 					result += '</table>';
 				} else {
@@ -3295,8 +3345,15 @@ $(document).ready(function () {
 				}
 				// Populate DIV
 				$('#divBoxListDatosTerceros').html(result);
+				$('.croquis-auto').remove();
+				croquisAddItem('auto', 0);
+				for (var i = 1; i <= count; i++) {
+					croquisAddItem('auto', i);
+				}
 			}
+			dfd.resolve();
 		});
+		return dfd.promise();
 	}
 	populateDiv_SiniestroLesionesTerceros = function(id) {
 		$.getJSON("get-json-fich_siniestros_lesiones_terceros.php?id=" + id, {}, function (j) {
@@ -4060,8 +4117,41 @@ $(document).ready(function () {
 	updateFormSiniestro = function(id) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
+		var croquis = '';
+		var t = $('#droppable').offset().top;
+		var b = t + $('#droppable').height();
+		var l = $('#droppable').offset().left;
+		var r = l + $('#droppable').width();
+		$('.croquis-auto').each(function(i,e) {
+			var top = $(e).offset().top;
+			var left = $(e).offset().left;
+			if (top >= t && top <= b && left >= l && left <= r) {
+				croquis += '&box-croquis-'+$(e).prop('id')+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+			}
+		});
+		$('.croquis-moto').each(function(i,e) {
+			var top = $(e).offset().top;
+			var left = $(e).offset().left;
+			if (top >= t && top <= b && left >= l && left <= r) {
+				croquis += '&box-croquis-moto'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+			}
+		});
+		$('.croquis-peaton').each(function(i,e) {
+			var top = $(e).offset().top;
+			var left = $(e).offset().left;
+			if (top >= t && top <= b && left >= l && left <= r) {
+				croquis += '&box-croquis-peat'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+			}
+		});
+		$('.croquis-direccion').each(function(i,e) {
+			var top = $(e).offset().top;
+			var left = $(e).offset().left;
+			if (top >= t && top <= b && left >= l && left <= r) {
+				croquis += '&box-croquis-dire'+i+'='+$(e).attr('direction')+','+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+			}
+		});
 		// Post
-		$.post("update-siniestro.php", $("#frmBox").serialize(), function (data) {
+		$.post("update-siniestro.php", $("#frmBox").serialize() + croquis, function (data) {
 			if (data == 'Session expired') {
 				sessionExpire('box');
 			} else {
@@ -7198,7 +7288,6 @@ $(document).ready(function () {
 					populateFormBoxSiniestro(id)
 				).then(function () {
 					
-					populateDiv_SiniestroDatosTerceros(id);
 					populateDiv_SiniestroLesionesTerceros(id);
 					
 					initDatePickersDaily('box-date', false, null);
@@ -7216,12 +7305,20 @@ $(document).ready(function () {
 						}
 					}).change();
 					
+					$('.draggable-autos').draggable();
 					$('.draggable').draggable({
-						drag: function() {
-							console.log('dragged');
+						helper: 'clone',
+					});
+					$('#droppable').droppable({
+						drop: function(event, ui) {
+							if (ui.helper.hasClass('draggable')) {
+								var offset = ui.helper.offset();
+								var position = ui.helper.position();
+								ui.helper.css({'position': 'absolute', 'top': position.top, 'left': position.left}).removeClass('draggable').draggable({'helper': 'original'}).appendTo( this ).offset( offset );
+								$.ui.ddmanager.current.cancelHelperRemoval = true;
+							}
 						}
 					});
-					// $('#droppable').droppable();
 					
 					// Validate form
 					var validateForm = $("#frmBox").validate({

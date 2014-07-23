@@ -12,6 +12,7 @@
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.dialog.min.js"></script>
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.mouse.min.js"></script>        
         <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.draggable.min.js"></script>
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.droppable.min.js"></script>
 		<script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.slider.min.js"></script>
         
 		<!-- Set datepicker defaults -->
