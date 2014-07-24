@@ -1760,6 +1760,7 @@ $(document).ready(function () {
 						populateDiv_SiniestroDatosTerceros(id)
 					).then(function () {
 						// Populate croquis
+						$('.dragged').remove();
 						$.each(j, function(k,v) {
 							if (k.substring(0, 7)=='croquis') {
 								var i = parseInt(k.substring(12));
@@ -2341,14 +2342,14 @@ $(document).ready(function () {
 		case 'moto':
 			if (data) {
 				var pos = data.split('X');
-				var moto = '<div class="croquis-moto" style="width:20px;height:9px;background: center no-repeat url(\'siniestros/croquis/moto.png\');background-size:20px 9px"></div>';
+				var moto = '<div class="croquis-moto dragged" style="width:20px;height:9px;background: center no-repeat url(\'siniestros/croquis/moto.png\');background-size:20px 9px"></div>';
 				$(moto).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
 			}
 			break;
 		case 'peat':
 			if (data) {
 				var pos = data.split('X');
-				var peaton = '<div class="croquis-peaton" style="width:9px;height:9px;background: center no-repeat url(\'siniestros/croquis/peaton.png\');background-size:9px 9px"></div>';
+				var peaton = '<div class="croquis-peaton dragged" style="width:9px;height:9px;background: center no-repeat url(\'siniestros/croquis/peaton.png\');background-size:9px 9px"></div>';
 				$(peaton).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
 			}
 			break;
@@ -2357,7 +2358,7 @@ $(document).ready(function () {
 				data = data.split(',');
 				var dir = data[0].toLowerCase();
 				var pos = data[1].split('X');
-				var direccion = '<div class="croquis-direccion" style="width:16px;height:15px;background: center no-repeat url(\'siniestros/croquis/'+dir+'.png\');background-size:16px 15px" direction="'+dir+'"></div>';
+				var direccion = '<div class="croquis-direccion dragged" style="width:16px;height:15px;background: center no-repeat url(\'siniestros/croquis/'+dir+'.png\');background-size:16px 15px" direction="'+dir+'"></div>';
 				$(direccion).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'}).draggable();
 			}
 			break;
@@ -3345,6 +3346,7 @@ $(document).ready(function () {
 				}
 				// Populate DIV
 				$('#divBoxListDatosTerceros').html(result);
+				$('#croquis-autos').children().remove();
 				$('.croquis-auto').remove();
 				croquisAddItem('auto', 0);
 				for (var i = 1; i <= count; i++) {
@@ -7314,7 +7316,7 @@ $(document).ready(function () {
 							if (ui.helper.hasClass('draggable')) {
 								var offset = ui.helper.offset();
 								var position = ui.helper.position();
-								ui.helper.css({'position': 'absolute', 'top': position.top, 'left': position.left}).removeClass('draggable').draggable({'helper': 'original'}).appendTo( this ).offset( offset );
+								ui.helper.css({'position': 'absolute', 'top': position.top, 'left': position.left}).removeClass('draggable').addClass('dragged').draggable({'helper': 'original'}).appendTo( this ).offset( offset );
 								$.ui.ddmanager.current.cancelHelperRemoval = true;
 							}
 						}

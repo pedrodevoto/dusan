@@ -571,28 +571,28 @@
 							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/oe.png');background-size:16px 15px" direction="oe"></div>
 						</div>
 						<div style="float:left;width:16px;padding:2px">
-							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/en.png');background-size:16px 15px" direction="en"></div>
-						</div>
-						<div style="float:left;width:16px;padding:2px">
-							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/es.png');background-size:16px 15px" direction="es"></div>
-						</div>
-						<div style="float:left;width:16px;padding:2px">
-							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/ne.png');background-size:16px 15px" direction="ne"></div>
-						</div>
-						<div style="float:left;width:16px;padding:2px">
-							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/no.png');background-size:16px 15px" direction="no"></div>
-						</div>
-						<div style="float:left;width:16px;padding:2px">
 							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/on.png');background-size:16px 15px" direction="on"></div>
+						</div>
+						<div style="float:left;width:16px;padding:2px">
+							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/en.png');background-size:16px 15px" direction="en"></div>
 						</div>
 						<div style="float:left;width:16px;padding:2px">
 							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/os.png');background-size:16px 15px" direction="os"></div>
 						</div>
 						<div style="float:left;width:16px;padding:2px">
-							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/se.png');background-size:16px 15px" direction="se"></div>
+							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/es.png');background-size:16px 15px" direction="es"></div>
+						</div>
+						<div style="float:left;width:16px;padding:2px">
+							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/no.png');background-size:16px 15px" direction="no"></div>
+						</div>
+						<div style="float:left;width:16px;padding:2px">
+							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/ne.png');background-size:16px 15px" direction="ne"></div>
 						</div>
 						<div style="float:left;width:16px;padding:2px">
 							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/so.png');background-size:16px 15px" direction="so"></div>
+						</div>
+						<div style="float:left;width:16px;padding:2px">
+							<div class="draggable croquis-direccion" style="width:16px;height:15px;background: center no-repeat url('siniestros/croquis/se.png');background-size:16px 15px" direction="se"></div>
 						</div>
 					</div>
 				</div>

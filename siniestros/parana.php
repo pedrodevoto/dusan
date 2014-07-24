@@ -233,7 +233,10 @@ $text = implode(', ', $lesiones_terceros_txt);
 $text = iconv('UTF-8', 'windows-1252', $text);
 $pdf->SetXY(103, 24);
 $pdf->SetFont('Arial', '', 7);
-$pdf->MultiCell(90, 5, $text, 0, 'L');
+$pdf->MultiCell(90, 5, $text, 0, 'L', 0, 10);
+
+// croquis
+$pdf->Rect(120, 81.7, 29, 29);
 
 if (isset($datos_terceros[1])) {
 	$pdf->wwrite(62, 148.5, $datos_terceros[1]['nombre']);
@@ -283,6 +286,11 @@ if (isset($datos_terceros[1])) {
 	if (!empty($datos_terceros[1]['danios_techo_der'])) $pdf->wwrite(182.7, 187.6, 'X');
 	if (!empty($datos_terceros[1]['danios_techo_izq'])) $pdf->wwrite(189.7, 187.6, 'X');
 }
+
+$text = iconv('UTF-8', 'windows-1252', $siniestro_detalle);
+$pdf->SetXY(22, 201);
+$pdf->SetFont('Arial', '', 7);
+$pdf->MultiCell(172, 7, $text, 0, 'L', 0, 6);
 
 $date = DateTime::createFromFormat("Y-m-d", $fecha_denuncia)->format('d/m/Y');
 $text = implode(', ', array($lugar_denuncia, $date));
