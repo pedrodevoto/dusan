@@ -23,10 +23,13 @@
 					continue;
 				}
 				$key = mysql_real_escape_string(substr($k, 4));
-				$val = mysql_real_escape_string(trim($v));
+				if (preg_match('/-noupper$/', $k)) 
+					$val = mysql_real_escape_string(trim($v));
+				else
+					$val = mysql_real_escape_string(strtoupper(trim($v)));
 				if ($val=='') continue;
 			
-				$values[] = sprintf('(%s, "%s", UPPER(TRIM("%s")))', $siniestro_id, $key, $val);
+				$values[] = sprintf('(%s, "%s", "%s")', $siniestro_id, $key, $val);
 			}
 		
 			$sql = sprintf('INSERT INTO siniestros_data (`siniestro_id`, `key`, `value`) VALUES %s', implode(', ', $values));

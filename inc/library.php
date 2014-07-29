@@ -46,7 +46,10 @@
 		<script type="text/javascript" language="javascript" src="jquery-plugins/validation/jquery.validate.min.js"></script>                
 		<script type="text/javascript" language="javascript" src="jquery-plugins/validation/jquery.validate.custom-methods.js"></script>        			
 		<script type="text/javascript" language="javascript" src="media/js/messages_es.js"></script>                        
-		<script type="text/javascript" language="javascript" src="jquery-plugins/validation/jquery.validate.setdefaults.js"></script>                                
+		<script type="text/javascript" language="javascript" src="jquery-plugins/validation/jquery.validate.setdefaults.js"></script>            
+		
+		<!-- html2canvas -->
+		<script type="text/javascript" language="javascript" src="jquery-plugins/html2canvas/html2canvas.js"></script>                    
                
         <!-- General functions -->
         <script type="text/javascript" language="javascript" src="media/js/functions.js"></script>

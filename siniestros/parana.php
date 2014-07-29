@@ -236,7 +236,8 @@ $pdf->SetFont('Arial', '', 7);
 $pdf->MultiCell(90, 5, $text, 0, 'L', 0, 10);
 
 // croquis
-$pdf->Rect(120, 81.7, 29, 29);
+$img = preg_replace('/^data:/', 'data://', $siniestro['croquis_img-noupper']);
+$pdf->Image($img, 120, 81.7, 29, 29, 'png');
 
 if (isset($datos_terceros[1])) {
 	$pdf->wwrite(62, 148.5, $datos_terceros[1]['nombre']);

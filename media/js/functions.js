@@ -4426,6 +4426,17 @@ $(document).ready(function () {
 		});
 	}
 	
+	renderCroquis = function() {
+		var dfd = new $.Deferred();
+		html2canvas($('#droppable'), {
+		  onrendered: function(canvas) {
+			$('#box-croquis_img-noupper').val(canvas.toDataURL());
+			dfd.resolve();
+		  }
+		});
+		return dfd.promise();
+	}
+	
 	/* Delete via Link functions */
 	deleteProdSeg = function (id, productor_id) {
 		$.when(
@@ -7343,7 +7354,9 @@ $(document).ready(function () {
 					$("#btnBox").click(function () {
 						if (validateForm.form()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
-							updateFormSiniestro(id);
+							$.when(renderCroquis()).then(function() {
+								updateFormSiniestro(id);
+							});
 						}
 					});
 					// Navegación

@@ -541,6 +541,7 @@
 			</p>
 			<div style="width:30%;float:left" id="croquis">
 				<div id="droppable" style="width:200px;height:200px;background: center no-repeat url('siniestros/croquis/plano.png');background-size:200px 200px; position:relative"></div>
+				<input type="hidden" name="box-croquis_img-noupper" id="box-croquis_img-noupper" />
 				<div style="width:200px">
 					<div id="croquis-autos">
 
