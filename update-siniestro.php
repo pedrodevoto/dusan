@@ -26,7 +26,7 @@
 				if (preg_match('/-noupper$/', $k)) 
 					$val = mysql_real_escape_string(trim($v));
 				else
-					$val = mysql_real_escape_string(strtoupper(trim($v)));
+					$val = mysql_real_escape_string(mb_strtoupper(trim($v), 'UTF-8'));
 				if ($val=='') continue;
 			
 				$values[] = sprintf('(%s, "%s", "%s")', $siniestro_id, $key, $val);
