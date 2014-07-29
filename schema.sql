@@ -151,7 +151,7 @@ CREATE TABLE `automotor` (
   KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
   KEY `equipo_rastreo_pedido_id` (`equipo_rastreo_pedido_id`),
   KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `automotor_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
+  CONSTRAINT `automotor_ibfk_6` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
   CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
   CONSTRAINT `automotor_ibfk_4` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`),
   CONSTRAINT `automotor_ibfk_5` FOREIGN KEY (`equipo_rastreo_pedido_id`) REFERENCES `equipo_rastreo_pedido` (`equipo_rastreo_pedido_id`)
@@ -503,8 +503,8 @@ CREATE TABLE `contacto` (
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `localidad_id` (`localidad_id`),
-  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`localidad_id`) ON DELETE SET NULL,
-  CONSTRAINT `contacto_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`)
+  CONSTRAINT `contacto_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
+  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`localidad_id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -535,7 +535,7 @@ CREATE TABLE `cuota` (
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),
   KEY `cuota_estado_id` (`cuota_estado_id`),
   KEY `cuota_recibo` (`cuota_recibo`),
-  CONSTRAINT `cuota_ibfk_1` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`),
+  CONSTRAINT `cuota_ibfk_3` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
   CONSTRAINT `cuota_ibfk_2` FOREIGN KEY (`cuota_estado_id`) REFERENCES `cuota_estado` (`cuota_estado_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -913,13 +913,13 @@ CREATE TABLE `poliza` (
   KEY `poliza_plan_id` (`poliza_plan_id`),
   KEY `poliza_pack_id` (`poliza_pack_id`),
   KEY `sucursal_id` (`sucursal_id`),
-  CONSTRAINT `poliza_ibfk_9` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE,
+  CONSTRAINT `poliza_ibfk_11` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
   CONSTRAINT `poliza_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
-  CONSTRAINT `poliza_ibfk_4` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`),
-  CONSTRAINT `poliza_ibfk_5` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`),
+  CONSTRAINT `poliza_ibfk_10` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
   CONSTRAINT `poliza_ibfk_6` FOREIGN KEY (`poliza_estado_id`) REFERENCES `poliza_estado` (`poliza_estado_id`),
   CONSTRAINT `poliza_ibfk_7` FOREIGN KEY (`poliza_plan_id`) REFERENCES `poliza_plan` (`poliza_plan_id`),
-  CONSTRAINT `poliza_ibfk_8` FOREIGN KEY (`poliza_pack_id`) REFERENCES `poliza_pack` (`poliza_pack_id`)
+  CONSTRAINT `poliza_ibfk_8` FOREIGN KEY (`poliza_pack_id`) REFERENCES `poliza_pack` (`poliza_pack_id`),
+  CONSTRAINT `poliza_ibfk_9` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1005,9 +1005,9 @@ CREATE TABLE `productor_seguro` (
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
   KEY `organizador_id` (`organizador_id`),
+  CONSTRAINT `productor_seguro_ibfk_5` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`) ON DELETE CASCADE,
   CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`organizador_id`) REFERENCES `organizador` (`organizador_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `productor_seguro_ibfk_1` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`),
-  CONSTRAINT `productor_seguro_ibfk_2` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`)
+  CONSTRAINT `productor_seguro_ibfk_4` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1233,8 +1233,8 @@ CREATE TABLE `usuario_sucursal` (
   PRIMARY KEY (`usuario_sucursal_id`),
   UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `usuario_sucursal_ibfk_5` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`)
+  CONSTRAINT `usuario_sucursal_ibfk_6` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE,
+  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1246,4 +1246,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-07-25 16:13:38
+-- 2014-07-25 20:39:02
