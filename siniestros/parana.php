@@ -131,6 +131,14 @@ if (!empty($seco)) $pdf->wwrite(143, 216, 'X');
 if (!empty($lluvia) or !empty($granizo) or !empty($nieve)) $pdf->wwrite(156.5, 216, 'X');
 if (!empty($niebla)) $pdf->wwrite(170.9, 216, 'X');
 
+$pdf->wwrite(93, 242.5, $inspeccion_taller);
+$pdf->wwrite(30, 248, $inspeccion_calle);
+$pdf->wwrite(122, 248, $inspeccion_altura);
+$pdf->wwrite(154, 248, $inspeccion_localidad);
+$date = DateTime::createFromFormat("Y-m-d", $inspeccion_fecha)->format('d/m/Y');
+$pdf->wwrite(32, 254.3, $date);
+$pdf->wwrite(74, 254.3, $inspeccion_telefono);
+
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(2);
 $pdf->useTemplate($tplIdx);

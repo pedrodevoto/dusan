@@ -612,6 +612,31 @@
 			    Cargando...
 			</div>
 		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Inspección del vehículo asegurado</legend>
+			<p>
+				<label for="box-inspeccion_taller">Nombre del taller</label>
+				<input type="text" name="box-inspeccion_taller" id="box-inspeccion_taller" class="ui-widget-content" />
+			</p>
+			<p>
+				<label for="box-inspeccion_contacto">Contacto</label>
+				<input type="text" name="box-inspeccion_contacto" id="box-inspeccion_contacto" class="ui-widget-content" />
+			</p>
+			<p>
+				<label for="box-inspeccion_calle">Calle</label>
+				<input type="text" name="box-inspeccion_calle" id="box-inspeccion_calle" class="ui-widget-content" />
+				<label for="box-inspeccion_altura" style="width:initial">Altura</label>
+				<input type="text" name="box-inspeccion_altura" id="box-inspeccion_altura" class="ui-widget-content" style="width:40px" />
+				<label for="box-inspeccion_localidad" style="width:initial">Localidad</label>
+				<input type="text" name="box-inspeccion_localidad" id="box-inspeccion_localidad" class="ui-widget-content" />
+			</p>
+            <p>
+                <label for="box-inspeccion_fecha">Fecha</label>
+                <input type="text" name="box-inspeccion_fecha" id="box-inspeccion_fecha" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
+				<label for="box-inspeccion_telefono" style="width:initial">Teléfono</label>
+				<input type="text" name="box-inspeccion_telefono" id="box-inspeccion_telefono" class="ui-widget-content" />
+            </p>
+		</fieldset>
 		<input type="hidden" name="box-siniestro_id" id="box-siniestro_id" value="" />
 		<input type="hidden" name="automotor_id" id="box-automotor_id" />
 		<input type="hidden" name="cliente_id" id="box-cliente_id" />
