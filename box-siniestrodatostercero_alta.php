@@ -104,7 +104,7 @@
 				<label for="box-modelo">Modelo</label>
 				<input type="text" name="box-modelo" id="box-modelo" class="ui-widget-content" />
 				<label for="box-ano" style="width:initial">Año</label>
-				<input type="text" name="box-ano" id="box-marca" class="ui-widget-content" style="width:50px" />
+				<input type="text" name="box-ano" id="box-ano" class="ui-widget-content" style="width:50px" />
 				<label for="box-patente_0" style="width:initial">Patente</label>
 		        <input type="text" name="box-patente_0" id="box-patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
 				<input type="text" name="box-patente_1" id="box-patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
