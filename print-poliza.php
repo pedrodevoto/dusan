@@ -345,17 +345,7 @@
 					$pdf->SetXY(70, 205);
 					$pdf->SetXY(102, 205);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, 205);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, 205);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}																									
+					
 					// OUTPUT
 					if (isset($_GET['email'])) {
 						$cc = explode(',', urldecode($_GET['email']));
@@ -1972,17 +1962,6 @@
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
 					
 					// Firma
 					if (isset($_GET['print'])) {
@@ -2619,17 +2598,6 @@
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
 					
 					// Firma
 					if (isset($_GET['print'])) {
@@ -3157,18 +3125,7 @@
 						$pdf->SetXY(70, $y);
 						$pdf->SetXY(102, $y);
 						printText($txt_pago_c2, $pdf, 30, 3.8);
-						// Importes
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->SetTextColor(0,0,0);								
-						$pdf->SetXY(149, $y);
-						foreach ($txt_imp_c1 as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-						}
-						$pdf->SetXY(149, $y);
-						foreach ($txt_imp_c2 as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-						}
-
+						
 						// Firma
 						if (isset($_GET['print'])) {
 							$pdf->Image('pdf/cc_dinamica_firma.png', 0, 0, 215.9, 279.4);
@@ -3671,18 +3628,7 @@
 						$pdf->SetXY(70, $y);
 						$pdf->SetXY(102, $y);
 						printText($txt_pago_c2, $pdf, 30, 3.8);
-						// Importes
-						$pdf->SetFont('Arial', '', 8);
-						$pdf->SetTextColor(0,0,0);								
-						$pdf->SetXY(149, $y);
-						foreach ($txt_imp_c1 as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-						}
-						$pdf->SetXY(149, $y);
-						foreach ($txt_imp_c2 as $array) {
-							printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-						}
-				
+						
 						// Firma
 						if (isset($_GET['print'])) {
 							$pdf->Image('pdf/cc_dinamica_firma.png', 0, 0, 215.9, 279.4);
