@@ -2,8 +2,6 @@
 $pdf = new FPDIW('P','mm',array(210.058,297.18));
 $pdf->setSourceFile('siniestros/parana.pdf');
 
-extract($siniestro);
-
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(1);
 $pdf->useTemplate($tplIdx);

@@ -37,8 +37,8 @@
 				<input type="text" name="box-cel" id="box-cel" class="ui-widget-content" style="width:80px" />
 			</p>
 			<p>
-				<label for="box-asegurado_fec_nac">Fecha de nacimiento</label>
-				<input type="text" name="box-asegurado_fecha_nac" id="box-asegurado_fecha_nac" class="ui-widget-content box-date" style="width:80px" />
+				<label for="box-fec_nac">Fecha de nacimiento</label>
+				<input type="text" name="box-fecha_nac" id="box-fecha_nac" class="ui-widget-content box-date" style="width:80px" />
 				<label for="box-nro_doc" style="width:initial;margin-left:20px">DNI</label>
 				<input type="text" name="box-nro_doc" id="box-nro_doc" class="ui-widget-content" style="width:180px" />
 				<label for="box-estado_civil" style="width:initial;margin-left:20px">Estado civil</label>

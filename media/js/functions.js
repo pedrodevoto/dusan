@@ -4428,6 +4428,7 @@ $(document).ready(function () {
 	
 	renderCroquis = function() {
 		var dfd = new $.Deferred();
+		$('#droppable')[0].scrollIntoView();
 		html2canvas($('#droppable'), {
 		  onrendered: function(canvas) {
 			$('#box-croquis_img-noupper').val(canvas.toDataURL());
@@ -7378,7 +7379,7 @@ $(document).ready(function () {
 					
 					formDisable('frmBox', 'ui', false);
 					if (focuselement!=undefined) {
-						$('#'+focuselement).focus();
+						$('#'+focuselement)[0].scrollIntoView();
 					}
 				});
 			}
@@ -7425,7 +7426,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id, 'btnNuevoDatosTercero');
+					openBoxModSiniestro(id, 'fieldset-datos-terceros');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -7474,7 +7475,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id, 'btnNuevoDatosTercero');
+						openBoxModSiniestro(siniestro_id, 'fieldset-datos-terceros');
 					});
 					
 					formDisable('frmBox', 'ui', false);
@@ -7525,7 +7526,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id, 'btnNuevoLesionesTercero');
+					openBoxModSiniestro(id, 'fieldset-lesiones-terceros');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -7574,7 +7575,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id, 'btnNuevoLesionesTercero');
+						openBoxModSiniestro(siniestro_id, 'fieldset-lesiones-terceros');
 					});
 					
 					formDisable('frmBox', 'ui', false);

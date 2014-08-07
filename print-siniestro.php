@@ -181,6 +181,9 @@ while ($row = mysql_fetch_array($res)) {
 	}
 	$siniestro['datos_terceros'][] = $siniestro_datos_tercero;
 }
+$siniestro['datos_terceros'][] = $siniestro['datos_terceros'][0];
+$siniestro['datos_terceros'][] = $siniestro['datos_terceros'][0];
+$siniestro['datos_terceros'][] = $siniestro['datos_terceros'][0];
 
 $siniestro['lesiones_terceros'] = array();
 $sql = sprintf('SELECT id FROM siniestros_lesiones_terceros WHERE siniestro_id = %s', $siniestro_id);
@@ -194,9 +197,16 @@ while ($row = mysql_fetch_array($res)) {
 	}
 	$siniestro['lesiones_terceros'][] = $siniestro_lesiones_tercero;
 }
+$siniestro['lesiones_terceros'][] = $siniestro['lesiones_terceros'][0];
+$siniestro['lesiones_terceros'][] = $siniestro['lesiones_terceros'][0];
+$siniestro['lesiones_terceros'][] = $siniestro['lesiones_terceros'][0];
 
-$seguros[2] = 'parana';
+$seguros = array(
+	1 => 'federal',
+	2 => 'parana',
+);
 
+extract($siniestro);
 include('siniestros/'.$seguros[$seguro_id].'.php');
 
 ?>

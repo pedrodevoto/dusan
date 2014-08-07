@@ -419,7 +419,7 @@
 				<textarea name="box-asegurado_danios_observaciones" id="box-asegurado_danios_observaciones" style="width:100%" rows="4"></textarea>
 			</p>
 		</fieldset>
-		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+		<fieldset id="fieldset-datos-terceros" class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos de terceros</legend>
 			<p>
 				<button id="btnNuevoDatosTercero">Agregar datos de tercero</button>
@@ -603,7 +603,7 @@
 			</div>
 			
 		</fieldset>
-		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+		<fieldset id="fieldset-lesiones-terceros" class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Lesiones a terceros</legend>
 			<p>
 				<button id="btnNuevoLesionesTercero">Agregar lesiones a terceros</button>
