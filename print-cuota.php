@@ -67,6 +67,11 @@
 		die("Error: El cliente no tiene un contacto primario asignado.");
 	}	
 
+	$sql = sprintf('SELECT count(cuota_id) from cuota where poliza_id = (select poliza_id from cuota where cuota_id=%s)', $cuota_id);
+	$res = mysql_query($sql, $connection) or die(mysql_error());
+	$row = mysql_fetch_array($res);
+	$cant_cuotas = $row[0];
+
 	$offset = 0;
 	// New document
 	if (isset($_GET['print'])) {
@@ -131,7 +136,7 @@
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
 						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
 						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
-						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
+						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 					);						
 			
@@ -208,7 +213,7 @@
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
 						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
 						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
-						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
+						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 					);						
 		
@@ -252,7 +257,7 @@
 					array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
 					array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
 					array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
-					array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$row_Recordset1['poliza_cant_cuotas']." - ".$cuota_periodo),
+					array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 					array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 				);						
 			break;
