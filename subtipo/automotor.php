@@ -136,6 +136,9 @@
 			$('#box-valor_gnc2').val(parseInt($('#box-valor_gnc').val()));
 		}
 	});
+	$('#box-patente_0').keyup(function(event) {
+		if ($('#box-patente_0').val().length==3 && !event.which.toString().match(/(^9$)|(^16$)/g)) $('#box-patente_1').focus();
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
