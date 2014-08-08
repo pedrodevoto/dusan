@@ -1157,17 +1157,6 @@
 					$pdf->SetXY(70, $y);
 					$pdf->SetXY(102, $y);
 					printText($txt_pago_c2, $pdf, 30, 3.8);
-					// Importes
-					$pdf->SetFont('Arial', '', 8);
-					$pdf->SetTextColor(0,0,0);								
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c1 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8);
-					}
-					$pdf->SetXY(149, $y);
-					foreach ($txt_imp_c2 as $array) {
-						printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-					}
 					
 					// Firma
 					if (isset($_GET['print'])) {
