@@ -57,7 +57,7 @@ list($seguro_email_endoso) = mysql_fetch_array($res);
                 <input type="text" name="box-endoso_premio" id="box-endoso_premio" maxlength="255" class="ui-widget-content" style="width:180px" readonly />
             </p>
             <p>
-                <label for="box-endoso_fecha_compania">Fecha de la compañía</label>
+                <label for="box-endoso_fecha_compania">Fecha de emisión</label>
                 <input type="text" name="box-endoso_fecha_compania" id="box-endoso_fecha_compania" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
             </p>
 			<p>
