@@ -1259,6 +1259,9 @@ $(document).ready(function () {
 						$(element).attr('checked', false);
 					}
 					break;
+				case 'span':
+					$(element).text(value);
+					break;
 				default:
 					$(element).val($(element).prop("multiple") ? value.split(',') : value);
 					break;
