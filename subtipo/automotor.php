@@ -139,6 +139,9 @@
 	$('#box-patente_0').keyup(function(event) {
 		if ($('#box-patente_0').val().length==3 && !event.which.toString().match(/(^9$)|(^16$)/g)) $('#box-patente_1').focus();
 	});
+	$('#box-uso').change(function() {
+		if ($(this).val()=='Remise') $('#box-seguro_cobertura_tipo_limite_rc_id').val(4);
+	});
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
