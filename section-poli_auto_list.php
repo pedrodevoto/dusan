@@ -110,22 +110,22 @@
 						{"bSearchable": false, "bVisible": false},
 						{"bSearchable": false, "bVisible": false},
 						// Visible fields (data and actions)
-						{"sWidth": "7%"},
-						{"sWidth": "6%"},
-						{"sWidth": "8%"},
-						{"sWidth": "7%"},
-						{"sWidth": "9%"},
-						{"sWidth": "9%"},
-						{"sWidth": "7%", "bSearchable": false, "bSortable": true},
-						{"sWidth": "7%", "bSearchable": false},
-						{"sWidth": "7%", "bSearchable": false},
-						{"sWidth": "5%", "bSearchable": false},
-						{"sWidth": "6%", "bSearchable": false},
 						{"sWidth": "5%"},
+						{"sWidth": "4%"},
+						{"sWidth": "5%"},
+						{"sWidth": "5%"},
+						{"sWidth": "6%"},
+						{"sWidth": "17%"},
+						{"sWidth": "4%", "bSearchable": false, "bSortable": true},
+						{"sWidth": "4%", "bSearchable": false},
+						{"sWidth": "4%", "bSearchable": false},
+						{"sWidth": "4%", "bSearchable": false},
+						{"sWidth": "4%", "bSearchable": false},
+						{"sWidth": "3%"},
 						{"sWidth": "4%",  "bSearchable": false},
 						{"sWidth": "6%",  "bSearchable": false, "bVisible": false},
 						{"bSearchable": false, "bVisible": false},
-						{"sWidth": "10%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
+						{"sWidth": "8%", "bSearchable": false, "bSortable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Datos de Póliza" onclick="openBoxModPoliza('+oObj.aData[0]+', \'Patrimoniales\');"><span class="ui-icon ui-icon-pencil"></span></li><li title="Detalle de Póliza" onclick="'+(oObj.aData[17]==1?'openBoxPolizaFlota(\'detalle\', ':'openBoxPolizaDet(')+oObj.aData[0]+', false);"><span class="ui-icon ui-icon-document-b"></span></li>';

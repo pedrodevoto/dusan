@@ -50,7 +50,7 @@ textarea {
 }
 
 #divContainer {
-	width: 960px;
+	width: 1050px;
 	margin: 4px auto;
 	padding: 0;
 }
@@ -521,4 +521,7 @@ border-color: #d6e9c6 !important;
 	width:80px;*/
 	padding-left:18px;
 	text-align:right;
+}
+#divTable {
+	font-size:9px;
 }
