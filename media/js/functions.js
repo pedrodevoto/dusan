@@ -6423,6 +6423,11 @@ $(document).ready(function () {
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
+					$('#box-endoso_tipo_id').change(function() {
+						var tipo_endoso = $(':selected', this).parent().attr('label');
+						$('#mail-subject').val('Pedido de '+(tipo_endoso=='Anulación'?'anulación':'endoso')+' PZA. '+$('#box-poliza_numero').val());
+					}).change();
+
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
