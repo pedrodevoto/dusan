@@ -80,13 +80,13 @@ function showLimiteRC() {
 }
 
 function showZonasRiesgo($id) {
-	$query_Recordset1 = sprintf("SELECT seguro_zona_riesgo_id, seguro_zona_riesgo_nombre FROM seguro_zona_riesgo WHERE seguro_id=%s", 
+	$query_Recordset1 = sprintf("SELECT seguro_zona_riesgo_id, seguro_zona_riesgo_nombre, seguro_zona_riesgo_default FROM seguro_zona_riesgo WHERE seguro_id=%s", 
 		GetSQLValueString($id, "int"));
 
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1) or die(mysql_error());
 	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
-		echo '<option value="'.$row_Recordset1[0].'">'.$row_Recordset1[1].'</option>';
+		echo '<option value="'.$row_Recordset1[0].'"'.($row_Recordset1[2]==1?' selected':'').'>'.$row_Recordset1[1].'</option>';
 	}
 }
 function showProducto() {
