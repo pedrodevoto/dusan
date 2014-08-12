@@ -5728,6 +5728,9 @@ $(document).ready(function () {
 				$('#navegacion-cert').click(function() {
 					openBoxPolizaCert(id);
 				});
+				$('#navegacion-cuotas').click(function() {
+					openBoxCuota(id);
+				});
 				
 				// Initialize buttons
 				$("#btnBox").button();
@@ -6073,6 +6076,9 @@ $(document).ready(function () {
 					$('#navegacion-cert').click(function() {
 						openBoxPolizaCert(id);
 					});
+					$('#navegacion-cuotas').click(function() {
+						openBoxCuota(id);
+					});
 					$(".btnBox").val('Aceptar');
 				}
 
@@ -6129,6 +6135,9 @@ $(document).ready(function () {
 				});
 				$("#navegacion-datos").click(function() {
 					openBoxModPoliza(id);
+				});
+				$('#navegacion-cuotas').click(function() {
+					openBoxCuota(id);
 				});
 				
 				$('#btnFinalizar').button().click(function() {
@@ -6196,12 +6205,23 @@ $(document).ready(function () {
 	openBoxCuota = function (id) {
 		$.colorbox({
 			title: 'Registro',
-			href: 'box-cuota.php?id='+id,
+			href: 'box-cuota.php?section=4&id='+id,
 			width: '900px',
 			height: '100%',
 			onComplete: function () {
 
 				$('#btnBox').button();
+				
+				// Navegación
+				$("#navegacion-detalle").click(function() {
+					openBoxPolizaDet(id, false);
+				});
+				$("#navegacion-datos").click(function() {
+					openBoxModPoliza(id);
+				});
+				$('#navegacion-cert').click(function() {
+					openBoxPolizaCert(id);
+				});
 
 				// Populate DIVs
 				populateDiv_Poliza_Info(id);

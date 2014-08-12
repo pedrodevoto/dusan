@@ -23,7 +23,8 @@
 		$progMenu = array(
 			1=>array('nombre'=>'1. Datos de Póliza', 'id'=>'navegacion-datos'),
 			2=>array('nombre'=>'2. Detalle de Póliza', 'id'=>'navegacion-detalle'),
-			3=>array('nombre'=>'3. Certificados', 'id'=>'navegacion-cert')
+			3=>array('nombre'=>'3. Certificados', 'id'=>'navegacion-cert'),
+			4=>array('nombre'=>'4. Cuotas', 'id'=>'navegacion-cuotas')
 		);	
 		if ($renew === true) {
 			$progMenu[1] .= ' [Renovación]';

@@ -10,7 +10,8 @@ $res = mysql_query($sql, $connection);
 list($cliente_email) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
-
+    <!-- Progress Menu -->
+    <?php require_once('inc/progress.php'); ?>
         <div>
             <fieldset class="ui-widget ui-widget-content ui-corner-all">
                 <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Poliza Seleccionada</legend> 
