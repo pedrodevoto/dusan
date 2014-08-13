@@ -242,8 +242,11 @@ $pdf->SetFont('Arial', '', 7);
 $pdf->MultiCell(90, 5, $text, 0, 'L', 0, 10);
 
 // croquis
-$img = preg_replace('/^data:/', 'data://', $siniestro['croquis_img-noupper']);
-$pdf->Image($img, 120, 81.7, 29, 29, 'png');
+$data = substr($siniestro['croquis_img-noupper'], 22);
+if (substr($siniestro['croquis_img-noupper'], 22)=='data:image/png;base64,' && base64_encode(base64_decode($data, true))===$data) {
+	$pdf->Image($siniestro['croquis_img-noupper'], 26, 202, 40, 36, 'png');
+}
+
 
 if (isset($datos_terceros[1])) {
 	$pdf->wwrite(62, 148.5, $datos_terceros[1]['nombre']);
@@ -303,12 +306,121 @@ $date = DateTime::createFromFormat("Y-m-d", $fecha_denuncia)->format('d/m/Y');
 $text = implode(', ', array($lugar_denuncia, $date));
 $pdf->wwrite(44, 265.5, $text);
 
+$text = '';
+if (count($siniestro['datos_terceros'])>2) {
+	for ($i=2;$i<count($siniestro['datos_terceros']);$i++) {
+		$datos_tercero = $siniestro['datos_terceros'][$i];
+		$text .= "DETALLE DEL OTRO VEHÍCULO (".($i+1).")\n";
+		$text .= 'Nombre: '.$datos_tercero['nombre'];
+		$text .= ', '.($datos_tercero['sexo']==1?'masculino':'femenino').'. ';
+		$text .= 'Registro: '.$datos_tercero['registro'].'. ';
+		$text .= 'Tel: '.$datos_tercero['tel'].'. ';
+		$text .= 'Domicilio: '.implode(', ', array_filter(array($datos_tercero['calle'].' '.$datos_tercero['altura'], $datos_tercero['cp'], $datos_tercero['localidad'], $datos_tercero['provincia']))).'. ';
+		$text .= 'Marca: '.$datos_tercero['marca'].'. ';
+		$text .= 'Modelo: '.$datos_tercero['modelo'].'. ';
+		$text .= 'Tipo: '.$datos_tercero['tipo'].'. ';
+		$text .= 'Patente: '.$datos_tercero['patente_0'].$datos_tercero['patente_1'].'. ';
+		$text .= 'Año: '.$datos_tercero['ano'].'. ';
+		$text .= 'Nro motor: '.$datos_tercero['nro_motor'].'. ';
+		$text .= 'Nro chasis: '.$datos_tercero['nro_chasis'].'. ';
+		$text .= 'Seguro: '.$datos_tercero['seguro'].'. ';
+		$text .= 'Póliza: '.$datos_tercero['nro_poliza'].'. ';
+		
+		$danios = array();
+		foreach ($datos_tercero as $danio_k=>$danio_v) {
+			if (!preg_match('/^danios_(_observaciones)?/', $danio_k)) continue;
+			if ($danio_v == 1) $danios[] = ucwords(preg_replace('/_/', ' ', substr($danio_k, 7)));
+		}
+		$text .= 'Daños: '.implode(', ', $danios).'. ';
+		if (!empty($datos_tercero['danios_observaciones'])) $text .= 'Observaciones: '.$datos_tercero['danios_observaciones'].'. ';
+		
+		$text .= 'El conductor '.((string)$datos_tercero['conductor_asegurado']=='0'?'no ':'').'es el propio asegurado. ';
+
+		if ((string)$datos_tercero['conductor_asegurado']=='0') {
+			$text .= 'Datos del conductor: ';
+			$text .= 'nombre: '.$datos_tercero['conductor_nombre'];
+			$text .= ', '.($datos_tercero['conductor_sexo']==1?'masculino':'femenino').'. ';
+			$text .= 'Registro: '.$datos_tercero['conductor_registro'].'. ';
+			if (isset($datos_tercero['conductor_registro_venc'])) {
+				$date = DateTime::createFromFormat("Y-m-d", $datos_tercero['conductor_registro_venc']);
+				$text .= 'Vencimiento: '.$date->format('d/m/Y').'. ';
+			}
+			$text .= 'Teléfono: '.$datos_tercero['conductor_tel'].'. ';
+			$text .= 'Domicilio: '.implode(', ', array_filter(array($datos_tercero['conductor_calle'].' '.$datos_tercero['conductor_altura'], $datos_tercero['conductor_cp'], $datos_tercero['conductor_localidad'], $datos_tercero['conductor_provincia']))).'. ';			
+			
+			if (isset($datos_tercero['conductor_fecha_nac'])) {
+				$date = DateTime::createFromFormat("Y-m-d", $datos_tercero['conductor_fecha_nac']);
+				$text .= 'Fecha de nacimiento: '.$date->format('d/m/Y').'. ';
+			}
+		}
+		$text .= "\n\n";
+	}
+}
+if (count($siniestro['lesiones_terceros'])>4) {
+	for ($i=4;$i<count($siniestro['lesiones_terceros']);$i++) {
+		$lesiones_tercero = $siniestro['lesiones_terceros'][$i];
+		$text .= "LESIONES A TERCEROS (".($i+1).")\n";
+		$text .= 'Nombre: '.$lesiones_tercero['nombre'];
+		$text .= ', '.($lesiones_tercero['sexo']==1?'masculino':'femenino').'. ';
+		$text .= 'Número de documento: '.$lesiones_tercero['nro_doc'].'. ';
+		$text .= 'Teléfono '.$lesiones_tercero['tel'].'. ';
+		$text .= 'Domicilio: '.implode(', ', array_filter(array($lesiones_tercero['calle'].' '.$lesiones_tercero['altura'], $lesiones_tercero['cp'], $lesiones_tercero['localidad'], $lesiones_tercero['provincia']))).'. ';
+		$text .= 'Estado civil: '.$lesiones_tercero['estado_civil'].'. ';
+		if (isset($lesiones_tercero['fecha_nac'])) {
+			$date = DateTime::createFromFormat("Y-m-d", $lesiones_tercero['fecha_nac']);
+			$text .= 'Fecha de nacimiento: '.$date->format('d/m/Y').'. ';
+		}
+		switch((string)$lesiones_tercero['relacion_asegurado']) {
+			case 1:
+			$text .= 'Relación con asegurado: conductor otro vehículo. ';
+			break;
+			case 2:
+			$text .= 'Relación con asegurado: pasajero otro vehículo. ';
+			break;
+			case 3:
+			$text .= 'Relación con asegurado: pasajero vehículo asegurado. ';
+			break;
+			case 4:
+			$text .= 'Relación con asegurado: peatón. ';
+			break;
+		}
+		switch((string)$lesiones_tercero['tipo_lesiones']) {
+			case 1:
+			$text .= 'Tipo de lesiones: leves. ';
+			break;
+			case 2:
+			$text .= 'Tipo de lesiones: graves (con internación). ';
+			break;
+			case 3:
+			$text .= 'Tipo de lesiones: mortal. ';
+			break;
+		}
+		switch ((string)$lesiones_tercero['examen_alcoholemia']) {
+			case '1':
+			$text .= 'Exámen de alcoholemia: sí. ';
+			break;
+			case '0':
+			$text .= 'Exámen de alcoholemia: no. ';
+			break;
+			case '2':
+			$text .= 'Exámen de alcoholemia: se negó. ';
+			break;
+		}
+		$text .= 'Centro asistencial: '.$lesiones_tercero['centro_asistencial'];
+		$text .= "\n\n";
+	}
+}
+
+if (!empty($text)) {
+	$pdf->AddPage();
+	$pdf->SetAutoPageBreak(true, 10);
+	$pdf->SetMargins(10, 10);
+
+	$text = iconv('UTF-8', 'windows-1252', $text);
+	$pdf->SetXY(10, 10);
+	$pdf->SetFont('Arial', '', 7);
+	$pdf->MultiCell(200, 5, $text);
+}
+
 $pdf->Output();
-// "los checkboxes de arriba no van por ahora"
-// "lugar y fecha del siniestro" es "datos del siniestro"
-// "unidad remolcada" no va
-// "actuaciones judiciales y/o policiales" no va
-// "inspección del vehículo asegurado" hay que agregarlo
-// 		lo de abajo no va
-// "lesiones a terceros" no suele habre muchas, armar mas o menos con los datos que se ingresen
 ?>

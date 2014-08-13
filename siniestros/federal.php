@@ -426,10 +426,10 @@ if (!empty($detalle_colision_columna)) $pdf->wwrite(142, 189.8, 'X');
 if (!empty($detalle_colision_animal)) $pdf->wwrite(162, 189.8, 'X');
 
 // croquis
-// $pdf->SetFillColor(0,255,0);
-// $pdf->Rect(26, 203, 40, 33, 'D');
-$img = preg_replace('/^data:/', 'data://', $siniestro['croquis_img-noupper']);
-$pdf->Image($img, 26, 202, 40, 36, 'png');
+$data = substr($siniestro['croquis_img-noupper'], 22);
+if (substr($siniestro['croquis_img-noupper'], 22)=='data:image/png;base64,' && base64_encode(base64_decode($data, true))===$data) {
+	$pdf->Image($siniestro['croquis_img-noupper'], 26, 202, 40, 36, 'png');
+}
 
 $text = iconv('UTF-8', 'windows-1252', $siniestro_detalle);
 $pdf->SetXY(90, 203.6);
@@ -576,6 +576,60 @@ if (count($siniestro['datos_terceros'])>2) {
 		$text .= "\n\n";
 	}
 }
+if (count($siniestro['lesiones_terceros'])>4) {
+	for ($i=4;$i<count($siniestro['lesiones_terceros']);$i++) {
+		$lesiones_tercero = $siniestro['lesiones_terceros'][$i];
+		$text .= "LESIONES A TERCEROS (".($i+1).")\n";
+		$text .= 'Nombre: '.$lesiones_tercero['nombre'];
+		$text .= ', '.($lesiones_tercero['sexo']==1?'masculino':'femenino').'. ';
+		$text .= 'Número de documento: '.$lesiones_tercero['nro_doc'].'. ';
+		$text .= 'Teléfono '.$lesiones_tercero['tel'].'. ';
+		$text .= 'Domicilio: '.implode(', ', array_filter(array($lesiones_tercero['calle'].' '.$lesiones_tercero['altura'], $lesiones_tercero['cp'], $lesiones_tercero['localidad'], $lesiones_tercero['provincia']))).'. ';
+		$text .= 'Estado civil: '.$lesiones_tercero['estado_civil'].'. ';
+		if (isset($lesiones_tercero['fecha_nac'])) {
+			$date = DateTime::createFromFormat("Y-m-d", $lesiones_tercero['fecha_nac']);
+			$text .= 'Fecha de nacimiento: '.$date->format('d/m/Y').'. ';
+		}
+		switch((string)$lesiones_tercero['relacion_asegurado']) {
+			case 1:
+			$text .= 'Relación con asegurado: conductor otro vehículo. ';
+			break;
+			case 2:
+			$text .= 'Relación con asegurado: pasajero otro vehículo. ';
+			break;
+			case 3:
+			$text .= 'Relación con asegurado: pasajero vehículo asegurado. ';
+			break;
+			case 4:
+			$text .= 'Relación con asegurado: peatón. ';
+			break;
+		}
+		switch((string)$lesiones_tercero['tipo_lesiones']) {
+			case 1:
+			$text .= 'Tipo de lesiones: leves. ';
+			break;
+			case 2:
+			$text .= 'Tipo de lesiones: graves (con internación). ';
+			break;
+			case 3:
+			$text .= 'Tipo de lesiones: mortal. ';
+			break;
+		}
+		switch ((string)$lesiones_tercero['examen_alcoholemia']) {
+			case '1':
+			$text .= 'Exámen de alcoholemia: sí. ';
+			break;
+			case '0':
+			$text .= 'Exámen de alcoholemia: no. ';
+			break;
+			case '2':
+			$text .= 'Exámen de alcoholemia: se negó. ';
+			break;
+		}
+		$text .= 'Centro asistencial: '.$lesiones_tercero['centro_asistencial'];
+		$text .= "\n\n";
+	}
+}
 
 if (!empty($text)) {
 	$pdf->AddPage();
@@ -588,3 +642,4 @@ if (!empty($text)) {
 	$pdf->MultiCell(200, 5, $text);
 }
 $pdf->Output();
+?>
