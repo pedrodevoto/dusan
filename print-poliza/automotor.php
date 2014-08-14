@@ -20,10 +20,10 @@ $txt_titular_c1 = array(
 	array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 );
 $txt_titular_c2 = array(
-	array('maxwidth' => 47, 'text' => ""),
 	array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),								
 	array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['localidad_cp']),
-	array('maxwidth' => 47, 'text' => ""),																
+	array('maxwidth' => 47, 'text' => $row_Recordset1['contacto_country']),
+	array('maxwidth' => 47, 'text' => $row_Recordset1['contacto_lote']),
 	array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit_0'].$row_Recordset1['cliente_cuit_1'].$row_Recordset1['cliente_cuit_2']),
 	array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc'])
 );
@@ -373,10 +373,10 @@ switch(substr($_GET['type'], 0, 2)) {
 				array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
 			);
 			$txt_titular_c2 = array(
-				array('maxwidth' => 47, 'text' => ""),
 				array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),								
 				array('maxwidth' => 47, 'text' => "CP: ".$row_Recordset1['localidad_cp']),
-				array('maxwidth' => 47, 'text' => ""),																
+				array('maxwidth' => 47, 'text' => $row_Recordset1['contacto_country']),
+				array('maxwidth' => 47, 'text' => $row_Recordset1['contacto_lote']),
 				array('maxwidth' => 47, 'text' => "CUIT: ".$row_Recordset1['cliente_cuit_0'].$row_Recordset1['cliente_cuit_1'].$row_Recordset1['cliente_cuit_2']),
 				array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc'])
 			);
