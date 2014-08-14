@@ -1152,8 +1152,8 @@ $(document).ready(function () {
 	// Use this space for dialog related functions
 	// Globo flotante de stats
 	$( "#stats" ).dialog({
-		position: [$(document).width()-180-20],
-		width: 180,
+		position: [$(document).width()-160],
+		width: 140,
 		dialogClass: 'fixedpos'
 	});
 	$.ajax({
