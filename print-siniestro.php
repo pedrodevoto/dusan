@@ -150,11 +150,11 @@ require_once('inc/mail_functions.php');
 <?php
 // Obtain URL parameter
 $siniestro_id = intval($_GET['id']);
-$sql = sprintf('SELECT seguro_id, productor_nombre, poliza_numero FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING(productor_seguro_id) JOIN productor USING(productor_id) WHERE id = %s', $siniestro_id);
+$sql = sprintf('SELECT seguro_id, productor_nombre, poliza_numero, automotor_id, seguro_email_siniestro, poliza.cliente_id FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING(productor_seguro_id) JOIN productor USING(productor_id) JOIN seguro USING (seguro_id) WHERE id = %s', $siniestro_id);
 $res = mysql_query($sql, $connection) or die(mysql_error());
 if (!mysql_num_rows($res)) die ('Siniestro no encontrado');
 $row = mysql_fetch_array($res);
-list($seguro_id, $productor_nombre, $poliza_numero) = $row;
+list($seguro_id, $productor_nombre, $poliza_numero, $automotor_id, $seguro_email_siniestro, $cliente_id) = $row;
 
 $siniestro = array();
 
@@ -202,5 +202,46 @@ $seguros = array(
 
 extract($siniestro);
 include('siniestros/'.$seguros[$seguro_id].'.php');
+
+if (isset($pdf)) {
+	// OUTPUT
+	if (isset($_GET['email'])) {
+		$cc = explode(',', urldecode($_GET['email']));
+		$subject = $_GET['mail-subject'];
+		$to = $seguro_email_siniestro;
+		$type = 9;
+		$body = false;
+		
+		$filename = 'temp/'.md5(microtime()).'.pdf';
+		$pdf->Output($filename, 'F');
+		$attachments = array();
+		$attachments[] = array('file'=>$filename, 'name'=>'Siniestro.pdf', 'type'=>'application/pdf');
+		
+		// fotos
+		$sql = sprintf('SELECT automotor_cedula_verde_foto_url FROM automotor_cedula_verde_foto WHERE automotor_id = %s', $automotor_id);
+		$res = mysql_query($sql) or die(mysql_error());
+		$i = 1;
+		while ($foto = mysql_fetch_array($res)) {
+			$extension = strtolower(strrchr($foto[0], '.'));
+			$mime = mime_content_type($foto[0]);
+			$attachments[] = array('file'=>$foto[0], 'name'=>'Foto Cedula Verde '.$i.$extension, 'type'=>$mime);
+			$i++;
+		}
+		$sql = sprintf('SELECT cliente_foto_url FROM cliente_foto WHERE cliente_id = %s', $cliente_id);
+		$res = mysql_query($sql) or die(mysql_error());
+		$i = 1;
+		while ($foto = mysql_fetch_array($res)) {
+			$extension = strtolower(strrchr($foto[0], '.'));
+			$mime = mime_content_type($foto[0]);
+			$attachments[] = array('file'=>$foto[0], 'name'=>'Foto Registro '.$i.$extension, 'type'=>$mime);
+			$i++;
+		}
+		
+		echo send_mail($type, $siniestro_id, $to, $subject, $body, $attachments, $cc);
+	}
+	else {
+		$pdf->Output();
+	}
+}
 
 ?>

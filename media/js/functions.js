@@ -7637,7 +7637,6 @@ $(document).ready(function () {
 					$.colorbox.close();
 				});
 
-				populateDiv_Envios('1,2,3,4,7,8', id);
 
 				// Button action
 				$("#btnDE").button().click(function () {
@@ -7650,39 +7649,24 @@ $(document).ready(function () {
 					// window.open('print-poliza.php?type=pe&mc=0&id=' + id);
 				});
 				
-				// Button email action
+				populateDiv_Envios('9', id);
+				
+				// Email form
 				$('#doc').buttonset();
 				$("#btnBox1").button().click(function () {
-					return false;
 					$('#btnBox1').button("option", "disabled", true);
-					var url = '';
-					switch ($('input[name="type"]:checked', '#frmBox1').val()) {
-						case 'fotos':
-							url = 'send-fotos.php';
-							break;
-						case 'rast':
-							url = 'send-rastreo.php';
-							break;
-						case 'insp':
-							url = 'send-inspeccion.php';
-							break;
-						default:
-							url = 'print-poliza.php';
-							break;
-					}
+					var arr = $('#frmBox1').serializeArray();
 					$.ajax({
-						url: url,
-						data: $('#frmBox1').serializeArray(),
+						url: 'print-siniestro.php?email',
+						data: arr,
 						success: function(data) {
-							showBoxConf(data, false, 'always', 3000, function () {
-								$('#btnBox1').button("option", "disabled", false);
-								populateDiv_Envios('1,2,3,4,7,8', id);
-							});
+							alert(data);
+							$('#btnBox1').button("option", "disabled", false);
+							populateDiv_Envios('9', id);
 						},
 						error: function() {
-							showBoxConf('Error. Intente nuevamente.', false, 'always', 3000, function () {
-								$('#btnBox1').button("option", "disabled", false);
-							});
+							alert('Error. Intente nuevamente.');
+							$('#btnBox1').button("option", "disabled", false);
 						}
 					});
 					return false;

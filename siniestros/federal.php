@@ -641,5 +641,4 @@ if (!empty($text)) {
 	$pdf->SetFont('Arial', '', 7);
 	$pdf->MultiCell(200, 5, $text);
 }
-$pdf->Output();
 ?>

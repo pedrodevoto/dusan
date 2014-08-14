@@ -5,9 +5,9 @@
 <?php
 require_once('Connections/connection.php');
 $siniestro_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = sprintf('SELECT automotor_id, cliente_id, poliza_id FROM siniestros JOIN automotor USING(automotor_id) WHERE id=%s', $siniestro_id);
+$sql = sprintf('SELECT automotor_id, siniestros.cliente_id, poliza_id, seguro_email_siniestro FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING (productor_seguro_id) JOIN seguro USING (seguro_id) WHERE id=%s', $siniestro_id);
 $res = mysql_query($sql) or die(mysql_error());
-list($automotor_id, $cliente_id, $poliza_id) = mysql_fetch_array($res);
+list($automotor_id, $cliente_id, $poliza_id, $seguro_email_siniestro) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
 	<input type="hidden" name="box-automotor_id" id="box-automotor_id" value="<?=$automotor_id?>" />
@@ -41,7 +41,7 @@ list($automotor_id, $cliente_id, $poliza_id) = mysql_fetch_array($res);
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Envío de denuncia</legend> 
 			<p>
 				<div id="doc">
-					<input type="radio" id="doc1" name="type" value="de" mail="<?=$cliente_email?>" subject='DUSAN ASESORES DE SEGUROS' /><label for="doc1">Denuncia</label>
+					<input type="radio" id="doc1" name="type" value="de" mail="<?=$seguro_email_siniestro?>" subject='DUSAN ASESORES DE SEGUROS' /><label for="doc1">Denuncia</label>
 				</div>
 			</p>
 			<p>
@@ -51,10 +51,10 @@ list($automotor_id, $cliente_id, $poliza_id) = mysql_fetch_array($res);
 				<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" placeholder="Asunto" />
 			</p>	
 			<p>
-				<textarea name="email" id="email" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
+				<textarea name="mail-cc" id="mail-cc" class="ui-widget-content" style="width:100%" rows="5" placeholder="Direcciones de email (CC), separadas por coma"></textarea>
 			</p>
         	<p align="center" style="margin-top:10px">
-				<input type="hidden" name="id" value="<?=$poliza_id?>" />
+				<input type="hidden" name="id" value="<?=$siniestro_id?>" />
 				<input type="submit" name="btnBox1" id="btnBox1" value="Enviar email" />
 			</p>
 		</fieldset>
