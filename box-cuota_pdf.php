@@ -6,7 +6,6 @@
 </style>
 <script type="text/javascript" language="javascript" src="jquery/jquery-1.6.2.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
     function printIframePdf(){
         window.frames["printf"].focus();
         try {
@@ -32,15 +31,14 @@ $(document).ready(function() {
         if (idPdf.readyState === 4)
             setTimeout(printObjectPdf, 1000);
     }
-	setTimeout(printObjectPdf, 3000);
+	// setTimeout(printObjectPdf, 3000);
 	var flag = true;
-	// $('#printf, #idPdf').ready(function(){
-	// 	if (flag) {
-	// 		flag = false;
-	// 		printObjectPdf();
-	// 	}
-	// });
-});
+	$('#printf, #idPdf').ready(function(){
+		if (flag) {
+			flag = false;
+			printObjectPdf();
+		}
+	});
 </script>
 
 <iframe id="printf" name="printf" src="print-cuota.php?print&id=<?=$_GET['id']?>" frameborder="0" width="100%" height="100%" style="width: 440px; height: 580px;display: none;"></iframe>
