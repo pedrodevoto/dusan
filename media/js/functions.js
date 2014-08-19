@@ -3007,9 +3007,9 @@ $(document).ready(function () {
 				} else {
 					var result = '';
 					/* Open Table and Row */
-					result += '<table class="tblBox2">';
+					result += '<table class="tblBox" style="border-spacing:0">';
 					$.each(j, function (i, object) {
-						result += '<tr>';
+						result += '<tr style="'+(object.highlight==1?'background-color:#b0dfaa':'')+'">';
 						result += '<td>' + object.cliente_nombre + '</td>';
 						result += '<td>' + object.poliza_numero + '</td>';
 						result += '<td>' + object.validez + '</td>';
