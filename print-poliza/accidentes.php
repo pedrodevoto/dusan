@@ -383,7 +383,7 @@ switch(substr($_GET['type'], 0, 2)) {
 		newPage($pdf, true, $endoso['anulacion']);				
 		// Compañía
 		$txt_compania = strtoupper($row_Recordset1['seguro_nombre']);
-		$txt_compania.= ' (' . strtoupper($row_Recordset1['sucursal_nombre']) . ')';
+		$txt_compania.= ' (' . strtoupper($row_Recordset1['sucursal_nombre']) . ' '.$row_Recordset1['productor_seguro_codigo'].')';
 		$pdf->SetFont('Arial', 'B', 28);
 		$pdf->SetTextColor(255,0,0);										
 		$pdf->SetXY(50, 30);
