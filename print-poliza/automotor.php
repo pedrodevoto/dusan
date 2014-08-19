@@ -432,7 +432,7 @@ switch(substr($_GET['type'], 0, 2)) {
 			$txt_cobertura = ($row_Recordset2['producto_id']>0?"Producto: ".$row_Recordset2['producto_nombre']." | ":'')."Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row_Recordset2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row_Recordset2['franquicia']) ? "$ ".formatNumber($row_Recordset2['franquicia'],0) : "-");
 			$txt_observaciones = $row_Recordset2['observaciones'];			
 			$txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ($row_Recordset1['cuota_pfc']?' + 1':'') . ' cuotas';
 			$txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 			$txt_imp_c1 = array(
 				array('maxwidth' => 95, 'text' => "Prima:"),
@@ -689,7 +689,7 @@ switch(substr($_GET['type'], 0, 2)) {
 					printText($txt_pago_c3, $pdf, 100, 3.8);	
 					$pdf->SetXY(70, 250);
 					$pdf->SetXY(102, 250);
-					printText($txt_pago_c2, $pdf, 30, 3.8);
+					printText($txt_pago_c2, $pdf, 40, 3.8);
 					// Importes
 					$pdf->SetFont('Arial', '', 8);
 					$pdf->SetTextColor(0,0,0);								

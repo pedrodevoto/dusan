@@ -489,7 +489,8 @@ switch(substr($_GET['type'], 0, 2)) {
 			printText($txt_pago_c3, $pdf, 100, 3.8);	
 			$pdf->SetXY(70, 250);
 			$pdf->SetXY(102, 250);
-			printText($txt_pago_c2, $pdf, 30, 3.8);
+			$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ($row_Recordset1['cuota_pfc']?' + 1':'') . ' cuotas';
+			printText($txt_pago_c2, $pdf, 40, 3.8);
 			// Importes
 			$pdf->SetFont('Arial', '', 8);
 			$pdf->SetTextColor(0,0,0);								
