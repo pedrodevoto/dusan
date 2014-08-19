@@ -7058,6 +7058,7 @@ $(document).ready(function () {
 					$('#box0-cliente_id').chosen().change(function() {
 						$("#BtnSearchPoliza").click();
 					});
+					$('#box0_cliente_id_chosen .chosen-drop .chosen-search input').focus();
 				});
 				
 				// Assign functions to buttons
@@ -7079,8 +7080,7 @@ $(document).ready(function () {
 				});
 				// Enable form
 				formDisable('frmSelectPoliza', 'normal', false);
-				// Set focus on search
-				$("#box0-poliza_numero").focus();
+
 			}
 			
 		});

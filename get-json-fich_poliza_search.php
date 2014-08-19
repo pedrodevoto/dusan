@@ -42,7 +42,7 @@
 		$query_Recordset1 .= " AND 1=2";
 	}
 	
-	$query_Recordset1 .= $group;
+	$query_Recordset1 .= $group." ORDER BY poliza_validez_desde DESC ";
 	
 	// Recordset	
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_error());
