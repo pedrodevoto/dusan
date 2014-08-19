@@ -66,7 +66,7 @@ $txt_poliza = array(
 	array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 );
 $txt_pago_c1 = "Forma de Pago: ".$row_Recordset1['poliza_medio_pago'];			
-$txt_pago_c2 = "Plan de Pago: ".$row_Recordset1['poliza_cant_cuotas'] . ' cuotas';
+$txt_pago_c2 = "Plan de Pago: ".($row_Recordset1['poliza_cant_cuotas']+$row_Recordset1['cuota_pfc']) . ' cuotas';
 $txt_pago_c3 = "Detalle de pago: ".$row_Recordset1['poliza_pago_detalle'];			
 $txt_imp_c1 = array(
 	array('maxwidth' => 95, 'text' => "Prima:"),
