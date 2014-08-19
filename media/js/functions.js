@@ -4406,13 +4406,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, false, 'always', 10, function () {
 					openBoxCuota(poliza_id);
-					// var recibo = window.open('print-cuota.php?print&id=' + cuota_id);
-					var recibo = window.open('box-cuota_pdf.php?id='+cuota_id);
-					window.setTimeout(function() {
-						console.log('?');
-						// recibo.print(false);
-					}, 3000);
-					// recibo.close();
+					var recibo = window.open('print-cuota.php?print&id=' + cuota_id);
 				});
 			}
 		});
