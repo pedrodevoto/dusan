@@ -3011,6 +3011,7 @@ $(document).ready(function () {
 					$.each(j, function (i, object) {
 						result += '<tr style="'+(object.highlight==1?'background-color:#b0dfaa':'')+'">';
 						result += '<td>' + object.cliente_nombre + '</td>';
+						result += '<td>' + object.patente + '</td>';
 						result += '<td>' + object.poliza_numero + '</td>';
 						result += '<td>' + object.validez + '</td>';
 						result += '<td>' + object.seguro_nombre + '</td>';
