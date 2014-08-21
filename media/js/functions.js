@@ -3009,7 +3009,17 @@ $(document).ready(function () {
 					/* Open Table and Row */
 					result += '<table class="tblBox" style="border-spacing:0">';
 					$.each(j, function (i, object) {
-						result += '<tr style="'+(object.highlight==1?'background-color:#b0dfaa':'')+'">';
+						switch (object.highlight) {
+						case '0':
+							result += '<tr>';
+							break;
+						case '1':
+							result += '<tr style="background-color:#b0dfaa">';
+							break;
+						case '2':
+							result += '<tr style="background-color:red">';
+							break;
+						}
 						result += '<td>' + object.cliente_nombre + '</td>';
 						result += '<td>' + object.patente + '</td>';
 						result += '<td>' + object.poliza_numero + '</td>';
