@@ -571,6 +571,7 @@ CREATE TABLE `email_log` (
   `object_id` int(10) unsigned NOT NULL,
   `usuario_id` int(10) unsigned NOT NULL,
   `email_log_to` text COLLATE utf8_unicode_ci NOT NULL,
+  `email_log_desc` text COLLATE utf8_unicode_ci,
   `email_log_timestamp` datetime NOT NULL,
   PRIMARY KEY (`email_log_id`),
   KEY `usuario_id` (`usuario_id`),
@@ -1245,4 +1246,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-08-14 11:26:52
+-- 2014-08-21 15:25:29

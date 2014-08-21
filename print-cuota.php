@@ -393,7 +393,7 @@
 		$pdf->Output($filename, 'F');
 		$attachments = array();
 		$attachments[] = array('file'=>$filename, 'name'=>'Recibo electronico.pdf', 'type'=>'application/pdf');
-		echo send_mail(6, $row_Recordset1['poliza_id'], $to, $subject, TRUE, $attachments, $cc);
+		echo send_mail(6, $row_Recordset1['poliza_id'], $to, $subject, TRUE, $attachments, $cc, NULL, $row_Recordset1['cuota_recibo']);
 	}
 	else {
 		$pdf->Output();

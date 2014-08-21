@@ -3120,6 +3120,13 @@ $(document).ready(function () {
 					result += '<th>Fecha</th>';
 					result += '<th>Usuario</th>';
 					result += '<th>Destino emails</th>';
+					result += '<th>';
+					switch (type) {
+					case '6':
+						result += 'Recibo';
+						break;
+					}
+					result += '</th>';
 					result += '<th>Tipo</th>';
 					result += '</tr>';
 					// Table Data
@@ -3128,6 +3135,7 @@ $(document).ready(function () {
 						result += '<td>' + object.email_log_timestamp + '</td>';
 						result += '<td>' + object.usuario_usuario + '</td>';
 						result += '<td><span title="'+object.email_log_to+'">' + object.email_log_to.slice(0, 50) + (object.email_log_to.length>50?'...':'') + '</span></td>';
+						result += '<td>' + object.email_log_desc + '</td>';
 						result += '<td>' + object.email_type_name + '</td>';
 						result += '<td>';
 						if (object.cuota_nro == 1) {

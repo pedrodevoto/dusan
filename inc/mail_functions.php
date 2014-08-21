@@ -3,7 +3,7 @@ require_once 'Classes/PHPMailer/class.phpmailer.php';
 require_once('Connections/connection.php');
 require_once('inc/credentials.php');
 
-function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $custombody = NULL, $from=array('name'=>'Dusan Asesor de Seguros', 'email'=>'info@dusanasegurador.com.ar')) {
+function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $custombody = NULL, $desc = NULL, $from=array('name'=>'Dusan Asesor de Seguros', 'email'=>'info@dusanasegurador.com.ar')) {
 	global $connection, $mail_username, $mail_password;
 	$mail = new PHPMailer(true); 
 	$recipients = array();
@@ -57,7 +57,7 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $customb
 			}
 		}
 		$mail->Send();
-		$sql = sprintf('INSERT INTO email_log (email_type_id, object_id, usuario_id, email_log_to, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients));
+		$sql = sprintf('INSERT INTO email_log (email_type_id, object_id, usuario_id, email_log_to, email_log_desc, email_log_timestamp) VALUES (%s, %s, %s, \'%s\', %s, NOW())', $type, $id, $_SESSION['ADM_UserId'], implode(', ', $recipients), (empty($desc)?'NULL':'"'.$desc.'"'));
 		mysql_query($sql, $connection) or die(mysql_error());
 		return "Email enviado satisfactoriamente.";
 	} 

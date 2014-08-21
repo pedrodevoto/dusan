@@ -18,7 +18,7 @@
 			$types[] = intval(mysql_real_escape_string($type));
 		}
 	}
-	$query_Recordset1 = sprintf("SELECT email_type_name, usuario_usuario, email_log_to, DATE_FORMAT(email_log_timestamp, '%%d/%%m/%%y %%H:%%i') as email_log_timestamp FROM email_log JOIN (email_type, usuario) ON email_type.email_type_id = email_log.email_type_id AND usuario.usuario_id = email_log.usuario_id WHERE email_log.email_type_id IN (%s) AND object_id=%s ORDER BY email_log_timestamp ASC",
+	$query_Recordset1 = sprintf("SELECT email_type_name, usuario_usuario, email_log_to, email_log_desc, DATE_FORMAT(email_log_timestamp, '%%d/%%m/%%y %%H:%%i') as email_log_timestamp FROM email_log JOIN (email_type, usuario) ON email_type.email_type_id = email_log.email_type_id AND usuario.usuario_id = email_log.usuario_id WHERE email_log.email_type_id IN (%s) AND object_id=%s ORDER BY email_log_timestamp ASC",
 							implode(',', $types),
 							GetSQLValueString($colname_Recordset1, "int"));
 							
