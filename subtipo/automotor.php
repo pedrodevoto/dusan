@@ -245,6 +245,7 @@
 				<option value="MARRON">MARRON</option>
 				<option value="VIOLETA">VIOLETA</option>
 				<option value="CELESTE">CELESTE</option>
+				<option value="BORDEAUX">BORDEAUX</option>
 			</select>
 	    </p>
 	    <p>
