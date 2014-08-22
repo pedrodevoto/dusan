@@ -24,13 +24,9 @@
 	$query_Recordset1_group = " GROUP BY cliente.cliente_id";
 	
 	// Filter by: cliente_nombre
-	if(isset($_GET['cliente_nombre']) && $_GET['cliente_nombre']!=""){	
-		$condition = array();
-		foreach (explode(' ', $_GET['cliente_nombre']) as $term) {
-			$conditions[] = sprintf('(cliente_nombre LIKE %1$s OR cliente_apellido LIKE %1$s)', GetSQLValueString('%' . $term . '%', "text"));
-		}
-		$query_Recordset1_where .= ' AND ('.implode(' OR ', $conditions).')';
-	}	
+	if(isset($_GET['cliente_id']) && $_GET['cliente_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND cliente.cliente_id = %s", GetSQLValueString($_GET['cliente_id'], "int"));
+	}
 	// Filter by: cliente_nro_doc
 	if(isset($_GET['cliente_nro_doc']) && $_GET['cliente_nro_doc']!=""){	
 		$query_Recordset1_where .= sprintf(" AND cliente_nro_doc LIKE %s",GetSQLValueString('%' . $_GET['cliente_nro_doc'] . '%', "text"));

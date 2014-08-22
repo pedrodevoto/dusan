@@ -25,6 +25,13 @@
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
 				populateListSuc('sucursal_id', 'main');
+				
+				$.when(populateListClientes('cliente_id', 'main')).then(function() {
+					$('#cliente_id').chosen().change(function() {
+						$('#btnFiltro').click();
+					});
+					$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
+				});
 							
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -42,10 +49,7 @@
 					$('#frmFiltro').each(function(){
 						this.reset();
 					});
-				});	
-				
-				// Filter: Get focus
-				$("#cliente_nombre").focus();				
+				});				
 				
 			});	
 		</script>   
@@ -149,8 +153,9 @@
                     <table cellpadding="5" cellspacing="0" border="0" width="100%">
                         <tr>                   
                             <td width="25%">
-                                <label for="cliente_nombre">Nombre</label>                                
-                                <input type="text" name="cliente_nombre" id="cliente_nombre" maxlength="255" />
+								<label for="cliente_id">Cliente</label>
+								<select style="height:10px" name="cliente_id" id="cliente_id">
+								</select>
                             </td>
                             <td width="25%">
                                 <label for="cliente_nro_doc">Documento</label>                                
