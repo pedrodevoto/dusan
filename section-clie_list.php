@@ -48,6 +48,7 @@
 				$('#btnReset').click(function() {								
 					$('#frmFiltro').each(function(){
 						this.reset();
+						$('#cliente_id').trigger("chosen:updated");
 					});
 				});				
 				
