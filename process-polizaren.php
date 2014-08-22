@@ -104,11 +104,17 @@
 				// Get New ID
 				$new_id = mysql_insert_id();				
 				
+				// Insert: Cuotas
+				if ($_POST['box-poliza_medio_pago']=='Directo' && isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
+					$monto = intval($_POST['box-cuota_monto']);
+				}
+				else {
+					$monto = $poliza_premio / $poliza_cant_cuotas;
+				}
+				
 				$pfc = (isset($_POST['box-sucursal_pfc'])?1:0);
 				$poliza_cant_cuotas += $pfc;
 				
-				// Insert: Cuotas
-				$monto = $poliza_premio / $poliza_cant_cuotas;
 				for ($i=0; $i<$poliza_cant_cuotas; $i++) {
 					$insertSQL = sprintf("INSERT INTO cuota (poliza_id, cuota_nro, cuota_periodo, cuota_monto, cuota_vencimiento, cuota_estado_id, cuota_pfc) VALUES (%s, %s, DATE_FORMAT(DATE_ADD(%s, INTERVAL %s MONTH),'%%Y-%%m-01'), %s, DATE_ADD(%s, INTERVAL %s MONTH), 1, %s)",
 									GetSQLValueString($new_id, "int"),
