@@ -90,7 +90,6 @@
 								var returnval = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 								
 								returnval += '<li title="Modificar" onclick="openBoxModCliente('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
-								returnval += '<li title="Asignar Contactos" onclick="openBoxContacto('+oObj.aData[0]+');"><span class="ui-icon ui-icon-person"></span></li>';
 								returnval += '<li title="Ver Pólizas" onclick="openBoxPolizas('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document"></span></li>';
 								
 								<?php if($_SESSION['ADM_UserGroup']=="master") { ?>

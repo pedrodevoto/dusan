@@ -38,7 +38,25 @@ $(document).ready(function () {
 
 		return years;
 	}
-
+	formToJson = function (form) {
+		var arr = $(form).serializeArray();
+		var ret = {};
+		$.each(arr, function() {	
+			var key = this.name;
+			var val = this.value || '';
+			if (key.match(/\[\]$/)) {
+				if (val!='') {
+					if (ret[key]) ret[key].push(val);
+					else ret[key] = [val];
+				}
+			}
+			else {
+				ret[key] = val;
+			}
+		});
+		return ret;
+	}
+	
 	/* Custom validations */
 	$.validator.addMethod("dateAR", function (value, element) {
 		return value == '' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
@@ -3563,9 +3581,9 @@ $(document).ready(function () {
 	}
 	insertFormContacto = function (id) {
 		// Disable button
-		$('#btnBox').button("option", "disabled", true);
+		$('#btnBoxContacto').button("option", "disabled", true);
 		// Set form parameters
-		var param = $("#frmBox").serializeArray();
+		var param = $("#frmBoxContacto").serializeArray();
 		param.push({
 			name: "box-cliente_id",
 			value: id
@@ -3580,7 +3598,7 @@ $(document).ready(function () {
 					alert($.trim(data));
 				} else {
 					// Clear form
-					$('#frmBox').each(function () {
+					$('#frmBoxContacto').each(function () {
 						this.reset();
 					});
 					$('#box-localidad_id').trigger('chosen:updated');
@@ -3589,7 +3607,7 @@ $(document).ready(function () {
 					populateDiv_Contacto(id);
 				}
 				// Enable button
-				$('#btnBox').button("option", "disabled", false);
+				$('#btnBoxContacto').button("option", "disabled", false);
 			}
 		});
 	}
@@ -3911,31 +3929,20 @@ $(document).ready(function () {
 	updateFormCliente = function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
-		// AJAXize form
-		$("#frmBox").ajaxSubmit({
-			url: 'update-cliente.php',
-			type: 'POST',
-			beforeSend: function () {
-
-			},
-			uploadProgress: function (event, position, total, percentComplete) {
-
-			},
-			success: function (responseText, statusText, xhr) {
-				data = responseText;
-				if (data == 'Session expired') {
-					sessionExpire('box');
-				} else {
-					// Table standing redraw
-					if (typeof oTable != 'undefined') {
-						oTable.fnStandingRedraw();
-					}
-					// Show message
-					showBoxConf(data, true, 'always', 3000, function () {
-						// Repopulate form
-						populateFormBoxCliente($('#box-cliente_id').val());
-					});
+		// Post
+		$.post("update-cliente.php", $("#frmBox").serialize()+'&'+$("#frmBox1").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
 				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxCliente($('#box-cliente_id').val());
+				});
 			}
 		});
 	}
@@ -4044,7 +4051,7 @@ $(document).ready(function () {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		// Post
-		$.post("update-contacto.php", $("#frmBox").serialize(), function (data) {
+		$.post("update-contacto.php", $("#frmBoxContacto").serialize(), function (data) {
 			if (data == 'Session expired') {
 				sessionExpire('box');
 			} else {
@@ -4053,14 +4060,14 @@ $(document).ready(function () {
 					alert($.trim(data));
 				} else {
 					// Clear form
-					$('#frmBox').each(function () {
+					$('#frmBoxContacto').each(function () {
 						this.reset();
 					});
 					$('#box-localidad_id').trigger('chosen:updated');
 					$("#box-contacto_id").remove();
 					$("#box-action").val('insert');
-					$("#btnBoxReset").button('option', 'label', 'Borrar');
-					$("#btnBox").button('option', 'label', 'Agregar');
+					$("#btnBoxResetContacto").button('option', 'label', 'Borrar');
+					$("#btnBoxContacto").button('option', 'label', 'Agregar');
 					$("#box-contacto_tipo").val('Particular');
 					$("#box-contacto_domicilio").focus();
 					// Refresh DIVs
@@ -5025,8 +5032,8 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-cliente_alta.php',
-			width: '700px',
-			height: '600px',
+			width: '950px',
+			height: '100%',
 			onComplete: function () {
 
 				// Initialize buttons
@@ -5139,9 +5146,11 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Registro',
 			href: 'box-cliente_mod.php',
-			width: '700px',
-			height: '600px',
+			width: '970px',
+			height: '100%',
 			onComplete: function () {
+				populateDiv_Fotos('cliente', id, 'Registro');
+				populateDiv_Contacto(id);
 
 				// Initialize buttons
 				$("#btnBox").button();
@@ -5164,7 +5173,11 @@ $(document).ready(function () {
 				formDisable('frmBox', 'ui', true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxCliente(id)).then(function () {
+				$.when(
+					populateFormBoxCliente(id),
+					populateListContacto_Tipo('box-contacto_tipo', 'box'),
+					populateListTelefonoCompania('box-contacto_telefono2_compania', 'box')
+				).then(function () {
 
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 
@@ -5214,48 +5227,26 @@ $(document).ready(function () {
 							updateFormCliente();
 						};
 					});
-
-					$('#btnContact').button().click(function() {
-						openBoxContacto(id);
-						return false;
-					})
 					
-					// Enable form
-					formDisable('frmBox', 'ui', false);
-					$('#box-cliente_tipo_persona').change();
-				});
-
-			}
-		});
-	}
-	openBoxContacto = function (id) {
-		$.colorbox({
-			title: 'Cliente/Contactos',
-			href: 'box-contacto.php',
-			width: '950px',
-			height: '100%',
-			onComplete: function () {
-
-				// -------------------- GENERAL ---------------------
-
-				// Initialize buttons
-				$("#btnBox, #btnBoxReset, #btnAtras, #btnAcciones").button();
-
-				// Disable forms
-				formDisable('frmBox', 'ui', true);
-
-				// Populate DIVs
-				populateDiv_Cliente_Info(id);
-				populateDiv_Contacto(id);
-				populateDiv_Fotos('cliente', id);
-
-				// -------------------- FORM 1 ----------------------
-
-				// Populate drop-downs, then initialize form
-				$.when(
-					populateListContacto_Tipo('box-contacto_tipo', 'box'),
-					populateListTelefonoCompania('box-contacto_telefono2_compania', 'box')
-				).then(function () {
+					$('#cliente_foto').ajaxForm({
+						data: { cliente_id: id },
+						beforeSend: function () {
+							$("#fotosLoadingcliente_foto").show();
+						},
+						uploadProgress: function (event, position, total, percentComplete) {
+						
+						},
+						complete: function (xhr) {
+							if (xhr.responseText.indexOf('Error:') != -1) {
+								alert(xhr.responseText);
+							} else {
+								$("#fotosLoadingcliente_foto").show().hide();
+							}
+							populateDiv_Fotos('cliente', id, 'Registro');
+						}
+					});
+					
+					// Contactos
 					$.when(populateListLocalidades('box-localidad_id', 'box')).then(function() {
 						$('#box-localidad_id').chosen();
 					});
@@ -5263,7 +5254,7 @@ $(document).ready(function () {
 					$('#box-contacto_tipo').val('Particular');
 
 					// Validate form
-					var validateForm = $("#frmBox").validate({
+					var validateFormContacto = $("#frmBoxContacto").validate({
 						rules: {
 							"box-contacto_tipo": {
 								required: true
@@ -5277,8 +5268,8 @@ $(document).ready(function () {
 						}
 					});
 					// Button action
-					$("#btnBox").click(function () {
-						if (validateForm.form()) {
+					$("#btnBoxContacto").button().click(function () {
+						if (validateFormContacto.form()) {
 							if ($("#box-action").val() == 'insert') {
 								insertFormContacto(id);
 							} else {
@@ -5287,29 +5278,22 @@ $(document).ready(function () {
 						};
 					});
 					
-					$("#btnBoxReset").click(function () {
+					$("#btnBoxResetContacto").button().click(function () {
 						// Clear form
-						$('#frmBox').each(function () {
+						$('#frmBoxContacto').each(function () {
 							this.reset();
 						});
 						$('#box-localidad_id').trigger('chosen:updated');
 						$("#box-contacto_id").remove();
 						$("#box-action").val('insert');
-						$("#btnBoxReset").button('option', 'label', 'Borrar');
-						$("#btnBox").button('option', 'label', 'Agregar');
+						$("#btnBoxResetContacto").button('option', 'label', 'Borrar');
+						$("#btnBoxContacto").button('option', 'label', 'Agregar');
 						$("#box-contacto_domicilio").focus();
-					});
-					
-					$('#btnAtras').click(function() {
-						openBoxModCliente(id);
-					});
-					$('#btnAcciones').click(function() {
-						openBoxClieAcciones(id);
 					});
 					
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-
+					$('#box-cliente_tipo_persona').change();
 				});
 
 			}
@@ -6583,19 +6567,19 @@ $(document).ready(function () {
 	}
 	editInBoxContacto = function (id) {
 		// Disable form
-		formDisable('frmBox', 'ui', true);
+		formDisable('frmBoxContacto', 'ui', true);
 		$.when(populateFormBoxContacto(id)).then(function () {
 
 			// Append hidden input to form
 			$('<input>').prop({
 				type: 'hidden',
-				id: 'box-contacto_ids',
+				id: 'box-contacto_id',
 				name: 'box-contacto_id'
-			}).val(id).appendTo($('#frmBox'));
+			}).val(id).appendTo($('#frmBoxContacto'));
 			$("#box-action").val('edit');
-			$("#btnBoxReset").button('option', 'label', 'Cancelar');
-			$("#btnBox").button('option', 'label', 'Guardar');
-			formDisable('frmBox', 'ui', false);
+			$("#btnBoxResetContacto").button('option', 'label', 'Cancelar');
+			$("#btnBoxContacto").button('option', 'label', 'Guardar');
+			formDisable('frmBoxContacto', 'ui', false);
 			$('#box-localidad_id').trigger('chosen:updated');
 			$("#box-contacto_domicilio").focus();
 		});
