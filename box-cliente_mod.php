@@ -230,6 +230,7 @@ $('#box-cliente_tipo_persona').change(function() {
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">     
         <input type="button" name="btnBox" id="btnBox" value="Aceptar" />
+		<button id="btnAcciones" class="alert-success">Hecho</button>
     </p>
     <!-- Nota -->
     <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio</p>

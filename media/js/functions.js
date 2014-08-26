@@ -5227,6 +5227,10 @@ $(document).ready(function () {
 							updateFormCliente();
 						};
 					});
+					$('#btnAcciones').button().click(function() {
+						openBoxClieAcciones(id);
+					});
+					
 					
 					$('#cliente_foto').ajaxForm({
 						data: { cliente_id: id },
