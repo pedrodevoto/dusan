@@ -4193,7 +4193,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, true, 'always', 3000, function () {
 					// Repopulate form
-					populateFormBoxSiniestro(id);
+					openBoxSiniestroCert(id);
 				});
 			}
 		});
