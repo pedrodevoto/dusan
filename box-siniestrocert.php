@@ -5,9 +5,10 @@
 <?php
 require_once('Connections/connection.php');
 $siniestro_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = sprintf('SELECT automotor_id, siniestros.cliente_id, poliza_id, seguro_email_siniestro FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING (productor_seguro_id) JOIN seguro USING (seguro_id) WHERE id=%s', $siniestro_id);
+$sql = sprintf('SELECT automotor_id, siniestros.cliente_id, poliza_id, seguro_email_siniestro, poliza_numero, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ""), " ", IFNULL(cliente_nombre, ""))), cliente_razon_social) as cliente_nombre FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN cliente ON cliente.cliente_id = poliza.cliente_id JOIN productor_seguro USING (productor_seguro_id) JOIN seguro USING (seguro_id) WHERE id=%s', $siniestro_id);
+error_log($sql);
 $res = mysql_query($sql) or die(mysql_error());
-list($automotor_id, $cliente_id, $poliza_id, $seguro_email_siniestro) = mysql_fetch_array($res);
+list($automotor_id, $cliente_id, $poliza_id, $seguro_email_siniestro, $poliza_numero, $cliente_nombre) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">
 	<input type="hidden" name="box-automotor_id" id="box-automotor_id" value="<?=$automotor_id?>" />
@@ -41,7 +42,7 @@ list($automotor_id, $cliente_id, $poliza_id, $seguro_email_siniestro) = mysql_fe
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Envío de denuncia</legend> 
 			<p>
 				<div id="doc">
-					<input type="radio" id="doc1" name="type" value="de" mail="<?=$seguro_email_siniestro?>" subject='DUSAN ASESORES DE SEGUROS' /><label for="doc1">Denuncia</label>
+					<input type="radio" id="doc1" name="type" value="de" mail="<?=$seguro_email_siniestro?>" subject='PZA: <?=$poliza_numero?> - <?=$cliente_nombre?> - SINIESTRO' /><label for="doc1">Denuncia</label>
 				</div>
 			</p>
 			<p>
