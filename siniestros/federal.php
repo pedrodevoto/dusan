@@ -207,8 +207,7 @@ else {
 	}
 }
 // datos del vehiculo asegurado
-$pdf->wwrite(20, 187.5, $asegurado_marca);
-$pdf->wwrite(132, 189, $asegurado_modelo, 5);
+$pdf->wwrite(20, 187.5, $asegurado_marca . ' ' . $asegurado_modelo);
 $automotor_tipo = array("1"=>"AUTOMOTOR","2"=>"PICKUP A","3"=>"PICKUP B","7"=>"CAMIÓN","5"=>"ACOPLADO","8"=>"SEMIRREMOLQUE","4"=>"MOTO","9"=>"TRACTOR","10"=>"MAQUINARIA RURAL Y AGRÍCOLA","11"=>"CASA RODANTE","12"=>"TRAILER","6"=>"BANTAM","13"=>"CUATRICICLO");
 $pdf->wwrite(170, 187.5, $automotor_tipo[$asegurado_tipo]);
 $pdf->wwrite(25, 193, $asegurado_patente_0 . $asegurado_patente_1);
@@ -259,8 +258,7 @@ if (isset($datos_terceros[0])) {
 	$pdf->wwrite(26, 260, $datos_terceros[0]['localidad']);
 	$pdf->wwrite(105, 260, $datos_terceros[0]['provincia']);
 	$pdf->wwrite(170, 260, 'Argentina');
-	$pdf->wwrite(25, 266, $datos_terceros[0]['marca']);
-	$pdf->wwrite(132, 266, $datos_terceros[0]['modelo']);
+	$pdf->wwrite(25, 266, $datos_terceros[0]['marca'].' '.$datos_terceros[0]['modelo']);
 	$pdf->wwrite(170, 266, $datos_terceros[0]['tipo']);
 	$pdf->wwrite(23, 271.5, $datos_terceros[0]['patente_0'] . $datos_terceros[0]['patente_1']);
 	$pdf->wwrite(65, 271.5, $datos_terceros[0]['ano']);
@@ -348,8 +346,7 @@ if (isset($datos_terceros[1])) {
 	$pdf->wwrite(26, 32, $datos_terceros[1]['localidad']);
 	$pdf->wwrite(105, 32, $datos_terceros[1]['provincia']);
 	$pdf->wwrite(170, 32, 'Argentina');
-	$pdf->wwrite(25, 37, $datos_terceros[1]['marca']);
-	$pdf->wwrite(132, 37, $datos_terceros[1]['modelo']);
+	$pdf->wwrite(25, 37, $datos_terceros[1]['marca'].' '.$datos_terceros[1]['modelo']);
 	$pdf->wwrite(170, 37, $datos_terceros[1]['tipo']);
 	$pdf->wwrite(23, 43, $datos_terceros[1]['patente_0'] . $datos_terceros[1]['patente_1']);
 	$pdf->wwrite(65, 43, $datos_terceros[1]['ano']);

@@ -90,9 +90,8 @@ if (!$conductor_asegurado) {
 		$pdf->wwrite(185, 138, $date->format('Y'));
 	}
 }
-$pdf->wwrite(35, 143.4, $asegurado_marca);
+$pdf->wwrite(35, 143.4, $asegurado_marca.' '.$asegurado_modelo);
 $pdf->wwrite(108, 143.4, $asegurado_ano);
-$pdf->wwrite(137, 144.4, $asegurado_modelo, 5);
 $patente = $asegurado_patente_0 . $asegurado_patente_1;
 $pdf->wwrite(178, 143.4, $patente);
 $pdf->wwrite(35, 149, $asegurado_nro_motor);
@@ -119,8 +118,7 @@ if (isset($datos_terceros[0])) {
 	$pdf->wwrite(168, 181.8, $datos_terceros[0]['cp']);
 	$pdf->wwrite(42, 188, $datos_terceros[0]['seguro']);
 	$pdf->wwrite(143, 188, $datos_terceros[0]['nro_poliza']);
-	$pdf->wwrite(43, 194, $datos_terceros[0]['marca']);
-	$pdf->wwrite(118, 194, $datos_terceros[0]['modelo']);
+	$pdf->wwrite(43, 194, $datos_terceros[0]['marca'].' '.$datos_terceros[0]['modelo']);
 	$patente = $datos_terceros[0]['patente_0'] . $datos_terceros[0]['patente_1'];
 	$pdf->wwrite(158, 194, $patente);
 	// propietario es asegurado?
@@ -282,8 +280,7 @@ if (isset($datos_terceros[1])) {
 	$pdf->wwrite(132, 167, $datos_terceros[1]['provincia'], 5);
 	$pdf->wwrite(43, 172, $datos_terceros[1]['seguro']);
 	$pdf->wwrite(115, 172, $datos_terceros[1]['nro_poliza']);
-	$pdf->wwrite(104, 177.5, $datos_terceros[1]['marca']);
-	$pdf->wwrite(134, 178.5, $datos_terceros[1]['modelo'], 5);
+	$pdf->wwrite(104, 177.5, $datos_terceros[1]['marca'].' '.$datos_terceros[1]['modelo']);
 	$patente = $datos_terceros[1]['patente_0'] . $datos_terceros[1]['patente_1'];
 	$pdf->wwrite(38, 183, $patente);
 	$pdf->wwrite(130, 183, $datos_terceros[1]['uso']);
