@@ -460,6 +460,9 @@ if (isset($fecha_denuncia)) {
 }
 $pdf->wwrite(132, 298, $hora_denuncia);
 
+$pdf->wwrite(141, 326.5, $asegurado_nombre);
+$pdf->wwrite(141, 330, $asegurado_registro);
+
 $pdf->AddPage();
 $tplIdx = $pdf->importPage(3);
 $pdf->useTemplate($tplIdx);

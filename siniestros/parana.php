@@ -321,6 +321,9 @@ $date = DateTime::createFromFormat("Y-m-d", $fecha_denuncia)->format('d/m/Y');
 $text = implode(', ', array($lugar_denuncia, $date));
 $pdf->wwrite(44, 265.5, $text);
 
+$pdf->wwrite(150, 258, $asegurado_nombre);
+$pdf->wwrite(150, 261.5, $asegurado_registro);
+
 $text = '';
 if (count($siniestro['datos_terceros'])>2) {
 	for ($i=2;$i<count($siniestro['datos_terceros']);$i++) {
