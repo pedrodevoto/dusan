@@ -32,8 +32,8 @@
 	}
 	
 	// Filter by: poliza_numero
-	if(!empty($_GET['siniestro_numero'])){	
-		$query_Recordset1_having .= sprintf(" AND siniestro_numero LIKE %s",GetSQLValueString('%' . $_GET['siniestro_numero'] . '%', "text"));
+	if(!empty($_GET['poliza_numero'])){	
+		$query_Recordset1_having .= sprintf(" AND poliza_numero LIKE %s",GetSQLValueString('%' . $_GET['poliza_numero'] . '%', "text"));
 	}
 	// Filter by: tipo_siniestro
 	if(!empty($_GET['tipo_siniestro'])){	
