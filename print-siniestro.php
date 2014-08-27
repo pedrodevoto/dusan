@@ -150,11 +150,11 @@ require_once('inc/mail_functions.php');
 <?php
 // Obtain URL parameter
 $siniestro_id = intval($_GET['id']);
-$sql = sprintf('SELECT seguro_id, productor_nombre, poliza_numero, automotor_id, seguro_email_siniestro, poliza.cliente_id FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING(productor_seguro_id) JOIN productor USING(productor_id) JOIN seguro USING (seguro_id) WHERE id = %s', $siniestro_id);
+$sql = sprintf('SELECT seguro_id, productor_nombre, productor_seguro_codigo, poliza_numero, automotor_id, seguro_email_siniestro, poliza.cliente_id FROM siniestros JOIN automotor USING(automotor_id) JOIN poliza USING(poliza_id) JOIN productor_seguro USING(productor_seguro_id) JOIN productor USING(productor_id) JOIN seguro USING (seguro_id) WHERE id = %s', $siniestro_id);
 $res = mysql_query($sql, $connection) or die(mysql_error());
 if (!mysql_num_rows($res)) die ('Siniestro no encontrado');
 $row = mysql_fetch_array($res);
-list($seguro_id, $productor_nombre, $poliza_numero, $automotor_id, $seguro_email_siniestro, $cliente_id) = $row;
+list($seguro_id, $productor_nombre, $productor_seguro_codigo, $poliza_numero, $automotor_id, $seguro_email_siniestro, $cliente_id) = $row;
 
 $siniestro = array();
 

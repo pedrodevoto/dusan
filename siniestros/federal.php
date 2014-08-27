@@ -8,6 +8,8 @@ $pdf->AddPage();
 $tplIdx = $pdf->importPage(1);
 $pdf->useTemplate($tplIdx);
 
+$pdf->wwrite(128, 3.5, $productor_nombre, 10);
+$pdf->wwrite(128, 8, $productor_seguro_codigo, 10);
 $pdf->wwrite(28, 37.5, $poliza_numero);
 $pdf->wwrite(140, 37.5, $siniestro_numero);
 if (isset($fecha)) {
