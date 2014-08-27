@@ -237,7 +237,7 @@ if (isset($pdf)) {
 			$i++;
 		}
 		
-		echo send_mail($type, $siniestro_id, $to, $subject, $body, $attachments, $cc);
+		echo send_mail($type, $siniestro_id, $to, $subject, $body, $attachments, $cc, NULL, NULL, array('name'=>'Dusan Asesor de Seguros', 'email'=>'siniestros@dusanasegurador.com.ar'));
 	}
 	else {
 		$pdf->Output();

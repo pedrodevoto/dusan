@@ -14,7 +14,7 @@ function send_mail($type, $id, $to, $subject, $body, $attachments, $cc, $customb
 		$mail->SMTPSecure = "ssl"; 
 		$mail->Host = "smtp.googlemail.com";
 		$mail->Port = 465;
-		$mail->Username = $mail_username;
+		$mail->Username = $from['email'];
 		$mail->Password = $mail_password;
 		 
 		$mail->SMTPDebug = 1;
