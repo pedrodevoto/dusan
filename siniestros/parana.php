@@ -7,6 +7,22 @@ $tplIdx = $pdf->importPage(1);
 $pdf->useTemplate($tplIdx);
 
 $pdf->wwrite(154, 15, $siniestro_numero);
+$pdf->SetTextColor(255,0,0);
+switch((string)$tipo_siniestro) {
+	case '1':
+	$pdf->wwrite(60, 22, 'DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)', 10);
+	break;
+	case '2':
+	$pdf->wwrite(60, 22, 'DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)', 10);
+	break;
+	case '3':
+	$pdf->wwrite(60, 22, 'DENUNCIA DE ROBO/DAÑO (CON REPOSICION)', 10);
+	break;
+	case '4':
+	$pdf->wwrite(60, 22, 'DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)', 10);
+	break;
+}
+$pdf->SetTextColor(0,0,0);
 $pdf->wwrite(22, 51, $productor_nombre);
 $pdf->wwrite(123.5, 51, $poliza_numero);
 $pdf->wwrite(65, 58, $asegurado_nombre);
