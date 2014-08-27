@@ -243,7 +243,7 @@ $pdf->MultiCell(90, 5, $text, 0, 'L', 0, 10);
 
 // croquis
 $data = substr($siniestro['croquis_img-noupper'], 22);
-if (substr($siniestro['croquis_img-noupper'], 22)=='data:image/png;base64,' && base64_encode(base64_decode($data, true))===$data) {
+if (base64_encode(base64_decode($data, true))===$data) {
 	$pdf->Image($siniestro['croquis_img-noupper'], 26, 202, 40, 36, 'png');
 }
 

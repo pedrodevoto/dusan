@@ -2354,7 +2354,7 @@ $(document).ready(function () {
 				$('#auto'+i).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'});
 			}
 			else {
-				var auto = '<div id="auto'+i+'" class="draggable-autos croquis-auto" style="width:25px;height:13px;border:solid 1px black;background-color:white;text-align:center;cursor:move">' + i + '</div>';
+				var auto = '<div id="auto'+i+'" class="draggable-autos croquis-auto" style="width:25px;height:13px;border:solid 1px black;background-color:white;text-align:center;cursor:move">' + (i+1) + '</div>';
 				auto = '<div style="float:left;width:25px;padding:4px">'+auto+'</div>';
 				$('#croquis-autos').append(auto);
 			}
@@ -3369,7 +3369,7 @@ $(document).ready(function () {
 					$.each(j, function (i, object) {
 						count++;
 						result += '<tr>';
-						result += '<td>' + count + '</td>';
+						result += '<td>' + (count+1) + '</td>';
 						result += '<td>' + object.nombre + '</td>';
 						result += '<td>' + object.patente + '</td>';
 						result += '<td><ul class="listInlineIcons">';
