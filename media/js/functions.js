@@ -3049,7 +3049,7 @@ $(document).ready(function () {
 							f = 'assignPolizaToEndoso('+object.poliza_id+', \'' + object.poliza_numero + '\')';
 							break;
 						case 'recibo':
-							f = 'openBoxCuota('+object.poliza_id+')';
+							f = '$.colorbox.settings.onClosed=function(){openBoxEmitirRecibo('+object.cliente_id+')};openBoxCuota('+object.poliza_id+')';
 							break;
 						case 'siniestro':
 							result += '<td>' + object.patente + '</td>';
@@ -7042,7 +7042,8 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxEmitirRecibo = function() {
+	openBoxEmitirRecibo = function(cliente_id) {
+		$.colorbox.settings.onClosed = null;
 		$.colorbox({
 			title: 'Endoso',
 			href: 'box-emitirrecibo.php',
@@ -7057,17 +7058,10 @@ $(document).ready(function () {
 				// Initialize special fields
 				initAutocompletePoliza('box0-poliza_numero', 'box');
 				
-				$.when(populateListClientes('box0-cliente_id', 'main')).then(function() {
-					$('#box0-cliente_id').chosen().change(function() {
-						$("#BtnSearchPoliza").click();
-					});
-					$('#box0_cliente_id_chosen .chosen-drop .chosen-search input').focus();
-				});
-				
 				// Assign functions to buttons
 				$("#BtnSearchPoliza").click(function () {
 					// If a field was completed
-					if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_nombre').val() != '' || $('#box0-patente').val() != '') {
+					if ($('#box0-poliza_numero').val() != '' || $('#box0-cliente_id').val() != '' || $('#box0-patente').val() != '') {
 						populateDiv_Poliza_Results('recibo');
 					} else {
 						$('#divBoxPolizaSearchResults').html('Debe ingresar información en al menos un campo.');
@@ -7081,9 +7075,19 @@ $(document).ready(function () {
 						}
 					});
 				});
-				// Enable form
-				formDisable('frmSelectPoliza', 'normal', false);
-
+				$.when(populateListClientes('box0-cliente_id', 'main')).then(function() {
+					$('#box0-cliente_id').chosen().change(function() {
+						$("#BtnSearchPoliza").click();
+					});
+					$('#box0_cliente_id_chosen .chosen-drop .chosen-search input').focus();
+					
+					// Enable form
+					formDisable('frmSelectPoliza', 'normal', false);
+					if (cliente_id) {
+						$('#box0-cliente_id').val(cliente_id).trigger("chosen:updated");
+						$("#BtnSearchPoliza").click();
+					}
+				});
 			}
 			
 		});
