@@ -3569,7 +3569,7 @@ $(document).ready(function () {
 						oTable.fnStandingRedraw();
 					}
 					if (!isNaN(data)) {
-						openBoxContacto(data);
+						openBoxModCliente(data);
 					}
 					else {
 						// Show message
