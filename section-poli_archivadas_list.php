@@ -148,7 +148,7 @@
 							$(nRow).css('color', 'black');
 							break;
 						}
-						if (aData[14]=='No') {
+						if (aData[14]=='No' && aData[12]!='ANULADA') {
 							$('td:eq(12)', nRow).addClass('ui-state-error');
 						}
 						$('td:eq(12)', nRow).html('<span title="'+aData[15]+'">'+aData[14]+'</span>');
