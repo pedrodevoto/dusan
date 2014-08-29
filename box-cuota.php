@@ -33,6 +33,10 @@ list($cliente_email) = mysql_fetch_array($res);
 					<p>
 						<textarea name="box-poliza_observaciones" id="box-poliza_observaciones" class="ui-widget-content" style="width:100%" rows="5" placeholder="Observaciones"></textarea>
 					</p>
+					<p>
+						<label for="box-poliza_cobranza_domicilio">Cobranza a domicilio</label>
+						<input type="checkbox" name="box-poliza_cobranza_domicilio" id="box-poliza_cobranza_domicilio" />
+					</p>
 	            	<p align="center" style="margin-top:10px">
 						<input type="hidden" name="box-poliza_id" id="box-poliza_id" />
 						<input type="submit" name="btnBox" id="btnBox" value="Guardar observaciones" />
