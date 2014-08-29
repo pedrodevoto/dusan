@@ -5501,6 +5501,9 @@ $(document).ready(function () {
 								case '6 Cuotas Pago Tarj/CBU':
 									cuotas = 6;
 									break;
+								case 'Tarjeta de Crédito':
+									cuotas = 6;
+									break;
 								}
 								$('#box-poliza_cant_cuotas').val(cuotas);
 								break;
