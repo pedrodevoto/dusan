@@ -69,7 +69,7 @@ switch ($type) {
 				
 				$pdf->SetXY(175,85+($first?0:165));
 				$pdf->Write(5, '$'.formatNumber($row['cuota_monto'] * $percent_serv));
-				$pdf->SetXY(175,136+($first?0:165));
+				$pdf->SetXY(175,136+($first?0:144));
 				$pdf->Write(5, '$'.formatNumber($row['cuota_monto'] * $percent_serv));
 				
 				$first = FALSE;
