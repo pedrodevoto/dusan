@@ -45,31 +45,31 @@ switch ($type) {
 			
 			$first = TRUE;
 			for ($i=0;$i<2;$i++) {
-				$pdf->SetXY(160, 19+($first?0:150));
+				$pdf->SetXY(160, 14+($first?0:165));
 				$pdf->Write(5,$row['cuota_fe_pago']);
-				$pdf->SetXY(25,43+($first?0:150));
+				$pdf->SetXY(25,43+($first?0:165));
 				$pdf->Write(5,$row['cliente_nombre']);
-				$pdf->SetXY(25,48+($first?0:150));
+				$pdf->SetXY(25,48+($first?0:165));
 				$pdf->Write(5,$row['contacto_domicilio'].' '.$row['contacto_nro'].' '.$row['contacto_piso'].' '.$row['contacto_dpto']);
 				$pdf->SetX(130);
 				$pdf->Write(5,$row['localidad_nombre'].' ('.$row['localidad_cp'].')');
-				$pdf->SetXY(132, 56+($first?0:150));
+				$pdf->SetXY(132, 56+($first?0:165));
 				$pdf->Write(5,$row['cliente_cuit']);
 			
 				$x = $row['cliente_cf']=='Consumidor Final'?35:$row['cliente_cf']=='Excento'?62:$row['cliente_cf']=='Monotributista'?97:NULL;
-				$pdf->SetXY($x,56+($first?0:150));
+				$pdf->SetXY($x,56+($first?0:165));
 				if ($x) $pdf->Write(5,'X');
 			
-				$pdf->SetXY(10, 85+($first?0:150));
+				$pdf->SetXY(10, 85+($first?0:165));
 				$pdf->Write(5, trimText('CUOTA SEGURO/SERVICIO - MANDATO N° 208 COBRANZA POR CUENTA Y ORDEN', $pdf, 150));
-				$pdf->SetXY(10, 90+($first?0:150));
+				$pdf->SetXY(10, 90+($first?0:165));
 				$pdf->Write(5, $row['detalle_poliza']);
-				$pdf->SetXY(10, 95+($first?0:150));
+				$pdf->SetXY(10, 95+($first?0:165));
 				$pdf->Write(5, trimText('SERVICIOS VARIOS DIRECTO', $pdf, 100));
 				
-				$pdf->SetXY(175,85+($first?0:150));
+				$pdf->SetXY(175,85+($first?0:165));
 				$pdf->Write(5, '$'.formatNumber($row['cuota_monto'] * $percent_serv));
-				$pdf->SetXY(175,131+($first?0:150));
+				$pdf->SetXY(175,136+($first?0:165));
 				$pdf->Write(5, '$'.formatNumber($row['cuota_monto'] * $percent_serv));
 				
 				$first = FALSE;
