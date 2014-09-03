@@ -42,7 +42,6 @@ $xls->getDefaultStyle()->getFont()
     ->setName('Arial')
     ->setSize(10);
 $ws = $xls->getActiveSheet();
-$ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 
 $i = 1;
 $medios_pago = array(
@@ -133,6 +132,12 @@ $ws->getColumnDimension('B')->setAutoSize(true);
 $ws->getColumnDimension('F')->setAutoSize(true);
 $ws->getColumnDimension('J')->setAutoSize(true);
 $ws->getColumnDimension('K')->setAutoSize(true);
+
+$ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+$ws->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+$ws->getPageSetup()->setFitToPage(true);
+$ws->getPageSetup()->setFitToWidth(1);
+$ws->getPageSetup()->setFitToHeight(0);
 
 $objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
 header('Content-type: application/vnd.ms-excel');
