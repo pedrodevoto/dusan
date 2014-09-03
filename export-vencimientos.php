@@ -42,6 +42,7 @@ $xls->getDefaultStyle()->getFont()
     ->setName('Arial')
     ->setSize(10);
 $ws = $xls->getActiveSheet();
+$ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 
 $i = 1;
 $medios_pago = array(
