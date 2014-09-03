@@ -96,7 +96,9 @@
 								<label for="cuponera">Cuponera</label>
 								<input type="checkbox" name="cuponera" id="cuponera" checked />
 								<label for="domicilio">Cobranza a domicilio</label>
-								<input type="checkbox" name="domicilio" id="domicilio" checked />								
+								<input type="checkbox" name="domicilio" id="domicilio" checked />	
+								<label for="vencimientos_anteriores">Vencimientos anteriores</label>
+								<input type="checkbox" name="vencimientos_anteriores" id="vencimientos_anteriores">							
 							</td>  
                         </tr>
                         <tr>                                

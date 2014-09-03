@@ -43,12 +43,6 @@ $xls->getDefaultStyle()->getFont()
     ->setSize(10);
 $ws = $xls->getActiveSheet();
 
-
-foreach($ws->getColumnDimension() as $col) {
-    $col->setAutoSize(true);
-}
-$ws->calculateColumnWidths();
-
 $i = 1;
 $medios_pago = array(
 	array(
@@ -90,16 +84,22 @@ foreach ($medios_pago as $medio_pago) {
 	$i++;
 
 	$sql = sprintf("SELECT poliza_numero, CONCAT_WS(' ', cliente_nombre, cliente_apellido, cliente_razon_social), DATE_FORMAT(MAX(cuota_vencimiento), '%%d/%%m/%%Y'), max(cuota_nro), CONCAT_WS('', patente_0, patente_1), CONCAT_WS(' ', automotor_marca_nombre, modelo), GROUP_CONCAT(DISTINCT CONCAT(month(cuota_periodo), ': ', IF(cuota_estado_id=1, 'DEBE',cuota_monto)) SEPARATOR ', '), GROUP_CONCAT(DISTINCT CONCAT_WS(', ', contacto_telefono1, contacto_telefono2, contacto_telefono_laboral, contacto_telefono_alt) SEPARATOR ', '), CONCAT_WS(' ', contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, localidad_nombre, localidad_cp)
-	from poliza
-	join cuota using (poliza_id)
-	join cliente using (cliente_id)
-	join contacto USING (cliente_id)
-	left join localidad using (localidad_id)
-	join automotor using (poliza_id)
-	left join automotor_marca using (automotor_marca_id)
-	where date_format(cuota_periodo, '%%Y-%%m') between '%s-%s' and '%s-%s' and %s
-	group by poliza_id
-	having sum(if(cuota_estado_id=1,1,0))>0", $year_0, sprintf("%02s", $month_0), $year, sprintf("%02s", $month), $medio_pago[0]);
+		from poliza
+		join cuota using (poliza_id)
+		join cliente using (cliente_id)
+		join contacto USING (cliente_id)
+		left join localidad using (localidad_id)
+		join automotor using (poliza_id)
+		left join automotor_marca using (automotor_marca_id)
+		where date_format(cuota_periodo, '%%Y-%%m') between '%s-%s' and '%s-%s' and %s
+		group by poliza_id
+		having sum(if(cuota_estado_id=1,1,0))>0
+		%s
+		order by max(cuota_vencimiento) asc", 
+		$year_0, sprintf("%02s", $month_0), $year, sprintf("%02s", $month), 
+		$medio_pago[0],
+		(isset($_GET['vencimientos_anteriores'])?'':"and date_format(max(cuota_vencimiento),'%Y-%m') = '".$year."-".sprintf("%02s", $month)."'")
+	);
 	
 	$res = mysql_query($sql) or die(mysql_error());
 	
@@ -128,6 +128,10 @@ foreach ($medios_pago as $medio_pago) {
 	$i += 10;
 }
 
+$ws->getColumnDimension('B')->setAutoSize(true);
+$ws->getColumnDimension('F')->setAutoSize(true);
+$ws->getColumnDimension('J')->setAutoSize(true);
+$ws->getColumnDimension('K')->setAutoSize(true);
 
 $objWriter = PHPExcel_IOFactory::createWriter($xls, 'Excel5');
 header('Content-type: application/vnd.ms-excel');
