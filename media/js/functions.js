@@ -26,7 +26,7 @@ $(document).ready(function () {
 	formatNumber = function (x) {
 		return x.toString().replace(/\./g, ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
-	years = function (startYear, futureYears) {
+	getYears = function (startYear, futureYears) {
 		futureYears = futureYears || 0;
 		var currentYear = new Date().getFullYear() + futureYears,
 			years = [];

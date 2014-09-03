@@ -57,6 +57,7 @@
 					<ul>
 		               	<li><a href="section-libros_rubricados.php">Libros Rubricados</a></li>
 						<li><a href="section-facturacion.php">Facturación</a></li>
+						<li><a href="section-vencimientos.php">Listado de vencimientos</a></li>
 					</ul>
 				</li>
                 <li><a href="#">Configuración</a>
