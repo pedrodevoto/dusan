@@ -134,8 +134,8 @@ $ws->getColumnDimension('J')->setAutoSize(true);
 $ws->getColumnDimension('K')->setAutoSize(true);
 
 $ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-$ws->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
-$ws->getPageSetup()->setFitToPage(true);
+// $ws->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+$ws->getPageSetup()->setFitToPage(false);
 $ws->getPageSetup()->setFitToWidth(1);
 $ws->getPageSetup()->setFitToHeight(0);
 
