@@ -36,7 +36,7 @@
 			}
 			$output[$key] = strip_tags($value);
 		}				
-				
+		$output['master'] = $_SESSION['ADM_UserGroup']=='master';
 	} else {
 		$output["empty"] = true;
 	}

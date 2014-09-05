@@ -1577,7 +1577,7 @@ $(document).ready(function () {
 						populateFormGeneric(j, "box");
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 						// Resolve
-						dfd.resolve();
+						dfd.resolve(j.master);
 					});
 				}
 			}
@@ -5743,7 +5743,7 @@ $(document).ready(function () {
 				formDisable('frmBox', 'ui', true);
 
 				// Populate form, then initialize
-				$.when(populateFormBoxPoliza(id)).then(function () {
+				$.when(populateFormBoxPoliza(id)).then(function (ismaster) {
 
 					// Initialize datepickers
 					initDatePickersDaily('box-date', false, null);
@@ -5830,7 +5830,7 @@ $(document).ready(function () {
 
 					// Enable form
 					formDisable('frmBox', 'ui', false);
-					$('#box-cuota_pfc').prop('disabled', true);
+					$('#box-cuota_pfc').prop('disabled', !ismaster);
 				});
 
 			}

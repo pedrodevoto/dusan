@@ -33,12 +33,51 @@
 			die("Error: No se pudo determinar el Estado de la póliza.");
 		}
 		
+		if ($_SESSION['ADM_UserGroup']=='master') {
+			$sql = sprintf('SELECT poliza_premio FROM poliza WHERE poliza_id=%s', GetSQLValueString($_POST['box-poliza_id'], "int"));
+			$res = mysql_query($sql, $connection);
+			list($premio) = mysql_fetch_array($res);
+			if (floatval($_POST['box-poliza_premio'])!=floatval($premio)) {
+				$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 2 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
+				$res = mysql_query($sql, $connection);
+				list($pagado) = mysql_fetch_array($res);
+	
+				$sql =  sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 1 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
+				$res = mysql_query($sql, $connection);
+				list($no_pagado_cant) = mysql_fetch_array($res);
+	
+				$cuota = (intval($_POST['box-poliza_premio']) - $pagado) / $no_pagado_cant;
+	
+				$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
+				mysql_query($sql, $connection) or die(mysql_error());
+	
+				$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-poliza_premio'], "int"), GetSQLValueString($_POST['box-poliza_id'], "int"));
+				mysql_query($sql, $connection) or die(mysql_error());
+			}
+			$sql = sprintf('UPDATE cuota SET cuota_pfc = %s WHERE poliza_id = %s AND cuota_nro = 1', 
+				GetSQLValueString(isset($_POST['box-cuota_pfc']) ? 'true' : '', 'defined','1','0'),
+				GetSQLValueString($_POST['box-poliza_id'], "int")
+			);
+			mysql_query($sql) or die(mysql_error());
+		}
+		$sql = sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id=%s AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
+		$res = mysql_query($sql, $connection);
+		list($cant_cuotas) = mysql_fetch_array($res);
+
+		if ($_POST['box-poliza_medio_pago']=='Directo' && isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
+			$cuota = intval($_POST['box-cuota_monto']);
+			$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
+			mysql_query($sql, $connection) or die(mysql_error());
+		}
+		
+		
 		// Update
-		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s, poliza_numero=TRIM(%s), poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_descuento=%s",
+		$updateSQL = sprintf("UPDATE poliza SET poliza_estado_id=%s, poliza_numero=TRIM(%s), poliza_validez_desde=%s, poliza_validez_hasta=%s, poliza_cant_cuotas=%s, poliza_fecha_solicitud=%s, poliza_fecha_emision=%s, poliza_fecha_recepcion=%s, poliza_fecha_entrega=%s, poliza_correo=%s, poliza_email=%s, poliza_entregada=%s, poliza_prima=%s, poliza_medio_pago=%s, poliza_pago_detalle=%s, poliza_recargo=%s, poliza_descuento=%s",
 						GetSQLValueString($estado, "int"),
 						GetSQLValueString($_POST['box-poliza_numero'], "text"),							
 						GetSQLValueString($_POST['box-poliza_validez_desde'], "date"),						
 						GetSQLValueString($_POST['box-poliza_validez_hasta'], "date"),
+						GetSQLValueString($cant_cuotas, "int"),
 						GetSQLValueString($_POST['box-poliza_fecha_solicitud'], "date"),
 						GetSQLValueString($_POST['box-poliza_fecha_emision'], "date"),						
 						GetSQLValueString($_POST['box-poliza_fecha_recepcion'], "date"),						
@@ -60,38 +99,6 @@
 		
 		switch (mysql_errno()) {
 			case 0:									
-				$sql = sprintf('SELECT poliza_premio FROM poliza WHERE poliza_id=%s', GetSQLValueString($_POST['box-poliza_id'], "int"));
-				$res = mysql_query($sql, $connection);
-				list($premio) = mysql_fetch_array($res);
-	
-				if (floatval($_POST['box-poliza_premio'])!=floatval($premio)) {
-					if ($_SESSION['ADM_UserGroup']=='master') {
-						$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 2 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
-						$res = mysql_query($sql, $connection);
-						list($pagado) = mysql_fetch_array($res);
-			
-						$sql =  sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 1 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
-						$res = mysql_query($sql, $connection);
-						list($no_pagado_cant) = mysql_fetch_array($res);
-			
-						$cuota = (intval($_POST['box-poliza_premio']) - $pagado) / $no_pagado_cant;
-			
-						$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
-						mysql_query($sql, $connection) or die(mysql_error());
-			
-						$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-poliza_premio'], "int"), GetSQLValueString($_POST['box-poliza_id'], "int"));
-						mysql_query($sql, $connection) or die(mysql_error());
-					}
-					else {
-						die('Acceso denegado para modificar el premio.');
-					}
-				}
-
-				if ($_POST['box-poliza_medio_pago']=='Directo' && isset($_POST['box-cuota_monto']) && intval($_POST['box-cuota_monto']>0)) {
-					$cuota = intval($_POST['box-cuota_monto']);
-					$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
-					mysql_query($sql, $connection) or die(mysql_error());
-				}
 				echo "El registro ha sido actualizado.";							
 				break;								
 			case 1062:
