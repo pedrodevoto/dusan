@@ -3437,6 +3437,7 @@ $(document).ready(function () {
 		});
 	}
 	populateDiv_CajaIngresosSistema = function(sucursal_id, fecha) {
+		var dfd = new $.Deferred();
 		$.getJSON("get-json-fich_caja_ingresos_sistema.php?sucursal_id="+sucursal_id+"&date=" + fecha, {}, function (j) {
 			if (j.error == 'expired') {
 				// Session expired
@@ -3444,7 +3445,6 @@ $(document).ready(function () {
 			} else {
 				if (j.empty == true) {
 					// Record not found
-					$.colorbox.close();
 				} else {
 					// General variables
 					var total = 0;
@@ -3477,9 +3477,10 @@ $(document).ready(function () {
 					$('#divIngresosSistema').html(result);
 					$('#totalIngresosSistema').text(parseFloat(total).toFixed(2));
 				}
+				dfd.resolve();
 			}
 		});
-		
+		return dfd.promise();
 	}
 	
 	/* Insert via form functions */

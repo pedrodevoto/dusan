@@ -19,10 +19,7 @@
 				initDatePickersDaily('box-date', false, null);
 				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 				
-				$('#fecha').val(Date.today().clearTime().toString("dd/MM/yy")).change(function() {
-					
-					$('#leyenda_caja').text('CAJA DEL DÍA '+$(this).val());
-				}).change();
+				$('#fecha').val(Date.today().clearTime().toString("dd/MM/yy"));
 				
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -40,8 +37,19 @@
 				// Filter: Submit handler
 				$('#btnFiltro').click(function() {						
 					if (validateForm.form()) {
+						$('#divIngresosSistema').html('');
+						$('#totalIngresosSistema').text(0.00);
+						$('#leyenda_caja').text(' ');
+						
+						var leyenda = 'Caja del día '+$('#fecha').val()+', sucursal '+$("#sucursal_id option:selected").text();
 						$('.box-date, .box-datetime').datepicker('option', 'dateFormat', 'yy-mm-dd');
-						populateDiv_CajaIngresosSistema($('#sucursal_id').val(), $('#fecha').val());
+						
+						$.when(
+							populateDiv_CajaIngresosSistema($('#sucursal_id').val(), $('#fecha').val())
+						).then(function() {
+							$('#leyenda_caja').text(leyenda);
+						});
+						
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					}
 				});	
@@ -85,17 +93,6 @@
 								
 							</td>
                         </tr>
-						<tr>
-							<td colspan="2">
-								<span id="leyenda_caja" style="font-weight:bold"></span>
-							</td>
-							<td width="20%">
-								
-							</td>
-							<td>
-								
-							</td>
-						</tr>
                         <tr>
                             <td colspan="4" align="center">
                                 <input type="button" name="btnFiltro" id="btnFiltro" value="Ver caja">&nbsp;<input type="button" name="btnReset" id="btnReset" value="Resetear" >
@@ -103,7 +100,8 @@
                         </tr>
                     </table>
                 </form>                 
-            </div>                
+            </div>
+			<div style="width:100%;clear:both;margin-top:20px"><span id="leyenda_caja" style="text-align:center;font-size:2em;font-weight:bold"></span></div>
             <!-- Form End -->
 			<div style="float:left;width:50%">
 				<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
