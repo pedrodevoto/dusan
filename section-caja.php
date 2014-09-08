@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>JARVIS - Vencimientos</title>
+		<title>JARVIS - Caja diaria</title>
 
 		<?php require_once('inc/library.php'); ?>               
 		
@@ -90,8 +90,7 @@
 								<span id="leyenda_caja" style="font-weight:bold"></span>
 							</td>
 							<td width="20%">
-								<label for="apertura_caja">Apertura de caja:</label>
-								<input type="text" name="apertura_caja" id="apertura_caja" style="width:60px" />
+								
 							</td>
 							<td>
 								
@@ -144,7 +143,10 @@
 						Total arrastre: $<span id="total-arrastre">1,001,119</span>
 					</p>
 					<p>
-						Cierre de caja: <input type="text" name="cierre-caja" id="cierre-caja" style="width:40px" />
+						<label style="display:inline-block;width:80px">Apertura de caja:</label> <input type="text" name="apertura_caja" id="apertura_caja" style="width:60px" />
+					</p>
+					<p>
+						<label style="display:inline-block;width:80px">Cierre de caja:</label> <input type="text" name="cierre_caja" id="cierre_caja" style="width:60px" />
 					</p>
 					<p>
 						Envío de sobre: $<span id="envio-sobre">900</span>
