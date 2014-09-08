@@ -41,7 +41,7 @@
 				$('#btnFiltro').click(function() {						
 					if (validateForm.form()) {
 						$('.box-date, .box-datetime').datepicker('option', 'dateFormat', 'yy-mm-dd');
-						populateDiv_CajaIngresosSistema($('#fecha').val());
+						populateDiv_CajaIngresosSistema($('#sucursal_id').val(), $('#fecha').val());
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					}
 				});	

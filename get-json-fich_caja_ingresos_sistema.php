@@ -11,10 +11,12 @@
 <?php
 	// Main Query
 	$colname_Recordset1 = "-1";
-	if (isset($_GET['date'])) {
+	if (isset($_GET['sucursal_id']) && isset($_GET['date'])) {
+		$sucursal_id = $_GET['sucursal_id'];
 		$date = $_GET['date'];
 	}
-	$query_Recordset1 = sprintf("SELECT time(cuota_fe_pago) as hora, c.cuota_recibo, usuario_usuario, concat_ws(' ', cliente_apellido, cliente_nombre) as nombre, cuota_nro, (select count(cuota_id) from cuota where poliza_id = c.poliza_id) as cuota_nros, cuota_monto from cuota c join poliza using (poliza_id) join cliente using (cliente_id) left join cuota_log using (cuota_id) left join usuario using (usuario_id) where date(cuota_fe_pago) = %s",
+	$query_Recordset1 = sprintf("SELECT time(cuota_fe_pago) as hora, c.cuota_recibo, usuario_usuario, concat_ws(' ', cliente_apellido, cliente_nombre) as nombre, cuota_nro, (select count(cuota_id) from cuota where poliza_id = c.poliza_id) as cuota_nros, cuota_monto from cuota c join poliza using (poliza_id) join cliente using (cliente_id) left join cuota_log using (cuota_id) left join usuario using (usuario_id) where sucursal_id = %s and date(cuota_fe_pago) = %s",
+							GetSQLValueString($sucursal_id, "int"),
 							GetSQLValueString($date, "date"));
 
 	// Recordset: Main
