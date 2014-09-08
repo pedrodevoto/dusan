@@ -3436,6 +3436,51 @@ $(document).ready(function () {
 			}
 		});
 	}
+	populateDiv_CajaIngresosSistema = function(date) {
+		$.getJSON("get-json-fich_caja_ingresos_sistema.php?date=" + date, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// General variables
+					var total = 0;
+					var result = '';
+					// Open Table and Headers
+					result += '<table class="tblBox">';
+					result += '<tr>';
+					result += '<th height="21">Hora</th>';
+					result += '<th>Usuario</th>';
+					result += '<th>Recibo</th>';
+					result += '<th>Cliente</th>';
+					result += '<th>Cuota</th>';
+					result += '<th>Valor</th>';
+					result += '</tr>';
+					// Table Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td height="21">' + object.hora + '</td>';
+						result += '<td>' + object.usuario_usuario + '</td>';
+						result += '<td>' + object.cuota_recibo + '</td>';
+						result += '<td>' + object.nombre + '</td>';
+						result += '<td>' + object.cuota_nro + '/' + object.cuota_nros + '</td>';
+						result += '<td>' + object.cuota_monto + '</td>';
+						result += '</tr>';
+						total += parseFloat(object.cuota_monto);
+					});
+					// Close Table
+					result += '</table>';
+					// Populate DIV
+					$('#divIngresosSistema').html(result);
+					$('#totalIngresosSistema').text(parseFloat(total).toFixed(2));
+				}
+			}
+		});
+		
+	}
 	
 	/* Insert via form functions */
 	insertFormUsuario = function () {

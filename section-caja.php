@@ -14,7 +14,6 @@
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
-				$.when(populateListSuc('sucursal_id', 'main')).then(function(){$('#sucursal_id').val(2);});
 				
 				$('#guardar, #imprimir').button();
 				initDatePickersDaily('box-date', false, null);
@@ -42,7 +41,7 @@
 				$('#btnFiltro').click(function() {						
 					if (validateForm.form()) {
 						$('.box-date, .box-datetime').datepicker('option', 'dateFormat', 'yy-mm-dd');
-						// TODO
+						populateDiv_CajaIngresosSistema($('#fecha').val());
 						$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					}
 				});	
@@ -53,6 +52,11 @@
 						$('#fecha').val(Date.today().clearTime().toString("dd/MM/yy"));
 						$('#sucursal_id').val(2); 
 					});
+				});
+				
+				$.when(populateListSuc('sucursal_id', 'main')).then(function(){
+					$('#sucursal_id').val(2);
+					$('#btnFiltro').click();
 				});
 			});	
 		</script>   
@@ -83,7 +87,7 @@
                         </tr>
 						<tr>
 							<td colspan="2">
-								<span id="leyenda_caja" style=""></span>
+								<span id="leyenda_caja" style="font-weight:bold"></span>
 							</td>
 							<td width="20%">
 								<label for="apertura_caja">Apertura de caja:</label>
@@ -105,7 +109,8 @@
 			<div style="float:left;width:50%">
 				<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 		            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding: 5px;">Ingresos por sistema</legend>
-				
+					<div id="divIngresosSistema" style="height:170px;overflow-y:scroll">a</div>
+					<div style="width:100%;text-align:right">Total recibos por sistema: $<span id="totalIngresosSistema"></span></div>
 				</fieldset>
 			</div>
 			<div style="float:left;width:50%">
