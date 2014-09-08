@@ -31,7 +31,7 @@
 				<li><a href="section-endosos_list.php">Endosos</a></li>
                 <li><a href="#">Siniestros</a></li>
                 <li><a href="section-clie_list.php">Clientes</a></li>
-                <li><a href="#">Caja</a></li>
+                <li><a href="section-caja.php">Caja</a></li>
                 <? } ?>
                 
             	<?php if($_SESSION['ADM_UserGroup']=="master") { ?>
@@ -52,7 +52,7 @@
 				<li><a href="section-endosos_list.php">Endosos</a></li>
                 <li><a href="section-siniestros_list.php">Siniestros</a></li>
 				<li><a href="section-clie_list.php">Clientes</a></li>
-                <li><a href="#">Caja</a></li>
+                <li><a href="section-caja.php">Caja</a></li>
 				<li><a href="#">Administración</a>
 					<ul>
 		               	<li><a href="section-libros_rubricados.php">Libros Rubricados</a></li>
