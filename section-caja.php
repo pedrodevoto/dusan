@@ -108,7 +108,7 @@
 			<div style="float:left;width:50%">
 				<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 		            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding: 5px;">Ingresos por sistema</legend>
-					<div id="divIngresosSistema" style="height:170px;overflow-y:scroll">a</div>
+					<div id="divIngresosSistema" style="height:170px;overflow-y:scroll"></div>
 					<div style="width:100%;text-align:right">Total recibos por sistema: $<span id="totalIngresosSistema"></span></div>
 				</fieldset>
 			</div>
