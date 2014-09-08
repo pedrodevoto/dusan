@@ -3436,8 +3436,8 @@ $(document).ready(function () {
 			}
 		});
 	}
-	populateDiv_CajaIngresosSistema = function(sucursal_id, date) {
-		$.getJSON("get-json-fich_caja_ingresos_sistema.php?sucursal_id="+sucursal_id+"&date=" + date, {}, function (j) {
+	populateDiv_CajaIngresosSistema = function(sucursal_id, fecha) {
+		$.getJSON("get-json-fich_caja_ingresos_sistema.php?sucursal_id="+sucursal_id+"&date=" + fecha, {}, function (j) {
 			if (j.error == 'expired') {
 				// Session expired
 				sessionExpire('box');
