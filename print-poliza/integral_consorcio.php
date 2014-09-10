@@ -18,7 +18,7 @@ $txt_titular_c1 = array(
 	array('maxwidth' => 82, 'text' => "Localidad: ".$row_Recordset1['localidad_nombre']),
 	array('maxwidth' => 130, 'text' => "Teléfonos: ".$row_Recordset1['contacto_telefono1']." / ".$row_Recordset1['contacto_telefono2']),
 	array('maxwidth' => 82, 'text' => "Categoría de IVA: ".$row_Recordset1['cliente_cf']),
-	array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])))
+	array('maxwidth' => 82, 'text' => "Fecha de Nacimiento: ".(!empty($row_Recordset1['cliente_nacimiento'])?strftime("%d/%m/%Y", strtotime($row_Recordset1['cliente_nacimiento'])):''))
 );
 $txt_titular_c2 = array(
 	array('maxwidth' => 47, 'text' => "E-mail: ".$row_Recordset1['cliente_email']),
