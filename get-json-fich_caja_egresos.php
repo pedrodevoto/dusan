@@ -15,7 +15,7 @@
 		$sucursal_id = $_GET['sucursal_id'];
 		$date = $_GET['date'];
 	}
-	$query_Recordset1 = sprintf("SELECT caja_egreso_id as id, time(caja_egreso_fecha) as hora, usuario_usuario, caja_egreso_cantidad, caja_egreso_detalle, caja_egreso_valor from caja_egresos join usuario using (usuario_id) where sucursal_id = %s and date(caja_egreso_fecha) = %s",
+	$query_Recordset1 = sprintf("SELECT caja_egreso_id as id, time(caja_egreso_fecha) as hora, usuario_usuario, caja_egreso_detalle, caja_egreso_valor from caja_egresos join usuario using (usuario_id) where sucursal_id = %s and date(caja_egreso_fecha) = %s",
 							GetSQLValueString($sucursal_id, "int"),
 							GetSQLValueString($date, "date"));
 	// Recordset: Main

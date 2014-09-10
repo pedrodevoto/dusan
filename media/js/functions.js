@@ -3544,7 +3544,6 @@ $(document).ready(function () {
 					result += '<tr>';
 					result += '<th height="21">Hora</th>';
 					result += '<th>Usuario</th>';
-					result += '<th>Cantidad</th>';
 					result += '<th>Detalle</th>';
 					result += '<th>Valor</th>';
 					result += '<th>Acciones</th>';
@@ -3554,7 +3553,6 @@ $(document).ready(function () {
 						result += '<tr>';
 						result += '<td height="21">' + object.hora + '</td>';
 						result += '<td>' + object.usuario_usuario + '</td>';
-						result += '<td>' + object.caja_egreso_cantidad + '</td>';
 						result += '<td>' + object.caja_egreso_detalle + '</td>';
 						result += '<td>' + object.caja_egreso_valor + '</td>';
 						result += '<td><ul class="listInlineIcons"><li title="Eliminar egreso" onClick="$.when(deleteViaLink(\'caja_egresos\','+object.id+')).then(function(){populateDiv_CajaEgresos('+sucursal_id+', \''+fecha+'\');});"><span class="ui-icon ui-icon-trash"></span></li></ul></td>';

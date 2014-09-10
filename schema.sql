@@ -298,7 +298,6 @@ CREATE TABLE `caja_egresos` (
   `sucursal_id` int(11) NOT NULL,
   `usuario_id` int(10) unsigned NOT NULL,
   `caja_egreso_fecha` datetime NOT NULL,
-  `caja_egreso_cantidad` int(11) NOT NULL,
   `caja_egreso_detalle` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `caja_egreso_valor` float NOT NULL,
   PRIMARY KEY (`caja_egreso_id`),
@@ -1296,4 +1295,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-09-10 15:08:18
+-- 2014-09-10 18:59:38

@@ -202,8 +202,7 @@
 				<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 		            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding: 5px;">Egresos</legend>
 					<form id="frmEgreso" tipo="egreso">
-						<input type="text" name="egreso_cantidad" id="egreso_cantidad" placeholder="Cant" style="width:60px" />
-						<input type="text" name="egreso_detalle" id="egreso_detalle" placeholder="Detalle" style="width:250px" />
+						<input type="text" name="egreso_detalle" id="egreso_detalle" placeholder="Detalle" style="width:310px" />
 						<input type="text" name="egreso_valor" id="egreso_valor" placeholder="Valor" style="width:60px" />
 						<input type="submit" id="btnEgreso" value="Guardar" />
 					</form>
