@@ -1,4 +1,6 @@
 <?php
+setlocale(LC_TIME, 'es_AR');
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 // Sanitation
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
