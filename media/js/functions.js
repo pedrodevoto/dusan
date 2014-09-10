@@ -1143,7 +1143,7 @@ $(document).ready(function () {
 	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id, table) {
-		table = table || oTable;
+		table = table || (typeof oTable != 'undefined'?oTable:undefined);
 		var dfd = new $.Deferred();
 		if (confirm('Está seguro que desea eliminar el registro?\n\nEsta acción no puede deshacerse.')) {
 			$.post('delete-' + section + '.php', {
@@ -1855,6 +1855,34 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateFormCajaDiaria = function(sucursal_id, fecha) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_caja_diaria.php?sucursal_id=" + sucursal_id+"&fecha="+fecha,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate drop-downs, then form
+					$.when(
+						
+					).then(function () {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+					});
+				}
+				calculateCajaDiaria();
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	}
 	
 	populatePolizaDet = function (subtipo_poliza, id) {
 		switch (subtipo_poliza) {
@@ -2384,6 +2412,21 @@ $(document).ready(function () {
 			}
 			break;
 		}
+	}
+	calculateCajaDiaria = function() {
+		var totalingresos = parseFloat($('#totalIngresosSistema').text()) + parseFloat($('#totalIngresos').text());
+		var totalegresos = parseFloat($('#totalEgresos').text());
+		var saldo = totalingresos - totalegresos;
+		var cierre = parseFloat($('#box-caja_diaria_cierre').val()) || parseFloat(0);
+		var sobre = saldo - cierre;
+		var arrastreanterior = parseFloat($('#box-caja_arrastre_anterior').val()) || parseFloat(0);
+		var arrastre = arrastreanterior + saldo;
+		
+		$('#box-caja_ingresos').val(parseFloat(totalingresos).toFixed(2));
+		$('#box-caja_egresos').val(parseFloat(totalegresos).toFixed(2));
+		$('#box-caja_saldo').val(parseFloat(saldo).toFixed(2));
+		$('#box-caja_sobre').val(parseFloat(sobre).toFixed(2));
+		$('#box-caja_arrastre_total').val(parseFloat(arrastre).toFixed(2));
 	}
 	
 	/* Other form functions */
@@ -3477,6 +3520,101 @@ $(document).ready(function () {
 					$('#divIngresosSistema').html(result);
 					$('#totalIngresosSistema').text(parseFloat(total).toFixed(2));
 				}
+				calculateCajaDiaria();
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	}
+	populateDiv_CajaEgresos = function(sucursal_id, fecha) {
+		var dfd = new $.Deferred();
+		$.getJSON("get-json-fich_caja_egresos.php?sucursal_id="+sucursal_id+"&date=" + fecha, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+				} else {
+					// General variables
+					var total = 0;
+					var result = '';
+					// Open Table and Headers
+					result += '<table class="tblBox">';
+					result += '<tr>';
+					result += '<th height="21">Hora</th>';
+					result += '<th>Usuario</th>';
+					result += '<th>Cantidad</th>';
+					result += '<th>Detalle</th>';
+					result += '<th>Valor</th>';
+					result += '<th>Acciones</th>';
+					result += '</tr>';
+					// Table Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td height="21">' + object.hora + '</td>';
+						result += '<td>' + object.usuario_usuario + '</td>';
+						result += '<td>' + object.caja_egreso_cantidad + '</td>';
+						result += '<td>' + object.caja_egreso_detalle + '</td>';
+						result += '<td>' + object.caja_egreso_valor + '</td>';
+						result += '<td><ul class="listInlineIcons"><li title="Eliminar egreso" onClick="$.when(deleteViaLink(\'caja_egresos\','+object.id+')).then(function(){populateDiv_CajaEgresos('+sucursal_id+', \''+fecha+'\');});"><span class="ui-icon ui-icon-trash"></span></li></ul></td>';
+						result += '</tr>';
+						total += parseFloat(object.caja_egreso_valor);
+					});
+					// Close Table
+					result += '</table>';
+					// Populate DIV
+					$('#divEgresos').html(result);
+					$('#totalEgresos').text(parseFloat(total).toFixed(2));
+				}
+				calculateCajaDiaria();
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	}
+	populateDiv_CajaIngresos = function(sucursal_id, fecha) {
+		var dfd = new $.Deferred();
+		$.getJSON("get-json-fich_caja_ingresos.php?sucursal_id="+sucursal_id+"&date=" + fecha, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+				} else {
+					// General variables
+					var total = 0;
+					var result = '';
+					// Open Table and Headers
+					result += '<table class="tblBox">';
+					result += '<tr>';
+					result += '<th height="21">Hora</th>';
+					result += '<th>Usuario</th>';
+					result += '<th>Recibo</th>';
+					result += '<th>Cliente</th>';
+					result += '<th>Valor</th>';
+					result += '<th>Acciones</th>';
+					result += '</tr>';
+					// Table Data
+					$.each(j, function (i, object) {
+						result += '<tr>';
+						result += '<td height="21">' + object.hora + '</td>';
+						result += '<td>' + object.usuario_usuario + '</td>';
+						result += '<td>' + object.caja_ingreso_recibo + '</td>';
+						result += '<td>' + object.caja_ingreso_cliente + '</td>';
+						result += '<td>' + object.caja_ingreso_valor + '</td>';
+						result += '<td><ul class="listInlineIcons"><li title="Eliminar ingreso" onClick="$.when(deleteViaLink(\'caja_ingresos\','+object.id+')).then(function(){populateDiv_CajaIngresos('+sucursal_id+', \''+fecha+'\');});"><span class="ui-icon ui-icon-trash"></span></li></ul></td>';
+						result += '</tr>';
+						total += parseFloat(object.caja_ingreso_valor);
+					});
+					// Close Table
+					result += '</table>';
+					// Populate DIV
+					$('#divIngresos').html(result);
+					$('#totalIngresos').text(parseFloat(total).toFixed(2));
+				}
+				calculateCajaDiaria();
 				dfd.resolve();
 			}
 		});
