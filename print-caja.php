@@ -88,8 +88,6 @@ $egresos = mysql_query($sql) or die(mysql_error());
 			<?php 
 			} 
 			?>
-			</tbody>
-			<tfoot>
 				<tr>
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de ingresos: </td>
@@ -98,7 +96,7 @@ $egresos = mysql_query($sql) or die(mysql_error());
 					<td style="border:none;text-align:right">Total de egresos: </td>
 					<td style="text-align:right"><?=$total_egresos?></td>
 				</tr>
-			</tfoot>
+			</tbody>
 		</table>
 	</div>
 </body>
