@@ -134,6 +134,7 @@
 						name: "sucursal_id", 
 						value: $('#sucursal_id1').val()
 					});
+					param = $.merge(param, $('#frmCuotas').serializeArray());
 					$.post('process-caja_diaria.php', param, function(data) {
 						if (data == 'Session expired') {
 							sessionExpire('main');
@@ -142,6 +143,9 @@
 								this.reset();
 							});
 							populateFormCajaDiaria($('#sucursal_id1').val(), $('#fecha1').val());
+							populateDiv_CajaEgresos($('#sucursal_id1').val(), $('#fecha1').val());
+							populateDiv_CajaIngresos($('#sucursal_id1').val(), $('#fecha1').val());
+							populateDiv_CajaIngresosSistema($('#sucursal_id1').val(), $('#fecha1').val());
 						}
 						$('#btnCajaDiaria').button('option', 'disabled', false);
 					});
@@ -194,7 +198,9 @@
 			<div style="float:left;width:50%">
 				<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 		            <legend class="ui-widget ui-widget-header ui-corner-all" style="padding: 5px;">Ingresos por sistema</legend>
-					<div id="divIngresosSistema" style="height:170px;overflow-y:scroll"></div>
+					<form id="frmCuotas">
+						<div id="divIngresosSistema" style="height:170px;overflow-y:scroll"></div>
+					</form>
 					<div style="width:100%;text-align:right">Total recibos por sistema: $<span id="totalIngresosSistema"></span></div>
 				</fieldset>
 			</div>

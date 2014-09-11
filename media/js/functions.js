@@ -3501,6 +3501,8 @@ $(document).ready(function () {
 					result += '<th>Cliente</th>';
 					result += '<th>Cuota</th>';
 					result += '<th>Valor</th>';
+					result += '<th>No Efc</th>';
+					result += '<th>No Entra</th>';
 					result += '</tr>';
 					// Table Data
 					$.each(j, function (i, object) {
@@ -3511,8 +3513,10 @@ $(document).ready(function () {
 						result += '<td>' + object.nombre + '</td>';
 						result += '<td>' + object.cuota_nro + '/' + object.cuota_nros + '</td>';
 						result += '<td>' + object.cuota_monto + '</td>';
+						result += '<td><input name="box-cuota_no_efc[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_efc?'checked':'')+'/></td>';
+						result += '<td><input name="box-cuota_no_entra[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_entra?'checked':'')+'/></td>';
 						result += '</tr>';
-						total += parseFloat(object.cuota_monto);
+						total += (object.cuota_no_efc?0:parseFloat(object.cuota_monto));
 					});
 					// Close Table
 					result += '</table>';

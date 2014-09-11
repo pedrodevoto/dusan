@@ -578,6 +578,8 @@ CREATE TABLE `cuota` (
   `cuota_recibo` int(10) unsigned DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
   `cuota_nro_factura` int(11) unsigned DEFAULT NULL,
+  `cuota_no_efc` tinyint(3) unsigned DEFAULT NULL,
+  `cuota_no_entra` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`cuota_id`),
   UNIQUE KEY `poliza_id` (`poliza_id`,`cuota_nro`),
   UNIQUE KEY `poliza_id_2` (`poliza_id`,`cuota_periodo`),

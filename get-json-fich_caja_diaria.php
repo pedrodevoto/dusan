@@ -32,7 +32,8 @@
 		}
 	}
 	
-	$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota JOIN poliza USING (poliza_id) WHERE sucursal_id = %s AND DATE(cuota_fe_pago) >= "%s" AND DATE(cuota_fe_pago) < "%s"', $sucursal_id, date('Y-m-01', strtotime($date)), date('Y-m-d', strtotime($date)));
+	$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota JOIN poliza USING (poliza_id) WHERE (cuota_no_efc is null or cuota_no_efc = 0) AND sucursal_id = %s AND DATE(cuota_fe_pago) >= "%s" AND DATE(cuota_fe_pago) < "%s"', $sucursal_id, date('Y-m-01', strtotime($date)), date('Y-m-d', strtotime($date)));
+	error_log($sql);
 	$res = mysql_query($sql) or die(mysql_error());
 	$row = mysql_fetch_array($res);
 	$total_cuotas = $row[0];
