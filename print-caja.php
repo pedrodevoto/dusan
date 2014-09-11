@@ -43,7 +43,6 @@ $egresos = mysql_query($sql) or die(mysql_error());
 	  td    { page-break-inside:avoid; page-break-after:auto }
 	  thead { display:table-header-group }
 	  tfoot { display:table-footer-group }
-	  div.page {page-break-inside: avoid;}
 	}
 	</style>
 </head>
@@ -91,14 +90,14 @@ $egresos = mysql_query($sql) or die(mysql_error());
 			?>
 			</tbody>
 			<tfoot>
-				<tr><div class="page">
+				<tr>
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de ingresos: </td>
 					<td style="text-align:right"><?=$total_ingresos?></td>
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de egresos: </td>
 					<td style="text-align:right"><?=$total_egresos?></td>
-				</div></tr>
+				</tr>
 			</tfoot>
 		</table>
 	</div>
