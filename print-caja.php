@@ -25,14 +25,14 @@ $egresos = mysql_query($sql) or die(mysql_error());
 	<style>
 	@media print{@page {size: landscape}}
 	body {
-		font-size:8px;
+		font-size:10px;
 		font-family:Arial;
 	}
 	table {
 		border-collapse:collapse;
 	}
 	th, td {
-		font-size:8px;
+		font-size:10px;
 		font-family:Arial;
 		border:1px solid black;
 	}
