@@ -151,6 +151,10 @@
 					});
 					event.preventDefault();
 				});
+				$('#imprimirCajaDiaria').click(function(event) {
+					window.open('print-caja.php?sucursal_id='+$('#sucursal_id1').val()+'&fecha='+ $('#fecha1').val());
+					event.preventDefault();
+				});
 				
 				$.when(populateListSuc('sucursal_id', 'main')).then(function(){
 					$('#sucursal_id').val(2);
