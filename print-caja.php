@@ -22,6 +22,7 @@ $egresos = mysql_query($sql) or die(mysql_error());
 ?>
 <html>
 <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<style>
 	@media print{@page {size: landscape}}
 	body {
@@ -58,12 +59,12 @@ $egresos = mysql_query($sql) or die(mysql_error());
 					<th colspan="3" width="50%">EGRESOS</th>
 				</tr>
 				<tr>
-					<th width="5%">Comprobante</th>
+					<th width="3%">Recibo</th>
 					<th>Detalle</th>
-					<th width="5%">Importe</th>
-					<th width="5%">Comprobante</th>
+					<th width="3%">Importe</th>
+					<th width="3%">Recibo</th>
 					<th>Detalle</th>
-					<th width="5%">Importe</th>
+					<th width="3%">Importe</th>
 				</tr>
 			</thead>
 			<tbody>
