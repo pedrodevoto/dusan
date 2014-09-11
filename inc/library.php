@@ -64,3 +64,7 @@
         
         <!-- Base Style -->                     
         <link rel="stylesheet" href="media/css/base.css" />
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="media/images/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="media/images/favicon.ico" type="image/x-icon">
