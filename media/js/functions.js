@@ -3516,7 +3516,7 @@ $(document).ready(function () {
 						result += '<td><input name="box-cuota_no_efc[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_efc==1?'checked':'')+'/></td>';
 						result += '<td><input name="box-cuota_no_entra[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_entra==1?'checked':'')+'/></td>';
 						result += '</tr>';
-						total += (object.cuota_no_efc?0:parseFloat(object.cuota_monto));
+						total += (object.cuota_no_efc==1?0:parseFloat(object.cuota_monto));
 					});
 					// Close Table
 					result += '</table>';
