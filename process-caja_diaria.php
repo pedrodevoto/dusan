@@ -10,7 +10,7 @@
 ?>
 <?php
 	if (!empty($_POST['sucursal_id']) && !empty($_POST['fecha'])) {
-		$sql = sprintf("UPDATE cuota join poliza using (poliza_id) set cuota_no_efc = null, cuota_no_entra = null where sucursal_id = %s and date(cuota_fe_pago) = %s", GetSQLValueString($_POST['sucursal_id'], "int"), GetSQLValueString($_POST['fecha'], "date"));
+		$sql = sprintf("UPDATE cuota join poliza using (poliza_id) set cuota_no_efc = 0, cuota_no_entra = 0 where sucursal_id = %s and date(cuota_fe_pago) = %s", GetSQLValueString($_POST['sucursal_id'], "int"), GetSQLValueString($_POST['fecha'], "date"));
 		mysql_query($sql) or die(mysql_error());
 		if (isset($_POST['box-cuota_no_efc']) && is_array($_POST['box-cuota_no_efc'])) {
 			foreach ($_POST['box-cuota_no_efc'] as $cuota_id) {

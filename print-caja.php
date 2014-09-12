@@ -19,6 +19,33 @@ $ingresos = mysql_query($sql) or die(mysql_error());
 $sql = sprintf('SELECT caja_egreso_detalle as detalle, caja_egreso_valor as importe from caja_egresos where sucursal_id = %s and date(caja_egreso_fecha) = %s', GetSQLValueString($_GET['sucursal_id'], "int"), GetSQLValueString($_GET['fecha'], "date"));
 $egresos = mysql_query($sql) or die(mysql_error());
 
+$sql = sprintf('SELECT caja_diaria_apertura, caja_diaria_cierre from caja_diaria WHERE sucursal_id = %s AND caja_diaria_fecha = %s', GetSQLValueString($_GET['sucursal_id'], "int"), GetSQLValueString($_GET['fecha'], "date"));
+$res = mysql_query($sql);
+$row = mysql_fetch_array($res);
+if (!$row) {
+	die('Debe guardar la caja antes de exportarla');
+}
+list($apertura, $cierre) = $row;
+
+// arrastre
+$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota JOIN poliza USING (poliza_id) WHERE cuota_no_efc = 0 AND sucursal_id = %s AND DATE(cuota_fe_pago) >= "%s" AND DATE(cuota_fe_pago) < "%s"', GetSQLValueString($_GET['sucursal_id'], "int"), date('Y-m-01', strtotime($_GET['fecha'])), date('Y-m-d', strtotime($_GET['fecha'])));
+error_log($sql);
+$res = mysql_query($sql) or die(mysql_error());
+$row = mysql_fetch_array($res);
+$total_cuotas = $row[0];
+
+$sql = sprintf('SELECT SUM(caja_ingreso_valor) FROM caja_ingresos WHERE sucursal_id = %s AND DATE(caja_ingreso_fecha) >= "%s" AND DATE(caja_ingreso_fecha) < "%s"', GetSQLValueString($_GET['sucursal_id'], "int"), date('Y-m-01', strtotime($_GET['fecha'])), date('Y-m-d', strtotime($_GET['fecha'])));
+$res = mysql_query($sql) or die(mysql_error());
+$row = mysql_fetch_array($res);
+$total_ingresos = $row[0];
+
+$sql = sprintf('SELECT SUM(caja_egreso_valor) FROM caja_egresos WHERE sucursal_id = %s AND DATE(caja_egreso_fecha) >= "%s" AND DATE(caja_egreso_fecha) < "%s"', GetSQLValueString($_GET['sucursal_id'], "int"), date('Y-m-01', strtotime($_GET['fecha'])), date('Y-m-d', strtotime($_GET['fecha'])));
+$res = mysql_query($sql) or die(mysql_error());
+$row = mysql_fetch_array($res);
+$total_egresos = $row[0];
+
+$arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (float)$total_egresos, 2);
+
 ?>
 <html>
 <head>
@@ -31,6 +58,9 @@ $egresos = mysql_query($sql) or die(mysql_error());
 	}
 	table {
 		border-collapse:collapse;
+	}
+	table {
+		border-top:1px solid black;
 	}
 	th, td {
 		font-size:10px;
@@ -48,8 +78,14 @@ $egresos = mysql_query($sql) or die(mysql_error());
 	</style>
 </head>
 <body>
-	<div style="width:100%;margin:auto;text-align:center">
+	<div style="float:left;width:33.33%;">
+		Apertura: $<?=(float)$apertura?>
+	</div>
+	<div style="float:left;width:33.33%;text-align:center">
 		<b>PLANILLA DE CAJA</b>
+	</div>
+	<div style="float:left;width:33.33%;text-align:right">
+		<?=date('d/m/Y')?>
 	</div>
 	<div style="width:100%;">
 		<table style="width:100%">
@@ -88,6 +124,8 @@ $egresos = mysql_query($sql) or die(mysql_error());
 				</tr>
 			<?php 
 			} 
+			$saldo = (float)$total_ingresos-(float)$total_egresos;
+			$arrastre = $arrastre_anterior + $saldo;
 			?>
 				<tr>
 					<td style="border:none"></td>
@@ -96,6 +134,22 @@ $egresos = mysql_query($sql) or die(mysql_error());
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de egresos: </td>
 					<td style="text-align:right"><?=$total_egresos?></td>
+				</tr>
+				<tr>
+					<td style="border:none"></td>
+					<td style="border:none;text-align:right">Menos egresos: </td>
+					<td style="text-align:right"><?=$total_egresos?></td>
+					<td style="border:none"></td>
+					<td style="border:none;text-align:right">Arrastre día anterior: </td>
+					<td style="text-align:right"><?=$arrastre_anterior?></td>
+				</td>
+				<tr>
+					<td style="border:none"></td>
+					<td style="border:none;text-align:right">Total: </td>
+					<td style="text-align:right"><?=$saldo?></td>
+					<td style="border:none"></td>
+					<td style="border:none;text-align:right">Arrastre total: </td>
+					<td style="text-align:right"><?=$arrastre?></td>
 				</tr>
 			</tbody>
 		</table>
