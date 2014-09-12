@@ -79,24 +79,24 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 </head>
 <body>
 	<div style="float:left;width:33.33%;">
-		Apertura: $<?=(float)$apertura?>
+		<b style="font-size:12px">Apertura: $<?=(float)$apertura?></b>
 	</div>
 	<div style="float:left;width:33.33%;text-align:center">
 		<b>PLANILLA DE CAJA</b>
 	</div>
 	<div style="float:left;width:33.33%;text-align:right">
-		<?=date('d/m/Y')?>
+		<b style="font-size:12px"><?=date('d/m/Y', strtotime($_GET['fecha']))?></b>
 	</div>
 	<div style="width:100%;">
 		<table style="width:100%">
 			<thead>
 				<tr>
-					<th colspan="3" width="50%">INGRESOS</th>
+					<th colspan="5" width="50%">INGRESOS</th>
 					<th colspan="3" width="50%">EGRESOS</th>
 				</tr>
 				<tr>
 					<th width="3%">Recibo</th>
-					<th>Detalle</th>
+					<th colspan="3">Detalle</th>
 					<th width="3%">Importe</th>
 					<th width="3%">Recibo</th>
 					<th>Detalle</th>
@@ -116,11 +116,11 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 			?>
 				<tr>
 					<td><?=($ingreso?$ingreso['recibo']:'')?></td>
-					<td><?=($ingreso?$ingreso['detalle']:'')?></td>
-					<td style="text-align:right"><?=($ingreso?$ingreso['importe']:'')?></td>
+					<td colspan="3"><?=($ingreso?$ingreso['detalle']:'')?></td>
+					<td style="text-align:right"><?=($ingreso?'$'.$ingreso['importe']:'')?></td>
 					<td></td>
 					<td><?=($egreso?$egreso['detalle']:'')?></td>
-					<td style="text-align:right"><?=($egreso?$egreso['importe']:'')?></td>
+					<td style="text-align:right"><?=($egreso?'$'.$egreso['importe']:'')?></td>
 				</tr>
 			<?php 
 			} 
@@ -129,27 +129,33 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 			?>
 				<tr>
 					<td style="border:none"></td>
+					<td style="border:none;text-align:right"><b>Arrastre del día anterior: </b></td>
+					<td style="border:none">$<?=$arrastre_anterior?></td>
 					<td style="border:none;text-align:right">Total de ingresos: </td>
-					<td style="text-align:right"><?=$total_ingresos?></td>
+					<td style="text-align:right">$<?=$total_ingresos?></td>
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de egresos: </td>
-					<td style="text-align:right"><?=$total_egresos?></td>
+					<td style="text-align:right">$<?=$total_egresos?></td>
 				</tr>
 				<tr>
 					<td style="border:none"></td>
+					<td style="border:none;text-align:right"><b>Saldo del día:</b></td>
+					<td style="border:none">$<?=$saldo?></td>
 					<td style="border:none;text-align:right">Menos egresos: </td>
-					<td style="text-align:right"><?=$total_egresos?></td>
+					<td style="text-align:right">$<?=$total_egresos?></td>
 					<td style="border:none"></td>
-					<td style="border:none;text-align:right">Arrastre día anterior: </td>
-					<td style="text-align:right"><?=$arrastre_anterior?></td>
+					<td style="border:none"></td>
+					<td style="border:none"></td>
 				</td>
 				<tr>
 					<td style="border:none"></td>
+					<td style="border:none;text-align:right"><b>Arrastre total: </b></td>
+					<td style="border:none">$<?=$arrastre?></td>
 					<td style="border:none;text-align:right">Total: </td>
-					<td style="text-align:right"><?=$saldo?></td>
+					<td style="text-align:right">$<?=$saldo?></td>
 					<td style="border:none"></td>
-					<td style="border:none;text-align:right">Arrastre total: </td>
-					<td style="text-align:right"><?=$arrastre?></td>
+					<td style="border:none"></td>
+					<td style="border:none"></td>
 				</tr>
 			</tbody>
 		</table>
