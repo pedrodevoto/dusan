@@ -3513,8 +3513,8 @@ $(document).ready(function () {
 						result += '<td>' + object.nombre + '</td>';
 						result += '<td>' + object.cuota_nro + '/' + object.cuota_nros + '</td>';
 						result += '<td>' + object.cuota_monto + '</td>';
-						result += '<td><input name="box-cuota_no_efc[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_efc?'checked':'')+'/></td>';
-						result += '<td><input name="box-cuota_no_entra[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_entra?'checked':'')+'/></td>';
+						result += '<td><input name="box-cuota_no_efc[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_efc==1?'checked':'')+'/></td>';
+						result += '<td><input name="box-cuota_no_entra[]" value="'+object.id+'" type="checkbox" '+(object.cuota_no_entra==1?'checked':'')+'/></td>';
 						result += '</tr>';
 						total += (object.cuota_no_efc?0:parseFloat(object.cuota_monto));
 					});
