@@ -1,0 +1,1 @@
+<footer style="clear:both;text-align:right;width: 1050px;margin: 20px auto 5px auto;">Dusan Asesor de Seguros <?=date('Y')?>. Derechos reservados.</footer>
