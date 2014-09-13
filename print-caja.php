@@ -91,16 +91,16 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 		<table style="width:100%">
 			<thead>
 				<tr>
-					<th colspan="5" width="50%">INGRESOS</th>
-					<th colspan="3" width="50%">EGRESOS</th>
+					<th colspan="5" width="50%" style="color:darkgreen">INGRESOS</th>
+					<th colspan="3" width="50%" style="color:darkred">EGRESOS</th>
 				</tr>
 				<tr>
-					<th width="3%">Recibo</th>
-					<th colspan="3">Detalle</th>
-					<th width="3%">Importe</th>
-					<th width="3%">Recibo</th>
-					<th>Detalle</th>
-					<th width="3%">Importe</th>
+					<th style="color:darkgreen" width="3%">Recibo</th>
+					<th style="color:darkgreen" colspan="3">Detalle</th>
+					<th style="color:darkgreen" width="3%">Importe</th>
+					<th style="color:darkred" width="3%">Recibo</th>
+					<th style="color:darkred">Detalle</th>
+					<th style="color:darkred" width="3%">Importe</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -115,12 +115,12 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 			if (!$ingreso and !$egreso) break;
 			?>
 				<tr>
-					<td><?=($ingreso?$ingreso['recibo']:'')?></td>
-					<td colspan="3"><?=($ingreso?$ingreso['detalle']:'')?></td>
-					<td style="text-align:right"><?=($ingreso?'$'.$ingreso['importe']:'')?></td>
+					<td style="color:darkgreen"><?=($ingreso?$ingreso['recibo']:'')?></td>
+					<td style="color:darkgreen" colspan="3"><?=($ingreso?$ingreso['detalle']:'')?></td>
+					<td style="text-align:right;color:darkgreen"><?=($ingreso?'$'.$ingreso['importe']:'')?></td>
 					<td></td>
-					<td><?=($egreso?$egreso['detalle']:'')?></td>
-					<td style="text-align:right"><?=($egreso?'$'.$egreso['importe']:'')?></td>
+					<td style="color:darkred"><?=($egreso?$egreso['detalle']:'')?></td>
+					<td style="text-align:right;color:darkred"><?=($egreso?'$'.$egreso['importe']:'')?></td>
 				</tr>
 			<?php 
 			} 
@@ -132,10 +132,10 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 					<td style="border:none;text-align:right"><b>Arrastre del día anterior: </b></td>
 					<td style="border:none">$<?=$arrastre_anterior?></td>
 					<td style="border:none;text-align:right">Total de ingresos: </td>
-					<td style="text-align:right">$<?=$total_ingresos?></td>
+					<td style="text-align:right;color:darkgreen">$<?=$total_ingresos?></td>
 					<td style="border:none"></td>
 					<td style="border:none;text-align:right">Total de egresos: </td>
-					<td style="text-align:right">$<?=$total_egresos?></td>
+					<td style="text-align:right;color:darkred">$<?=$total_egresos?></td>
 				</tr>
 				<tr>
 					<td style="border:none"></td>
