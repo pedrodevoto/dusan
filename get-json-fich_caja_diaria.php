@@ -15,7 +15,7 @@
 		$sucursal_id = GetSQLValueString($_GET['sucursal_id'], "int");
 		$date = mysql_real_escape_string($_GET['fecha']);
 	}
-	$query_Recordset1 = sprintf("SELECT caja_diaria_apertura, caja_diaria_cierre, caja_diaria_observaciones FROM caja_diaria WHERE sucursal_id = %s AND caja_diaria_fecha = '%s'",
+	$query_Recordset1 = sprintf("SELECT caja_diaria_apertura, caja_diaria_cierre, caja_diaria_observaciones, caja_diaria_numero FROM caja_diaria WHERE sucursal_id = %s AND caja_diaria_fecha = '%s'",
 							$sucursal_id,
 							$date);
 							// Recordset: Main
@@ -33,7 +33,6 @@
 	}
 	
 	$sql = sprintf('SELECT SUM(cuota_monto) FROM cuota JOIN poliza USING (poliza_id) WHERE (cuota_no_efc is null or cuota_no_efc = 0) AND sucursal_id = %s AND DATE(cuota_fe_pago) >= "%s" AND DATE(cuota_fe_pago) < "%s"', $sucursal_id, date('Y-m-01', strtotime($date)), date('Y-m-d', strtotime($date)));
-	error_log($sql);
 	$res = mysql_query($sql) or die(mysql_error());
 	$row = mysql_fetch_array($res);
 	$total_cuotas = $row[0];
@@ -57,6 +56,11 @@
 		$res = mysql_query($sql) or die(mysql_error());
 		$row = mysql_fetch_array($res);
 		$output['caja_diaria_apertura'] = $row[0];
+	}
+	if (empty($output['caja_diaria_numero'])) {
+		$sql = sprintf('SELECT COALESCE(MAX(caja_diaria_numero)+1, 1) FROM caja_diaria WHERE sucursal_id = %s', $sucursal_id);
+		$res = mysql_query($sql) or die(mysql_error());
+		list($output['caja_diaria_numero']) = mysql_fetch_array($res);
 	}
 	
 	echo json_encode($output);

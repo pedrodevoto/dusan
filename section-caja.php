@@ -139,13 +139,18 @@
 						if (data == 'Session expired') {
 							sessionExpire('main');
 						} else {
-							$('#frmCajaDiaria').each(function() {
-								this.reset();
-							});
-							populateFormCajaDiaria($('#sucursal_id1').val(), $('#fecha1').val());
-							populateDiv_CajaEgresos($('#sucursal_id1').val(), $('#fecha1').val());
-							populateDiv_CajaIngresos($('#sucursal_id1').val(), $('#fecha1').val());
-							populateDiv_CajaIngresosSistema($('#sucursal_id1').val(), $('#fecha1').val());
+							if (data.toLowerCase().indexOf("error") != -1) {
+								alert($.trim(data));
+							}
+							else {
+								$('#frmCajaDiaria').each(function() {
+									this.reset();
+								});
+								populateFormCajaDiaria($('#sucursal_id1').val(), $('#fecha1').val());
+								populateDiv_CajaEgresos($('#sucursal_id1').val(), $('#fecha1').val());
+								populateDiv_CajaIngresos($('#sucursal_id1').val(), $('#fecha1').val());
+								populateDiv_CajaIngresosSistema($('#sucursal_id1').val(), $('#fecha1').val());
+							}
 						}
 						$('#btnCajaDiaria').button('option', 'disabled', false);
 					});
@@ -267,10 +272,13 @@
 					</div>
 					<div style="float:left;width:25%">
 						<p>
+							<label>Número de caja:</label><input type="text" name="box-caja_diaria_numero" id="box-caja_diaria_numero" style="width:50px" />
+						</p>
+						<p>
 							Observaciones del día
 						</p>
 						<p>
-							<textarea name="box-caja_diaria_observaciones" id="box-caja_diaria_observaciones" rows="5" style="width:240px"></textarea>
+							<textarea name="box-caja_diaria_observaciones" id="box-caja_diaria_observaciones" rows="4" style="width:240px"></textarea>
 						</p>
 					</div>
 					<div style="float:left;width:25%">

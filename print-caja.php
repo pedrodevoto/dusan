@@ -19,13 +19,13 @@ $ingresos = mysql_query($sql) or die(mysql_error());
 $sql = sprintf('SELECT caja_egreso_detalle as detalle, caja_egreso_valor as importe from caja_egresos where sucursal_id = %s and date(caja_egreso_fecha) = %s', GetSQLValueString($_GET['sucursal_id'], "int"), GetSQLValueString($_GET['fecha'], "date"));
 $egresos = mysql_query($sql) or die(mysql_error());
 
-$sql = sprintf('SELECT caja_diaria_apertura, caja_diaria_cierre from caja_diaria WHERE sucursal_id = %s AND caja_diaria_fecha = %s', GetSQLValueString($_GET['sucursal_id'], "int"), GetSQLValueString($_GET['fecha'], "date"));
+$sql = sprintf('SELECT caja_diaria_apertura, caja_diaria_cierre, caja_diaria_numero from caja_diaria WHERE sucursal_id = %s AND caja_diaria_fecha = %s', GetSQLValueString($_GET['sucursal_id'], "int"), GetSQLValueString($_GET['fecha'], "date"));
 $res = mysql_query($sql);
 $row = mysql_fetch_array($res);
 if (!$row) {
 	die('Debe guardar la caja antes de exportarla');
 }
-list($apertura, $cierre) = $row;
+list($apertura, $cierre, $caja_diaria_numero) = $row;
 
 // arrastre
 $sql = sprintf('SELECT SUM(cuota_monto) FROM cuota JOIN poliza USING (poliza_id) WHERE cuota_no_efc = 0 AND sucursal_id = %s AND DATE(cuota_fe_pago) >= "%s" AND DATE(cuota_fe_pago) < "%s"', GetSQLValueString($_GET['sucursal_id'], "int"), date('Y-m-01', strtotime($_GET['fecha'])), date('Y-m-d', strtotime($_GET['fecha'])));
@@ -85,6 +85,8 @@ $arrastre_anterior = round((float)$total_cuotas + (float)$total_ingresos - (floa
 		<b>PLANILLA DE CAJA</b>
 	</div>
 	<div style="float:left;width:33.33%;text-align:right">
+		<b>N de caja: <?=$caja_diaria_numero?></b>
+		-
 		<b style="font-size:12px"><?=date('d/m/Y', strtotime($_GET['fecha']))?></b>
 	</div>
 	<div style="width:100%;">
