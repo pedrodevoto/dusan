@@ -91,9 +91,11 @@ foreach ($medios_pago as $medio_pago) {
 		left join localidad using (localidad_id)
 		join automotor using (poliza_id)
 		left join automotor_marca using (automotor_marca_id)
+		left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1)
 		where date_format(cuota_periodo, '%%Y-%%m') between '%s-%s' and '%s-%s' and %s
-		group by poliza_id
+		group by poliza.poliza_id
 		having sum(if(cuota_estado_id=1,1,0))>0
+		and count(endoso_id) = 0
 		%s
 		order by max(cuota_vencimiento) asc", 
 		$year_0, sprintf("%02s", $month_0), $year, sprintf("%02s", $month), 
