@@ -118,24 +118,24 @@ foreach ($medios_pago as $medio_pago) {
 	$res = mysql_query($sql) or die(mysql_error());
 	
 	while($row = mysql_fetch_array($res)) {
-		$ws->SetCellValue("A$i", (string)$row[0]);
-		$ws->SetCellValue("B$i", (string)$row[1]);
-		$ws->SetCellValue("C$i", (string)$row[2]);
-		$ws->SetCellValue("D$i", (string)$row[3]);
-		$ws->SetCellValue("E$i", (string)$row[4]);
-		$ws->SetCellValue("F$i", (string)$row[5]);
+		$ws->SetCellValueExplicit("A$i", (string)$row[0], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("B$i", (string)$row[1], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("C$i", (string)$row[2], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("D$i", (string)$row[3], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("E$i", (string)$row[4], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("F$i", (string)$row[5], PHPExcel_Cell_DataType::TYPE_STRING);
 		$val = explode(',', $row[6]);
 		foreach($val as $v) {
 			list($m,$w) = explode(':', trim($v));
 			if (intval($m)==intval($month_0)) 
-				$ws->SetCellValue("G$i", (string)$w);
+				$ws->SetCellValueExplicit("G$i", (string)$w, PHPExcel_Cell_DataType::TYPE_STRING);
 			if (intval($m)==intval($month_1)) 
-				$ws->SetCellValue("H$i", (string)$w);
+				$ws->SetCellValueExplicit("H$i", (string)$w, PHPExcel_Cell_DataType::TYPE_STRING);
 			if (intval($m)==intval($month)) 
-				$ws->SetCellValue("I$i", (string)$w);
+				$ws->SetCellValueExplicit("I$i", (string)$w, PHPExcel_Cell_DataType::TYPE_STRING);
 		}
-		$ws->SetCellValue("J$i", (string)$row[7]);
-		$ws->SetCellValue("K$i", (string)$row[8]);
+		$ws->SetCellValueExplicit("J$i", (string)$row[7], PHPExcel_Cell_DataType::TYPE_STRING);
+		$ws->SetCellValueExplicit("K$i", (string)$row[8], PHPExcel_Cell_DataType::TYPE_STRING);
 		
 		$i++;
 	}
@@ -153,6 +153,19 @@ $ws->getColumnDimension('H')->setWidth(7);
 $ws->getColumnDimension('I')->setWidth(7);
 $ws->getColumnDimension('J')->setWidth(24);
 $ws->getColumnDimension('K')->setWidth(53);
+
+$hr = $ws->getHighestRow();
+$ws->getStyle("A1:A".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("B1:B".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("C1:C".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("D1:D".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$ws->getStyle("E1:E".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("F1:F".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("G1:G".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$ws->getStyle("H1:H".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$ws->getStyle("I1:I".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$ws->getStyle("J1:J".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+$ws->getStyle("K1:K".$hr)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
 
 $ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 // $ws->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
