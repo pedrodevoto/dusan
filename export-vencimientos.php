@@ -109,7 +109,7 @@ foreach ($medios_pago as $medio_pago) {
 		and count(endoso_id) = 0
 		%s
 		order by max(cuota_vencimiento) asc", 
-		GetSQLValueString($_GET['sucursal_id']),
+		GetSQLValueString($_GET['sucursal_id'], 'int'),
 		$year_0, sprintf("%02s", $month_0), $year, sprintf("%02s", $month), 
 		$medio_pago[0],
 		(isset($_GET['vencimientos_anteriores'])?'':"and date_format(max(cuota_vencimiento),'%Y-%m') = '".$year."-".sprintf("%02s", $month)."'")
