@@ -56,6 +56,16 @@ $medios_pago = array(
 		isset($_GET['cuponera'])
 	), 
 	array(
+		'poliza_medio_pago IN ("Tarjeta de Crédito", "Tarjeta de Credito / CBU - 1 Cuota", "1 Pago Tarjeta de Credito / CBU", "6 Cuotas Pago Tarj/CBU") and poliza_cobranza_domicilio=0', 
+		'Tarjeta de crédito', 
+		isset($_GET['tarjeta'])
+	),
+	array(
+		'poliza_medio_pago IN ("Débito Bancario") and poliza_cobranza_domicilio=0', 
+		'Débito bancario', 
+		isset($_GET['debito'])
+	),
+	array(
 		'poliza_cobranza_domicilio=1', 
 		'Cobranza a domicilio',
 		isset($_GET['domicilio'])
@@ -92,12 +102,14 @@ foreach ($medios_pago as $medio_pago) {
 		join automotor using (poliza_id)
 		left join automotor_marca using (automotor_marca_id)
 		left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1)
-		where date_format(cuota_periodo, '%%Y-%%m') between '%s-%s' and '%s-%s' and %s
+		where sucursal_id = %s 
+		and date_format(cuota_periodo, '%%Y-%%m') between '%s-%s' and '%s-%s' and %s
 		group by poliza.poliza_id
 		having sum(if(cuota_estado_id=1,1,0))>0
 		and count(endoso_id) = 0
 		%s
 		order by max(cuota_vencimiento) asc", 
+		GetSQLValueString($_GET['sucursal_id']),
 		$year_0, sprintf("%02s", $month_0), $year, sprintf("%02s", $month), 
 		$medio_pago[0],
 		(isset($_GET['vencimientos_anteriores'])?'':"and date_format(max(cuota_vencimiento),'%Y-%m') = '".$year."-".sprintf("%02s", $month)."'")

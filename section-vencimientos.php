@@ -15,6 +15,10 @@
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
 				
+				$.when(populateListSuc('sucursal_id', 'main')).then(function(){
+					$('#sucursal_id').val(2);
+				});
+				
 				initDatePickersDaily('box-date', false, null);
 				$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 				
@@ -90,11 +94,20 @@
 									<option value="12">Diciembre</option>
 								</select>
                             </td>
-                            <td width="75%">
+							<td width="15%">
+                                <label for="sucursal_nombre">Sucursal</label>                                
+                                <select name="sucursal_id" id="sucursal_id">
+								</select>
+							</td>
+                            <td width="70%">
 								<label for="directo">Directo</label>
 								<input type="checkbox" name="directo" id="directo" checked />
 								<label for="cuponera">Cuponera</label>
 								<input type="checkbox" name="cuponera" id="cuponera" checked />
+								<label for="tarjeta">TC</label>
+								<input type="checkbox" name="tarjeta" id="tarjeta" checked />
+								<label for="debito">DC</label>
+								<input type="checkbox" name="debito" id="debito" checked />
 								<label for="domicilio">Cobranza a domicilio</label>
 								<input type="checkbox" name="domicilio" id="domicilio" checked />	
 								<label for="vencimientos_anteriores">Vencimientos anteriores</label>
