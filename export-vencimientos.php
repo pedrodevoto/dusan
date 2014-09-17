@@ -142,10 +142,17 @@ foreach ($medios_pago as $medio_pago) {
 	$i += 10;
 }
 
-$ws->getColumnDimension('B')->setAutoSize(true);
-$ws->getColumnDimension('F')->setAutoSize(true);
-$ws->getColumnDimension('J')->setAutoSize(true);
-$ws->getColumnDimension('K')->setAutoSize(true);
+$ws->getColumnDimension('A')->setWidth(8.19);
+$ws->getColumnDimension('B')->setWidth(41);
+$ws->getColumnDimension('C')->setWidth(10);
+$ws->getColumnDimension('D')->setWidth(7);
+$ws->getColumnDimension('E')->setWidth(8);
+$ws->getColumnDimension('F')->setWidth(38);
+$ws->getColumnDimension('G')->setWidth(7);
+$ws->getColumnDimension('H')->setWidth(7);
+$ws->getColumnDimension('I')->setWidth(7);
+$ws->getColumnDimension('J')->setWidth(24);
+$ws->getColumnDimension('K')->setWidth(53);
 
 $ws->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 // $ws->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
