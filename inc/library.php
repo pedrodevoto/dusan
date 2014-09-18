@@ -1,12 +1,19 @@
 		<!-- JQuery -->
         <!--<link rel="stylesheet" href="jquery/themes/start/jquery.ui.all.css" />-->
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	
-	    <link rel="stylesheet" href="jquery/ui/jquery-ui.css" />
-	    <link rel="stylesheet" href="jquery/themes/dusan/jquery-ui-1.10.3.custom.css" />
-	    <script type="text/javascript" language="javascript" src="jquery/ui/jquery-ui.min.js"></script>
-
+        <link rel="stylesheet" href="jquery/themes/dusan/jquery-ui-1.10.3.custom.css" />
+        <script type="text/javascript" language="javascript" src="jquery/jquery-1.6.2.min.js"></script>        
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.core.min.js"></script>
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.widget.min.js"></script>
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.button.min.js"></script>                        
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.datepicker.min.js"></script>        
+        <script type="text/javascript" language="javascript" src="jquery/ui/i18n/jquery.ui.datepicker-es.js"></script>
+		<script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.position.min.js"></script>		
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.autocomplete.min.js"></script>                          
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.dialog.min.js"></script>
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.mouse.min.js"></script>        
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.draggable.min.js"></script>
+        <script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.droppable.min.js"></script>
+		<script type="text/javascript" language="javascript" src="jquery/ui/minified/jquery.ui.slider.min.js"></script>
         
 		<!-- Set datepicker defaults -->
 		<script type="text/javascript" language="javascript" src="media/js/datepicker.setdefault.js"></script> 
@@ -61,10 +68,3 @@
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="media/images/favicon.ico" type="image/x-icon">
 		<link rel="icon" href="media/images/favicon.ico" type="image/x-icon">
-		
-		<!-- fullcalendar.io -->
-		<link href='jquery-plugins/fullcalendar/fullcalendar.css' rel='stylesheet' />
-		<link href='jquery-plugins/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-		<script src='jquery-plugins/fullcalendar/lib/moment.min.js'></script>
-		<script src='jquery-plugins/fullcalendar/fullcalendar.js'></script>
-		<script src='jquery-plugins/fullcalendar/lang/es.js'></script>
