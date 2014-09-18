@@ -1171,6 +1171,7 @@ $(document).ready(function () {
 	// Globo flotante de stats
 	$( "#stats" ).dialog({
 		position: [$(document).width()-160],
+		position: { my: "left top", at: "right top+150", of: $('#divContainer') },
 		width: 140,
 		dialogClass: 'fixedpos'
 	});
