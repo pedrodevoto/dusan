@@ -277,8 +277,8 @@ $(document).ready(function () {
 		$("#" + form + " input[type='number']").attr("disabled", disabled);
 		// Enable-disable buttons
 		if (type == 'ui') {
-			$("#" + form + " input[type='button']").button("option", "disabled", disabled);
-			$("#" + form + " input[type='submit']").button("option", "disabled", disabled);
+			$("#" + form + " input[type='button']").button().button("option", "disabled", disabled);
+			$("#" + form + " input[type='submit']").button().button("option", "disabled", disabled);
 		} else {
 			$("#" + form + " input[type='button']").attr("disabled", disabled);
 			$("#" + form + " input[type='submit']").attr("disabled", disabled);
