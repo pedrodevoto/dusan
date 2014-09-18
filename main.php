@@ -24,22 +24,10 @@
 			contentHeight: 110,
 			editable: false,
 			eventLimit: true,
-			events: [
+			eventSources: [
 				{
-					id: 999,
-					title: 'Vence XXXXX',
-					start: '2014-09-16T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-09-16T20:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-09-19T16:00:00'
-				},
+					url: 'get-json-vencimientos.php'
+				}
 			]
 		})
 
