@@ -1170,7 +1170,6 @@ $(document).ready(function () {
 	// Use this space for dialog related functions
 	// Globo flotante de stats
 	$( "#stats" ).dialog({
-		position: [$(document).width()-160],
 		position: { my: "left top", at: "right top+150", of: $('#divContainer') },
 		width: 140,
 		dialogClass: 'fixedpos'
