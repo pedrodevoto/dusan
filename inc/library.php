@@ -1,11 +1,11 @@
 		<!-- JQuery -->
         <!--<link rel="stylesheet" href="jquery/themes/start/jquery.ui.all.css" />-->
-		<script src="//code.jquery.com/jquery-1.11.0.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="jquery/jquery-1.11.1.min.js"></script>
+		<script src="jquery/jquery-migrate-1.2.1.min.js"></script>
 	
 	    <link rel="stylesheet" href="jquery/ui/jquery-ui.css" />
 	    <link rel="stylesheet" href="jquery/themes/dusan/jquery-ui-1.10.3.custom.css" />
-	    <script type="text/javascript" language="javascript" src="jquery/ui/jquery-ui.min.js"></script>
+	    <script type="text/javascript" language="javascript" src="jquery/ui/jquery-ui-1.10.4.custom.min.js"></script>
 
         
 		<!-- Set datepicker defaults -->
