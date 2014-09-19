@@ -27,6 +27,10 @@
 				{
 					url: 'get-json-vencimientos.php',
 					className: 'vencimientos'
+				},
+				{
+					url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
+					className: 'gcal-event'
 				}
 			],
 			eventClick: function(event, jsEvent, view) {
