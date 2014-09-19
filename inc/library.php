@@ -67,4 +67,5 @@
 		<link href='jquery-plugins/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
 		<script src='jquery-plugins/fullcalendar/lib/moment.min.js'></script>
 		<script src='jquery-plugins/fullcalendar/fullcalendar.js'></script>
+		<script src='jquery-plugins/fullcalendar/gcal.js'></script>
 		<script src='jquery-plugins/fullcalendar/lang/es.js'></script>
