@@ -2133,7 +2133,7 @@ $(document).ready(function () {
 			addBienesDeUsoItem();
 		})
 	}
-
+	
 	addTvAudVidItem = function (cantidad, producto, marca, serial, valor) {
 		var j = 0;
 		$('#tv_aud_vid p').each(function (i, e) {
@@ -3621,6 +3621,28 @@ $(document).ready(function () {
 			}
 		});
 		return dfd.promise();
+	}
+
+	populateDialog_Vencimientos = function(date) {
+		$.ajax({
+			url: "get-json-vencimientos.php?date="+date,
+			dataType: 'json',
+			success: function (j) {
+				var output = '';
+				output += '<table class="tblBox">';
+				$.each(j, function (key, object) {
+					output += '<tr>';
+					output += '<td>'+object.cliente_nombre+'</td>';
+					output += '<td>PZA '+object.poliza_numero+'</td>';
+					output += '<td>'+object.patente+'</td>';
+					output += '<td>'+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
+					output += '<td>$'+object.cuota_monto+'</td>';
+					output += '</tr>';
+				});
+				output += '</table>';
+				$('#eventdialog').html(output);
+			}
+		});
 	}
 	
 	/* Insert via form functions */

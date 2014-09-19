@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>JARVIS - Main</title>
+    <title>JARVIS - Calendario</title>
 	
 	<?php require_once('inc/library.php'); ?>
 	
@@ -35,27 +35,12 @@
 			eventClick: function(event, jsEvent, view) {
 				$('#eventdialog').html('Cargando...');
 				if ($(this).hasClass('vencimientos')) {
-					$.ajax({
-						url: "get-json-vencimientos.php?date="+event.id,
-						dataType: 'json',
-						success: function (j) {
-							var output = '';
-							output += '<table class="tblBox">';
-							$.each(j, function (key, object) {
-								output += '<tr>';
-								output += '<td>PZA '+object.poliza_numero+'</td>';
-								output += '<td>Cuota '+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
-								output += '<td>$'+object.cuota_monto+'</td>';
-								output += '</tr>';
-							});
-							output += '</table>';
-							$('#eventdialog').html(output);
-						}
-					});
+					populateDialog_Vencimientos(event.id);
 					date = moment(event.id, 'YYYY-MM-DD');
 					$("#eventdialog").dialog({
 						position: { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
-						title: 'Venimientos el '+date.format('DD/MM/YY')
+						title: 'Venimientos el '+date.format('DD/MM/YY'),
+						width: 500
 					}).dialog("open");
 				}
 			}
