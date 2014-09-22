@@ -115,6 +115,11 @@
 					"position": { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
 					title: "Evento el "+date.format('DD/MM/YY')
 				}).dialog("open");
+			},
+			eventRender: function(event, element, view) {
+				if (event.description) {
+					element.prop('title', event.description);
+				}
 			}
 		})
 	});
