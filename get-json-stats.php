@@ -23,7 +23,7 @@
 				'tc' => $row2['tc'],
 				'cup' => $row2['cup'],
 			);
-		$sql = 'SELECT COUNT(p.poliza_id) AS total FROM poliza p LEFT JOIN (endoso e, endoso_tipo et) ON (p.poliza_id = e.poliza_id AND e.endoso_tipo_id = et.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE poliza_estado_id IN(3,4,7) AND endoso_id IS NULL';
+		$sql = 'SELECT COUNT(p.poliza_id) AS total FROM poliza p LEFT JOIN (endoso e, endoso_tipo et) ON (p.poliza_id = e.poliza_id AND e.endoso_tipo_id = et.endoso_tipo_id AND endoso_tipo_grupo_id = 1) WHERE sucursal_id = 2 AND poliza_estado_id IN(3,4,7) AND endoso_id IS NULL';
 		$res2 = mysql_query($sql, $connection) or die(mysql_error());
 		$row2 = mysql_fetch_assoc($res2);
 		$output['total'] = $row2['total'];
