@@ -112,6 +112,19 @@ $(document).ready(function () {
 	$.colorbox.settings.overlayClose = false;
 	$.colorbox.settings.fixed = true;
 
+	$.fn.hasAnyClass = function() {
+	    var classes = arguments[0].split(" ");
+	    for (var i = 0; i < classes.length; i++) {
+	        if (this.hasClass(classes[i])) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	String.prototype.capitalize = function() {
+	    return this.charAt(0).toUpperCase() + this.slice(1);
+	}
+
 	/* List functions */
 	sortListAlpha = function (field) {
 		$("select#" + field).html($("select#" + field + " option").sort(function (a, b) {
@@ -3623,9 +3636,9 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
-	populateDialog_Vencimientos = function(date) {
+	populateDialog_Calendar = function(type, date) {
 		$.ajax({
-			url: "get-json-vencimientos.php?date="+date,
+			url: "get-json-"+type+".php?date="+date,
 			dataType: 'json',
 			success: function (j) {
 				var output = '';
@@ -3635,8 +3648,10 @@ $(document).ready(function () {
 					output += '<td>'+object.cliente_nombre+'</td>';
 					output += '<td>PZA '+object.poliza_numero+'</td>';
 					output += '<td>'+object.patente+'</td>';
-					output += '<td>'+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
-					output += '<td>$'+object.cuota_monto+'</td>';
+					if (type=='vencimientos') {
+						output += '<td>'+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
+						output += '<td>$'+object.cuota_monto+'</td>';
+					}
 					output += '</tr>';
 				});
 				output += '</table>';

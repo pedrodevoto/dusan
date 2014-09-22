@@ -29,7 +29,12 @@
 			eventSources: [
 				{
 					url: 'get-json-vencimientos.php',
-					className: 'vencimientos'
+					className: 'vencimiento',
+					color: '#cd0a0a'
+				},
+				{
+					url: 'get-json-renovaciones.php',
+					className: 'renovacion'
 				},
 				{
 					url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
@@ -38,12 +43,13 @@
 			],
 			eventClick: function(event, jsEvent, view) {
 				$('#eventdialog').html('Cargando...');
-				if ($(this).hasClass('vencimientos')) {
-					populateDialog_Vencimientos(event.id);
-					date = moment(event.id, 'YYYY-MM-DD');
+				if ($(this).hasAnyClass('vencimiento renovacion')) {
+					date = event.start;
+					type = event.id;
+					populateDialog_Calendar(type, date.format("YYYY-MM-DD"));
 					$("#eventdialog").dialog({
 						position: { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
-						title: 'Venimientos el '+date.format('DD/MM/YY'),
+						title: type.capitalize()+' el '+date.format('DD/MM/YY'),
 						width: 500
 					}).dialog("open");
 				}
