@@ -57,6 +57,8 @@ $(document).ready(function () {
 		return ret;
 	}
 	
+	$(document).tooltip();
+	
 	/* Custom validations */
 	$.validator.addMethod("dateAR", function (value, element) {
 		return value == '' || value.match(/^\d\d\/\d\d\/\d\d(\d\d)?$/);
