@@ -30,7 +30,7 @@
 						event.description = $('#box-evento_descripcion').val().toUpperCase();
 						$('#calendar').fullCalendar('updateEvent', event);
 					}
-					else if(data===parseInt(data)) {
+					else if(data==parseInt(data)) {
 						// add
 						var event = {
 							id: parseInt(data),
