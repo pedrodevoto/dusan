@@ -25,6 +25,8 @@
 				else {
 					if ($('#box-evento_id').val()) {
 						// update
+						$('#neweventdialog').dialog('close');
+						// TODO fix event update
 						var event = $('#calendar').fullCalendar('clientEvents', $('#box-evento_id').val());
 						event.title = $('#box-evento_titulo').val().toUpperCase();
 						event.description = $('#box-evento_descripcion').val().toUpperCase();
