@@ -216,6 +216,123 @@ $(document).ready(function () {
 			})
 		})
 	}
+	initCalendar = function(defaultView, contentHeight) {
+	    $( "#eventdialog, #neweventdialog" ).dialog({
+	      autoOpen: false,
+	    });
+		$('#btnEvent').button().click(function(event) {
+			$.post('process-evento.php', $('#frmEvent').serializeArray(), function (data) {
+				// Show message if error ocurred
+				if (data.toLowerCase().indexOf("error") != -1) {
+					alert($.trim(data));
+				}
+				else {
+					if ($('#box-evento_id').val()) {
+						// update
+						$('#neweventdialog').dialog('close');
+						// TODO fix event update
+						var event = $('#calendar').fullCalendar('clientEvents', $('#box-evento_id').val());
+						event.title = $('#box-evento_titulo').val().toUpperCase();
+						event.description = $('#box-evento_descripcion').val().toUpperCase();
+						$('#calendar').fullCalendar('updateEvent', event);
+					}
+					else if(data==parseInt(data)) {
+						// add
+						var event = {
+							id: parseInt(data),
+							start: $('#box-evento_fecha').val(),
+							title: $('#box-evento_titulo').val().toUpperCase(),
+							description: $('#box-evento_descripcion').val().toUpperCase(),
+							className: 'evento'
+						};
+						$('#calendar').fullCalendar('addEventSource', [event]);
+					}
+					$('#frmEvent').each(function () {
+						this.reset();
+					});
+					$('#neweventdialog').dialog('close');
+				}
+			});
+			event.preventDefault();
+		});
+		$('#calendar').fullCalendar({
+			header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: ''
+			},
+			defaultView: defaultView,
+			contentHeight: contentHeight,
+			editable: false,
+			eventLimit: true,
+			eventSources: [
+				{
+					url: 'get-json-vencimientos.php',
+					className: 'vencimiento',
+					color: '#cd0a0a',
+				},
+				{
+					url: 'get-json-renovaciones.php',
+					className: 'renovacion',
+				},
+				{
+					url: 'get-json-eventos.php',
+					className: 'evento',
+				},
+				{
+					url: 'get-json-cumpleanos.php',
+					className: 'cumpleano',
+					color: '#3c763d',
+				},
+				{
+					url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
+					className: 'gcal-event'
+				}
+			],
+			eventClick: function(event, jsEvent, view) {
+				date = event.start;
+				if ($(this).hasAnyClass('vencimiento renovacion cumpleano')) {
+					$('#eventdialog').html('Cargando...');
+					type = event.id;
+					var prefix = event.titlePrefix;
+					populateDialog_Calendar(type, date.format("YYYY-MM-DD"));
+					$("#eventdialog").dialog({
+						position: { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
+						title: prefix+' el '+date.format('DD/MM/YY'),
+						width: 500
+					}).dialog("open");
+				}
+				if ($(this).hasClass('evento')) {
+					$('#frmEvent').each(function () {
+						this.reset();
+					});
+					$('#box-evento_id').val(event.id);
+					$('#box-evento_fecha').val(date.format('YYYY-MM-DD'));
+					$('#box-evento_titulo').val(event.title);
+					$('#box-evento_descripcion').val(event.description);
+					$("#neweventdialog").dialog({
+						"position": { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
+						title: "Evento el "+date.format('DD/MM/YY')
+					}).dialog("open");
+				}
+			},
+			dayClick: function(date, jsEvent, view) {
+				$('#frmEvent').each(function () {
+					this.reset();
+				});
+				$('#box-evento_fecha').val(date.format('YYYY-MM-DD'));
+				$("#neweventdialog").dialog({
+					"position": { my: "left top", at: "left top", of: $(jsEvent.srcElement)},
+					title: "Evento el "+date.format('DD/MM/YY')
+				}).dialog("open");
+			},
+			eventRender: function(event, element, view) {
+				if (event.description) {
+					element.prop('title', event.description);
+				}
+			}
+		})
+	}
 
 	/* Filter functions */
 	disableFilters = function (disabled) {
@@ -3648,12 +3765,22 @@ $(document).ready(function () {
 				$.each(j, function (key, object) {
 					output += '<tr>';
 					output += '<td>'+object.cliente_nombre+'</td>';
-					output += '<td>PZA '+object.poliza_numero+'</td>';
-					output += '<td>'+object.patente+'</td>';
-					if (type=='vencimientos') {
-						output += '<td>'+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
-						output += '<td>$'+object.cuota_monto+'</td>';
+					switch(type) {
+					case 'vencimientos':
+					case 'renovaciones':
+						output += '<td>PZA '+object.poliza_numero+'</td>';
+						output += '<td>'+object.patente+'</td>';
+						if (type=='vencimientos') {
+							output += '<td>'+object.cuota_nro+'/'+object.poliza_cant_cuotas+'</td>';
+							output += '<td>$'+object.cuota_monto+'</td>';
+						}
+						break;
+					case 'cumpleanos':
+						output += '<td>'+object.cliente_nacimiento+'</td>';
+						output += '<td>'+object.telefonos+'</td>';
+						break;
 					}
+						
 					output += '</tr>';
 				});
 				output += '</table>';

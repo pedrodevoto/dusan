@@ -21,7 +21,7 @@
 		$sql = sprintf('SELECT poliza_validez_hasta, count(poliza.poliza_id) from poliza left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1) where endoso_id is null and poliza_validez_hasta between %s and date(%s)-interval 1 day and poliza_estado_id in(3,4) group by poliza_validez_hasta', GetSQLValueString($_GET['start'], 'date'), GetSQLValueString($_GET['end'], 'date'));
 		$res = mysql_query($sql, $connection) or die(mysql_die());
 		while ($row = mysql_fetch_array($res)) {
-			$output[] = array('title'=>sprintf('Renovaciones (%s)', $row[1]), 'start'=>$row[0], 'id'=>'renovaciones');
+ 			$output[] = array('title'=>sprintf('Renovaciones (%s)', $row[1]), 'start'=>$row[0], 'id'=>'renovaciones', 'titlePrefix'=>'Renovaciones');
 		}
 	}
 	echo json_encode($output);
