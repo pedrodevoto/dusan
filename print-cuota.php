@@ -51,7 +51,7 @@
 	$cuota_id = intval($_GET['id']);
 	
 	// Recordset: Main
-	$query_Recordset1 = sprintf("SELECT *, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre FROM cuota JOIN (poliza, subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (cuota.poliza_id=poliza.poliza_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN contacto ON poliza.cliente_id=contacto.cliente_id AND contacto_default=1 LEFT JOIN localidad ON localidad.localidad_id = contacto.localidad_id JOIN sucursal on poliza.sucursal_id = sucursal.sucursal_id
+	$query_Recordset1 = sprintf("SELECT *, IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as cliente_nombre FROM cuota JOIN (poliza, subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro) ON (cuota.poliza_id=poliza.poliza_id AND poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id) LEFT JOIN contacto ON poliza.cliente_id=contacto.cliente_id AND contacto_default=1 LEFT JOIN localidad ON localidad.localidad_id = contacto.localidad_id JOIN sucursal on poliza.sucursal_id = sucursal.sucursal_id LEFT JOIN cliente_cf ON cliente_cf.cliente_cf_id = cliente.cliente_cf_id
 									WHERE cuota_recibo IS NOT NULL AND cuota_estado_id=2 AND cuota.cuota_id=%s GROUP BY cuota.cuota_id",
 									$cuota_id);
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
@@ -134,7 +134,7 @@
 			$txt2 = array(
 						array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
+						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
 						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
@@ -211,7 +211,7 @@
 			$txt2 = array(
 						array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
+						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
 						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
@@ -257,11 +257,24 @@
 		$txt2 = array(
 					array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 					array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-					array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf']),
+					array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
 					array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
 					array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
 					array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
 				);						
+		// Text 3
+		$txt3 = array(
+					array('maxwidth' => 96, 'text' => "Asegurados: ".$asegurados['cantidad']),
+					array('maxwidth' => 47, 'text' => "Suma asegurada: $".formatNumber($asegurados['suma_asegurada'], 2)),
+					array('maxwidth' => 47, 'text' => "Gastos médicos: $".formatNumber($asegurados['gastos_medicos'], 2)),
+		);																			
+	
+		// Text 4
+		$txt4 = array(
+					array('maxwidth' => 47, 'text' => "Clausulas de No Repeticion: ".$clausulas['cantidad']),
+					array('maxwidth' => 47, 'text' => " "),
+					array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
+		);			
 			break;
 		default:
 			// ---------------------------------- UNDEFINED ---------------------------------- //		
