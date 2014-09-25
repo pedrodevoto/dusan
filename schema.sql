@@ -255,6 +255,17 @@ CREATE TABLE `automotor_micrograbado_foto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `automotor_modelo`;
+CREATE TABLE `automotor_modelo` (
+  `automotor_modelo_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_marca_id` int(11) NOT NULL,
+  `automotor_modelo_nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_modelo_id`),
+  KEY `automotor_marca_id` (`automotor_marca_id`),
+  CONSTRAINT `automotor_modelo_ibfk_1` FOREIGN KEY (`automotor_marca_id`) REFERENCES `automotor_marca` (`automotor_marca_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `automotor_tipo`;
 CREATE TABLE `automotor_tipo` (
   `automotor_tipo_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -274,6 +285,28 @@ CREATE TABLE `automotor_tipo_carroceria` (
   KEY `automotor_carroceria_id` (`automotor_carroceria_id`),
   CONSTRAINT `automotor_tipo_carroceria_ibfk_1` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`) ON DELETE CASCADE,
   CONSTRAINT `automotor_tipo_carroceria_ibfk_2` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_version`;
+CREATE TABLE `automotor_version` (
+  `automotor_version_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_modelo_id` int(11) NOT NULL,
+  `automotor_version_nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`automotor_version_id`),
+  KEY `automotor_modelo_id` (`automotor_modelo_id`),
+  CONSTRAINT `automotor_version_ibfk_1` FOREIGN KEY (`automotor_modelo_id`) REFERENCES `automotor_modelo` (`automotor_modelo_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+DROP TABLE IF EXISTS `automotor_version_ano`;
+CREATE TABLE `automotor_version_ano` (
+  `automotor_version_ano_id` int(11) NOT NULL AUTO_INCREMENT,
+  `automotor_version_id` int(11) NOT NULL,
+  `automotor_ano` int(11) NOT NULL,
+  PRIMARY KEY (`automotor_version_ano_id`),
+  KEY `automotor_version_id` (`automotor_version_id`),
+  CONSTRAINT `automotor_version_ano_ibfk_1` FOREIGN KEY (`automotor_version_id`) REFERENCES `automotor_version` (`automotor_version_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1309,4 +1342,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-09-22 15:45:13
+-- 2014-09-25 16:00:18

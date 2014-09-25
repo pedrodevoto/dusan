@@ -69,6 +69,7 @@
                         <li><a href="section-pro_list.php">Productores</a></li>
 						<li><a href="section-org_list.php">Organizadores</a></li>
 						<li><a href="section-suc_list.php">Sucursales</a></li>
+						<li><a href="section-autos_modelos_list.php">Modelos de autos</a></li>
                     </ul>
                 </li>  
                 <? } ?>                  

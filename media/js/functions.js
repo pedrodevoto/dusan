@@ -1272,6 +1272,58 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
+	populateListAutoMarca = function(field, context) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-auto_marca.php",
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateListAutoModelo = function(field, context, marca_id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-auto_modelo.php?marca_id="+marca_id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
 	
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id, table) {
@@ -2011,6 +2063,78 @@ $(document).ready(function () {
 				}
 				calculateCajaDiaria();
 				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxAutoMarca = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_auto_marca.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxAutoModelo = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_auto_modelo.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxAutoVersion = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-fich_auto_version.php?id=" + id,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					// Session expired
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					// Record not found
+					$.colorbox.close();
+				} else {
+					var years = getYears(1950, 1).reverse();
+					var options = '';
+					$.each(years, function(i,e) {
+						options += '<option value="' + e + '">' + e + '</option>';
+					});
+					$('#box-automotor_anos').html(options);
+					// Populate Form
+					populateFormGeneric(j, "box");
+					// Resolve
+					dfd.resolve();
+				}
 			}
 		});
 		return dfd.promise();
@@ -4193,6 +4317,72 @@ $(document).ready(function () {
 			}
 		});
 	}
+	insertFormAutoMarca = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-auto_marca.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
+			}
+		});
+	}
+	insertFormAutoModelo = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-auto_modelo.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
+			}
+		});
+	}
+	insertFormAutoVersion = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("insert-auto_version.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Clear form
+					$('#frmBox').each(function () {
+						this.reset();
+					});
+				});
+			}
+		});
+	}
 
 	/* Update via form functions */
 	updateFormUsuario = function () {
@@ -4589,6 +4779,66 @@ $(document).ready(function () {
 				} else {
 					showBoxConf(data, true, 'always', 3000, function () {});
 				}
+			}
+		});
+	}
+	updateFormAutoMarca = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-auto_marca.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxAutoMarca($('#box-automotor_marca_id').val());
+				});
+			}
+		});
+	}
+	updateFormAutoModelo = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-auto_modelo.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxAutoModelo($('#box-automotor_modelo_id').val());
+				});
+			}
+		});
+	}
+	updateFormAutoVersion = function() {
+		// Disable button
+		$('#btnBox').button("option", "disabled", true);
+		// Post
+		$.post("update-auto_version.php", $("#frmBox").serialize(), function (data) {
+			if (data == 'Session expired') {
+				sessionExpire('box');
+			} else {
+				// Table standing redraw
+				if (typeof oTable != 'undefined') {
+					oTable.fnStandingRedraw();
+				}
+				// Show message
+				showBoxConf(data, false, 'always', 3000, function () {
+					// Repopulate form
+					populateFormBoxAutoVersion($('#box-automotor_version_id').val());
+				});
 			}
 		});
 	}
@@ -8093,6 +8343,272 @@ $(document).ready(function () {
 						populateDiv_Archivos('siniestro_denuncia_policial', id, 'DenunciaPolicial');
 					}
 				});
+			}
+		});
+	}
+	openBoxAltaAutomotorMarca = function() {
+		$.colorbox({
+			title: 'Marca',
+			href: 'box-auto_marca_alta.php',
+			width: '700px',
+			height: '450px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Validate form
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						"box-automotor_marca_nombre": {
+							required: true
+						}
+					}
+				});
+
+				// Button action
+				$("#btnBox").click(function () {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							insertFormAutoMarca();
+						}
+					};
+				});
+
+				// Enable form
+				formDisable('frmBox', 'ui', false);
+			}
+		});
+	}
+	openBoxModAutoMarca = function(id) {
+		$.colorbox({
+			title: 'Marca',
+			href: 'box-auto_marca_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxAutoMarca(id)).then(function () {
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-automotor_marca_nombre": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormAutoMarca();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+				});
+
+			}
+		});
+	}
+	openBoxAltaAutomotorModelo = function() {
+		$.colorbox({
+			title: 'Modelo',
+			href: 'box-auto_modelo_alta.php',
+			width: '700px',
+			height: '450px',
+			onComplete: function () {
+				
+				populateListAutoMarca('box-automotor_marca_id', 'box');
+				
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Validate form
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						"box-automotor_marca_id": {
+							required: true
+						},
+						"box-automotor_modelo_nombre": {
+							required: true
+						}
+					}
+				});
+
+				// Button action
+				$("#frmBox").submit(function (event) {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							insertFormAutoModelo();
+						}
+					};
+					event.preventDefault();
+				});
+
+				// Enable form
+				formDisable('frmBox', 'ui', false);
+			}
+		});
+	}
+	openBoxModAutoModelo = function(id) {
+		$.colorbox({
+			title: 'Modelo',
+			href: 'box-auto_modelo_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxAutoModelo(id)).then(function () {
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-automotor_modelo_nombre": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormAutoModelo();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+				});
+
+			}
+		});
+	}
+	openBoxAltaAutomotorVersion = function() {
+		$.colorbox({
+			title: 'Versión',
+			href: 'box-auto_version_alta.php',
+			width: '700px',
+			height: '450px',
+			onComplete: function () {
+				
+				populateListAutoMarca('box-automotor_marca_id', 'box');
+				
+				$('#box-automotor_marca_id').change(function() {
+					populateListAutoModelo('box-automotor_modelo_id', 'box', $(this).val());
+				});
+				
+				var years = getYears(1950, 1).reverse();
+				var options = '';
+				$.each(years, function(i,e) {
+					options += '<option value="' + e + '">' + e + '</option>';
+				});
+				$('#box-automotor_anos').html(options);
+				
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Validate form
+				var validateForm = $("#frmBox").validate({
+					rules: {
+						"box-automotor_marca_id": {
+							required: true
+						},
+						"box-automotor_modelo_id": {
+							required: true
+						},
+						"box-automotor_version_nombre": {
+							required: true
+						},
+						"box-automotor_anos[]": {
+							required: true
+						}
+					}
+				});
+
+				// Button action
+				$("#frmBox").submit(function (event) {
+					if (validateForm.form()) {
+						if (confirm('Está seguro que desea crear el registro?')) {
+							insertFormAutoVersion();
+						}
+					};
+					event.preventDefault();
+				});
+
+				// Enable form
+				formDisable('frmBox', 'ui', false);
+			}
+		});
+	}
+	openBoxModAutoVersion = function(id) {
+		$.colorbox({
+			title: 'Versión',
+			href: 'box-auto_version_mod.php',
+			width: '700px',
+			height: '500px',
+			onComplete: function () {
+
+				// Initialize buttons
+				$("#btnBox").button();
+
+				// Disable form
+				formDisable('frmBox', 'ui', true);
+
+				// Populate form, then initialize
+				$.when(populateFormBoxAutoVersion(id)).then(function () {
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-automotor_version_nombre": {
+								required: true
+							}
+						}
+					});
+
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							if (confirm('Está seguro que desea modificar el registro?')) {
+								updateFormAutoVersion();
+							}
+						};
+					});
+
+					// Enable form
+					formDisable('frmBox', 'ui', false);
+				});
+
 			}
 		});
 	}
