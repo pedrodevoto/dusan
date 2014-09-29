@@ -610,7 +610,7 @@ CREATE TABLE `cuota` (
   `cuota_estado_id` int(11) NOT NULL,
   `cuota_fe_pago` datetime DEFAULT NULL,
   `cuota_fe_anulada` datetime DEFAULT NULL,
-  `cuota_recibo` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cuota_recibo` int(11) DEFAULT NULL,
   `cuota_pfc` tinyint(3) unsigned NOT NULL,
   `cuota_nro_factura` int(11) unsigned DEFAULT NULL,
   `cuota_no_efc` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -1342,4 +1342,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-09-29 13:40:30
+-- 2014-09-29 14:17:16
