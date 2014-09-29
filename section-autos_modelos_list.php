@@ -53,9 +53,7 @@
 						$('#btnNuevaVersion').show();
 						break;
 					}
-					var newsource = sourceURL+'?action=view&mostrar='+mostrar;
-					oTable.fnSettings().sAjaxSource = newsource;
-					oTable.fnDraw();
+					$('#btnFiltro').click();
 				});
 				
 				// Filter: Assign listening functions to input-text for Submit
@@ -119,7 +117,11 @@
 								f = 'openBoxModAutoVersion('+oObj.aData[0]+');';
 								break;
 							}
-							return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="'+f+'"><span class="ui-icon ui-icon-pencil"></span></li></ul>'; 
+							var output = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+							output += '<li title="Modificar" onclick="'+f+'"><span class="ui-icon ui-icon-pencil"></span></li>';
+							output += '<li title="Eliminar" onclick="deleteViaLink(\'auto_marca\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							output += '</ul>';
+							return output;
 						}}
 					],	
 					"aaSorting": [[1,'asc']],					
