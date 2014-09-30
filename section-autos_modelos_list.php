@@ -181,12 +181,12 @@
                         <tr>                   
                             <td width="25%">
 								<label for="marca_id">Marca</label>
-								<select style="height:10px" name="marca_id" id="marca_id">
+								<select name="marca_id" id="marca_id">
 								</select>
                             </td>
                             <td width="25%">
 								<label for="modelo_id">Modelo</label>
-								<select style="height:10px" name="modelo_id" id="modelo_id">
+								<select name="modelo_id" id="modelo_id">
 								</select>
                             </td>
                             <td width="50%">
