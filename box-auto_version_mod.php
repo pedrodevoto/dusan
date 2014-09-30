@@ -23,7 +23,7 @@
             </p>
 			<p>
 				<label for="box-automotor_anos">Años *</label>
-				<select multiple="multiple" name="box-automotor_anos[]" id="box-automotor_anos" class="ui-widget-content" style="width:220px">
+				<select multiple="multiple" name="box-automotor_anos[]" id="box-automotor_anos" class="ui-widget-content" style="width:400px;height:200px">
 					
 				</select>
 			</p>
