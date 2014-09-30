@@ -233,6 +233,7 @@
 			
 			break;
 		case 'integral_comercio':
+		case 'incendio_edificio':
 		// General variables
 		$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 		$percent_serv = 0.13045;			
