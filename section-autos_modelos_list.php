@@ -107,19 +107,19 @@
 						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { 
 							var f = '';
 							switch (oObj.aData[1]) {
-							case 'marcas':
+							case 'marca':
 								f = 'openBoxModAutoMarca('+oObj.aData[0]+');';
 								break;
-							case 'modelos':
+							case 'modelo':
 								f = 'openBoxModAutoModelo('+oObj.aData[0]+');';
 								break;
-							case 'versiones':
+							case 'version':
 								f = 'openBoxModAutoVersion('+oObj.aData[0]+');';
 								break;
 							}
 							var output = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							output += '<li title="Modificar" onclick="'+f+'"><span class="ui-icon ui-icon-pencil"></span></li>';
-							output += '<li title="Eliminar" onclick="deleteViaLink(\'auto_marca\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							output += '<li title="Eliminar" onclick="deleteViaLink(\'auto_'+oObj.aData[1]+'\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
 							output += '</ul>';
 							return output;
 						}}

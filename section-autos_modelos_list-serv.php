@@ -14,13 +14,13 @@
 	switch ($_GET['mostrar']) {
 		case 'marcas':
 		default:
-			$query_Recordset1_fields = " automotor_marca_id as id, 'marcas' as tipo_registro, automotor_marca_nombre as nombre";
+			$query_Recordset1_fields = " automotor_marca_id as id, 'marca' as tipo_registro, automotor_marca_nombre as nombre";
 			$sIndexColumn = "automotor_marca_id";
 			$query_Recordset1_tables = " FROM automotor_marca";
 			$query_Recordset1_where = " WHERE 1";
 		break;
 		case 'modelos':
-			$query_Recordset1_fields = " automotor_modelo_id as id, 'modelos' as tipo_registro, automotor_modelo_nombre as nombre";
+			$query_Recordset1_fields = " automotor_modelo_id as id, 'modelo' as tipo_registro, automotor_modelo_nombre as nombre";
 			$sIndexColumn = "automotor_modelo_id";
 			$query_Recordset1_tables = " FROM automotor_modelo";
 			// Filter by: automotor_marca_id
@@ -32,7 +32,7 @@
 			}
 			break;
 		case 'versiones':
-			$query_Recordset1_fields = " automotor_version_id as id, 'versiones' as tipo_registro, automotor_version_nombre as nombre";
+			$query_Recordset1_fields = " automotor_version_id as id, 'version' as tipo_registro, automotor_version_nombre as nombre";
 			$sIndexColumn = "automotor_version_id";
 			$query_Recordset1_tables = " FROM automotor_version";
 			if(!empty($_GET['modelo_id'])){	
