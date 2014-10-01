@@ -1280,9 +1280,6 @@ $(document).ready(function () {
 			success: function (j) {
 				if (j.error == 'expired') {
 					sessionExpire(context);
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
 				} else {
 					var options = '';
 					$.each(j, function (key, value) {
@@ -1306,9 +1303,29 @@ $(document).ready(function () {
 			success: function (j) {
 				if (j.error == 'expired') {
 					sessionExpire(context);
-				} else if (j.empty == true) {
-					// Record not found
-					$.colorbox.close();
+				} else {
+					var options = '';
+					$.each(j, function (key, value) {
+						options += '<option value="' + key + '">' + value + '</option>';
+					});
+					$('#' + field).html(options);
+					appendListItem(field, '', 'Seleccione');
+					// Select first item
+					selectFirstItem(field);
+					dfd.resolve();
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateListAutoVersion = function(field, context, modelo_id, ano) {
+		var dfd = new $.Deferred();
+		$.ajax({
+			url: "get-json-auto_version.php?modelo_id="+modelo_id+"&ano="+ano,
+			dataType: 'json',
+			success: function (j) {
+				if (j.error == 'expired') {
+					sessionExpire(context);
 				} else {
 					var options = '';
 					$.each(j, function (key, value) {
@@ -1822,7 +1839,7 @@ $(document).ready(function () {
 					if (typeof (polDetInit) == "function") {
 						polDetInit();
 					}
-					populatePolizaDet(j.subtipo_poliza, id);
+					populatePolizaDet(j, id);
 					// Resolve
 					dfd.resolve();
 				}
@@ -2140,11 +2157,19 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	
-	populatePolizaDet = function (subtipo_poliza, id) {
+	populatePolizaDet = function (j, id) {
+		var subtipo_poliza = j.subtipo_poliza;
 		switch (subtipo_poliza) {
 		case 'automotor':
 
 			populateSectionAutomotorAccesorios(id);
+			$.when(
+				populateListAutoModelo(j.automotor_marca_id),
+				populateListAutoVersion(j.automotor_modelo_id)
+			).then(function() {
+				$('#box-automotor_modelo_id').val(j.automotor_modelo_id);
+				$('#box-automotor_version_id').val(j.automotor_version_id);
+			});
 
 			// AJAX file form
 			$("#fileForm").ajaxForm({
@@ -2172,7 +2197,7 @@ $(document).ready(function () {
 					}
 				});
 			});
-			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
+			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento, #box-automotor_marca_id, #box-automotor_modelo_id').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado
