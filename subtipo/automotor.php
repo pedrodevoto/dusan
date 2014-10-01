@@ -200,7 +200,7 @@
 		    </p>
 		    <p>
 		        <label for="box-modelo">Modelo ^ (campo viejo)</label>
-		        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content required" style="width:200px" readonly="readonly" />
+		        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content" style="width:200px" readonly="readonly" />
 		    </p>
 		</div>
 		<div style="clear:both"></div>
