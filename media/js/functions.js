@@ -2164,8 +2164,8 @@ $(document).ready(function () {
 
 			populateSectionAutomotorAccesorios(id);
 			$.when(
-				populateListAutoModelo(j.automotor_marca_id),
-				populateListAutoVersion(j.automotor_modelo_id)
+				populateListAutoModelo('box-automotor_modelo_id', 'box', j.automotor_marca_id),
+				populateListAutoVersion('box-automotor_version_id', 'box', j.automotor_modelo_id, j.ano)
 			).then(function() {
 				$('#box-automotor_modelo_id').val(j.automotor_modelo_id);
 				$('#box-automotor_version_id').val(j.automotor_version_id);
@@ -2197,7 +2197,7 @@ $(document).ready(function () {
 					}
 				});
 			});
-			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento, #box-automotor_marca_id, #box-automotor_modelo_id').change();
+			$('#box-combustible, #box-pedido_instalacion, #box-cert_rodamiento').change();
 			break;
 		case 'accidentes':
 			// Agregar asegurado
