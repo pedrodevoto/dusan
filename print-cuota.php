@@ -95,7 +95,7 @@
 			// ---------------------------------- AUTOMOTOR ---------------------------------- //
 			
 			// Recordset: Automotor
-			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo) ON automotor_tipo.automotor_tipo_id = automotor.automotor_tipo_id AND seguro_cobertura_tipo.seguro_cobertura_tipo_id = automotor.seguro_cobertura_tipo_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+			$query_Recordset2 = sprintf("SELECT * FROM automotor JOIN (automotor_tipo, seguro_cobertura_tipo) ON automotor_tipo.automotor_tipo_id = automotor.automotor_tipo_id AND seguro_cobertura_tipo.seguro_cobertura_tipo_id = automotor.seguro_cobertura_tipo_id LEFT JOIN automotor_marca ON automotor.automotor_marca_id = automotor_marca.automotor_marca_id LEFT JOIN automotor_modelo ON automotor.automotor_modelo_id = automotor_modelo.automotor_modelo_id LEFT JOIN automotor_version ON automotor.automotor_version_id = automotor_version.automotor_version_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 			$Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);					
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -108,7 +108,14 @@
 			// General variables
 			$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 			$percent_serv = 0.13045;			
-
+			
+			$marca = $row_Recordset2['automotor_marca_nombre'];
+			if (empty($row_Recordset2['automotor_version_nombre'])) {
+				$modelo = (empty($row_Recordset2['automotor_modelo_nombre'])?$row_Recordset2['modelo']:$row_Recordset2['automotor_modelo_nombre']);
+			}
+			else {
+				$modelo = $row_Recordset2['automotor_version_nombre'];
+			}
 
 			// Text 1
 			$contacto_piso = is_null($row_Recordset1['contacto_piso']) ? "" : " P ".$row_Recordset1['contacto_piso'];
@@ -144,7 +151,7 @@
 			$cuota_ssn = $row_Recordset1['cuota_monto'] - ($row_Recordset1['cuota_monto'] * $percent_serv);
 			$cuota_servicios = $row_Recordset1['cuota_monto'] * $percent_serv;
 			$txt3 = array(
-						array('maxwidth' => 96, 'text' => "Vehículo: ".$row_Recordset2['marca']." - ".$row_Recordset2['modelo']),
+						array('maxwidth' => 96, 'text' => "Vehículo: ".$marca." - ".$modelo),
 						array('maxwidth' => 47, 'text' => "Tipo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 						array('maxwidth' => 47, 'text' => "Uso: ".$row_Recordset2['uso']),
 						array('maxwidth' => 47, 'text' => "SSN: ".formatNumber($cuota_ssn)." Servicios: ".formatNumber($cuota_servicios))
