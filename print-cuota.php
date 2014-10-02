@@ -160,7 +160,7 @@
 			// Text 4
 			$txt4 = array(
 						array('maxwidth' => 0, 'text' => ""),
-						array('maxwidth' => 47, 'text' => "Año: ".formatNumber($row_Recordset2['ano'],0)." Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1']),
+						array('maxwidth' => 47, 'text' => "Año: ".$row_Recordset2['ano']." Patente: ".($row_Recordset2['automotor_carroceria_id']==17?'101':'').$row_Recordset2['patente_0'].$row_Recordset2['patente_1']),
 						array('maxwidth' => 47, 'text' => "Cobertura: ".$row_Recordset2['seguro_cobertura_tipo_nombre']),
 						array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 			);
