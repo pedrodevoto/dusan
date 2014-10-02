@@ -77,9 +77,6 @@
 	if (isset($_GET['print'])) {
 		$pdf = new PDF('P','mm',array(210,297));
 		$pdf->AddPage();
-		$pdf->setSourceFile('pdf/cuota.pdf');
-		$tplIdx = $pdf->importPage(1);
-		$pdf->useTemplate($tplIdx);
 		$pdf->rotation = 90;
 	}
 	else {
@@ -118,12 +115,13 @@
 			$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
 			$contacto_telefono1 = is_null($row_Recordset1['contacto_telefono1']) ? "-" : $row_Recordset1['contacto_telefono1'];			
 			$txt1 = array(
+						array('maxwidth' => 96, 'text' => "Asegurado: ".strtoupper($row_Recordset1['cliente_nombre'])),
 						array('maxwidth' => 47, 'text' => "Sección: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),
-						array('maxwidth' => 96, 'text' => "Señor: ".strtoupper($row_Recordset1['cliente_nombre'])),
 						array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc']),
 						array('maxwidth' => 47, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].$contacto_piso.$contacto_dpto),
 						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['localidad_nombre']." - ".$row_Recordset1['localidad_cp']),
-						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
+						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1),
+						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre'])
 					);
 
 
@@ -132,12 +130,13 @@
 			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 			$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 			$txt2 = array(
+						array('maxwidth' => 1 , 'text' => ''),
 						array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
-						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
+						array('maxwidth' => 47, 'text' => "Póliza: ".$poliza_numero),
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
-						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
+						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc),
+						array('maxwidth' => 1 , 'text' => '')
 					);						
 			
 			
@@ -196,12 +195,13 @@
 			$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
 			$contacto_telefono1 = is_null($row_Recordset1['contacto_telefono1']) ? "-" : $row_Recordset1['contacto_telefono1'];			
 			$txt1 = array(
+						array('maxwidth' => 96, 'text' => "Asegurado: ".strtoupper($row_Recordset1['cliente_nombre'])),
 						array('maxwidth' => 47, 'text' => "Sección: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),
-						array('maxwidth' => 96, 'text' => "Señor: ".strtoupper($row_Recordset1['cliente_nombre'])),
 						array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc']),
 						array('maxwidth' => 47, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].$contacto_piso.$contacto_dpto),
 						array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['localidad_nombre']." - ".$row_Recordset1['localidad_cp']),
-						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
+						array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1),
+						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre'])
 					);
 
 			// Text 2
@@ -209,12 +209,13 @@
 			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 			$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 			$txt2 = array(
+						array('maxwidth' => 1 , 'text' => ''),
 						array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 						array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-						array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
-						array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
+						array('maxwidth' => 47, 'text' => "Póliza: ".$poliza_numero),
 						array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
-						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
+						array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc),
+						array('maxwidth' => 1 , 'text' => '')
 					);						
 		
 			// Text 3
@@ -243,12 +244,13 @@
 		$contacto_dpto = is_null($row_Recordset1['contacto_dpto']) ? "" : " Dto. ".$row_Recordset1['contacto_dpto'];
 		$contacto_telefono1 = is_null($row_Recordset1['contacto_telefono1']) ? "-" : $row_Recordset1['contacto_telefono1'];			
 		$txt1 = array(
+					array('maxwidth' => 96, 'text' => "Asegurado: ".strtoupper($row_Recordset1['cliente_nombre'])),
 					array('maxwidth' => 47, 'text' => "Sección: ".strtoupper($row_Recordset1['subtipo_poliza_nombre'])),
-					array('maxwidth' => 96, 'text' => "Señor: ".strtoupper($row_Recordset1['cliente_nombre'])),
 					array('maxwidth' => 47, 'text' => $row_Recordset1['cliente_tipo_doc'].": ".$row_Recordset1['cliente_nro_doc']),
 					array('maxwidth' => 47, 'text' => "Domicilio: ".$row_Recordset1['contacto_domicilio']." ".$row_Recordset1['contacto_nro'].$contacto_piso.$contacto_dpto),
 					array('maxwidth' => 47, 'text' => "Localidad: ".$row_Recordset1['localidad_nombre']." - ".$row_Recordset1['localidad_cp']),
-					array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1)
+					array('maxwidth' => 47, 'text' => "Teléfono: ".$contacto_telefono1),
+					array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre'])
 				);
 
 		// Text 2
@@ -256,12 +258,13 @@
 		$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 		$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 		$txt2 = array(
+					array('maxwidth' => 1 , 'text' => ''),
 					array('maxwidth' => 47, 'text' => "Cía.: ".$row_Recordset1['seguro_nombre']),
 					array('maxwidth' => 47, 'text' => "Suc.: ".$row_Recordset1['sucursal_nombre']),
-					array('maxwidth' => 47, 'text' => "Cond. IVA: ".$row_Recordset1['cliente_cf_nombre']),
-					array('maxwidth' => 47, 'text' => "Imputado a Póliza: ".$poliza_numero),
+					array('maxwidth' => 47, 'text' => "Póliza: ".$poliza_numero),
 					array('maxwidth' => 47, 'text' => "Cuota: ".$row_Recordset1['cuota_nro']."/".$cant_cuotas." - ".$cuota_periodo),
-					array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc)
+					array('maxwidth' => 47, 'text' => "Próximo Vto: ".$cuota_prox_venc),
+					array('maxwidth' => 1 , 'text' => '')
 				);						
 		// Text 3
 		$txt3 = array(
@@ -299,13 +302,13 @@
 			$y += 4.5;
 		}
 		
-		$y = 90;
+		$y = 90-4.5;
 		foreach ($txt1 as $array) {
 			$pdf->RotatedText($y, 101, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 		
-		$y = 90;
+		$y = 90-4.5;
 		foreach ($txt2 as $array) {
 			$pdf->RotatedText($y, 50, $array['text'], $array['maxwidth']);
 			$y += 4.5;
@@ -331,13 +334,13 @@
 			$y += 4.5;
 		}
 		
-		$y = 90;
+		$y = 90-4.5;
 		foreach ($txt1 as $array) {
 			$pdf->RotatedText($y, 101 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
 		}
 		
-		$y = 90;
+		$y = 90-4.5;
 		foreach ($txt2 as $array) {
 			$pdf->RotatedText($y, 50 + 111, $array['text'], $array['maxwidth']);
 			$y += 4.5;
