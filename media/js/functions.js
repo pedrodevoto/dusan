@@ -2193,7 +2193,12 @@ $(document).ready(function () {
 					url: 'get-json-patente.php?patente_0='+$("#box-patente_0").val()+'&patente_1='+$("#box-patente_1").val(),
 					dataType: 'json',
 					success: function(j) {
+						if (j != false) {
+							$('#box-nro_motor').val(j.nro_motor);
+							$('#box-nro_chasis').val(j.nro_chasis);
+						}
 						$('#msg_patente').text(j?'Patente existente':'');
+
 					}
 				});
 			});
