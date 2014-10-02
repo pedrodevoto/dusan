@@ -1824,6 +1824,7 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	populateFormBoxPolizaDet = function (id, flota) {
+		flota = flota || 0;
 		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-fich_polizadet.php?id=" + id + '&flota=' + flota,
