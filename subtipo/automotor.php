@@ -149,6 +149,19 @@
 		 populateListAutoVersion('box-automotor_version_id', 'box', $('#box-automotor_modelo_id').val(), $('#box-ano').val());
 	});
 	
+	$("#more_fields_toggle").click(function() {
+		if ($(this).attr('togglestate')=="0") {
+			$(".more_fields").children().show();
+			$(this).attr('togglestate', "1");
+			$(this).text("▲Menos Campos▲")
+		}
+		else {
+			$(".more_fields").children().hide();
+			$(this).attr('togglestate', "0");
+			$(this).text("▼Más Campos▼")
+		}
+	});
+	$(".more_fields").children().hide();
 //--> 
 </script>
 <form name="frmBox" id="frmBox" class="frmBoxMain" style="margin-top:20px" enctype="multipart/form-data">
@@ -593,64 +606,67 @@
 	</p>      
 	<!-- Nota -->
 	<p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>  
-	<div style="float:left;width:50%">
-		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
-		    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
-		    <p>
-		        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
-			</p>
-			<p>
-				<label for="box-equipo_rastreo_pedido_id">Pedir</label>
-				<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
-					<option value="">Ninguno</option>
-					<?php showEquipoRastreoPedido(); ?>
-				</select>
-			<p>
-		        <label for="box-equipo_rastreo_id">Marca</label>
-		        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
-		            <option value="">Ninguno</option>    
-		            <?php showEquipoRastreo(); ?>
-		        </select>
-		    </p>
+	<div style="width:100%;text-align:center;font-size:12px"><span id="more_fields_toggle" style="cursor:pointer" togglestate="0">▼Más Campos▼</span></div>
+	<div class="more_fields">
+		<div style="float:left;width:50%">
+			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">    
+			    <legend class="ui-widget ui-widget-header ui-corner-all">Equipo Rastreo</legend>      
+			    <p>
+			        <label for="box-equipo_rastreo">Email</label><input type="checkbox" name="box-equipo_rastreo" id="box-equipo_rastreo" />
+				</p>
+				<p>
+					<label for="box-equipo_rastreo_pedido_id">Pedir</label>
+					<select name="box-equipo_rastreo_pedido_id" id="box-equipo_rastreo_pedido_id" class="ui-widget-content" style="width:110px">
+						<option value="">Ninguno</option>
+						<?php showEquipoRastreoPedido(); ?>
+					</select>
+				<p>
+			        <label for="box-equipo_rastreo_id">Marca</label>
+			        <select name="box-equipo_rastreo_id" id="box-equipo_rastreo_id" class="ui-widget-content" style="width:110px">    
+			            <option value="">Ninguno</option>    
+			            <?php showEquipoRastreo(); ?>
+			        </select>
+			    </p>
     
-		</fieldset>	
-	</div>
-	<div style="float:left;width:50%">
+			</fieldset>	
+		</div>
+		<div style="float:left;width:50%">
+			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
+			    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
+			    <p>
+					<label for="box-micro_grabado">Micro Grabado</label>
+					<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
+				<p>
+			        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
+			        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:200px" />
+			    </p>
+				<p>
+					<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
+			        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
+				</p>
+			</fieldset>
+		</div>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-		    <legend class="ui-widget ui-widget-header ui-corner-all">Micrograbado</legend>
+			<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de inspección</legend>
 		    <p>
-				<label for="box-micro_grabado">Micro Grabado</label>
-				<input type="checkbox" name="box-micro_grabado" id="box-micro_grabado" value="1" />
-			<p>
-		        <label for="box-cupon_vintrak">Nº Cupón Vintrak</label>
-		        <input type="text" name="box-cupon_vintrak" id="box-cupon_vintrak" maxlength="100" class="ui-widget-content" style="width:200px" />
+		        <label for="box-pedido_instalacion">Pedir inspección?</label>
+		        Sí <input type="checkbox" name="box-pedido_instalacion" id="box-pedido_instalacion" value="1" />
 		    </p>
 			<p>
-				<label for="box-cupon_vintrak_fecha">Fecha de entrega de cupón</label>
-		        <input type="text" name="box-cupon_vintrak_fecha" id="box-cupon_vintrak_fecha" maxlength="10" class="ui-widget-content box-date dateAR" style="width:80px" />
+				<label for="box-pedido_instalacion_direccion">Dirección</label>
+				<input type="text" name="box-pedido_instalacion_direccion" id="box-pedido_instalacion_direccion" class="ui-widget-content" style="width:220px" readonly />
 			</p>
-		</fieldset>
+			<p>
+				<label for="box-pedido_instalacion_horario">Horario de atención</label>
+				<input type="text" name="box-pedido_instalacion_horario" id="box-pedido_instalacion_horario" class="ui-widget-content" style="width:120px" readonly />
+			</p>
+			<p>
+				<label for="box-pedido_instalacion_telefono">Teléfono de contacto</label>
+				<input type="text" name="box-pedido_instalacion_telefono" id="box-pedido_instalacion_telefono" class="ui-widget-content" style="width:120px" readonly />
+			</p>
+			<p>
+				<label for="box-pedido_instalacion_observaciones">Observaciones</label>
+				<textarea name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:220px" maxlength="500" readonly /> </textarea>
+			</p>
+		</fieldset>  
 	</div>
-	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
-		<legend class="ui-widget ui-widget-header ui-corner-all">Pedido de inspección</legend>
-	    <p>
-	        <label for="box-pedido_instalacion">Pedir inspección?</label>
-	        Sí <input type="checkbox" name="box-pedido_instalacion" id="box-pedido_instalacion" value="1" />
-	    </p>
-		<p>
-			<label for="box-pedido_instalacion_direccion">Dirección</label>
-			<input type="text" name="box-pedido_instalacion_direccion" id="box-pedido_instalacion_direccion" class="ui-widget-content" style="width:220px" readonly />
-		</p>
-		<p>
-			<label for="box-pedido_instalacion_horario">Horario de atención</label>
-			<input type="text" name="box-pedido_instalacion_horario" id="box-pedido_instalacion_horario" class="ui-widget-content" style="width:120px" readonly />
-		</p>
-		<p>
-			<label for="box-pedido_instalacion_telefono">Teléfono de contacto</label>
-			<input type="text" name="box-pedido_instalacion_telefono" id="box-pedido_instalacion_telefono" class="ui-widget-content" style="width:120px" readonly />
-		</p>
-		<p>
-			<label for="box-pedido_instalacion_observaciones">Observaciones</label>
-			<textarea name="box-pedido_instalacion_observaciones" id="box-pedido_instalacion_observaciones" class="ui-widget-content" style="width:220px" maxlength="500" readonly /> </textarea>
-		</p>
-	</fieldset>  
