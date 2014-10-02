@@ -199,8 +199,7 @@
 		        <input type="text" name="box-nro_chasis" id="box-nro_chasis" maxlength="255" class="ui-widget-content required" style="width:200px" />
 		    </p>
 		    <p>
-		        <label for="box-modelo">Modelo ^ (campo viejo)</label>
-		        <input type="text" name="box-modelo" id="box-modelo" maxlength="100" class="ui-widget-content" style="width:200px" />
+				<span type="span" id="box-modelo"></span>
 		    </p>
 		</div>
 		<div style="clear:both"></div>
@@ -253,6 +252,10 @@
 		        <label for="box-0km" style="width:30px">0 KM</label>
 		        <input type="checkbox" name="box-0km" id="box-0km" value="1" />
 			</p>
+		    <p>
+		        <label for="box-observaciones">Observaciones</label>
+		        <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
+		    </p>
 		</div>
 		<div style="float:left;width:50%">
 		    <p>
@@ -313,10 +316,6 @@
 		        <label for="box-acreedor_cuit">CUIT Nº</label>
 		        <input type="text" name="box-acreedor_cuit" id="box-acreedor_cuit" maxlength="15" class="ui-widget-content" style="width:220px" readonly="readonly" />
 		    </p>
-		    <p>
-		        <label for="box-observaciones">Observaciones</label>
-		        <textarea name="box-observaciones" id="box-observaciones" rows="3" class="ui-widget-content" style="width:220px"></textarea>
-		    </p>                            
 		</div>
 	</fieldset>
 	<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">  
