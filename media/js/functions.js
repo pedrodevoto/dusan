@@ -6034,9 +6034,9 @@ $(document).ready(function () {
 						populateFormPFC($(this).val());
 						$('#box-poliza_cant_cuotas').attr('readonly', $(this).val()==1 && $('#box-subtipo_poliza_id').val()==6);
 					})
-					$("#box-poliza_vigencia").change(function () {
+					$("#box-poliza_vigencia, #box-poliza_validez_desde").change(function () {
 						var months;
-						switch ($(this).val()) {
+						switch ($("#box-poliza_vigencia").val()) {
 						case 'Anual':
 							months = 12;
 							break;
@@ -6056,8 +6056,8 @@ $(document).ready(function () {
 							months = 1;
 							break;
 						}
-						if ($(this).val() !== '') {
-							if ($(this).val() == 'Otra') {
+						if ($("#box-poliza_vigencia").val() !== '') {
+							if ($("#box-poliza_vigencia").val() == 'Otra') {
 								$("#box-poliza_vigencia_dias").attr('readonly', false);
 								$("#box-poliza_vigencia_dias").focus();
 							} else {
