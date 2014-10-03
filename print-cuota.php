@@ -283,7 +283,7 @@
 		// Text 4
 		$txt4 = array(
 					array('maxwidth' => 47, 'text' => "Clausulas de No Repeticion: ".$clausulas['cantidad']),
-					array('maxwidth' => 47, 'text' => " "),
+					array('maxwidth' => 47, 'text' => "Riesgo: ".$row_Recordset1['subtipo_poliza_nombre']),
 					array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 		);			
 			break;
