@@ -2,6 +2,7 @@
 	// Custom die function
 	function mysql_die() {
 		// echo "Database error.";
+		error_log(mysql_error());
 		echo "Error: ".mysql_error();
 	}
 
