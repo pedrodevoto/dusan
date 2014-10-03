@@ -6493,6 +6493,7 @@ $(document).ready(function () {
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
 					$("#box-seguro_id").change(function () {
+						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 						populateFormFlota($(this).val());
 						if ($(this).val()==4) {
 							// si es allianz, prima obligatoria y mostrar campo de descuento
