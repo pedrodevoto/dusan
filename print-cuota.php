@@ -275,15 +275,15 @@
 				);						
 		// Text 3
 		$txt3 = array(
-					array('maxwidth' => 96, 'text' => "Asegurados: ".$asegurados['cantidad']),
-					array('maxwidth' => 47, 'text' => "Suma asegurada: $".formatNumber($asegurados['suma_asegurada'], 2)),
-					array('maxwidth' => 47, 'text' => "Gastos médicos: $".formatNumber($asegurados['gastos_medicos'], 2)),
+					array('maxwidth' => 47, 'text' => ""),
+					array('maxwidth' => 47, 'text' => "Riesgo: ".$row_Recordset1['subtipo_poliza_nombre']),
+					array('maxwidth' => 47, 'text' => ""),
 		);																			
 	
 		// Text 4
 		$txt4 = array(
-					array('maxwidth' => 47, 'text' => "Clausulas de No Repeticion: ".$clausulas['cantidad']),
-					array('maxwidth' => 47, 'text' => "Riesgo: ".$row_Recordset1['subtipo_poliza_nombre']),
+					array('maxwidth' => 47, 'text' => ""),
+					array('maxwidth' => 47, 'text' => ""),
 					array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 		);			
 			break;
