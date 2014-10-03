@@ -40,7 +40,7 @@
                 <li><a href="#">Pólizas</a>
 					<ul>
                         <li><a href="section-poli_auto_list.php">Automotor</a></li>
-                        <li><a href="section-poli_patrimoniales_list.php">Otros Reisgos</a></li>
+                        <li><a href="section-poli_patrimoniales_list.php">Otros Riesgos</a></li>
                         <li><a href="section-poli_personas_list.php">Personas</a></li>                        
                     </ul>
 				</li>
