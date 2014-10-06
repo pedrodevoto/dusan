@@ -6155,7 +6155,7 @@ $(document).ready(function () {
 								}
 								else {
 									// casos generales automotor
-									if ($('#box-subtipo_poliza_id')==6) {
+									if ($('#box-subtipo_poliza_id').val()==6) {
 										switch ($(this).val()) {
 										case 'Cuponera':
 											cuotas = 5;
@@ -6511,8 +6511,9 @@ $(document).ready(function () {
 
 					// On Change: Selects
 					var loading = '<option value="">Cargando...</option>';
-					$("#box-seguro_id").change(function () {
-						populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
+					$("#box-seguro_id").change(function (a) {
+						a = a || true;
+						if(a)populateListProductorSeguro_Productor($(this).val(), $('#box-sucursal_id').val(), 'box-productor_seguro_id', 'box');
 						populateFormFlota($(this).val());
 						if ($(this).val()==4) {
 							// si es allianz, prima obligatoria y mostrar campo de descuento
@@ -6547,7 +6548,7 @@ $(document).ready(function () {
 							$('.poliza_plan').hide();
 							$('#box-poliza_plan_flag').val(0);
 						}
-					}).change();
+					}).change(false);
 					$("#box-poliza_vigencia").change(function () {
 						var months;
 						switch ($(this).val()) {
@@ -6613,11 +6614,25 @@ $(document).ready(function () {
 					})
 					$("#box-poliza_medio_pago, #box-poliza_cuotas").change(function() {
 						var cuotas = '';
-						if ($('#box-poliza_cuotas').val()=='Total') {
-							cuotas = 1;
+						$('#pfc')[($('#box-poliza_medio_pago').val()=='Directo'?'show':'hide')]().children().eq(0).attr('disabled', ($('#box-poliza_medio_pago').val()=='Directo'?false:true));
+						if ($('#box-subtipo_poliza_id').val()==6) {
+							switch ($('#box-poliza_medio_pago').val()) {
+							case 'Cuponera':
+								cuotas = 5;
+								break;
+							case 'Directo':
+								cuotas = 5;
+								$('#box-sucursal_pfc').attr('checked', true);
+								break;
+							case 'Débito Bancario':
+							case 'Tarjeta de Crédito':
+								cuotas = 6;
+								break;
+							}
 						}
 						else {
-							cuotas = 5;
+							// casos generales otros riesgos/personas
+							
 						}
 						$('#box-poliza_cant_cuotas').val(cuotas);
 						if ($('#box-poliza_medio_pago').val()=='Directo') $('#cuota_monto').show();
