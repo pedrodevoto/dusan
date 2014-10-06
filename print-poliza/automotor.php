@@ -10,6 +10,15 @@ if ($totalRows_Recordset2 === 0) {
 	die("Error: Detalle de Poliza no encontrado.");
 }
 
+$marca = $row_Recordset2['automotor_marca_nombre'];
+if (empty($row_Recordset2['automotor_version_nombre'])) {
+	$modelo = (empty($row_Recordset2['automotor_modelo_nombre'])?$row_Recordset2['modelo']:$row_Recordset2['automotor_modelo_nombre']);
+}
+else {
+	$modelo = $row_Recordset2['automotor_version_nombre'];
+}
+$auto_modelo = "$marca $modelo";
+
 // Compose Shared Texts
 $txt_titular_c1 = array(
 	array('maxwidth' => 130, 'text' => "Nombre/Razón Social: ".$row_Recordset1['cliente_nombre']),
@@ -35,7 +44,7 @@ $txt_poliza = array(
 	array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 	array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 );
-$txt_marca_modelo = $row_Recordset2['automotor_marca_nombre']." - ".strtoupper($row_Recordset2['modelo']);
+$txt_marca_modelo = $auto_modelo;
 $txt_datos_vehiculo_c1 = array(
 	array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 	array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),
@@ -149,7 +158,7 @@ switch(substr($_GET['type'], 0, 2)) {
 		for ($i = 1; $i <= $totalRows_Recordset2; $i++) {
 			if ($i > 1) {
 				$row_Recordset2 = mysql_fetch_assoc($Recordset2);
-				$txt_marca_modelo = $row_Recordset2['automotor_marca_nombre']." - ".strtoupper($row_Recordset2['modelo']);
+				$txt_marca_modelo = $auto_modelo;
 				$txt_datos_vehiculo_c1 = array(
 					array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 					array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),
@@ -388,7 +397,7 @@ switch(substr($_GET['type'], 0, 2)) {
 				array('maxwidth' => 55, 'text' => "VIGENCIA DESDE: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_desde']))),
 				array('maxwidth' => 55, 'text' => "VIGENCIA HASTA: ".strftime("%d/%m/%Y", strtotime($row_Recordset1['poliza_validez_hasta'])))
 			);
-			$txt_marca_modelo = $row_Recordset2['automotor_marca_nombre']." - ".strtoupper($row_Recordset2['modelo']);
+			$txt_marca_modelo = $auto_modelo;
 			$txt_datos_vehiculo_c1 = array(
 				array('maxwidth' => 57, 'text' => "Tipo Vehículo: ".strtoupper($row_Recordset2['automotor_tipo_nombre'])),
 				array('maxwidth' => 57, 'text' => "0KM: ".formatCB($row_Recordset2['0km'],'W')),
