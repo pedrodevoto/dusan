@@ -101,7 +101,14 @@
 	});	
 	$('#box-seguro_cobertura_tipo_id').change(function(){
 		populateCobertura($('#box-seguro_cobertura_tipo_id').val());
-	});
+		var cobertura = $('#box-seguro_cobertura_tipo_id').find(':selected').text();
+		if (cobertura=='A' || cobertura=='A2' || cobertura=='A4' || cobertura=='AE') {
+			$('#box-valor_vehiculo').removeClass('required');
+		}
+		else {
+			$('#box-valor_vehiculo').addClass('required');
+		}
+	}).change();
 	$('#box-automotor_tipo_id').change(function(){
 		$('box-automotor_carroceria_id').html('<option value="">Cargando...</option>');
 		populateCarroceria('box-automotor_carroceria_id', 'box', $(this).val());
