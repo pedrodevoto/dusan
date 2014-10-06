@@ -6154,7 +6154,26 @@ $(document).ready(function () {
 									cuotas = 12;
 								}
 								else {
-									cuotas = 5;
+									// casos generales automotor
+									if ($('#box-subtipo_poliza_id')==6) {
+										switch ($(this).val()) {
+										case 'Cuponera':
+											cuotas = 5;
+											break;
+										case 'Directo':
+											cuotas = 5;
+											$('#box-sucursal_pfc').attr('checked', true);
+											break;
+										case 'Débito Bancario':
+										case 'Tarjeta de Crédito':
+											cuotas = 6;
+											break;
+										}
+									}
+									else {
+										// casos generales otros riesgos/personas
+										
+									}
 								}
 							}
 							$('#box-poliza_cant_cuotas').val(cuotas);
