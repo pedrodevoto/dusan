@@ -824,7 +824,7 @@ $(document).ready(function () {
 			vigencia = [];
 			break;
 		default:
-			vigencia = ['Mensual', 'Bimestral', 'Trimestral', 'Cuatrimestral', 'Semestral', 'Anual'];
+			vigencia = ['Mensual', 'Bimestral', 'Trimestral', 'Cuatrimestral', 'Semestral', 'Anual', 'Otra'];
 			break;
 		}
 		for (var i = 0; i < vigencia.length; i++) {
