@@ -12,7 +12,7 @@
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
 	$query_Recordset1_fields = " productor_seguro.productor_seguro_id as productor_seguro_id, productor_nombre, organizador_nombre, productor_seguro_codigo, GROUP_CONCAT(sucursal_nombre) as sucursal_nombre";
-	$query_Recordset1_tables = " FROM productor_seguro JOIN (productor) ON productor_seguro.productor_id = productor.productor_id LEFT JOIN (organizador, productor_seguro_sucursal, sucursal) ON (organizador.organizador_id = productor_seguro.organizador_id AND productor_seguro.productor_seguro_id = productor_seguro_sucursal.productor_seguro_id AND sucursal.sucursal_id = productor_seguro_sucursal.sucursal_id) ";
+	$query_Recordset1_tables = " FROM productor_seguro JOIN (productor) ON productor_seguro.productor_id = productor.productor_id LEFT JOIN organizador ON organizador.organizador_id = productor_seguro.organizador_id LEFT JOIN (productor_seguro_sucursal, sucursal) ON (productor_seguro.productor_seguro_id = productor_seguro_sucursal.productor_seguro_id AND sucursal.sucursal_id = productor_seguro_sucursal.sucursal_id) ";
 	
 	$query_Recordset1_where = " WHERE seguro_id = ".mysql_real_escape_string($_GET['seguro']);
 	
