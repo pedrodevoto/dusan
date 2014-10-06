@@ -100,11 +100,10 @@
 			<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:10px">
 	            <legend class="ui-widget ui-widget-header ui-corner-all">Precio y Forma de Pago</legend>
 	            <p>
-	                <label for="box-poliza_prima">Prima</label>
-	                <input type="text" name="box-poliza_prima" id="box-poliza_prima" maxlength="11" class="ui-widget-content" style="width:100px" />
-					Premio *
+					<label for="box-poliza_premio">Premio *</label>
 	                <input type="text" name="box-poliza_premio" id="box-poliza_premio" maxlength="11" class="ui-widget-content" style="width:100px" />
-					
+	                Prima
+	                <input type="text" name="box-poliza_prima" id="box-poliza_prima" maxlength="11" class="ui-widget-content" style="width:100px" />
 	            </p>
 	            <p>
 	                <label for="box-poliza_cuotas">Plan de Pago *</label>
