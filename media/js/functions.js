@@ -2197,6 +2197,15 @@ $(document).ready(function () {
 						if (j != false) {
 							$('#box-nro_motor').val(j.nro_motor);
 							$('#box-nro_chasis').val(j.nro_chasis);
+							$('#box-ano').val(j.ano);
+							$('#box-automotor_marca_id').val(j.automotor_marca_id);
+							$.when(populateListAutoModelo('box-automotor_modelo_id', 'box', j.automotor_marca_id)).then(function() {
+								$('#box-automotor_modelo_id').val(j.automotor_modelo_id);
+								$.when(populateListAutoVersion('box-automotor_version_id', 'box', j.automotor_modelo_id, j.ano)).then(function() {
+									$('#box-automotor_version_id').val(j.automotor_version_id);
+								});
+							});
+							$('#box-valor_vehiculo').focus();
 						}
 						$('#msg_patente').text(j?'Patente existente':'');
 
