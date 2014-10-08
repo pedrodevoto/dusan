@@ -5744,6 +5744,9 @@ $(document).ready(function () {
 							"box-cliente_nro_doc": {
 								required: true
 							},
+							"box-cliente_cf_id": {
+								required: function() {return $("#box-cliente_tipo_persona").val()==1}
+							}
 							"box-cliente_cuit_0": {
 								required:  function() {return $("#box-cliente_tipo_persona").val()==2}
 							},
