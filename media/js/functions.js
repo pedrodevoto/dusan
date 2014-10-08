@@ -6774,6 +6774,7 @@ $(document).ready(function () {
 					$('#box-suma_asegurada').val($('#box-valor_total').val());
 					
 					if (fromcreate===true) {
+						$('#box-automotor_tipo_id').val(1);
 						$('#box-automotor_tipo_id').change();
 					}
 
