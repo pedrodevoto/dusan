@@ -7069,7 +7069,8 @@ $(document).ready(function () {
 
 				$("#btnBox").button();
 				$("#btnBoxExport").button();
-
+				$('#enviar_a').buttonset();
+				
 				formDisable('frmBox', 'ui', true);
 
 				populateDiv_Fotos('endoso', id);

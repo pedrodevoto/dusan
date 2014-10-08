@@ -401,7 +401,15 @@ if (isset($_GET['email'])) {
 					$type = 4;
 				break;
 				case 'en':
-					$to = $row_Recordset1['seguro_email_endosos'];
+					switch($_GET['enviar_a']) {
+						case 'comp':
+						default:
+						$to = $row_Recordset1['seguro_email_endosos'];
+						break;
+						case 'clie':
+						$to = $row_Recordset1['cliente_email'];
+						break;
+					}
 					$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row_Recordset1['poliza_numero'].".pdf";
 					$body = FALSE;
 					$type = 5;

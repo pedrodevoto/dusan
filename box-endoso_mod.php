@@ -5,9 +5,9 @@
 <?php
 require_once('Connections/connection.php');
 $endoso_id = intval(mysql_real_escape_string($_GET['id']));
-$sql = 'SELECT seguro_email_endosos FROM endoso JOIN (poliza, productor_seguro, seguro) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id WHERE endoso_id='.$endoso_id;
+$sql = 'SELECT seguro_email_endosos, cliente_email FROM endoso JOIN (poliza, productor_seguro, seguro, cliente) ON poliza.poliza_id = endoso.poliza_id AND poliza.productor_seguro_id = productor_seguro.productor_seguro_id AND productor_seguro.seguro_id = seguro.seguro_id AND cliente.cliente_id = poliza.cliente_id WHERE endoso_id='.$endoso_id;
 $res = mysql_query($sql, $connection) or die(mysql_error());
-list($seguro_email_endoso) = mysql_fetch_array($res);
+list($seguro_email_endoso, $cliente_email) = mysql_fetch_array($res);
 ?>
 <div class="divBoxContainer" style="width:94%">  
 	
@@ -81,8 +81,12 @@ list($seguro_email_endoso) = mysql_fetch_array($res);
     <form name="frmBox1" id="frmBox1" class="frmBoxMain" style="margin-top:20px">
         <fieldset class="ui-widget ui-widget-content ui-corner-all">
             <legend class="ui-widget ui-widget-header ui-corner-all" style="padding:5px">Enviar por email</legend> 
+			<div id="enviar_a">
+				<input type="radio" id="enviar_a1" name="enviar_a" value="comp" mail="<?=$seguro_email_endoso?>" /><label for="enviar_a1">A compañía</label>
+				<input type="radio" id="enviar_a2" name="enviar_a" value="clie" mail="<?=$cliente_email?>" /><label for="enviar_a2">Al cliente</label>
+			</div>
 			<p>
-				Para: <span id="default-email"><?=$seguro_email_endoso?></span>
+				Para: <span id="default-email"></span>
 			</p>
 			<p>
 				<input type="text" name="mail-subject" id="mail-subject" class="ui-widget-content" style="width:50%" value='Pedido de Endoso' placeholder="Asunto" />
@@ -104,4 +108,10 @@ list($seguro_email_endoso) = mysql_fetch_array($res);
         </fieldset>
 	</div>
 </div>
-	
+<script>
+$('#enviar_a1, #enviar_a2').change(function() {
+	if ($(this).prop('checked')) {
+		$('#default-email').text($(this).attr('mail'));
+	}
+});
+$('#enviar_a1').click();
