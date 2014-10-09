@@ -1,6 +1,6 @@
 <?php
 // Recordset: Automotor
-$query_Recordset2 = sprintf("SELECT * FROM automotor LEFT JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, seguro_zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = seguro_zona_riesgo.seguro_zona_riesgo_id LEFT JOIN producto ON producto.producto_id = automotor.producto_id LEFT JOIN automotor_version ON automotor.automotor_version_id = automotor_version.automotor_version_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
+$query_Recordset2 = sprintf("SELECT * FROM automotor LEFT JOIN (automotor_tipo, seguro_cobertura_tipo, automotor_marca, seguro_cobertura_tipo_limite_rc, seguro_zona_riesgo) ON automotor.automotor_tipo_id = automotor_tipo.automotor_tipo_id AND automotor.seguro_cobertura_tipo_id = seguro_cobertura_tipo.seguro_cobertura_tipo_id and automotor.automotor_marca_id = automotor_marca.automotor_marca_id AND seguro_cobertura_tipo_limite_rc.seguro_cobertura_tipo_limite_rc_id = automotor.seguro_cobertura_tipo_limite_rc_id AND automotor.zona_riesgo_id = seguro_zona_riesgo.seguro_zona_riesgo_id LEFT JOIN producto ON producto.producto_id = automotor.producto_id LEFT JOIN automotor_modelo ON automotor.automotor_modelo_id = automotor_modelo.automotor_modelo_id LEFT JOIN automotor_version ON automotor.automotor_version_id = automotor_version.automotor_version_id WHERE automotor.poliza_id=%s", $row_Recordset1['poliza_id']);
 $Recordset2 = mysql_query($query_Recordset2, $connection) or die(mysql_die());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -12,7 +12,12 @@ if ($totalRows_Recordset2 === 0) {
 
 $marca = $row_Recordset2['automotor_marca_nombre'];
 if (empty($row_Recordset2['automotor_version_nombre'])) {
-	$modelo = (empty($row_Recordset2['automotor_modelo_nombre'])?$row_Recordset2['modelo']:$row_Recordset2['automotor_modelo_nombre']);
+	if (empty($row_Recordset2['automotor_modelo_nombre'])) {
+		$modelo = $row_Recordset2['modelo'];
+	}
+	else {
+		$modelo = $row_Recordset2['automotor_modelo_nombre'];
+	}
 }
 else {
 	$modelo = $row_Recordset2['automotor_version_nombre'];
