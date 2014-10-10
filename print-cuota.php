@@ -240,8 +240,7 @@
 			);			
 			
 			break;
-		case 'integral_comercio':
-		case 'incendio_edificio':
+		default:
 		// General variables
 		$prox_cuota = getNextPayment($row_Recordset1['poliza_id'], $row_Recordset1['cuota_id']);
 		$percent_serv = 0.13045;			
@@ -286,10 +285,6 @@
 					array('maxwidth' => 47, 'text' => ""),
 					array('maxwidth' => 47, 'text' => "Total: ".formatNumber($row_Recordset1['cuota_monto']))
 		);			
-			break;
-		default:
-			// ---------------------------------- UNDEFINED ---------------------------------- //		
-			die("Error: Subtipo no habilitado.");
 			break;
 	}
 	if (isset($_GET['print'])) {
