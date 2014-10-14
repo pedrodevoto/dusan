@@ -55,6 +55,7 @@
 				<li><a href="section-clie_list.php">Clientes</a></li>
                 <li><a href="section-caja.php">Caja</a></li>
                 <li><a href="section-calendario.php">Calendario</a></li>
+                <li><a href="section-estadisticas.php">Estadísticas</a></li>
 				<li><a href="#">Administración</a>
 					<ul>
 		               	<li><a href="section-libros_rubricados.php">Libros Rubricados</a></li>

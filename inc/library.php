@@ -69,3 +69,5 @@
 		<script src='jquery-plugins/fullcalendar/fullcalendar.js'></script>
 		<script src='jquery-plugins/fullcalendar/gcal.js'></script>
 		<script src='jquery-plugins/fullcalendar/lang/es.js'></script>
+		
+		<script type="text/javascript" language="javascript" src="media/js/chart.js"></script>                        
