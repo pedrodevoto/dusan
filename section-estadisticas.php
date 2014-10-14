@@ -95,8 +95,8 @@
 					Filtros
 				</div>
 				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart" width="250" height="250"></canvas>
-					<canvas id="pieChart" width="250" height="250"></canvas>
+					<canvas id="barChart" width="230" height="230"></canvas>
+					<canvas id="pieChart" width="200" height="200"></canvas>
 				</div>
 				<div style="clear:both"></div>
 			</div>
@@ -105,8 +105,8 @@
 					Filtros
 				</div>
 				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart2" width="250" height="250"></canvas>
-					<canvas id="pieChart2" width="250" height="250"></canvas>
+					<canvas id="barChart2" width="230" height="230"></canvas>
+					<canvas id="pieChart2" width="200" height="200"></canvas>
 				</div>
 				<div style="clear:both"></div>
 			</div>
@@ -116,8 +116,8 @@
 					Filtros
 				</div>
 				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart3" width="250" height="250"></canvas>
-					<canvas id="pieChart3" width="250" height="250"></canvas>
+					<canvas id="barChart3" width="230" height="230"></canvas>
+					<canvas id="pieChart3" width="200" height="200"></canvas>
 				</div>
 				<div style="clear:both"></div>
 			</div>
@@ -126,8 +126,8 @@
 					Filtros
 				</div>
 				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart4" width="250" height="250"></canvas>
-					<canvas id="pieChart4" width="250" height="250"></canvas>
+					<canvas id="barChart4" width="230" height="230"></canvas>
+					<canvas id="pieChart4" width="200" height="200"></canvas>
 				</div>
 				<div style="clear:both"></div>
 			</div>
