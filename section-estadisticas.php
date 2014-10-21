@@ -31,6 +31,7 @@
 	var pieChart4;
 	
 	$(document).ready(function() {
+		$('#tabs').tabs();
 		populateListSeguro('seguro_id', 'main');
 		
 		$('#estado, #seguro_id').change(function() {
@@ -154,71 +155,87 @@
 	<div id="divContainer">
 		<!-- Include Header -->
 		<?php include('inc/header.php'); ?>
-		<div id="divFilter" class="ui-corner-all">
-            <form id="frmFiltro" name="frmFiltro">
-                <table cellpadding="5" cellspacing="0" border="0" width="100%">
-					<tr>
-						<td width="10%">
-							<select name="estado" id="estado">
-								<option value="vigente">Vigente</option>
-								<option value="historico">Histórico</option>
-							</select>
-						</td>
-						<td width="10%">
-							<select name="seguro_id" id="seguro_id">
-							</select>
-						</td>
-						<td width="80%">
-							
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		<div id="divMain" style="padding-top:5px">
-			<div class="frame ui-corner-all" style="float:left;width:48%">
-				<div style="float:left;width:40%;margin-top:10px">
-					<p><b>Coberturas</b></p>
-				</div>
-				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart" width="230" height="230"></canvas>
-					<canvas id="pieChart" width="200" height="200"></canvas>
-				</div>
-				<div style="clear:both"></div>
+  		<div id="divFilter" class="ui-corner-all">
+              <form id="frmFiltro" name="frmFiltro">
+                  <table cellpadding="5" cellspacing="0" border="0" width="100%">
+  					<tr>
+  						<td width="10%">
+  							<select name="estado" id="estado">
+  								<option value="vigente">Vigente</option>
+  								<option value="historico">Histórico</option>
+  							</select>
+  						</td>
+  						<td width="10%">
+  							<select name="seguro_id" id="seguro_id">
+  							</select>
+  						</td>
+  						<td width="80%">
+						
+  						</td>
+  					</tr>
+  				</table>
+  			</form>
+  		</div>
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">Automotor</a></li>
+				<li><a href="#tabs-2">Clientes</a></li>
+				<li><a href="#tabs-3">General</a></li>
+			</ul>
+			<div id="tabs-1">
+		  		<div id="divMain" style="padding-top:5px">
+		  			<div class="frame ui-corner-all" style="float:left;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<p><b>Coberturas</b></p>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart" width="230" height="230"></canvas>
+		  					<canvas id="pieChart" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div class="frame ui-corner-all" style="float:right;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<b>Marcas</b>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart2" width="230" height="230"></canvas>
+		  					<canvas id="pieChart2" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div style="clear:both;margin-top:20px"></div>
+		  			<div class="frame ui-corner-all" style="float:left;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<b>Castigados</b>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart3" width="230" height="230"></canvas>
+		  					<canvas id="pieChart3" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div class="frame ui-corner-all" style="float:right;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<b>Equipos GNC</b>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart4" width="230" height="230"></canvas>
+		  					<canvas id="pieChart4" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div style="clear:both"></div>
+		  		</div>
 			</div>
-			<div class="frame ui-corner-all" style="float:right;width:48%">
-				<div style="float:left;width:40%;margin-top:10px">
-					<b>Marcas</b>
-				</div>
-				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart2" width="230" height="230"></canvas>
-					<canvas id="pieChart2" width="200" height="200"></canvas>
-				</div>
-				<div style="clear:both"></div>
+			<div id="tabs-2">
+
 			</div>
-			<div style="clear:both;margin-top:20px"></div>
-			<div class="frame ui-corner-all" style="float:left;width:48%">
-				<div style="float:left;width:40%;margin-top:10px">
-					<b>Castigados</b>
-				</div>
-				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart3" width="230" height="230"></canvas>
-					<canvas id="pieChart3" width="200" height="200"></canvas>
-				</div>
-				<div style="clear:both"></div>
+			<div id="tabs-3">
+			  
 			</div>
-			<div class="frame ui-corner-all" style="float:right;width:48%">
-				<div style="float:left;width:40%;margin-top:10px">
-					<b>Equipos GNC</b>
-				</div>
-				<div style="float:left;width:50%;margin:10px">
-					<canvas id="barChart4" width="230" height="230"></canvas>
-					<canvas id="pieChart4" width="200" height="200"></canvas>
-				</div>
-				<div style="clear:both"></div>
-			</div>
-			<div style="clear:both"></div>
 		</div>
 	</div>
+	<?php include('inc/footer.php');?>
 </body>
 </html>
