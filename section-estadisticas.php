@@ -33,8 +33,8 @@
 	$(document).ready(function() {
 		populateListSeguro('seguro_id', 'main');
 		
-		$('#seguro_id').change(function() {
-			$.get('get-json-estadisticas_automotor.php?seguro_id='+$(this).val(), {}, function(data) {
+		$('#estado, #seguro_id').change(function() {
+			$.get('get-json-estadisticas_automotor.php?estado='+$('#estado').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
 				var barData = {
 					labels: data.coberturas.bar.labels,
 					datasets: [
@@ -73,6 +73,44 @@
 
 				pieChart2.destroy();
 				pieChart2 = new Chart(pieCtx2).Pie(data.marcas.pie, {});
+				
+				var barData = {
+					labels: data.castigado.bar.labels,
+					datasets: [
+						{
+							label: 'Castigados',
+							fillColor: "rgba(151,187,205,0.5)",
+							strokeColor: "rgba(151,187,205,0.8)",
+							highlightFill: "rgba(151,187,205,0.75)",
+							highlightStroke: "rgba(151,187,205,1)",
+							data: data.castigado.bar.data
+						}
+					]
+				}
+				barChart3.destroy();
+				barChart3 = new Chart(barCtx3).Bar(barData, {});
+
+				pieChart3.destroy();
+				pieChart3 = new Chart(pieCtx3).Pie(data.castigado.pie, {});
+				
+				var barData = {
+					labels: data.gnc.bar.labels,
+					datasets: [
+						{
+							label: 'GNC',
+							fillColor: "rgba(151,187,205,0.5)",
+							strokeColor: "rgba(151,187,205,0.8)",
+							highlightFill: "rgba(151,187,205,0.75)",
+							highlightStroke: "rgba(151,187,205,1)",
+							data: data.gnc.bar.data
+						}
+					]
+				}
+				barChart4.destroy();
+				barChart4 = new Chart(barCtx4).Bar(barData, {});
+
+				pieChart4.destroy();
+				pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
 				
 			}, 'json');
 		});
@@ -115,12 +153,29 @@
 <body>
 	<div id="divContainer">
 		<!-- Include Header -->
-		<?php include('inc/header.php'); ?>    
-		<p>
-			<select name="seguro_id" id="seguro_id">
-			</select>
-		</p>
-		<div id="divMain">
+		<?php include('inc/header.php'); ?>
+		<div id="divFilter" class="ui-corner-all">
+            <form id="frmFiltro" name="frmFiltro">
+                <table cellpadding="5" cellspacing="0" border="0" width="100%">
+					<tr>
+						<td width="10%">
+							<select name="estado" id="estado">
+								<option value="vigente">Vigente</option>
+								<option value="historico">Histórico</option>
+							</select>
+						</td>
+						<td width="10%">
+							<select name="seguro_id" id="seguro_id">
+							</select>
+						</td>
+						<td width="80%">
+							
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div id="divMain" style="padding-top:5px">
 			<div class="frame ui-corner-all" style="float:left;width:48%">
 				<div style="float:left;width:40%;margin-top:10px">
 					<p><b>Coberturas</b></p>
