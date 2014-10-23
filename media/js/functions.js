@@ -8038,8 +8038,8 @@ $(document).ready(function () {
 					populateFormBoxSiniestro(id)
 				).then(function() {
 
-					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					initDatePickersDaily('box-date', false, null);
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					
 					$('#box-siniestro_id').val(id);
 					
