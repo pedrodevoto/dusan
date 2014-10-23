@@ -77,6 +77,23 @@
 			<legend class="ui-widget ui-widget-header ui-corner-all">Eventos</legend>
 			
 		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Estudio jurídico</legend>
+			<p>
+				<label for="box-enviado_estudio_juridico">Se envió a estudio jurídico?</label>
+				<input type="checkbox" name="box-enviado_estudio_juridico" id="box-enviado_estudio_juridico" />
+				<span style="margin-left:250px">Fecha de envío</span>
+				<input type="text" name="box-fecha_enviado_estudio_juridico" id="box-fecha_enviado_estudio_juridico" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
+			</p>
+			<p>
+				<label for="box-compania_tercero">Compañía del tercero</label>
+				<input type="text" name="box-compania_tercero" id="box-compania_tercero" class="ui-widget-content" />
+				<span style="margin-left:50px">Forma de pago</span>
+				<input type="text" name="box-forma_pago" id="box-forma_pago" class="ui-widget-content" />
+				<span style="margin-left:50px">Cobrado</span>
+				<input type="checkbox" name="box-cobrado" id="box-cobrado" />
+			</p>
+		</fieldset>
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
 			<input type="hidden" name="box-automotor_id" id="box-automotor_id" value="" />

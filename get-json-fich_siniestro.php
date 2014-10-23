@@ -16,7 +16,7 @@
 	}
 	$query_Recordset1 = sprintf("SELECT `key`, `value` FROM siniestros_data WHERE siniestro_id = %s", GetSQLValueString($colname_Recordset1, "int"));	
 	
-	$query_Recordset1 .= sprintf(' AND `key` %s IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id", "automotor_id")', (empty($_GET['limited'])?'NOT':''));
+	$query_Recordset1 .= sprintf(' AND `key` %s IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")', (empty($_GET['limited'])?'NOT':''));
 	
 	// Recordset: Main
 	$Recordset1 = mysql_query($query_Recordset1, $connection) or die(mysql_die());
