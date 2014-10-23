@@ -88,8 +88,8 @@
 			<p>
 				<label for="box-compania_tercero">Compañía del tercero</label>
 				<input type="text" name="box-compania_tercero" id="box-compania_tercero" class="ui-widget-content" />
-				<span style="margin-left:50px">Forma de pago</span>
-				<input type="text" name="box-forma_pago" id="box-forma_pago" class="ui-widget-content" />
+				<span style="margin-left:50px">Fecha de pago</span>
+				<input type="text" name="box-fecha_pago" id="box-fecha" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
 				<span style="margin-left:50px">Cobrado</span>
 				<input type="checkbox" name="box-cobrado" id="box-cobrado" />
 			</p>
