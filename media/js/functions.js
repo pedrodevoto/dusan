@@ -1968,6 +1968,30 @@ $(document).ready(function () {
 	populateFormBoxSiniestro = function(id) {
 		var dfd = new $.Deferred();
 		$.ajax({
+			url: "get-json-fich_siniestro.php?limited=1&id=" + id,
+			dataType: 'json',
+			success: function(j) {
+				if (j.error == 'expired') {
+					sessionExpire('box');
+				} else if (j.empty == true) {
+					
+				} else {
+					$.when(
+						
+					).then(function() {
+						// Populate Form
+						populateFormGeneric(j, "box");
+						// Resolve
+						dfd.resolve();
+					});
+				}
+			}
+		});
+		return dfd.promise();
+	}
+	populateFormBoxSiniestroForm = function(id) {
+		var dfd = new $.Deferred();
+		$.ajax({
 			url: "get-json-fich_siniestro.php?id=" + id,
 			dataType: 'json',
 			success: function (j) {
@@ -4727,44 +4751,47 @@ $(document).ready(function () {
 			}
 		});
 	}
-	updateFormSiniestro = function(id) {
+	updateFormSiniestro = function(id, croquis_flag) {
 		// Disable button
 		$('#btnBox').button("option", "disabled", true);
 		var croquis = '';
-		var t = $('#droppable').offset().top;
-		var b = t + $('#droppable').height();
-		var l = $('#droppable').offset().left;
-		var r = l + $('#droppable').width();
-		$('.croquis-auto').each(function(i,e) {
-			var top = $(e).offset().top;
-			var left = $(e).offset().left;
-			if (top >= t && top <= b && left >= l && left <= r) {
-				croquis += '&box-croquis-'+$(e).prop('id')+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
-			}
-		});
-		$('.croquis-moto').each(function(i,e) {
-			var top = $(e).offset().top;
-			var left = $(e).offset().left;
-			if (top >= t && top <= b && left >= l && left <= r) {
-				croquis += '&box-croquis-moto'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
-			}
-		});
-		$('.croquis-peaton').each(function(i,e) {
-			var top = $(e).offset().top;
-			var left = $(e).offset().left;
-			if (top >= t && top <= b && left >= l && left <= r) {
-				croquis += '&box-croquis-peat'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
-			}
-		});
-		$('.croquis-direccion').each(function(i,e) {
-			var top = $(e).offset().top;
-			var left = $(e).offset().left;
-			if (top >= t && top <= b && left >= l && left <= r) {
-				croquis += '&box-croquis-dire'+i+'='+$(e).attr('direction')+','+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
-			}
-		});
+		if (croquis_flag) {
+			var t = $('#droppable').offset().top;
+			var b = t + $('#droppable').height();
+			var l = $('#droppable').offset().left;
+			var r = l + $('#droppable').width();
+			$('.croquis-auto').each(function(i,e) {
+				var top = $(e).offset().top;
+				var left = $(e).offset().left;
+				if (top >= t && top <= b && left >= l && left <= r) {
+					croquis += '&box-croquis-'+$(e).prop('id')+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+				}
+			});
+			$('.croquis-moto').each(function(i,e) {
+				var top = $(e).offset().top;
+				var left = $(e).offset().left;
+				if (top >= t && top <= b && left >= l && left <= r) {
+					croquis += '&box-croquis-moto'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+				}
+			});
+			$('.croquis-peaton').each(function(i,e) {
+				var top = $(e).offset().top;
+				var left = $(e).offset().left;
+				if (top >= t && top <= b && left >= l && left <= r) {
+					croquis += '&box-croquis-peat'+i+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+				}
+			});
+			$('.croquis-direccion').each(function(i,e) {
+				var top = $(e).offset().top;
+				var left = $(e).offset().left;
+				if (top >= t && top <= b && left >= l && left <= r) {
+					croquis += '&box-croquis-dire'+i+'='+$(e).attr('direction')+','+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+				}
+			});
+		}
+		
 		// Post
-		$.post("update-siniestro.php", $("#frmBox").serialize() + croquis, function (data) {
+		$.post("update-siniestro.php", $("#frmBox").serialize() + croquis + (croquis_flag==false?'&limited=1':''), function (data) {
 			if (data == 'Session expired') {
 				sessionExpire('box');
 			} else {
@@ -4775,7 +4802,7 @@ $(document).ready(function () {
 				// Show message
 				showBoxConf(data, true, 'always', 3000, function () {
 					// Repopulate form
-					openBoxSiniestroCert(id);
+					
 				});
 			}
 		});
@@ -7940,12 +7967,6 @@ $(document).ready(function () {
 						rules: {
 							"box-fecha_denuncia": {
 								required: true
-							},
-							"box-hora_denuncia": {
-								required: true
-							},
-							"box-lugar_denuncia": {
-								required: true
 							}
 						}
 					});
@@ -8005,11 +8026,63 @@ $(document).ready(function () {
 			}
 		});
 	}
-	openBoxModSiniestro = function(id, focuselement) {
-		focuselement = focuselement || undefined;
+	openBoxModSiniestro = function(id) {
 		$.colorbox({
 			title: 'Siniestro',
 			href: 'box-siniestro_mod.php?section=2',
+			width: '900px',
+			height: '100%',
+			onComplete: function() {
+				$("#btnBox").button();
+				$.when(
+					populateFormBoxSiniestro(id)
+				).then(function() {
+
+					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
+					initDatePickersDaily('box-date', false, null);
+					
+					$('#box-siniestro_id').val(id);
+					
+					// Navegación
+					$("#navegacion-siniestros").unbind('click').click(function() {
+						openBoxSiniestros($('#box-automotor_id').val());
+					});
+					$('#navegacion-detalle_siniestro').unbind('click').click(function() {
+						openBoxSiniestroForm(id);
+					});
+					$('#navegacion-cert_siniestro').unbind('click').click(function() {
+						openBoxSiniestroCert(id);
+					});
+					
+					// Validate form
+					var validateForm = $("#frmBox").validate({
+						rules: {
+							"box-fecha_denuncia": {
+								required: true
+							}
+						},
+						errorPlacement: function (error, element) {
+							error.insertAfter(element.parent("p").children().last());
+						}
+					});
+					// Button action
+					$("#btnBox").click(function () {
+						if (validateForm.form()) {
+							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
+							updateFormSiniestro(id, false);
+						}
+					});
+					
+					formDisable('frmBox', 'ui', false);
+				});
+			}
+		});
+	}
+	openBoxSiniestroForm = function(id, focuselement) {
+		focuselement = focuselement || undefined;
+		$.colorbox({
+			title: 'Siniestro',
+			href: 'box-siniestro_form.php?section=3',
 			width: '900px',
 			height: '100%',
 			onComplete: function () {
@@ -8019,7 +8092,7 @@ $(document).ready(function () {
 				formDisable('frmBox', 'ui', true);
 				
 				$.when(
-					populateFormBoxSiniestro(id)
+					populateFormBoxSiniestroForm(id)
 				).then(function () {
 					
 					populateDiv_SiniestroLesionesTerceros(id);
@@ -8059,12 +8132,6 @@ $(document).ready(function () {
 						rules: {
 							"box-fecha_denuncia": {
 								required: true
-							},
-							"box-hora_denuncia": {
-								required: true
-							},
-							"box-lugar_denuncia": {
-								required: true
 							}
 						},
 						errorPlacement: function (error, element) {
@@ -8076,15 +8143,18 @@ $(document).ready(function () {
 						if (validateForm.form()) {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							$.when(renderCroquis()).then(function() {
-								updateFormSiniestro(id);
+								updateFormSiniestro(id, true);
 							});
 						}
 					});
 					// Navegación
-					$("#navegacion-siniestros").click(function() {
+					$("#navegacion-siniestros").unbind('click').click(function() {
 						openBoxSiniestros($('#box-automotor_id').val());
 					});
-					$('#navegacion-cert_siniestro').click(function() {
+					$('#navegacion-datos_siniestro').unbind('click').click(function() {
+						openBoxModSiniestro(id);
+					});
+					$('#navegacion-cert_siniestro').unbind('click').click(function() {
 						openBoxSiniestroCert(id);
 					});
 					
@@ -8308,7 +8378,7 @@ $(document).ready(function () {
 	openBoxSiniestroCert = function(id) {
 		$.colorbox({
 			title: 'Registro',
-			href: 'box-siniestrocert.php?section=3&id=' + id,
+			href: 'box-siniestrocert.php?section=4&id=' + id,
 			width: '750px',
 			height: '100%',
 			onComplete: function () {
@@ -8318,11 +8388,14 @@ $(document).ready(function () {
 				populateDiv_Poliza_Info($('#box-automotor_id').val(), 'automotor');
 
 				// Navegación
-				$("#navegacion-detalle").click(function() {
-					openBoxPolizaDet(id, false);
+				$("#navegacion-siniestros").unbind('click').click(function() {
+					openBoxSiniestros($('#box-automotor_id').val());
 				});
-				$("#navegacion-datos").click(function() {
-					openBoxModPoliza(id);
+				$('#navegacion-datos_siniestro').unbind('click').click(function() {
+					openBoxModSiniestro(id);
+				});
+				$('#navegacion-detalle_siniestro').unbind('click').click(function() {
+					openBoxSiniestroForm(id);
 				});
 				
 				$('#btnFinalizar').button().click(function() {
@@ -8368,7 +8441,7 @@ $(document).ready(function () {
 					openBoxSiniestros($('#box-automotor_id').val());
 				});
 				$('#navegacion-detalle_siniestro').click(function() {
-					openBoxModSiniestro(id);
+					openBoxSiniestroForm(id);
 				});
 				
 				// AJAX Forms

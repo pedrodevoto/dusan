@@ -15,8 +15,9 @@
 		case 'siniestro':
 		$progMenu = array(
 			1=>array('nombre'=>'1. Siniestros de la póliza', 'id'=>'navegacion-siniestros'),
-			2=>array('nombre'=>'2. Detalle del Siniestro', 'id'=>'navegacion-detalle_siniestro'),
-			3=>array('nombre'=>'3. Certificados', 'id'=>'navegacion-cert_siniestro')
+			2=>array('nombre'=>'2. Datos del Siniestro', 'id'=>'navegacion-datos_siniestro'),
+			3=>array('nombre'=>'3. Detalle del Siniestro', 'id'=>'navegacion-detalle_siniestro'),
+			4=>array('nombre'=>'4. Certificados', 'id'=>'navegacion-cert_siniestro')
 		);
 		break;
 		default:

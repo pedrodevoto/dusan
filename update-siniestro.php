@@ -12,8 +12,14 @@
 	if (!empty($_POST["box-siniestro_id"])) {
 		
 		$siniestro_id = mysql_real_escape_string($_POST['box-siniestro_id']);
-		
 		$sql = sprintf('DELETE FROM siniestros_data WHERE siniestro_id = "%s"', $siniestro_id);
+		if (!empty($_POST['limited'])) {
+			
+			$sql .= ' AND `key` IN ("automotor_id", "siniestro_numero", "fecha_compania", "fecha_denuncia", "tipo_siniestro", "pagado", "cerrado")';
+		}
+		else {
+			$sql .= ' AND `key` NOT IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "tipo_siniestro", "pagado", "cerrado")';
+		}
 		mysql_query($sql, $connection) or die(mysql_error());
 				
 		if ($siniestro_id) {

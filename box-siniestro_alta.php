@@ -31,48 +31,51 @@
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Siniestro</legend>  
-			<div style="width:33%;float:left">
-	            <p>
-	                <label for="box-fecha_denuncia">Fecha de denuncia</label>
-	                <input type="text" name="box-fecha_denuncia" id="box-fecha_denuncia" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
-	            </p>
-			</div>
-			<div style="width:28%;float:left">
-	            <p>
-	                <label for="box-hora_denuncia" style="width:initial">Hora</label>
-	                <input type="text" name="box-hora_denuncia" id="box-hora_denuncia" maxlength="5" class="ui-widget-content" style="width:80px" />
-					(HH:MM)
-	            </p>
-			</div>
-			<div style="width:38%;float:left">
-	            <p>
-	                <label for="box-lugar_denuncia" style="width:initial">Lugar</label>
-	                <input type="text" name="box-lugar_denuncia" id="box-lugar_denuncia" class="ui-widget-content" style="width:200px" />
-	            </p>
-			</div>
-			<div style="clear:both"></div>
+            <p>
+                <label for="box-productor_seguro_codigo"><b>Código de productor ^</b></label>
+                <input type="text" name="productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="255" class="ui-widget-content" style="width:50px" readonly />
+            </p>
 			<div style="width:50%;float:left">
 	            <p>
 	                <label for="box-siniestro_numero"><b>N° DE SINIESTRO</b></label>
 	                <input type="text" name="box-siniestro_numero" id="box-siniestro_numero" maxlength="255" class="ui-widget-content" style="width:80px" />
 	            </p>
+				<p>
+					<label for="box-fecha_compania">Fecha de ingreso a la compañía</label>
+					<input type="text" name="box-fecha_compania" id="box-fecha_compania" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
 			</div>
+			
 			<div style="width:50%;float:left">
 	            <p>
-	                <label for="box-productor_seguro_codigo"><b>Código de productor ^</b></label>
-	                <input type="text" name="productor_seguro_codigo" id="box-productor_seguro_codigo" maxlength="255" class="ui-widget-content" style="width:50px" readonly />
+	                <label for="box-fecha_denuncia">Fecha de ingreso de siniestro</label>
+	                <input type="text" name="box-fecha_denuncia" id="box-fecha_denuncia" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
+	            </p>
+	            <p>
+	                <label for="box-fecha_ocurrencia">Fecha de ocurrencia del siniestro</label>
+	                <input type="text" name="box-fecha_ocurrencia" id="box-fecha_ocurrencia" maxlength="10" class="ui-widget-content box-date" style="width:80px" />
 	            </p>
 			</div>
 			<div style="clear:both"></div>
+		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Estado</legend>
 			<p>
 				<label for="box-tipo_siniestro">Tipo de siniestro</label>
 				<select name="box-tipo_siniestro" id="box-tipo_siniestro" class="ui-widget-content">
-					<option value="1">DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)</option>
-					<option value="2">DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)</option>
-					<option value="3">DENUNCIA DE ROBO/DAÑO (CON REPOSICION)</option>
-					<option value="4">DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)</option>
+					<option value="1">SIN RECLAMO A TERCEROS</option>
+					<option value="2">CON RECLAMO A TERCEROS</option>
+					<option value="3">REPOSICION</option>
+					<option value="4">INSPECCIÓN</option>
+					<option value="5">ROBO TOTAL DE UNIDAD</option>
+					<option value="6">INCENDIO TOTAL DE UNIDAD</option>
 				</select>
+				<label for="box-pagado" style="margin-left:40px;width:initial">Pagado</label> <input type="checkbox" name="box-pagado" id="box-pagado" />
+				<label for="box-cerrado" style="margin-left:40px;width:initial">Cerrado</label> <input type="checkbox" name="box-cerrado" id="box-cerrado" />
 			</p>
+		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Eventos</legend>
+			
 		</fieldset>
         <!-- Acciones -->
         <p align="center" style="margin-top:20px">
