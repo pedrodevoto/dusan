@@ -8,6 +8,7 @@
 	
   	<!-- Siniestro -->        
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
+		<span style="text-align:center"><h1>INFORMACIÓN DEL SINIESTRO</h1></span>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
             <legend class="ui-widget ui-widget-header ui-corner-all">Siniestro</legend>  
             <p>
