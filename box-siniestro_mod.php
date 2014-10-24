@@ -96,7 +96,26 @@
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Eventos</legend>
-			
+			<div style="width:50%;float:left">
+				<p>
+					<label for="box-evento_fecha"><b>Fecha: </b></label>
+					<input type="text" name="box-evento_fecha" id="box-evento_fecha" class="ui-widget-content box-date" style="width:80px" maxlength="10" />
+				</p>
+				<p>
+					<label for="box-evento_comentario"><b>Comentarios: </b></label>
+					<textarea name="box-evento_comentario" id="box-evento_comentario" class="ui-widget-content" rows="4" style="width:220px" />
+				</p>
+				<p>
+					<label>&nbsp;</label>
+					<button id="btnEvento">Agregar</button>
+				</p>
+			</div>
+			<div style="width:50%;float:left">
+				<div style="width:100%;height:250px;overflow-y:scroll;overflow-x:hidden" id="siniestro_eventos">
+					
+				</div>
+			</div>
+			<div style="clear:both"></div>
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Estudio jurídico</legend>

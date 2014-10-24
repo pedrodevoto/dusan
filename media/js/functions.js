@@ -3942,7 +3942,37 @@ $(document).ready(function () {
 		});
 		return dfd.promise();
 	}
-
+	populateDiv_SiniestroEventos = function(siniestro_id) {
+		var dfd = new $.Deferred();
+		$.getJSON("get-json-siniestro_eventos.php?siniestro_id="+siniestro_id, {}, function (j) {
+			if (j.error == 'expired') {
+				// Session expired
+				sessionExpire('box');
+			} else {
+				if (j.empty == true) {
+					// Record not found
+				} else {
+					// General variables
+					var result = '';
+					$.each(j, function (i, object) {
+						result += '<div id="divFilter" class="ui-corner-all" style="width:98%">';
+						result += '<p>';
+						result += '<div style="float:left">Fecha: '+object.fecha+'</div>';
+						result += '<div style="float:right;margin-right:5px">Usuario: '+object.usuario+'</div>';
+						result += '<div style="clear:both"></div>';
+						result += '</p>';
+						result += '<p>'+object.comentario+'</p>';
+						result += '</div>';
+					});
+					// Populate DIV
+					$('#siniestro_eventos').html(result);
+				}
+				dfd.resolve();
+			}
+		});
+		return dfd.promise();
+	}
+	
 	populateDialog_Calendar = function(type, date) {
 		$.ajax({
 			url: "get-json-"+type+".php?date="+date,
@@ -8033,11 +8063,12 @@ $(document).ready(function () {
 			width: '900px',
 			height: '100%',
 			onComplete: function() {
-				$("#btnBox").button();
+				$("#btnBox, #btnEvento").button();
 				$.when(
 					populateFormBoxSiniestro(id)
 				).then(function() {
-
+					populateDiv_SiniestroEventos(id);
+					
 					initDatePickersDaily('box-date', false, null);
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
 					
@@ -8071,6 +8102,24 @@ $(document).ready(function () {
 							$('.box-date').datepicker('option', 'dateFormat', 'yy-mm-dd');
 							updateFormSiniestro(id, false);
 						}
+					});
+					
+					// Evento
+					$('#btnEvento').click(function(event){
+						if ($('#box-evento_fecha').val()=='' || $('#box-evento_comentario').val()=='') {
+							alert('Debe ingresar fecha y comentario');
+							return false;
+						}
+						$(this).attr('disabled', true);
+						$('#box-evento_fecha').datepicker('option', 'dateFormat', 'yy-mm-dd');
+						var data = 'siniestro_id=' + $('#box-siniestro_id').val() + '&fecha='+$('#box-evento_fecha').val()+'&comentario='+$('#box-evento_comentario').val();
+						$.post('insert-siniestro_evento.php', data, function(data) {
+							populateDiv_SiniestroEventos($('#box-siniestro_id').val());
+							$('#btnEvento').attr('disabled', false);
+							$('#box-evento_fecha').datepicker('option', 'dateFormat', 'dd/mm/yy');
+							$('#box-evento_fecha, #box-evento_comentario').val('');
+						});
+						event.preventDefault();
 					});
 					
 					formDisable('frmBox', 'ui', false);

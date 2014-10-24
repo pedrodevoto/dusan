@@ -63,7 +63,9 @@ CREATE TABLE `automotor` (
   `automotor_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `poliza_id` int(10) unsigned NOT NULL,
   `automotor_marca_id` int(11) NOT NULL,
-  `modelo` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `automotor_modelo_id` int(11) DEFAULT NULL,
+  `automotor_version_id` int(11) DEFAULT NULL,
+  `modelo` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `castigado` tinyint(1) NOT NULL DEFAULT '0',
   `patente_0` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
   `patente_1` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -151,10 +153,14 @@ CREATE TABLE `automotor` (
   KEY `equipo_rastreo_id` (`equipo_rastreo_id`),
   KEY `equipo_rastreo_pedido_id` (`equipo_rastreo_pedido_id`),
   KEY `poliza_id` (`poliza_id`),
-  CONSTRAINT `automotor_ibfk_6` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  KEY `automotor_modelo_id` (`automotor_modelo_id`),
+  KEY `automotor_version_id` (`automotor_version_id`),
   CONSTRAINT `automotor_ibfk_3` FOREIGN KEY (`automotor_tipo_id`) REFERENCES `automotor_tipo` (`automotor_tipo_id`),
   CONSTRAINT `automotor_ibfk_4` FOREIGN KEY (`automotor_carroceria_id`) REFERENCES `automotor_carroceria` (`automotor_carroceria_id`),
-  CONSTRAINT `automotor_ibfk_5` FOREIGN KEY (`equipo_rastreo_pedido_id`) REFERENCES `equipo_rastreo_pedido` (`equipo_rastreo_pedido_id`)
+  CONSTRAINT `automotor_ibfk_5` FOREIGN KEY (`equipo_rastreo_pedido_id`) REFERENCES `equipo_rastreo_pedido` (`equipo_rastreo_pedido_id`),
+  CONSTRAINT `automotor_ibfk_6` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`poliza_id`) ON DELETE CASCADE,
+  CONSTRAINT `automotor_ibfk_7` FOREIGN KEY (`automotor_modelo_id`) REFERENCES `automotor_modelo` (`automotor_modelo_id`),
+  CONSTRAINT `automotor_ibfk_8` FOREIGN KEY (`automotor_version_id`) REFERENCES `automotor_version` (`automotor_version_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -237,7 +243,8 @@ DROP TABLE IF EXISTS `automotor_marca`;
 CREATE TABLE `automotor_marca` (
   `automotor_marca_id` int(11) NOT NULL AUTO_INCREMENT,
   `automotor_marca_nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`automotor_marca_id`)
+  PRIMARY KEY (`automotor_marca_id`),
+  UNIQUE KEY `automotor_marca_nombre` (`automotor_marca_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1266,6 +1273,22 @@ CREATE TABLE `siniestros_lesiones_terceros_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `siniestro_evento`;
+CREATE TABLE `siniestro_evento` (
+  `siniestro_evento_id` int(11) NOT NULL AUTO_INCREMENT,
+  `siniestro_id` int(11) NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
+  `siniestro_evento_fecha` date NOT NULL,
+  `siniestro_evento_comentario` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`siniestro_evento_id`),
+  KEY `siniestro_evento_fecha` (`siniestro_evento_fecha`),
+  KEY `usuario_id` (`usuario_id`),
+  KEY `siniestro_id` (`siniestro_id`),
+  CONSTRAINT `siniestro_evento_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE NO ACTION,
+  CONSTRAINT `siniestro_evento_ibfk_3` FOREIGN KEY (`siniestro_id`) REFERENCES `siniestros` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `subtipo_poliza`;
 CREATE TABLE `subtipo_poliza` (
   `subtipo_poliza_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1342,4 +1365,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-09-29 14:17:16
+-- 2014-10-24 13:14:27
