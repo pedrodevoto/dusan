@@ -95,6 +95,10 @@
 			</p>
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+			<legend class="ui-widget ui-widget-header ui-corner-all">Denuncia</legend>
+			<button id="btnDetalle">Ir al formulario</button>
+		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Eventos</legend>
 			<div style="width:50%;float:left">
 				<p>

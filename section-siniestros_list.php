@@ -106,7 +106,6 @@
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
 							returnval += '<li title="Datos de siniestro" onclick="openBoxModSiniestro('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
-							returnval += '<li title="Detalle de siniestro" onclick="openBoxSiniestroForm('+oObj.aData[0]+');"><span class="ui-icon ui-icon-document-b"></span></li>';
 							returnval += '<li title="Certificados" onclick="openBoxSiniestroCert('+oObj.aData[0]+');"><span class="ui-icon ui-icon-print"></span></li>';
 							
 							returnval += '<li title="Eliminar" onclick="deleteViaLink(\'siniestro\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';

@@ -8063,7 +8063,7 @@ $(document).ready(function () {
 			width: '900px',
 			height: '100%',
 			onComplete: function() {
-				$("#btnBox, #btnEvento").button();
+				$("#btnBox, #btnEvento, #btnDetalle").button();
 				$.when(
 					populateFormBoxSiniestro(id)
 				).then(function() {
@@ -8077,9 +8077,6 @@ $(document).ready(function () {
 					// Navegación
 					$("#navegacion-siniestros").unbind('click').click(function() {
 						openBoxSiniestros($('#box-automotor_id').val());
-					});
-					$('#navegacion-detalle_siniestro').unbind('click').click(function() {
-						openBoxSiniestroForm(id);
 					});
 					$('#navegacion-cert_siniestro').unbind('click').click(function() {
 						openBoxSiniestroCert(id);
@@ -8122,6 +8119,11 @@ $(document).ready(function () {
 						event.preventDefault();
 					});
 					
+					$('#btnDetalle').click(function(event){
+						openBoxSiniestroForm(id);
+						event.preventDefault();
+					});
+					
 					formDisable('frmBox', 'ui', false);
 				});
 			}
@@ -8131,11 +8133,11 @@ $(document).ready(function () {
 		focuselement = focuselement || undefined;
 		$.colorbox({
 			title: 'Siniestro',
-			href: 'box-siniestro_form.php?section=3',
+			href: 'box-siniestro_form.php',
 			width: '900px',
 			height: '100%',
 			onComplete: function () {
-				$("#btnBox, #btnNuevoDatosTercero, #btnNuevoLesionesTercero").button();
+				$("#btnBox, #btnNuevoDatosTercero, #btnNuevoLesionesTercero, #btnDatos").button();
 				$("#btnBoxExport").button();
 
 				formDisable('frmBox', 'ui', true);
@@ -8196,16 +8198,6 @@ $(document).ready(function () {
 							});
 						}
 					});
-					// Navegación
-					$("#navegacion-siniestros").unbind('click').click(function() {
-						openBoxSiniestros($('#box-automotor_id').val());
-					});
-					$('#navegacion-datos_siniestro').unbind('click').click(function() {
-						openBoxModSiniestro(id);
-					});
-					$('#navegacion-cert_siniestro').unbind('click').click(function() {
-						openBoxSiniestroCert(id);
-					});
 					
 					$("#btnNuevoDatosTercero").click(function(event) {
 						openBoxAltaSiniestroDatosTercero(id);
@@ -8213,6 +8205,11 @@ $(document).ready(function () {
 					});
 					$("#btnNuevoLesionesTercero").click(function(event) {
 						openBoxAltaSiniestroLesionesTercero(id);
+						event.preventDefault();
+					});
+					
+					$('#btnDatos').click(function(event) {
+						openBoxModSiniestro(id);
 						event.preventDefault();
 					});
 					
@@ -8427,7 +8424,7 @@ $(document).ready(function () {
 	openBoxSiniestroCert = function(id) {
 		$.colorbox({
 			title: 'Registro',
-			href: 'box-siniestrocert.php?section=4&id=' + id,
+			href: 'box-siniestrocert.php?section=3&id=' + id,
 			width: '750px',
 			height: '100%',
 			onComplete: function () {
@@ -8442,9 +8439,6 @@ $(document).ready(function () {
 				});
 				$('#navegacion-datos_siniestro').unbind('click').click(function() {
 					openBoxModSiniestro(id);
-				});
-				$('#navegacion-detalle_siniestro').unbind('click').click(function() {
-					openBoxSiniestroForm(id);
 				});
 				
 				$('#btnFinalizar').button().click(function() {

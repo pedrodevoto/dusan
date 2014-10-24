@@ -11,7 +11,6 @@
 ?>
 
 <div class="divBoxContainer" style="width:94%">  
-	<?php $progress_bar = 'siniestro'; require_once('inc/progress.php'); ?>
   	<!-- Siniestro -->        
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
@@ -600,6 +599,7 @@
     <!-- Acciones -->
     <p align="center" style="margin-top:20px">
 		<button name="btnBox" id="btnBox">Guardar</button>
+		<button name="btnDatos" id="btnDatos">Atrás</button>
     </p>
     <!-- Nota -->
     <p align="center" style="margin-top:10px" class="txtBox">* Campo obligatorio | ^ Campo no editable</p>
