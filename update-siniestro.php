@@ -15,7 +15,7 @@
 		$sql = sprintf('DELETE FROM siniestros_data WHERE siniestro_id = "%s"', $siniestro_id);
 		if (!empty($_POST['limited'])) {
 			
-			$sql .= ' AND `key` IN ("automotor_id", "siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")';
+			$sql .= ' AND `key` IN ("automotor_id", "asegurado_registro", "asegurado_registro_venc", "siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")';
 		}
 		else {
 			$sql .= ' AND `key` NOT IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")';
@@ -25,7 +25,7 @@
 		if ($siniestro_id) {
 			$values = array();
 			foreach ($_POST as $k=>$v) {
-				if (!preg_match('/^box-/', $k) or $k=='box-poliza_id' or $k=='box-siniestro_id') {
+				if (!preg_match('/^box-/', $k) or $k=='box-poliza_id' or $k=='box-siniestro_id' or preg_match('/^box-evento/', $k)) {
 					continue;
 				}
 				$key = mysql_real_escape_string(substr($k, 4));

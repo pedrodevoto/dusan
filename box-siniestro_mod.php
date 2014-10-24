@@ -9,21 +9,21 @@
 		<span style="text-align:center"><h1>INFORMACIÓN DEL SINIESTRO</h1></span>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 	        <legend class="ui-widget ui-widget-header ui-corner-all">Información del cliente</legend>
-			<p>
+			<p style="margin-bottom:10px">
 				<label for="box-cliente_nombre"><b>Cliente:</b></label>
 				<span type="span" id="box-cliente_nombre"></span>
 			</p>
-			<p>
+			<p style="margin-bottom:10px">
 				<label for="box-cliente_domicilio"><b>Domicilio:</b></label>
 				<span type="span" id="box-cliente_domicilio"></span>
 				<span style="margin-left:20px"><b>Teléfonos: </b></span>
 				<span type="span" id="box-cliente_telefonos"></span>
 			</p>
-			<p>
-				<label for="box-registro_nro"><b>Registro Nro: </b></label>
-				<span type="span" id="box-cliente_registro_nro"></span>
+			<p style="margin-bottom:10px">
+				<label for="box-asegurado_registro"><b>Registro Nro: </b></label>
+				<input type="text" name="box-asegurado_registro" id="box-asegurado_registro" class="ui-widget-content" style="width:100px" />
 				<span style="margin-left:40px"><b>Vencimiento: </b></span>
-				<span type="span" id="box-cliente_registro_venc"></span>
+				<input type="text" name="box-asegurado_registro_venc" id="box-asegurado_registro_venc" class="ui-widget-content box-date" style="width:80px" />
 			</p>
 		</fieldset>
 	
@@ -42,7 +42,7 @@
 			</div>
 			<div style="width:50%;float:left">
 	            <p style="margin-bottom:10px">
-	                <label style="width:initial"  for="box-productor_seguro_codigo"><b>Código de productor:</b></label>
+	                <label style="width:initial"  for="box-productor_seguro_codigo"><b>Productor:</b></label>
 	                <span type="span" id="box-productor_seguro_codigo" />
 	            </p>
 				<p style="margin-bottom:10px">
