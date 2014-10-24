@@ -11,7 +11,7 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " siniestros.id as id, fecha.value as fecha, poliza_numero, tipo.value as tipo_siniestro, asegurado_nombre.value as nombre, CONCAT_WS('', patente_0.value, patente_1.value) as patente, lugar.value as lugar, siniestro_numero.value as siniestro_numero";
+	$query_Recordset1_fields = " siniestros.id as id, fecha.value as fecha, poliza_numero, asegurado_nombre.value as nombre, tipo.value as tipo_siniestro, CONCAT_WS('', patente_0.value, patente_1.value) as patente, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%Y'), ' al ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%Y')) as poliza_vigencia, siniestro_numero.value as siniestro_numero, IF(estudio_juridico.value is not null, 'Sí', 'No') as estudio_juridico";
 	$query_Recordset1_tables = " FROM siniestros
 		JOIN automotor USING (automotor_id)
 		JOIN poliza USING (poliza_id)
@@ -21,7 +21,8 @@
 		LEFT JOIN siniestros_data fecha ON fecha.siniestro_id = siniestros.id AND fecha.key = 'fecha_denuncia' 
 		LEFT JOIN siniestros_data lugar ON lugar.siniestro_id = siniestros.id AND lugar.key = 'lugar_denuncia' 
 		LEFT JOIN siniestros_data siniestro_numero ON siniestro_numero.siniestro_id = siniestros.id AND siniestro_numero.key = 'siniestro_numero'
-		LEFT JOIN siniestros_data tipo ON tipo.siniestro_id = siniestros.id AND tipo.key = 'tipo_siniestro'";
+		LEFT JOIN siniestros_data tipo ON tipo.siniestro_id = siniestros.id AND tipo.key = 'tipo_siniestro'
+		LEFT JOIN siniestros_data estudio_juridico ON estudio_juridico.siniestro_id = siniestros.id AND estudio_juridico.key = 'enviado_estudio_juridico'";
 	
 	$query_Recordset1_where = " WHERE 1";
 	$query_Recordset1_having = " HAVING 1";
@@ -59,7 +60,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('id', 'fecha', 'poliza_numero', 'tipo_siniestro', 'nombre', 'patente', 'lugar', 'siniestro_numero', ' ');
+			$aColumns = array('id', 'fecha', 'poliza_numero', 'nombre', 'tipo_siniestro', 'patente', 'poliza_vigencia', 'siniestro_numero', 'estudio_juridico', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "siniestros.id";		

@@ -72,19 +72,26 @@
 						// Visible fields (data and actions)						
 						{"sWidth": "10%"},					
 						{"sWidth": "8%"},
+						null,
 						{"sWidth": "28%", "bSearchable": false, "fnRender": function (oObj) {
-							switch (oObj.aData[3]) {
+							switch (oObj.aData[4]) {
 							case '1':
-								return 'DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)';
+								return 'SIN RECLAMO A TERCEROS';
 								break;
 							case '2':
-								return 'DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)';
+								return 'CON RECLAMO A TERCEROS';
 								break;
 							case '3':
-								return 'DENUNCIA DE ROBO/DAÑO (CON REPOSICION)';
+								return 'REPOSICION';
 								break;
 							case '4':
-								return 'DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)';
+								return 'INSPECCIÓN';
+								break;
+							case '5':
+								return 'ROBO TOTAL DE UNIDAD';
+								break;
+							case '6':
+								return 'INCENDIO TOTAL DE UNIDAD';
 								break;
 							default:
 								return '';
@@ -153,10 +160,12 @@
 								<label for="tipo_siniestro">Tipo de siniestro</label>
 								<select name="tipo_siniestro" id="tipo_siniestro" class="ui-widget-content">
 									<option value="">Todos</option>
-									<option value="1">DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)</option>
-									<option value="2">DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)</option>
-									<option value="3">DENUNCIA DE ROBO/DAÑO (CON REPOSICION)</option>
-									<option value="4">DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)</option>
+									<option value="1">SIN RECLAMO A TERCEROS</option>
+									<option value="2">CON RECLAMO A TERCEROS</option>
+									<option value="3">REPOSICION</option>
+									<option value="4">INSPECCIÓN</option>
+									<option value="5">ROBO TOTAL DE UNIDAD</option>
+									<option value="6">INCENDIO TOTAL DE UNIDAD</option>
 								</select>
                             </td>      
 							<td width="20%">
@@ -188,11 +197,12 @@
                             <th>Siniestro ID (Hide)</th>
 							<th>Fecha de la denuncia</th>
                             <th>Póliza</th>
-							<th>Tipo</th>
 							<th>Nombre del Asegurado</th>
+							<th>Tipo</th>
 							<th>Patente</th>
-							<th>Lugar</th>
+							<th>Vigencia</th>
                             <th>Número de siniestro</th>
+							<th>Estudio jurídico</th>
                             <th>Acc.</th>                                                        
                         </tr>
                     </thead>
