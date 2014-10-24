@@ -40,7 +40,9 @@
 	if(!empty($_GET['tipo_siniestro'])){	
 		$query_Recordset1_having .= sprintf(" AND tipo_siniestro = %s",GetSQLValueString($_GET['tipo_siniestro'], "int"));
 	}
-	
+	if(!empty($_GET['estudio_juridico'])){	
+		$query_Recordset1_having .= sprintf(" AND estudio_juridico = 'Sí'");
+	}
 ?>
 <?php
 

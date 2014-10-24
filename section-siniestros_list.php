@@ -73,7 +73,7 @@
 						{"sWidth": "10%"},					
 						{"sWidth": "8%"},
 						null,
-						{"sWidth": "28%", "bSearchable": false, "fnRender": function (oObj) {
+						{"sWidth": "20%", "bSearchable": false, "fnRender": function (oObj) {
 							switch (oObj.aData[4]) {
 							case '1':
 								return 'SIN RECLAMO A TERCEROS';
@@ -169,7 +169,8 @@
 								</select>
                             </td>      
 							<td width="20%">
-								
+								<label class="filtros_estado" for="estudio_juridico">Estudio jurídico</label>
+								<input type="checkbox" name="estudio_juridico" id="estudio_juridico" />
 							</td>  
 							<td width="20%">
 								
