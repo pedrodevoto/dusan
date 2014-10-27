@@ -185,23 +185,23 @@
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del vehículo asegurado</legend>
 			<p>
-				<label for="box-asegurado_marca">Marca</label>
+				<label for="box-asegurado_marca"><b>Marca</b></label>
 				<input type="text" name="box-asegurado_marca" id="box-asegurado_marca" class="ui-widget-content" />
-				<label for="box-asegurado_modelo">Modelo</label>
+				<label for="box-asegurado_modelo"><b>Modelo</b></label>
 				<input type="text" name="box-asegurado_modelo" id="box-asegurado_modelo" class="ui-widget-content" />
-				<label for="box-asegurado_ano" style="width:initial">Año</label>
+				<label for="box-asegurado_ano" style="width:initial"><b>Año</b></label>
 				<input type="text" name="box-asegurado_ano" id="box-asegurado_ano" class="ui-widget-content" style="width:50px" />
-				<label for="box-asegurado_patente_0" style="width:initial">Patente</label>
+				<label for="box-asegurado_patente_0" style="width:initial"><b>Patente</b></label>
 		        <input type="text" name="box-asegurado_patente_0" id="box-asegurado_patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
 				<input type="text" name="box-asegurado_patente_1" id="box-asegurado_patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
 			</p>
 			<p>
-				<label for="box-asegurado_tipo">Tipo</label>
+				<label for="box-asegurado_tipo"><b>Tipo</b></label>
 		        <select name="box-asegurado_tipo" id="box-asegurado_tipo" class="ui-widget-content required" style="width:144px">    
 		            <option value="">Seleccione</option>    
 		            <?php showAutomotorTipo(); ?>
 		        </select>
-				<label for="box-asegurado_uso">Uso</label>
+				<label for="box-asegurado_uso"><b>Uso</b></label>
 				<select name="box-asegurado_uso" id="box-asegurado_uso" class="ui-widget-content required" style="width:144px">
 					<option value="1">PARTICULAR</option>
 					<option value="2">COMERCIAL</option>
@@ -210,9 +210,9 @@
 				</select>
 			</p>
 			<p>
-				<label for="box-asegurado_nro_motor">N° motor</label>
+				<label for="box-asegurado_nro_motor"><b>N° motor</b></label>
 				<input type="text" name="box-asegurado_nro_motor" id="box-asegurado_nro_motor" class="ui-widget-content" />
-				<label for="box-asegurado_nro_chasis">N° chasis</label>
+				<label for="box-asegurado_nro_chasis"><b>N° chasis</b></label>
 				<input type="text" name="box-asegurado_nro_chasis" id="box-asegurado_nro_chasis" class="ui-widget-content" />
 			</p>
 			<p>
@@ -300,7 +300,7 @@
 									<input type="checkbox" value="1" name="box-asegurado_danios_paragolpes_del_izq" id="box-asegurado_danios_paragolpes_del_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-asegurado_danios_paragolpes_del_der" id="box-asegurado_danios_paragolpes_del_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -309,7 +309,7 @@
 									<input type="checkbox" value="1" name="box-asegurado_danios_paragolpes_tras_izq" id="box-asegurado_danios_paragolpes_tras_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-asegurado_danios_paragolpes_tras_der" id="box-asegurado_danios_paragolpes_tras_der" />
+									
 								</td>
 							</tr>
 						</tbody>
@@ -340,7 +340,7 @@
 									<input type="checkbox" value="1" name="box-asegurado_danios_baul_izq" id="box-asegurado_danios_baul_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-asegurado_danios_baul_der" id="box-asegurado_danios_baul_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -349,7 +349,7 @@
 									<input type="checkbox" value="1" name="box-asegurado_danios_capot_izq" id="box-asegurado_danios_capot_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-asegurado_danios_capot_der" id="box-asegurado_danios_capot_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -358,7 +358,7 @@
 									<input type="checkbox" value="1" name="box-asegurado_danios_techo_izq" id="box-asegurado_danios_techo_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-asegurado_danios_techo_der" id="box-asegurado_danios_techo_der" />
+									
 								</td>
 							</tr>
 						</tbody>
