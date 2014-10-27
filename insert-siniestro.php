@@ -36,7 +36,7 @@
 			}
 			
 			// Info cliente default
-			$sql = sprintf("SELECT IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as asegurado_nombre, IF(cliente_sexo='F', 2, IF(cliente_sexo='M', 1, NULL)) as asegurado_sexo, contacto_domicilio as asegurado_calle, contacto_nro as asegurado_altura, localidad_nombre as asegurado_localidad, localidad_cp as asegurado_cp, contacto_telefono1 as asegurado_tel, contacto_telefono2 as asegurado_cel, cliente_nacimiento as asegurado_fec_nac, cliente_registro as asegurado_registro, cliente_reg_vencimiento as asegurado_registro_venc FROM cliente JOIN contacto ON contacto.cliente_id = cliente.cliente_id AND contacto.contacto_default = 1 JOIN localidad USING(localidad_id) WHERE cliente.cliente_id = %s", $cliente_id);
+			$sql = sprintf("SELECT IF(cliente_tipo_persona=1, TRIM(CONCAT(IFNULL(cliente_apellido, ''), ' ', IFNULL(cliente_nombre, ''))), cliente_razon_social) as asegurado_nombre, cliente_sexo as asegurado_sexo, contacto_domicilio as asegurado_calle, contacto_nro as asegurado_altura, localidad_nombre as asegurado_localidad, localidad_cp as asegurado_cp, contacto_telefono1 as asegurado_tel, contacto_telefono2 as asegurado_cel, DATE_FORMAT(cliente_nacimiento, '%%d/%%m/%%Y') as asegurado_fec_nac, cliente_registro as asegurado_registro, cliente_reg_vencimiento as asegurado_registro_venc FROM cliente JOIN contacto ON contacto.cliente_id = cliente.cliente_id AND contacto.contacto_default = 1 JOIN localidad USING(localidad_id) WHERE cliente.cliente_id = %s", $cliente_id);
 			
 			$res = mysql_query($sql) or die(mysql_error());
 			$row = mysql_fetch_assoc($res);

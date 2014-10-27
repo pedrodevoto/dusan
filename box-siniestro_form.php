@@ -13,6 +13,7 @@
 <div class="divBoxContainer" style="width:94%">  
   	<!-- Siniestro -->        
 	<form name="frmBox" id="frmBox" class="frmBoxMain">
+		<span style="text-align:center"><h1>FORMULARIO DE SINIESTRO</h1></span>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del siniestro</legend>
 			<p>
@@ -104,38 +105,35 @@
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del asegurado</legend>
 			<p>
-				<label for="box-asegurado_nombre">Apellido y nombre</label>
-				<input type="text" name="box-asegurado_nombre" id="box-asegurado_nombre" class="ui-widget-content" style="width:300px" />
-				<label for="box-asegurado_sexo" style="width:initial;vergical-align:initial">Sexo</label>
-				<select name="box-asegurado_sexo" id="box-asegurado_sexo" style="ui-widget-content">
-					<option value="1">M</option>
-					<option value="2">F</option>
-				</select>
+				<label for="box-asegurado_nombre"><b>Apellido y nombre</b></label>
+				<span type="span" id="box-asegurado_nombre" style="display:inline-block;width:300px"></span>
+				<label for="box-asegurado_sexo" style="width:initial;vergical-align:initial"><b>Sexo</b></label>
+				<span type="span" id="box-asegurado_sexo"></span>
 			</p>
 			<p>
-				<label for="box-asegurado_calle">Calle</label>
-				<input type="text" name="box-asegurado_calle" id="box-asegurado_calle" class="ui-widget-content" />
-				<label for="box-asegurado_altura" style="width:initial">Altura</label>
-				<input type="text" name="box-asegurado_altura" id="box-asegurado_altura" class="ui-widget-content" />
-				<label for="box-asegurado_localidad" style="width:initial">Localidad</label>
-				<input type="text" name="box-asegurado_localidad" id="box-asegurado_localidad" class="ui-widget-content" style="width:180px" />
+				<label for="box-asegurado_calle"><b>Calle</b></label>
+				<span type="span" id="box-asegurado_calle" style="display:inline-block;width:280px"></span>
+				<label for="box-asegurado_altura" style="width:initial"><b>Altura</b></label>
+				<span type="span" id="box-asegurado_altura" style="display:inline-block;width:45px"></span>
+				<label for="box-asegurado_localidad" style="width:initial"><b>Localidad</b></label>
+				<span type="span" id="box-asegurado_localidad" style="display:inline-block;width:180px"></span>
 			</p>
 			<p>
-				<label for="box-asegurado_provincia">Provincia</label>
-				<input type="text" name="box-asegurado_provincia" id="box-asegurado_provincia" class="ui-widget-content" style="width:180px" />
-				<label for="box-asegurado_cp" style="width:initial">Cod Pos</label>
-				<input type="text" name="box-asegurado_cp" id="box-asegurado_cp" class="ui-widget-content" style="width:80px" />
-				<label for="box-asegurado_tel" style="width:initial;margin-left:20px">Tel</label>
-				<input type="text" name="box-asegurado_tel" id="box-asegurado_tel" class="ui-widget-content" style="width:80px" />
-				<label for="box-asegurado_cel" style="width:initial">Cel</label>
-				<input type="text" name="box-asegurado_cel" id="box-asegurado_cel" class="ui-widget-content" style="width:80px" />
+				<label for="box-asegurado_provincia"><b>Provincia</b></label>
+				<span type="span" id="box-asegurado_provincia" style="display:inline-block;width:180px"></span>
+				<label for="box-asegurado_cp" style="width:initial"><b>Cod Pos</b></label>
+				<span type="span" id="box-asegurado_cp" style="display:inline-block;width:80px"></span>
+				<label for="box-asegurado_tel" style="width:initial;margin-left:20px"><b>Tel</b></label>
+				<span type="span" id="box-asegurado_tel" style="display:inline-block;width:80px"></span>
+				<label for="box-asegurado_cel" style="width:initial"><b>Cel</b></label>
+				<span type="span" id="box-asegurado_cel" style="display:inline-block;width:80px"></span>
 			</p>
 			<p>
-				<label for="box-asegurado_fec_nac">Fecha de nacimiento</label>
-				<input type="text" name="box-asegurado_fecha_nac" id="box-asegurado_fecha_nac" class="ui-widget-content box-date" style="width:80px" />
-				<label for="box-asegurado_registro" style="width:initial;margin-left:20px">N° de registro</label>
+				<label for="box-asegurado_fec_nac"><b>Fecha de nacimiento</b></label>
+				<span type="span" id="box-asegurado_fecha_nac" style="display:inline-block;width:80px"></span>
+				<label for="box-asegurado_registro" style="width:initial;margin-left:20px"><b>N° de registro</b></label>
 				<input type="text" name="box-asegurado_registro" id="box-asegurado_registro" class="ui-widget-content" style="width:100px" />
-				<label for="box-asegurado_registro_venc" style="width:initial;margin-left:20px">Fecha de vencimiento</label>
+				<label for="box-asegurado_registro_venc" style="width:initial;margin-left:20px"><b>Fecha de vencimiento</b></label>
 				<input type="text" name="box-asegurado_registro_venc" id="box-asegurado_registro_venc" class="ui-widget-content box-date" style="width:80px" />
 			</p>
 		</fieldset>
