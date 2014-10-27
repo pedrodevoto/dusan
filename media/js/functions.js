@@ -8241,6 +8241,10 @@ $(document).ready(function () {
 					}
 				}).change();
 				
+				$('#box-patente_0').keyup(function(event) {
+					if ($('#box-patente_0').val().length==3 && !event.which.toString().match(/(^9$)|(^16$)/g)) $('#box-patente_1').focus();
+				});
+				
 				$('#box-siniestro_id').val(id);
 				
 				var validateForm = $("#frmBox").validate({
@@ -8262,7 +8266,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id, 'fieldset-datos-terceros');
+					openBoxSiniestroForm(id, 'fieldset-datos-terceros');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -8292,6 +8296,10 @@ $(document).ready(function () {
 						}
 					}).change();
 					
+					$('#box-patente_0').keyup(function(event) {
+						if ($('#box-patente_0').val().length==3 && !event.which.toString().match(/(^9$)|(^16$)/g)) $('#box-patente_1').focus();
+					});
+					
 					$('#box-siniestros_datos_terceros_id').val(id);
 					
 					var validateForm = $("#frmBox").validate({
@@ -8311,7 +8319,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id, 'fieldset-datos-terceros');
+						openBoxSiniestroForm(siniestro_id, 'fieldset-datos-terceros');
 					});
 					
 					formDisable('frmBox', 'ui', false);
@@ -8362,7 +8370,7 @@ $(document).ready(function () {
 					};
 				});
 				$("#btnBoxCancelar").click(function() {
-					openBoxModSiniestro(id, 'fieldset-lesiones-terceros');
+					openBoxSiniestroForm(id, 'fieldset-lesiones-terceros');
 				});
 				
 				formDisable('frmBox', 'ui', false);
@@ -8411,7 +8419,7 @@ $(document).ready(function () {
 						};
 					});
 					$("#btnBoxCancelar").click(function() {
-						openBoxModSiniestro(siniestro_id, 'fieldset-lesiones-terceros');
+						openBoxSiniestroForm(siniestro_id, 'fieldset-lesiones-terceros');
 					});
 					
 					formDisable('frmBox', 'ui', false);

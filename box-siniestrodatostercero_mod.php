@@ -206,7 +206,7 @@
 									<input type="checkbox" value="1" name="box-danios_paragolpes_del_izq" id="box-danios_paragolpes_del_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-danios_paragolpes_del_der" id="box-danios_paragolpes_del_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -215,7 +215,7 @@
 									<input type="checkbox" value="1" name="box-danios_paragolpes_tras_izq" id="box-danios_paragolpes_tras_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-danios_paragolpes_tras_der" id="box-danios_paragolpes_tras_der" />
+									
 								</td>
 							</tr>
 						</tbody>
@@ -246,7 +246,7 @@
 									<input type="checkbox" value="1" name="box-danios_baul_izq" id="box-danios_baul_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-danios_baul_der" id="box-danios_baul_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -255,7 +255,7 @@
 									<input type="checkbox" value="1" name="box-danios_capot_izq" id="box-danios_capot_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-danios_capot_der" id="box-danios_capot_der" />
+									
 								</td>
 							</tr>
 							<tr>
@@ -264,7 +264,7 @@
 									<input type="checkbox" value="1" name="box-danios_techo_izq" id="box-danios_techo_izq" />
 								</td>
 								<td>
-									<input type="checkbox" value="1" name="box-danios_techo_der" id="box-danios_techo_der" />
+									
 								</td>
 							</tr>
 						</tbody>
