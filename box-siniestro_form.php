@@ -104,21 +104,21 @@
 		</fieldset>
 		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del asegurado</legend>
-			<p>
+			<p style="margin-bottom:5px">
 				<label for="box-asegurado_nombre"><b>Apellido y nombre</b></label>
-				<span type="span" id="box-asegurado_nombre" style="display:inline-block;width:300px"></span>
+				<span type="span" id="box-asegurado_nombre" style="display:inline-block;width:337px"></span>
 				<label for="box-asegurado_sexo" style="width:initial;vergical-align:initial"><b>Sexo</b></label>
 				<span type="span" id="box-asegurado_sexo"></span>
 			</p>
-			<p>
+			<p style="margin-bottom:5px">
 				<label for="box-asegurado_calle"><b>Calle</b></label>
-				<span type="span" id="box-asegurado_calle" style="display:inline-block;width:280px"></span>
+				<span type="span" id="box-asegurado_calle" style="display:inline-block;width:246px"></span>
 				<label for="box-asegurado_altura" style="width:initial"><b>Altura</b></label>
 				<span type="span" id="box-asegurado_altura" style="display:inline-block;width:45px"></span>
 				<label for="box-asegurado_localidad" style="width:initial"><b>Localidad</b></label>
 				<span type="span" id="box-asegurado_localidad" style="display:inline-block;width:180px"></span>
 			</p>
-			<p>
+			<p style="margin-bottom:5px">
 				<label for="box-asegurado_provincia"><b>Provincia</b></label>
 				<span type="span" id="box-asegurado_provincia" style="display:inline-block;width:180px"></span>
 				<label for="box-asegurado_cp" style="width:initial"><b>Cod Pos</b></label>
