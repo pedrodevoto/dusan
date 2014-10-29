@@ -12,17 +12,11 @@ $pdf->wwrite(128, 3.5, $productor_nombre, 10);
 $pdf->wwrite(128, 8, $productor_seguro_codigo, 10);
 $pdf->SetTextColor(255,0,0);
 switch((string)$tipo_siniestro) {
-	case '1':
-	$pdf->wwrite(60, 23, 'DENUNCIA DE SINIESTRO (SIN RECLAMO A TERCEROS)', 10);
-	break;
-	case '2':
-	$pdf->wwrite(60, 23, 'DENUNCIA DE SINIESTRO (CON RECLAMO A TERCEROS)', 10);
-	break;
 	case '3':
-	$pdf->wwrite(60, 23, 'DENUNCIA DE ROBO/DAÑO (CON REPOSICION)', 10);
+	$pdf->wwrite(60, 23, 'REPOSICION', 10);
 	break;
 	case '4':
-	$pdf->wwrite(60, 23, 'DENUNCIA DE ROBO/DAÑO (SIN REPOSICION)', 10);
+	$pdf->wwrite(60, 23, 'INSPECCIÓN', 10);
 	break;
 }
 $pdf->SetTextColor(0,0,0);
