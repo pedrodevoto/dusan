@@ -49,7 +49,7 @@
 			}
 			
 			// Info automotor default
-			$sql = sprintf("SELECT automotor_marca_nombre as asegurado_marca, modelo as asegurado_modelo, ano as asegurado_ano, patente_0 as asegurado_patente_0, patente_1 as asegurado_patente_1, automotor_tipo_id as asegurado_tipo, IF(uso='Particular', 1, IF(uso='Comercial', 2, IF(uso='Comercial / Particular', 3, IF(uso='Remise', 4, NULL)))) as asegurado_uso, nro_motor as asegurado_nro_motor, nro_chasis as asegurado_nro_chasis FROM automotor LEFT JOIN automotor_marca USING (automotor_marca_id) WHERE automotor_id = %s", $automotor_id);
+			$sql = sprintf("SELECT automotor_marca_nombre as asegurado_marca, IFNULL(automotor_version_nombre, IFNULL(automotor_modelo_nombre, modelo)) as asegurado_modelo, ano as asegurado_ano, patente_0 as asegurado_patente_0, patente_1 as asegurado_patente_1, automotor_tipo_nombre as asegurado_tipo, uso as asegurado_uso, nro_motor as asegurado_nro_motor, nro_chasis as asegurado_nro_chasis FROM automotor LEFT JOIN automotor_marca USING (automotor_marca_id) LEFT JOIN automotor_modelo USING (automotor_modelo_id) LEFT JOIN automotor_version USING (automotor_version_id) LEFT JOIN automotor_tipo USING (automotor_tipo_id) WHERE automotor_id = %s", $automotor_id);
 			
 			$res = mysql_query($sql) or die(mysql_error());
 			$row = mysql_fetch_assoc($res);

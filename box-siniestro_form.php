@@ -186,34 +186,26 @@
 			<legend class="ui-widget ui-widget-header ui-corner-all">Datos del vehículo asegurado</legend>
 			<p>
 				<label for="box-asegurado_marca"><b>Marca</b></label>
-				<input type="text" name="box-asegurado_marca" id="box-asegurado_marca" class="ui-widget-content" />
+				<span type="span" id="box-asegurado_marca" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_modelo"><b>Modelo</b></label>
-				<input type="text" name="box-asegurado_modelo" id="box-asegurado_modelo" class="ui-widget-content" />
+				<span type="span" id="box-asegurado_modelo" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_ano" style="width:initial"><b>Año</b></label>
-				<input type="text" name="box-asegurado_ano" id="box-asegurado_ano" class="ui-widget-content" style="width:50px" />
+				<span type="span" id="box-asegurado_ano" style="display:inline-block;width:50px" />
 				<label for="box-asegurado_patente_0" style="width:initial"><b>Patente</b></label>
-		        <input type="text" name="box-asegurado_patente_0" id="box-asegurado_patente_0" maxlength="3" class="ui-widget-content required" style="width:30px" /> 
-				<input type="text" name="box-asegurado_patente_1" id="box-asegurado_patente_1" maxlength="3" class="ui-widget-content required" style="width:30px" />
+		        <span type="span"  id="box-asegurado_patente_0" /> 
+				<span type="span"  id="box-asegurado_patente_1" />
 			</p>
 			<p>
 				<label for="box-asegurado_tipo"><b>Tipo</b></label>
-		        <select name="box-asegurado_tipo" id="box-asegurado_tipo" class="ui-widget-content required" style="width:144px">    
-		            <option value="">Seleccione</option>    
-		            <?php showAutomotorTipo(); ?>
-		        </select>
+		        <span type="span" id="box-asegurado_tipo" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_uso"><b>Uso</b></label>
-				<select name="box-asegurado_uso" id="box-asegurado_uso" class="ui-widget-content required" style="width:144px">
-					<option value="1">PARTICULAR</option>
-					<option value="2">COMERCIAL</option>
-					<option value="3">COMERCIAL / PARTICULAR</option>
-					<option value="4">REMISE</option>
-				</select>
+				<span type="span" id="box-asegurado_uso" style="display:inline-block;width:140px" />
 			</p>
 			<p>
 				<label for="box-asegurado_nro_motor"><b>N° motor</b></label>
-				<input type="text" name="box-asegurado_nro_motor" id="box-asegurado_nro_motor" class="ui-widget-content" />
+				<span type="span" id="box-asegurado_nro_motor" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_nro_chasis"><b>N° chasis</b></label>
-				<input type="text" name="box-asegurado_nro_chasis" id="box-asegurado_nro_chasis" class="ui-widget-content" />
+				<span type="span" id="box-asegurado_nro_chasis" style="display:inline-block;width:140px" />
 			</p>
 			<p>
 				<b>DETALLE DE LOS DAÑOS</b>
