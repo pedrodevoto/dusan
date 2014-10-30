@@ -188,18 +188,18 @@
 				<label for="box-asegurado_marca"><b>Marca</b></label>
 				<span type="span" id="box-asegurado_marca" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_modelo"><b>Modelo</b></label>
-				<span type="span" id="box-asegurado_modelo" style="display:inline-block;width:140px" />
-				<label for="box-asegurado_ano" style="width:initial"><b>Año</b></label>
-				<span type="span" id="box-asegurado_ano" style="display:inline-block;width:50px" />
-				<label for="box-asegurado_patente_0" style="width:initial"><b>Patente</b></label>
-		        <span type="span"  id="box-asegurado_patente_0" /> 
-				<span type="span"  id="box-asegurado_patente_1" />
+				<span type="span" id="box-asegurado_modelo" />
 			</p>
 			<p>
 				<label for="box-asegurado_tipo"><b>Tipo</b></label>
 		        <span type="span" id="box-asegurado_tipo" style="display:inline-block;width:140px" />
 				<label for="box-asegurado_uso"><b>Uso</b></label>
 				<span type="span" id="box-asegurado_uso" style="display:inline-block;width:140px" />
+				<label for="box-asegurado_ano" style="width:initial"><b>Año</b></label>
+				<span type="span" id="box-asegurado_ano" style="display:inline-block;width:50px" />
+				<label for="box-asegurado_patente_0" style="width:initial"><b>Patente</b></label>
+		        <span type="span"  id="box-asegurado_patente_0" /> 
+				<span type="span"  id="box-asegurado_patente_1" />
 			</p>
 			<p>
 				<label for="box-asegurado_nro_motor"><b>N° motor</b></label>
