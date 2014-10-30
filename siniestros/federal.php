@@ -439,7 +439,7 @@ if (!empty($detalle_colision_animal)) $pdf->wwrite(162, 189.8, 'X');
 
 // croquis
 $data = substr($siniestro['croquis_img-noupper'], 22);
-if (base64_encode(base64_decode($data, true))===$data) {
+if (base64_encode(base64_decode($data, true))===$data && imagecreatefrompng($siniestro['croquis_img-noupper'])) {
 	$pdf->Image($siniestro['croquis_img-noupper'], 26, 202, 40, 36, 'png');
 }
 
