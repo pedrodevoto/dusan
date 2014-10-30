@@ -47,7 +47,13 @@
 						null,
 						null,
 						null,
-						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { return '<ul class="dtInlineIconList ui-widget ui-helper-clearfix"><li title="Modificar" onclick="openBoxModProd('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li></ul>'; }}
+						{"bSearchable": false, "bSortable": false, "fnRender": function (oObj) { 
+							var ret = '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
+							ret += '<li title="Modificar" onclick="openBoxModProd('+oObj.aData[0]+');"><span class="ui-icon ui-icon-pencil"></span></li>';
+							ret += '<li title="Eliminar" onclick="deleteViaLink(\'productor\','+oObj.aData[0]+');"><span class="ui-icon ui-icon-trash"></span></li>';
+							ret += '</ul>'; 
+							return ret;
+						}}
 					],	
 					"aaSorting": [[1,'asc']],					
 					
