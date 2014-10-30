@@ -8134,7 +8134,7 @@ $(document).ready(function () {
 		$.colorbox({
 			title: 'Siniestro',
 			href: 'box-siniestro_form.php',
-			width: '900px',
+			width: '950px',
 			height: '100%',
 			onComplete: function () {
 				$("#btnBox, #btnNuevoDatosTercero, #btnNuevoLesionesTercero, #btnDatos").button();

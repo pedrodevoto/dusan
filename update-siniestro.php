@@ -18,7 +18,7 @@
 			$sql .= ' AND `key` IN ("automotor_id", "asegurado_registro", "asegurado_registro_venc", "siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")';
 		}
 		else {
-			$sql .= ' AND `key` NOT IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id")';
+			$sql .= ' AND `key` NOT IN ("siniestro_numero", "fecha_compania", "fecha_denuncia", "fecha_ocurrencia", "tipo_siniestro", "pagado", "cerrado", "enviado_estudio_juridico", "fecha_enviado_estudio_juridico", "compania_tercero", "forma_pago", "cobrado", "siniestro_id", "asegurado_nombre", "asegurado_sexo", "asegurado_calle", "asegurado_altura", "asegurado_localidad", "asegurado_provincia", "asegurado_cp", "asegurado_tel", "asegurado_cel", "asegurado_fecha_nac", "asegurado_registro", "asegurado_registro_venc", "asegurado_marca", "asegurado_modelo", "asegurado_tipo", "asegurado_uso", "asegurado_ano", "asegurado_patente_0", "asegurado_patente_1", "asegurado_nro_motor", "asegurado_nro_chasis")';
 		}
 		mysql_query($sql, $connection) or die(mysql_error());
 				
