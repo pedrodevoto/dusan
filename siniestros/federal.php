@@ -439,8 +439,11 @@ if (!empty($detalle_colision_animal)) $pdf->wwrite(162, 189.8, 'X');
 
 // croquis
 $data = substr($siniestro['croquis_img-noupper'], 22);
+$tmp_name = 'siniestros/croquis/tmp/'.uniqid().'.png';
+$tmp = imagecreatefrompng('data://image/png;base64,'.$data);
+imagepng($tmp, $tmp_name);
 if (base64_encode(base64_decode($data, true))===$data) {
-	$pdf->Image(@$siniestro['croquis_img-noupper'], 26, 202, 40, 36, 'png');
+	$pdf->Image($tmp_name, 26, 202, 40, 36, 'png');
 }
 
 $text = iconv('UTF-8', 'windows-1252', $siniestro_detalle);

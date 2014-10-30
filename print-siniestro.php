@@ -242,6 +242,9 @@ if (isset($pdf)) {
 	else {
 		$pdf->Output();
 	}
+	if (isset($tmp_name)) {
+		unlink($tmp_name);
+	}
 }
 
 ?>
