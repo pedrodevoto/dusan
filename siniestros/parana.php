@@ -15,6 +15,9 @@ switch((string)$tipo_siniestro) {
 	case '4':
 	$pdf->wwrite(60, 23, 'INSPECCIÓN', 10);
 	break;
+	case '7':
+	$pdf->wwrite(60, 23, 'REINTEGRO', 10);
+	break;
 }
 $pdf->SetTextColor(0,0,0);
 $pdf->wwrite(22, 51, $productor_nombre);

@@ -93,6 +93,9 @@
 							case '6':
 								return 'INCENDIO TOTAL DE UNIDAD';
 								break;
+							case '7':
+								return 'REINTEGRO';
+								break;
 							default:
 								return '';
 								break;
@@ -165,6 +168,7 @@
 									<option value="4">INSPECCIÓN</option>
 									<option value="5">ROBO TOTAL DE UNIDAD</option>
 									<option value="6">INCENDIO TOTAL DE UNIDAD</option>
+									<opiton value="7">REINTEGRO</option>
 								</select>
                             </td>      
 							<td width="20%">

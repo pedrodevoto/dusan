@@ -69,6 +69,7 @@
 					<option value="4">INSPECCIÓN</option>
 					<option value="5">ROBO TOTAL DE UNIDAD</option>
 					<option value="6">INCENDIO TOTAL DE UNIDAD</option>
+					<opiton value="7">REINTEGRO</option>
 				</select>
 				<label for="box-pagado" style="margin-left:40px;width:initial"><b>Pagado</b></label> <input type="checkbox" name="box-pagado" id="box-pagado" />
 				<label for="box-cerrado" style="margin-left:40px;width:initial"><b>Cerrado</b></label> <input type="checkbox" name="box-cerrado" id="box-cerrado" />
