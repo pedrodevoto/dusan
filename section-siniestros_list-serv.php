@@ -11,7 +11,7 @@
 <?php
 
 	// GENERATE MAIN QUERY (WITHOUT SELECT STATEMENT)
-	$query_Recordset1_fields = " siniestros.id as id, fecha.value as fecha, poliza_numero, asegurado_nombre.value as nombre, tipo.value as tipo_siniestro, CONCAT_WS('', patente_0.value, patente_1.value) as patente, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%Y'), ' al ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%Y')) as poliza_vigencia, siniestro_numero.value as siniestro_numero, IF(estudio_juridico.value is not null, 'Sí', 'No') as estudio_juridico";
+	$query_Recordset1_fields = " siniestros.id as id, fecha.value as fecha, poliza_numero, asegurado_nombre.value as nombre, tipo.value as tipo_siniestro, CONCAT_WS('', patente_0.value, patente_1.value) as patente, CONCAT(DATE_FORMAT(poliza_validez_desde, '%d/%m/%Y'), ' al ', DATE_FORMAT(poliza_validez_hasta, '%d/%m/%Y')) as poliza_vigencia, siniestro_numero.value as siniestro_numero, (SELECT CONCAT(usuario_usuario, ' - ', DATE_FORMAT(siniestro_evento_fecha, '%d/%m/%y')) FROM siniestro_evento JOIN usuario USING (usuario_id) WHERE siniestro_evento.siniestro_id = siniestros.id) as evento, IF(estudio_juridico.value is not null, 'Sí', 'No') as estudio_juridico";
 	$query_Recordset1_tables = " FROM siniestros
 		JOIN automotor USING (automotor_id)
 		JOIN poliza USING (poliza_id)
@@ -62,7 +62,7 @@
 			$query_Recordset1_base = $query_Recordset1_fields . $query_Recordset1_tables . $query_Recordset1_where;	
 	
 			/* Array of database columns which should be read and sent back to DataTables */
-			$aColumns = array('id', 'fecha', 'poliza_numero', 'nombre', 'tipo_siniestro', 'patente', 'poliza_vigencia', 'siniestro_numero', 'estudio_juridico', ' ');
+ 			$aColumns = array('id', 'fecha', 'poliza_numero', 'nombre', 'tipo_siniestro', 'patente', 'poliza_vigencia', 'siniestro_numero', 'evento', 'estudio_juridico', ' ');
 	
 			/* Indexed column (used for fast and accurate table cardinality) */
 			$sIndexColumn = "siniestros.id";		

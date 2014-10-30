@@ -105,6 +105,7 @@
 						null,
 						null,
 						{"sWidth": "10%"},
+						null,
 						{"sWidth": "8%", "bSearchable": false, "fnRender": function (oObj) {
 							var returnval = '';
 							returnval += '<ul class="dtInlineIconList ui-widget ui-helper-clearfix">';
@@ -206,6 +207,7 @@
 							<th>Patente</th>
 							<th>Vigencia</th>
                             <th>Número de siniestro</th>
+							<th>Mensaje</th>
 							<th>Estudio jurídico</th>
                             <th>Acc.</th>                                                        
                         </tr>
@@ -219,11 +221,12 @@
                             <th></th>
                             <th></th>
                             <th></th>   
+                            <th></th>   
+                            <th></th>   
 							<th></th>                         
 							<th></th>                         
                             <th></th> 
                             <th></th>
-                            <th></th>                                                        
                         </tr>
                     </tfoot>                      
                 </table>
