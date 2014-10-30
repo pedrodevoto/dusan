@@ -53,14 +53,14 @@
 				<li><a href="section-endosos_list.php">Endosos</a></li>
                 <li><a href="section-siniestros_list.php">Siniestros</a></li>
 				<li><a href="section-clie_list.php">Clientes</a></li>
-                <li><a href="section-caja.php">Caja</a></li>
-                <li><a href="section-calendario.php">Calendario</a></li>
-                <li><a href="section-estadisticas.php">Estadísticas</a></li>
 				<li><a href="#">Administración</a>
 					<ul>
 		               	<li><a href="section-libros_rubricados.php">Libros Rubricados</a></li>
 						<li><a href="section-facturacion.php">Facturación</a></li>
 						<li><a href="section-vencimientos.php">Listado de vencimientos</a></li>
+		                <li><a href="section-caja.php">Caja</a></li>
+		                <li><a href="section-calendario.php">Calendario</a></li>
+		                <li><a href="section-estadisticas.php">Estadísticas</a></li>
 					</ul>
 				</li>
                 <li><a href="#">Configuración</a>
