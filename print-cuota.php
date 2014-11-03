@@ -134,7 +134,7 @@
 
 			// Text 2
 			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
-			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
+			$cuota_prox_venc = is_null($prox_cuota) ? date('d/m/Y', strtotime("+1 month", time())) : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 			$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 			$txt2 = array(
 						array('maxwidth' => 1 , 'text' => ''),
@@ -213,7 +213,7 @@
 
 			// Text 2
 			$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
-			$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
+			$cuota_prox_venc = is_null($prox_cuota) ? date('d/m/Y', strtotime("+1 month", time())) : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 			$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 			$txt2 = array(
 						array('maxwidth' => 1 , 'text' => ''),
@@ -261,7 +261,7 @@
 
 		// Text 2
 		$cuota_periodo = ucfirst(strftime("%B/%Y", strtotime($row_Recordset1['cuota_periodo'])));
-		$cuota_prox_venc = is_null($prox_cuota) ? "-" : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
+		$cuota_prox_venc = is_null($prox_cuota) ? date('d/m/Y', strtotime("+1 month", time())) : strftime("%d/%m/%Y", strtotime($prox_cuota['cuota_vencimiento']));
 		$poliza_numero = is_null($row_Recordset1['poliza_numero']) ? "-" : $row_Recordset1['poliza_numero'];
 		$txt2 = array(
 					array('maxwidth' => 1 , 'text' => ''),
