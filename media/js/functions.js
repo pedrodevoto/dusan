@@ -126,6 +126,13 @@ $(document).ready(function () {
 	String.prototype.capitalize = function() {
 	    return this.charAt(0).toUpperCase() + this.slice(1);
 	}
+	$.fn.rotate = function(degrees) {
+		$(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+			'-moz-transform' : 'rotate('+ degrees +'deg)',
+			'-ms-transform' : 'rotate('+ degrees +'deg)',
+			'transform' : 'rotate('+ degrees +'deg)'});
+    	return $(this);
+	};
 
 	/* List functions */
 	sortListAlpha = function (field) {
@@ -2698,8 +2705,12 @@ $(document).ready(function () {
 		switch (type) {
 		case 'auto':
 			if (data) {
-				var pos = data.split('X');
+				var pos_r = data.split('|');
+				var pos = pos_r[0].split('X');
 				$('#auto'+i).appendTo($('#droppable')).css({'position': 'absolute', 'top': pos[0]+'px', 'left': pos[1]+'px'});
+				if (pos_r.length == 2 && pos_r[1]=='R') {
+					$('#auto'+i).css({'width': '13px', 'height': '25px'}).addClass('rotated');
+				}
 			}
 			else {
 				var auto = '<div id="auto'+i+'" class="draggable-autos croquis-auto" style="width:25px;height:13px;border:solid 1px black;background-color:white;text-align:center;cursor:move">' + (i+1) + '</div>';
@@ -4795,6 +4806,9 @@ $(document).ready(function () {
 				var left = $(e).offset().left;
 				if (top >= t && top <= b && left >= l && left <= r) {
 					croquis += '&box-croquis-'+$(e).prop('id')+'='+(parseInt(top)-parseInt(t))+'x'+(parseInt(left)-parseInt(l));
+					if ($(e).hasClass('rotated')) {
+						croquis += '|R';
+					}
 				}
 			});
 			$('.croquis-moto').each(function(i,e) {
@@ -8175,6 +8189,14 @@ $(document).ready(function () {
 								ui.helper.css({'position': 'absolute', 'top': position.top, 'left': position.left}).removeClass('draggable').addClass('dragged').draggable({'helper': 'original'}).appendTo( this ).offset( offset );
 								$.ui.ddmanager.current.cancelHelperRemoval = true;
 							}
+							$('.croquis-auto').unbind('dblclick').dblclick(function() {
+								if ($(this).hasClass('rotated')) {
+									$(this).css({'width': '25px', 'height': '13px'}).removeClass('rotated');
+								}
+								else {
+									$(this).css({'width': '13px', 'height': '25px'}).addClass('rotated');
+								}
+							});
 						}
 					});
 					
