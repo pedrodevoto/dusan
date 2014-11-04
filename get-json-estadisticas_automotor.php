@@ -97,6 +97,32 @@ while ($row = mysql_fetch_array($res)) {
 	$output['gnc']['pie'][] = array('label'=>$row[0], 'value'=>(int)$row[1], 'color'=>$color, 'highlight'=>$color);
 }
 
+$output['renovadas'] = array();
+$output['renovadas']['bar']['labels'] = array('Renovadas %', 'No renovadas %');
+$output['renovadas']['bar']['data'] = array();
+$output['renovadas']['pie'] = array();
+
+$sql = sprintf('SELECT SUM(IF(ren.poliza_id is null, 0, 1)) as renovadas, SUM(IF(ren.poliza_id is null, 1, 0)) as no_renovadas
+	from poliza p
+	join productor_seguro using (productor_seguro_id)
+	left join poliza ren on p.poliza_numero = ren.poliza_renueva_num
+	where p.poliza_validez_hasta < date(now()) 
+	and p.subtipo_poliza_id = 6 
+	and seguro_id = %s
+	', GetSQLValueString($_GET['seguro_id'], 'int'));
+$res = mysql_query($sql, $connection) or die(mysql_error());
+end($colors);
+while ($row = mysql_fetch_array($res)) {
+	$total = $row[0] + $row[1];
+	$renovadas = round($row[0] / $total * 100, 2);
+	$no_renovadas = round($row[1] / $total * 100, 2);
+	$output['renovadas']['bar']['data'][0] = $renovadas;
+	$output['renovadas']['bar']['data'][1] = $no_renovadas;
+	$color = next($colors) or $color = reset($colors);
+	$output['renovadas']['pie'][0] = array('label'=>'Renovadas %', 'value'=>$renovadas, 'color'=>$color, 'highlight'=>$color);
+	$color = next($colors) or $color = reset($colors);
+	$output['renovadas']['pie'][1] = array('label'=>'No renovadas %', 'value'=>$no_renovadas, 'color'=>$color, 'highlight'=>$color);
+}
 echo json_encode($output);
 
 ?>

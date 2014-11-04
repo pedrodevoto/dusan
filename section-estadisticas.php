@@ -21,6 +21,10 @@
 	var barChart3;
 	var barCtx4;
 	var barChart4;
+	var barCtx5;
+	var barChart5;
+	var barCtx6;
+	var barChart6;
 	var pieCtx1;
 	var pieChart1;
 	var pieCtx2;
@@ -29,6 +33,10 @@
 	var pieChart3;
 	var pieCtx4;
 	var pieChart4;
+	var pieCtx5;
+	var pieChart5;
+	var pieCtx6;
+	var pieChart6;
 	
 	$(document).ready(function() {
 		$('#tabs').tabs();
@@ -113,6 +121,25 @@
 				pieChart4.destroy();
 				pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
 				
+				var barData = {
+					labels: data.renovadas.bar.labels,
+					datasets: [
+						{
+							label: 'Renovadas',
+							fillColor: "rgba(151,187,205,0.5)",
+							strokeColor: "rgba(151,187,205,0.8)",
+							highlightFill: "rgba(151,187,205,0.75)",
+							highlightStroke: "rgba(151,187,205,1)",
+							data: data.renovadas.bar.data
+						}
+					]
+				}
+				barChart6.destroy();
+				barChart6 = new Chart(barCtx6).Bar(barData, {});
+
+				pieChart6.destroy();
+				pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
+				
 			}, 'json');
 		});
 		
@@ -141,6 +168,16 @@
 		barChart4 = new Chart(barCtx4).Bar(barData, {});
 		pieCtx4 = $("#pieChart4").get(0).getContext("2d");
 		pieChart4 = new Chart(pieCtx4).Pie(pieData, {});
+		
+		barCtx5 = $("#barChart5").get(0).getContext("2d");
+		barChart5 = new Chart(barCtx5).Bar(barData, {});
+		pieCtx5 = $("#pieChart5").get(0).getContext("2d");
+		pieChart5 = new Chart(pieCtx5).Pie(pieData, {});
+		
+		barCtx6 = $("#barChart6").get(0).getContext("2d");
+		barChart6 = new Chart(barCtx6).Bar(barData, {});
+		pieCtx6 = $("#pieChart6").get(0).getContext("2d");
+		pieChart6 = new Chart(pieCtx6).Pie(pieData, {});
 		
 	});
 	</script>
@@ -222,6 +259,35 @@
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart4" width="230" height="230"></canvas>
 		  					<canvas id="pieChart4" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div style="clear:both;margin-top:20px"></div>
+		  			<div class="frame ui-corner-all" style="float:left;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<b>Altas/Bajas</b>
+							<p>
+								<select name="altas_bajas_periodo" id="altas_bajas_periodo">
+									<option value="6">Últimos 6 meses</option>
+									<option value="1">Último año</option>
+									<option value="2">Últimos 2 años</option>
+									<option value="3">Últimos 3 años</option>
+								</select>
+							</p>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart5" width="230" height="230"></canvas>
+		  					<canvas id="pieChart5" width="200" height="200"></canvas>
+		  				</div>
+		  				<div style="clear:both"></div>
+		  			</div>
+		  			<div class="frame ui-corner-all" style="float:right;width:48%">
+		  				<div style="float:left;width:40%;margin-top:10px">
+		  					<b>Efectividad de renovación</b>
+		  				</div>
+		  				<div style="float:left;width:50%;margin:10px">
+		  					<canvas id="barChart6" width="230" height="230"></canvas>
+		  					<canvas id="pieChart6" width="200" height="200"></canvas>
 		  				</div>
 		  				<div style="clear:both"></div>
 		  			</div>
