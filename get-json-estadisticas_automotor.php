@@ -36,6 +36,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
 		where poliza_validez_desde > date(now()) - interval %s
 		and subtipo_poliza_id = 6 
 		and endoso_id is null
+		and poliza_renueva_num is null
 		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
 	end($colors);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
@@ -47,6 +48,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
 	$sql = sprintf('SELECT count(distinct poliza.poliza_id) from poliza join productor_seguro using (productor_seguro_id) join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1) 
 		where poliza_validez_desde > date(now()) - interval %s
 		and subtipo_poliza_id = 6 
+		and poliza_renueva_num is null
 		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	while ($row = mysql_fetch_array($res)) {
