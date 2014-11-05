@@ -62,7 +62,7 @@ else {
 	$output['coberturas']['bar']['data'] = array();
 	$output['coberturas']['pie'] = array();
 
-	$sql = sprintf('SELECT if(substring(seguro_cobertura_tipo_nombre, 1, 1) between "a" and "e", substring(seguro_cobertura_tipo_nombre, 1, 1), seguro_cobertura_tipo_nombre) letter, count(automotor_id)
+	$sql = sprintf('SELECT seguro_cobertura_tipo_nombre letter, count(automotor_id)
 		from seguro_cobertura_tipo join automotor using (seguro_cobertura_tipo_id) join poliza using (poliza_id)
 		left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1)
 		where endoso_id is null
