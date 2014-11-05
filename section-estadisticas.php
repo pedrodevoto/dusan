@@ -141,6 +141,30 @@
 				pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
 				
 			}, 'json');
+			$('#altas_bajas_periodo').change();
+		});
+		
+		$('#altas_bajas_periodo').change(function() {
+			$.get('get-json-estadisticas_automotor.php?type=altas_bajas&periodo='+$('#altas_bajas_periodo').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
+				var barData = {
+					labels: data.altas_bajas.bar.labels,
+					datasets: [
+						{
+							label: 'Altas/Bajas',
+							fillColor: "rgba(151,187,205,0.5)",
+							strokeColor: "rgba(151,187,205,0.8)",
+							highlightFill: "rgba(151,187,205,0.75)",
+							highlightStroke: "rgba(151,187,205,1)",
+							data: data.altas_bajas.bar.data
+						}
+					]
+				}
+				barChart5.destroy();
+				barChart5 = new Chart(barCtx5).Bar(barData, {});
+
+				pieChart5.destroy();
+				pieChart5 = new Chart(pieCtx5).Pie(data.altas_bajas.pie, {});
+			}, 'json');
 		});
 		
 		var barData = {
