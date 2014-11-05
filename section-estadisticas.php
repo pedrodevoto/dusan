@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>JARVIS - Calendario</title>
+    <title>JARVIS - Estadísticas</title>
 	
 	<?php require_once('inc/library.php'); ?>
 	
