@@ -45,11 +45,13 @@
 				$sql =  sprintf('SELECT COUNT(cuota_id) FROM cuota WHERE poliza_id = %s AND cuota_estado_id = 1 AND cuota_pfc = 0', GetSQLValueString($_POST['box-poliza_id'], "int"));
 				$res = mysql_query($sql, $connection);
 				list($no_pagado_cant) = mysql_fetch_array($res);
+				
+				if ($no_pagado_cant > 0) {
+					$cuota = (intval($_POST['box-poliza_premio']) - $pagado) / $no_pagado_cant;
 	
-				$cuota = (intval($_POST['box-poliza_premio']) - $pagado) / $no_pagado_cant;
-	
-				$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
-				mysql_query($sql, $connection) or die(mysql_error());
+					$sql = sprintf('UPDATE cuota SET cuota_monto = %s WHERE poliza_id = %s AND cuota_estado_id = 1', $cuota, GetSQLValueString($_POST['box-poliza_id'], "int"));
+					mysql_query($sql, $connection) or die(mysql_error());
+				}
 	
 				$sql = sprintf('UPDATE poliza SET poliza_premio = %s WHERE poliza_id = %s', GetSQLValueString($_POST['box-poliza_premio'], "int"), GetSQLValueString($_POST['box-poliza_id'], "int"));
 				mysql_query($sql, $connection) or die(mysql_error());
