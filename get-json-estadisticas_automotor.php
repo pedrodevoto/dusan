@@ -33,7 +33,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
 	$output['altas_bajas']['bar']['data'] = array();
 	$output['altas_bajas']['pie'] = array();
 	$sql = sprintf('SELECT count(distinct poliza.poliza_id) from poliza join productor_seguro using (productor_seguro_id) left join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1) 
-		where poliza.`timestamp` > date(now()) - interval %s
+		where poliza_validez_desde > date(now()) - interval %s
 		and subtipo_poliza_id = 6 
 		and endoso_id is null
 		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
@@ -45,7 +45,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
 		$output['altas_bajas']['pie'][] = array('label'=>'Altas', 'value'=>(int)$row[0], 'color'=>$color, 'highlight'=>$color);
 	}
 	$sql = sprintf('SELECT count(distinct poliza.poliza_id) from poliza join productor_seguro using (productor_seguro_id) join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1) 
-		where poliza.`timestamp` > date(now()) - interval %s
+		where poliza_validez_desde > date(now()) - interval %s
 		and subtipo_poliza_id = 6 
 		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
 	$res = mysql_query($sql, $connection) or die(mysql_error());
