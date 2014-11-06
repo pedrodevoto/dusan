@@ -12,32 +12,17 @@ $output = array();
 
 $estado = ($_GET['estado'] == 'vigente'?'and poliza_estado_id in (2,3,4,7)':'');
 
-if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
-	$interval = '0';
-	switch ($_GET['periodo']) {
-		case '6':
-		$interval = '6 month';
-		break;
-		case '1':
-		$interval = '1 year';
-		break;
-		case '2':
-		$interval = '2 year';
-		break;
-		case '3':
-		$interval = '3 year';
-		break;
-	}
+if (!empty($_GET['type']) && $_GET['type']=='altas_bajas' && !empty($_GET['periodo'])) {
 	$output['altas_bajas'] = array();
 	$output['altas_bajas']['bar']['labels'] = array('Altas', 'Bajas');
 	$output['altas_bajas']['bar']['data'] = array();
 	$output['altas_bajas']['pie'] = array();
 	$sql = sprintf('SELECT count(distinct poliza.poliza_id) from poliza join productor_seguro using (productor_seguro_id) left join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1) 
-		where poliza_validez_desde > date(now()) - interval %s
+		where date_format(poliza_validez_desde, "%%Y-%%m") = %s
 		and subtipo_poliza_id = 6 
 		and endoso_id is null
 		and poliza_renueva_num is null
-		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
+		and seguro_id = %s', GetSQLValueString($_GET['periodo'], 'text'), GetSQLValueString($_GET['seguro_id'], 'int'));
 	end($colors);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	while ($row = mysql_fetch_array($res)) {
@@ -46,10 +31,10 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas') {
 		$output['altas_bajas']['pie'][] = array('label'=>'Altas', 'value'=>(int)$row[0], 'color'=>$color, 'highlight'=>$color);
 	}
 	$sql = sprintf('SELECT count(distinct poliza.poliza_id) from poliza join productor_seguro using (productor_seguro_id) join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1) 
-		where poliza_validez_desde > date(now()) - interval %s
+		where date_format(poliza_validez_desde, "%%Y-%%m") = %s
 		and subtipo_poliza_id = 6 
 		and poliza_renueva_num is null
-		and seguro_id = %s', $interval, GetSQLValueString($_GET['seguro_id'], 'int'));
+		and seguro_id = %s', GetSQLValueString($_GET['periodo'], 'text'), GetSQLValueString($_GET['seguro_id'], 'int'));
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	while ($row = mysql_fetch_array($res)) {
 		$output['altas_bajas']['bar']['data'][1] = $row[0];

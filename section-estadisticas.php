@@ -42,6 +42,14 @@
 		$('#tabs').tabs();
 		populateListSeguro('seguro_id', 'main');
 		
+		$.get('get-json-polizas_periodos.php', {}, function(data) {
+			var options = '';
+			$.each(data, function(i,e) {
+				options += '<option value="'+e[0]+'">'+e[1]+'</option>';
+			});
+			$('#altas_bajas_periodo').html(options);
+		}, 'json');
+		
 		$('#estado, #seguro_id').change(function() {
 			$.get('get-json-estadisticas_automotor.php?estado='+$('#estado').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
 				var barData = {
@@ -332,12 +340,7 @@
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<b>Altas/Bajas</b>
 							<p>
-								<select name="altas_bajas_periodo" id="altas_bajas_periodo">
-									<option value="6">Últimos 6 meses</option>
-									<option value="1">Último año</option>
-									<option value="2">Últimos 2 años</option>
-									<option value="3">Últimos 3 años</option>
-								</select>
+								<select name="altas_bajas_periodo" id="altas_bajas_periodo"></select>
 							</p>
 							<div id="chart5Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
