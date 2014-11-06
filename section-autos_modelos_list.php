@@ -124,7 +124,7 @@
 							return output;
 						}}
 					],	
-					"aaSorting": [[1,'asc']],					
+					"aaSorting": [[2,'asc']],					
 					
 					// Avoid session expired errors
 					"fnServerData": function (sSource, aoData, fnCallback) {
