@@ -548,7 +548,8 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 
-	populateListSeguro = function (field, context) {
+	populateListSeguro = function (field, context, first) {
+		first = first || 'Elegir';
 		var dfd = new $.Deferred();
 		$.ajax({
 			url: "get-json-seguro.php",
@@ -568,7 +569,7 @@ $(document).ready(function () {
 					// Sort options alphabetically
 					sortListAlpha(field);
 					// Append option: "all"
-					appendListItem(field, '', 'Elegir');
+					appendListItem(field, '', first);
 					// Select first item
 					selectFirstItem(field);
 					dfd.resolve();
@@ -1354,6 +1355,18 @@ $(document).ready(function () {
 		return dfd.promise();
 	}
 	
+	populateListPolizasPeriodos = function() {
+		var dfd = new $.Deferred();
+		$.get('get-json-polizas_periodos.php', {}, function(data) {
+			var options = '';
+			$.each(data, function(i,e) {
+				options += '<option value="'+e[0]+'">'+e[1]+'</option>';
+			});
+			$('#altas_bajas_periodo').html(options);
+			dfd.resolve();
+		}, 'json');
+		return dfd.promise();
+	}
 	/* Delete via Link functions */
 	deleteViaLink = function (section, id, table) {
 		table = table || (typeof oTable != 'undefined'?oTable:undefined);

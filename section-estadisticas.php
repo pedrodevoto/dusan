@@ -40,176 +40,171 @@
 	
 	$(document).ready(function() {
 		$('#tabs').tabs();
-		populateListSeguro('seguro_id', 'main');
-		
-		$.get('get-json-polizas_periodos.php', {}, function(data) {
-			var options = '';
-			$.each(data, function(i,e) {
-				options += '<option value="'+e[0]+'">'+e[1]+'</option>';
+		$.when(
+			populateListSeguro('seguro_id', 'main', 'Todos'),
+			populateListPolizasPeriodos()
+		).then(function() {
+			$('#altas_bajas_periodo').change(function() {
+				$.get('get-json-estadisticas_automotor.php?type=altas_bajas&periodo='+$('#altas_bajas_periodo').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
+					var barData = {
+						labels: data.altas_bajas.bar.labels,
+						datasets: [
+							{
+								label: 'Altas/Bajas',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.altas_bajas.bar.data
+							}
+						]
+					}
+					barChart5.destroy();
+					barChart5 = new Chart(barCtx5).Bar(barData, {});
+
+					pieChart5.destroy();
+					pieChart5 = new Chart(pieCtx5).Pie(data.altas_bajas.pie, {});
+				
+					var labels = '';
+					$.each(data.altas_bajas.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart5Labels').html(labels);
+				
+				}, 'json');
 			});
-			$('#altas_bajas_periodo').html(options);
-		}, 'json');
 		
-		$('#estado, #seguro_id').change(function() {
-			$.get('get-json-estadisticas_automotor.php?estado='+$('#estado').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
-				var barData = {
-					labels: data.coberturas.bar.labels,
-					datasets: [
-						{
-							label: 'Automotores',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.coberturas.bar.data
-						}
-					]
-				}
+			$('#estado, #seguro_id').change(function() {
+				$.get('get-json-estadisticas_automotor.php?estado='+$('#estado').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
+					var barData = {
+						labels: data.coberturas.bar.labels,
+						datasets: [
+							{
+								label: 'Automotores',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.coberturas.bar.data
+							}
+						]
+					}
 				
-				barChart1.destroy();
-				barChart1 = new Chart(barCtx1).Bar(barData, {});
+					barChart1.destroy();
+					barChart1 = new Chart(barCtx1).Bar(barData, {});
 
-				pieChart1.destroy();
-				pieChart1 = new Chart(pieCtx1).Pie(data.coberturas.pie, {});
+					pieChart1.destroy();
+					pieChart1 = new Chart(pieCtx1).Pie(data.coberturas.pie, {});
 				
-				var labels = '';
-				$.each(data.coberturas.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart1Labels').html(labels);
+					var labels = '';
+					$.each(data.coberturas.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart1Labels').html(labels);
 				
-				var barData = {
-					labels: data.marcas.bar.labels,
-					datasets: [
-						{
-							label: 'Marcas',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.marcas.bar.data
-						}
-					]
-				}
-				barChart2.destroy();
-				barChart2 = new Chart(barCtx2).Bar(barData, {});
+					var barData = {
+						labels: data.marcas.bar.labels,
+						datasets: [
+							{
+								label: 'Marcas',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.marcas.bar.data
+							}
+						]
+					}
+					barChart2.destroy();
+					barChart2 = new Chart(barCtx2).Bar(barData, {});
 
-				pieChart2.destroy();
-				pieChart2 = new Chart(pieCtx2).Pie(data.marcas.pie, {});
+					pieChart2.destroy();
+					pieChart2 = new Chart(pieCtx2).Pie(data.marcas.pie, {});
 				
-				var labels = '';
-				$.each(data.marcas.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart2Labels').html(labels);
+					var labels = '';
+					$.each(data.marcas.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart2Labels').html(labels);
 				
-				var barData = {
-					labels: data.castigado.bar.labels,
-					datasets: [
-						{
-							label: 'Castigados',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.castigado.bar.data
-						}
-					]
-				}
-				barChart3.destroy();
-				barChart3 = new Chart(barCtx3).Bar(barData, {});
+					var barData = {
+						labels: data.castigado.bar.labels,
+						datasets: [
+							{
+								label: 'Castigados',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.castigado.bar.data
+							}
+						]
+					}
+					barChart3.destroy();
+					barChart3 = new Chart(barCtx3).Bar(barData, {});
 
-				pieChart3.destroy();
-				pieChart3 = new Chart(pieCtx3).Pie(data.castigado.pie, {});
+					pieChart3.destroy();
+					pieChart3 = new Chart(pieCtx3).Pie(data.castigado.pie, {});
 				
-				var labels = '';
-				$.each(data.castigado.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart3Labels').html(labels);
+					var labels = '';
+					$.each(data.castigado.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart3Labels').html(labels);
 				
-				var barData = {
-					labels: data.gnc.bar.labels,
-					datasets: [
-						{
-							label: 'GNC',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.gnc.bar.data
-						}
-					]
-				}
-				barChart4.destroy();
-				barChart4 = new Chart(barCtx4).Bar(barData, {});
+					var barData = {
+						labels: data.gnc.bar.labels,
+						datasets: [
+							{
+								label: 'GNC',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.gnc.bar.data
+							}
+						]
+					}
+					barChart4.destroy();
+					barChart4 = new Chart(barCtx4).Bar(barData, {});
 
-				pieChart4.destroy();
-				pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
+					pieChart4.destroy();
+					pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
 				
-				var labels = '';
-				$.each(data.gnc.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart4Labels').html(labels);
+					var labels = '';
+					$.each(data.gnc.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart4Labels').html(labels);
 				
-				var barData = {
-					labels: data.renovadas.bar.labels,
-					datasets: [
-						{
-							label: 'Renovadas',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.renovadas.bar.data
-						}
-					]
-				}
-				barChart6.destroy();
-				barChart6 = new Chart(barCtx6).Bar(barData, {});
+					var barData = {
+						labels: data.renovadas.bar.labels,
+						datasets: [
+							{
+								label: 'Renovadas',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.renovadas.bar.data
+							}
+						]
+					}
+					barChart6.destroy();
+					barChart6 = new Chart(barCtx6).Bar(barData, {});
 
-				pieChart6.destroy();
-				pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
+					pieChart6.destroy();
+					pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
 				
-				var labels = '';
-				$.each(data.renovadas.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart6Labels').html(labels);
+					var labels = '';
+					$.each(data.renovadas.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chart6Labels').html(labels);
 				
-			}, 'json');
-			$('#altas_bajas_periodo').change();
-		});
-		
-		$('#altas_bajas_periodo').change(function() {
-			$.get('get-json-estadisticas_automotor.php?type=altas_bajas&periodo='+$('#altas_bajas_periodo').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
-				var barData = {
-					labels: data.altas_bajas.bar.labels,
-					datasets: [
-						{
-							label: 'Altas/Bajas',
-							fillColor: "rgba(151,187,205,0.5)",
-							strokeColor: "rgba(151,187,205,0.8)",
-							highlightFill: "rgba(151,187,205,0.75)",
-							highlightStroke: "rgba(151,187,205,1)",
-							data: data.altas_bajas.bar.data
-						}
-					]
-				}
-				barChart5.destroy();
-				barChart5 = new Chart(barCtx5).Bar(barData, {});
-
-				pieChart5.destroy();
-				pieChart5 = new Chart(pieCtx5).Pie(data.altas_bajas.pie, {});
-				
-				var labels = '';
-				$.each(data.altas_bajas.pie, function(i,e) {
-					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
-				});
-				$('#chart5Labels').html(labels);
-				
-			}, 'json');
+				}, 'json');
+				$('#altas_bajas_periodo').change();
+			}).change();
 		});
 		
 		var barData = {

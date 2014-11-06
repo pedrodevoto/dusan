@@ -22,7 +22,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas' && !empty($_GET['perio
 		and subtipo_poliza_id = 6 
 		and endoso_id is null
 		and poliza_renueva_num is null
-		and seguro_id = %s', GetSQLValueString($_GET['periodo'], 'text'), GetSQLValueString($_GET['seguro_id'], 'int'));
+		%s', GetSQLValueString($_GET['periodo'], 'text'), (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''));
 	end($colors);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	while ($row = mysql_fetch_array($res)) {
@@ -34,7 +34,7 @@ if (!empty($_GET['type']) && $_GET['type']=='altas_bajas' && !empty($_GET['perio
 		where date_format(poliza_validez_desde, "%%Y-%%m") = %s
 		and subtipo_poliza_id = 6 
 		and poliza_renueva_num is null
-		and seguro_id = %s', GetSQLValueString($_GET['periodo'], 'text'), GetSQLValueString($_GET['seguro_id'], 'int'));
+		%s', GetSQLValueString($_GET['periodo'], 'text'), (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''));
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	while ($row = mysql_fetch_array($res)) {
 		$output['altas_bajas']['bar']['data'][1] = $row[0];
@@ -53,9 +53,9 @@ else {
 		from seguro_cobertura_tipo join automotor using (seguro_cobertura_tipo_id) join poliza using (poliza_id)
 		left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1)
 		where endoso_id is null
-		and seguro_id = %s
 		%s
-		group by letter', GetSQLValueString($_GET['seguro_id'], 'int'), $estado);
+		%s
+		group by letter', (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''), $estado);
 
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	end($colors);
@@ -75,11 +75,11 @@ else {
 		from automotor join automotor_marca using (automotor_marca_id) join poliza using (poliza_id) join productor_seguro using (productor_seguro_id)
 		left join (endoso, endoso_tipo) ON (poliza.poliza_id = endoso.poliza_id AND endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id AND endoso_tipo_grupo_id = 1)
 		where endoso_id is null
-		and seguro_id = %s
+		%s
 		%s
 		group by automotor_marca_id
 		order by cant desc
-		limit 10', GetSQLValueString($_GET['seguro_id'], 'int'), $estado);
+		limit 10', (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''), $estado);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	end($colors);
 	while ($row = mysql_fetch_array($res)) {
@@ -96,10 +96,11 @@ else {
 
 	$sql = sprintf('SELECT IF(castigado=1,"Castigado", "No castigado"), count(automotor_id) as cant
 		from automotor join poliza using (poliza_id) join productor_seguro using (productor_seguro_id)
-		where seguro_id = %s
+		where 1
+		%s
 		%s
 		group by castigado
-		order by castigado desc', GetSQLValueString($_GET['seguro_id'], 'int'), $estado);
+		order by castigado desc', (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''), $estado);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	end($colors);
 	while ($row = mysql_fetch_array($res)) {
@@ -116,10 +117,11 @@ else {
 
 	$sql = sprintf('SELECT IF(gnc_flag=1,"Tiene GNC", "No tiene GNC"), count(automotor_id) as cant
 		from automotor join poliza using (poliza_id) join productor_seguro using (productor_seguro_id)
-		where seguro_id = %s
+		where 1
+		%s
 		%s
 		group by gnc_flag
-		order by gnc_flag desc', GetSQLValueString($_GET['seguro_id'], 'int'), $estado);
+		order by gnc_flag desc', (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''), $estado);
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	end($colors);
 	while ($row = mysql_fetch_array($res)) {
@@ -140,8 +142,8 @@ else {
 		left join poliza ren on p.poliza_numero = ren.poliza_renueva_num
 		where p.poliza_validez_hasta < date(now()) 
 		and p.subtipo_poliza_id = 6 
-		and seguro_id = %s
-		', GetSQLValueString($_GET['seguro_id'], 'int'));
+		%s
+		', (!empty($_GET['seguro_id'])?'and seguro_id = '.GetSQLValueString($_GET['seguro_id'], 'int'):''));
 	$res = mysql_query($sql, $connection) or die(mysql_error());
 	end($colors);
 	while ($row = mysql_fetch_array($res)) {
