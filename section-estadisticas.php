@@ -64,6 +64,12 @@
 				pieChart1.destroy();
 				pieChart1 = new Chart(pieCtx1).Pie(data.coberturas.pie, {});
 				
+				var labels = '';
+				$.each(data.coberturas.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart1Labels').html(labels);
+				
 				var barData = {
 					labels: data.marcas.bar.labels,
 					datasets: [
@@ -82,6 +88,12 @@
 
 				pieChart2.destroy();
 				pieChart2 = new Chart(pieCtx2).Pie(data.marcas.pie, {});
+				
+				var labels = '';
+				$.each(data.marcas.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart2Labels').html(labels);
 				
 				var barData = {
 					labels: data.castigado.bar.labels,
@@ -102,6 +114,12 @@
 				pieChart3.destroy();
 				pieChart3 = new Chart(pieCtx3).Pie(data.castigado.pie, {});
 				
+				var labels = '';
+				$.each(data.castigado.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart3Labels').html(labels);
+				
 				var barData = {
 					labels: data.gnc.bar.labels,
 					datasets: [
@@ -121,6 +139,12 @@
 				pieChart4.destroy();
 				pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
 				
+				var labels = '';
+				$.each(data.gnc.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart4Labels').html(labels);
+				
 				var barData = {
 					labels: data.renovadas.bar.labels,
 					datasets: [
@@ -139,6 +163,12 @@
 
 				pieChart6.destroy();
 				pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
+				
+				var labels = '';
+				$.each(data.renovadas.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart6Labels').html(labels);
 				
 			}, 'json');
 			$('#altas_bajas_periodo').change();
@@ -164,6 +194,13 @@
 
 				pieChart5.destroy();
 				pieChart5 = new Chart(pieCtx5).Pie(data.altas_bajas.pie, {});
+				
+				var labels = '';
+				$.each(data.altas_bajas.bar.labels, function(i,e) {
+					labels += '<p>'+e+'</p>';
+				});
+				$('#chart5Labels').html(labels);
+				
 			}, 'json');
 		});
 		
@@ -248,6 +285,7 @@
 		  			<div class="frame ui-corner-all" style="float:left;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<p><b>Coberturas</b></p>
+							<div id="chart1Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart" width="230" height="230"></canvas>
@@ -258,6 +296,7 @@
 		  			<div class="frame ui-corner-all" style="float:right;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<b>Marcas</b>
+							<div id="chart2Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart2" width="230" height="230"></canvas>
@@ -269,6 +308,7 @@
 		  			<div class="frame ui-corner-all" style="float:left;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<b>Castigados</b>
+							<div id="chart3Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart3" width="230" height="230"></canvas>
@@ -279,6 +319,7 @@
 		  			<div class="frame ui-corner-all" style="float:right;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<b>Equipos GNC</b>
+							<div id="chart4Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart4" width="230" height="230"></canvas>
@@ -298,6 +339,7 @@
 									<option value="3">Últimos 3 años</option>
 								</select>
 							</p>
+							<div id="chart5Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart5" width="230" height="230"></canvas>
@@ -308,6 +350,7 @@
 		  			<div class="frame ui-corner-all" style="float:right;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
 		  					<b>Efectividad de renovación</b>
+							<div id="chart6Labels" style="text-align:left;padding-left:40px"></div>
 		  				</div>
 		  				<div style="float:left;width:50%;margin:10px">
 		  					<canvas id="barChart6" width="230" height="230"></canvas>
