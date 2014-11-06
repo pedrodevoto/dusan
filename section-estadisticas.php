@@ -65,8 +65,8 @@
 				pieChart1 = new Chart(pieCtx1).Pie(data.coberturas.pie, {});
 				
 				var labels = '';
-				$.each(data.coberturas.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.coberturas.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart1Labels').html(labels);
 				
@@ -90,8 +90,8 @@
 				pieChart2 = new Chart(pieCtx2).Pie(data.marcas.pie, {});
 				
 				var labels = '';
-				$.each(data.marcas.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.marcas.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart2Labels').html(labels);
 				
@@ -115,8 +115,8 @@
 				pieChart3 = new Chart(pieCtx3).Pie(data.castigado.pie, {});
 				
 				var labels = '';
-				$.each(data.castigado.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.castigado.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart3Labels').html(labels);
 				
@@ -140,8 +140,8 @@
 				pieChart4 = new Chart(pieCtx4).Pie(data.gnc.pie, {});
 				
 				var labels = '';
-				$.each(data.gnc.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.gnc.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart4Labels').html(labels);
 				
@@ -165,8 +165,8 @@
 				pieChart6 = new Chart(pieCtx6).Pie(data.renovadas.pie, {});
 				
 				var labels = '';
-				$.each(data.renovadas.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.renovadas.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart6Labels').html(labels);
 				
@@ -196,8 +196,8 @@
 				pieChart5 = new Chart(pieCtx5).Pie(data.altas_bajas.pie, {});
 				
 				var labels = '';
-				$.each(data.altas_bajas.bar.labels, function(i,e) {
-					labels += '<p>'+e+'</p>';
+				$.each(data.altas_bajas.pie, function(i,e) {
+					labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
 				});
 				$('#chart5Labels').html(labels);
 				
