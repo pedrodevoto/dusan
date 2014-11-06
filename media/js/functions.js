@@ -292,13 +292,18 @@ $(document).ready(function () {
 					color: '#3c763d',
 				},
 				{
+					url: 'get-json-vencimientos_registro.php',
+					className: 'vencimientos_registro',
+					color: '#cd0a0a',
+				},
+				{
 					url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
 					className: 'gcal-event'
 				}
 			],
 			eventClick: function(event, jsEvent, view) {
 				date = event.start;
-				if ($(this).hasAnyClass('vencimiento renovacion cumpleano')) {
+				if ($(this).hasAnyClass('vencimiento renovacion cumpleano vencimientos_registro')) {
 					$('#eventdialog').html('Cargando...');
 					type = event.id;
 					var prefix = event.titlePrefix;
@@ -4006,6 +4011,7 @@ $(document).ready(function () {
 						break;
 					case 'cumpleanos':
 						output += '<td>'+object.cliente_nacimiento+'</td>';
+					case 'vencimientos_registro':
 						output += '<td>'+object.telefonos+'</td>';
 						break;
 					}
