@@ -412,8 +412,8 @@ CREATE TABLE `cliente_cliente_reg_tipo` (
   PRIMARY KEY (`cliente_cliente_reg_tipo_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `cliente_reg_tipo_id` (`cliente_reg_tipo_id`),
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
-  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`)
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_2` FOREIGN KEY (`cliente_reg_tipo_id`) REFERENCES `cliente_reg_tipo` (`cliente_reg_tipo_id`),
+  CONSTRAINT `cliente_cliente_reg_tipo_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -593,8 +593,8 @@ CREATE TABLE `contacto` (
   PRIMARY KEY (`contacto_id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `localidad_id` (`localidad_id`),
-  CONSTRAINT `contacto_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
-  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`localidad_id`) ON DELETE SET NULL
+  CONSTRAINT `contacto_ibfk_2` FOREIGN KEY (`localidad_id`) REFERENCES `localidad` (`localidad_id`) ON DELETE SET NULL,
+  CONSTRAINT `contacto_ibfk_3` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -879,7 +879,7 @@ CREATE TABLE `libros_rubricados_rcr` (
   `libros_rubricados_rcr_tipo_registro` tinyint(4) NOT NULL,
   `libros_rubricados_rcr_fecha_registro` datetime NOT NULL,
   `libros_rubricados_rcr_concepto` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `libros_rubricados_rcr_polizas` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `libros_rubricados_rcr_polizas` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `libros_rubricados_rcr_cia_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_rcr_organizador_flag` tinyint(4) NOT NULL,
   `libros_rubricados_rcr_organizador_tipo_persona` tinyint(4) DEFAULT NULL,
@@ -910,9 +910,9 @@ CREATE TABLE `libros_rubricados_ros` (
   `libros_rubricados_ros_fecha_registro` date NOT NULL,
   `libros_rubricados_ros_asegurado_tipo` int(10) unsigned NOT NULL,
   `libros_rubricados_ros_asegurado_tipo_doc` int(10) unsigned NOT NULL,
-  `libros_rubricados_ros_asegurado_nro_doc` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_asegurado_nro_doc` int(10) NOT NULL,
   `libros_rubricados_ros_asegurado_nombre` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `libros_rubricados_ros_cpa_proponente` int(10) unsigned NOT NULL,
+  `libros_rubricados_ros_cpa_proponente` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_obs_proponente` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_cpa` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
   `libros_rubricados_ros_cia_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -1016,6 +1016,7 @@ CREATE TABLE `poliza` (
   KEY `poliza_plan_id` (`poliza_plan_id`),
   KEY `poliza_pack_id` (`poliza_pack_id`),
   KEY `sucursal_id` (`sucursal_id`),
+  KEY `poliza_renueva_num` (`poliza_renueva_num`),
   CONSTRAINT `poliza_ibfk_1` FOREIGN KEY (`subtipo_poliza_id`) REFERENCES `subtipo_poliza` (`subtipo_poliza_id`),
   CONSTRAINT `poliza_ibfk_10` FOREIGN KEY (`productor_seguro_id`) REFERENCES `productor_seguro` (`productor_seguro_id`) ON DELETE CASCADE,
   CONSTRAINT `poliza_ibfk_11` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`) ON DELETE CASCADE,
@@ -1108,9 +1109,9 @@ CREATE TABLE `productor_seguro` (
   KEY `seguro_id` (`seguro_id`),
   KEY `productor_id` (`productor_id`) USING BTREE,
   KEY `organizador_id` (`organizador_id`),
-  CONSTRAINT `productor_seguro_ibfk_5` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`) ON DELETE CASCADE,
   CONSTRAINT `productor_seguro_ibfk_3` FOREIGN KEY (`organizador_id`) REFERENCES `organizador` (`organizador_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `productor_seguro_ibfk_4` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE
+  CONSTRAINT `productor_seguro_ibfk_4` FOREIGN KEY (`seguro_id`) REFERENCES `seguro` (`seguro_id`) ON DELETE CASCADE,
+  CONSTRAINT `productor_seguro_ibfk_5` FOREIGN KEY (`productor_id`) REFERENCES `productor` (`productor_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1352,8 +1353,8 @@ CREATE TABLE `usuario_sucursal` (
   PRIMARY KEY (`usuario_sucursal_id`),
   UNIQUE KEY `sucursal_id_usuario_id` (`sucursal_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`),
-  CONSTRAINT `usuario_sucursal_ibfk_6` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE,
-  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `usuario_sucursal_ibfk_3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_sucursal_ibfk_6` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursal` (`sucursal_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -1365,4 +1366,4 @@ CREATE TABLE `zona_riesgo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2014-10-24 13:14:27
+-- 2014-11-07 19:51:00

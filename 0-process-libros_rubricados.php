@@ -14,7 +14,8 @@
 $items = array();
 
 $sql = 'SELECT p.poliza_id, p.timestamp FROM poliza p LEFT JOIN libros_rubricados_ros lr ON p.poliza_id = lr.entidad_id JOIN (productor_seguro ps, productor pr) ON (p.productor_seguro_id = ps.productor_seguro_id AND ps.productor_id = pr.productor_id) WHERE libros_rubricados_ros_id IS NULL AND productor_exportar_lr = 1 AND poliza_numero <> "" AND poliza_entregada = 1 AND DATE(p.timestamp) < DATE(NOW())';
-$res = mysql_query($sql, $connection);
+$sql .= ' AND subtipo_poliza_id = 6';
+$res = mysql_query($sql, $connection) or die(mysql_error());
 while ($row = mysql_fetch_array($res)) {
 	$items[] = array('type'=>'poliza', 'id'=>$row[0], 'timestamp'=>$row[1]);
 }
@@ -60,7 +61,7 @@ foreach ($items as $item) {
 	$libros_rubricados_ros_fecha_registro = $item['timestamp'];
 	$libros_rubricados_ros_asegurado_tipo = $row['cliente_tipo_persona'];
 	$libros_rubricados_ros_asegurado_tipo_doc = ($row['cliente_tipo_persona']==2?2:$row['cliente_tipo_doc']=='DNI'?1:$row['cliente_tipo_doc']=='Pasaporte'?4:$row['cliente_tipo_doc']=='LC'?5:$row['cliente_tipo_doc']=='LE'?6:3);
-	$libros_rubricados_ros_asegurado_nro_doc = $row['cliente_nro_doc'];
+	$libros_rubricados_ros_asegurado_nro_doc = intval($row['cliente_nro_doc']);
 	$libros_rubricados_ros_asegurado_nombre = $row['cliente_nombre'];
 	$libros_rubricados_ros_cpa_proponente = $row['contacto_cp'];
 	$libros_rubricados_ros_obs_proponente = trim($row['contacto_domicilio'].' '.$row['contacto_nro'].' '.$row['contacto_piso'].' '.$row['contacto_dpto']).', '.trim($row['localidad_nombre'].' '.$row['localidad_cp'].' '.$row['contacto_country'].' '.$row['contacto_lote']);
@@ -144,8 +145,8 @@ $last_rcr = $row[0];
 
 $items = array();
 
-$sql = sprintf('SELECT cl.cuota_id, cuota_log_fecha, SUM(IF(cuota_log_tipo=1,1,-1)) as estado FROM cuota_log cl JOIN (cuota c, poliza p, productor_seguro ps, productor pr) ON (cl.cuota_id = c.cuota_id AND p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.productor_id = pr.productor_id) WHERE DATE(cuota_log_fecha) BETWEEN DATE("%s")+INTERVAL 1 DAY AND DATE(NOW()) - INTERVAL 1 DAY AND p.timestamp IS NOT NULL AND productor_exportar_lr = 1 GROUP BY cl.cuota_id HAVING estado<>0', $last_rcr);
-$res = mysql_query($sql, $connection);
+$sql = sprintf('SELECT cl.cuota_id, cuota_log_fecha, SUM(IF(cuota_log_tipo=1,1,-1)) as estado FROM cuota_log cl JOIN (cuota c, poliza p, productor_seguro ps, productor pr) ON (cl.cuota_id = c.cuota_id AND p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.productor_id = pr.productor_id) WHERE DATE(cuota_log_fecha) BETWEEN DATE("%s")+INTERVAL 1 DAY AND DATE(NOW()) - INTERVAL 1 DAY AND p.timestamp IS NOT NULL AND productor_exportar_lr = 1 and subtipo_poliza_id = 6 GROUP BY cl.cuota_id HAVING estado<>0', $last_rcr);
+$res = mysql_query($sql, $connection) or die(mysql_error());
 while ($row = mysql_fetch_array($res)) {
 	$items[] = array('type'=>$row[2], 'id'=>$row[0], 'timestamp'=>$row[1]);
 }
@@ -155,9 +156,9 @@ usort($items, function($a, $b) {
 });
 
 foreach ($items as $item) {
-	$sql = sprintf('SELECT ps.productor_id as productor_id, productor_matricula, productor_cuit, cuota_nro, cuota_recibo, poliza_cant_cuotas, poliza_numero, seguro_codigo_lr, productor_seguro_organizacion_flag, productor_seguro_organizacion_tipo_persona, productor_seguro_organizacion_matricula, productor_seguro_organizacion_cuit, cuota_monto FROM cuota c JOIN (poliza p, productor_seguro ps, seguro s, productor pr) ON (p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.seguro_id = s.seguro_id AND ps.productor_id = pr.productor_id) WHERE cuota_id = %s', $item['id']);
+	$sql = sprintf('SELECT ps.productor_id as productor_id, productor_matricula, productor_cuit, cuota_nro, cuota_recibo, poliza_cant_cuotas, poliza_numero, seguro_codigo_lr, organizador.organizador_id organizador_id, organizador_matricula, organizador_cuit, cuota_monto FROM cuota c JOIN (poliza p, productor_seguro ps, seguro s, productor pr) ON (p.poliza_id = c.poliza_id AND p.productor_seguro_id = ps.productor_seguro_id AND ps.seguro_id = s.seguro_id AND ps.productor_id = pr.productor_id) LEFT JOIN organizador USING (organizador_id) WHERE cuota_id = %s', $item['id']);
 	
-	$res = mysql_query($sql, $connection);
+	$res = mysql_query($sql, $connection) or die(mysql_error());
 	$row = mysql_fetch_assoc($res);
 	
 	$productor_id = $row['productor_id'];
@@ -182,10 +183,10 @@ foreach ($items as $item) {
 	$libros_rubricados_rcr_concepto = sprintf('Cuota No %s/%s. Recibo No %s', $row['cuota_nro'], $row['poliza_cant_cuotas'], $row['cuota_recibo']);
 	$libros_rubricados_rcr_polizas = $row['poliza_numero'];
 	$libros_rubricados_rcr_cia_id = $row['seguro_codigo_lr'];
-	$libros_rubricados_rcr_organizador_flag = $row['productor_seguro_organizacion_flag'];
-	$libros_rubricados_rcr_organizador_tipo_persona = $row['productor_seguro_organizacion_tipo_persona'];
-	$libros_rubricados_rcr_organizador_matricula = $row['productor_seguro_organizacion_matricula'];
-	$libros_rubricados_rcr_organizador_cuit = $row['productor_seguro_organizacion_cuit'];
+	$libros_rubricados_rcr_organizador_flag = (is_null($row['organizador_id'])?0:1);
+	$libros_rubricados_rcr_organizador_tipo_persona = 1;
+	$libros_rubricados_rcr_organizador_matricula = $row['organizador_matricula'];
+	$libros_rubricados_rcr_organizador_cuit = $row['organizador_cuit'];
 	$libros_rubricados_rcr_importe = $row['cuota_monto'];
 	$libros_rubricados_rcr_importe_tipo = 1;
 	
