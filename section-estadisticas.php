@@ -42,7 +42,8 @@
 		$('#tabs').tabs();
 		$.when(
 			populateListSeguro('seguro_id', 'main', 'Todos'),
-			populateListPolizasPeriodos()
+			populateListPolizasPeriodos(),
+			populateListClientes('cliente_id', 'main')
 		).then(function() {
 			$('#altas_bajas_periodo').change(function() {
 				$.get('get-json-estadisticas_automotor.php?type=altas_bajas&periodo='+$('#altas_bajas_periodo').val()+'&seguro_id='+$('#seguro_id').val(), {}, function(data) {
@@ -205,6 +206,21 @@
 				}, 'json');
 				$('#altas_bajas_periodo').change();
 			}).change();
+			
+			$('#cliente_id').chosen().change(function() {
+				$.get('get-json-estadisticas_cliente.php?cliente_id='+$('#cliente_id').val(), {}, function(data) {
+					$('#cliente_nombre').text(data.nombre);
+					$('#cliente_inicio').text(data.inicio);
+					$('#cliente_cant_automotor').text(data.cant_automotor);
+					$('#cliente_cant_otros').text(data.cant_otros);
+					$('#cliente_cant_personas').text(data.cant_personas);
+					$('#cliente_edad').text(data.edad);
+					$('#cliente_cant_siniestros').text(data.cant_siniestros);
+					
+				}, 'json');
+			});
+			$('#cliente_id_chosen').css('width', '210px');
+			$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
 		});
 		
 		var barData = {
@@ -256,27 +272,6 @@
 	<div id="divContainer">
 		<!-- Include Header -->
 		<?php include('inc/header.php'); ?>
-  		<div id="divFilter" class="ui-corner-all">
-              <form id="frmFiltro" name="frmFiltro">
-                  <table cellpadding="5" cellspacing="0" border="0" width="100%">
-  					<tr>
-  						<td width="10%">
-  							<select name="estado" id="estado">
-  								<option value="vigente">Vigente</option>
-  								<option value="historico">Histórico</option>
-  							</select>
-  						</td>
-  						<td width="10%">
-  							<select name="seguro_id" id="seguro_id">
-  							</select>
-  						</td>
-  						<td width="80%">
-						
-  						</td>
-  					</tr>
-  				</table>
-  			</form>
-  		</div>
 		<div id="tabs">
 			<ul>
 				<li><a href="#tabs-1">Automotor</a></li>
@@ -284,6 +279,27 @@
 				<li><a href="#tabs-3">General</a></li>
 			</ul>
 			<div id="tabs-1">
+		  		<div id="divFilter" class="ui-corner-all">
+		              <form id="frmFiltro" name="frmFiltro">
+		                  <table cellpadding="5" cellspacing="0" border="0" width="100%">
+		  					<tr>
+		  						<td width="10%">
+		  							<select name="estado" id="estado">
+		  								<option value="vigente">Vigente</option>
+		  								<option value="historico">Histórico</option>
+		  							</select>
+		  						</td>
+		  						<td width="10%">
+		  							<select name="seguro_id" id="seguro_id">
+		  							</select>
+		  						</td>
+		  						<td width="80%">
+						
+		  						</td>
+		  					</tr>
+		  				</table>
+		  			</form>
+		  		</div>
 		  		<div id="divMain" style="padding-top:5px">
 		  			<div class="frame ui-corner-all" style="float:left;width:48%">
 		  				<div style="float:left;width:40%;margin-top:10px">
@@ -360,7 +376,55 @@
 		  		</div>
 			</div>
 			<div id="tabs-2">
-
+		  		<div id="divFilter" class="ui-corner-all">
+		              <form id="frmFiltroClientes" name="frmFiltro">
+		                  <table cellpadding="5" cellspacing="0" border="0" width="100%">
+		  					<tr>
+		  						<td>
+									<select style="height:10px" name="cliente_id" id="cliente_id">
+									</select>
+		  						</td>
+		  					</tr>
+		  				</table>
+		  			</form>
+		  		</div>
+		  		<div id="divMain" style="padding-top:5px;text-align:left">
+		  			<div class="frame ui-corner-all" style="padding-left:10px">
+						<p style="min-height:13px">
+							<b><span id="cliente_nombre"></span></b>
+						</p>
+						<p>
+							<b>Inicio como cliente: </b><span id="cliente_inicio"></span>
+						</p>
+						<p><b>Cantidad de pólizas desde el inicio:</b></p>
+						<p>Automotor: <span id="cliente_cant_automotor"></span></p>
+						<p>Otros riesgos: <span id="cliente_cant_otros"></span></p>
+						<p>Personas: <span id="cliente_cant_personas"></span></p>
+						<p>
+							<b>Edad: </b><span id="cliente_edad"></span>
+						</p>
+						<p>
+							<b>Rentabilidad: </b><span id="cliente_rentabilidad"></span>
+						</p>
+						<p>
+							Comisión: <span id="cliente_comision"></span>
+						</p>
+						<p>
+							PFC: <span id="cliente_pfc"></span>
+						</p>
+						<p>
+							<b>Cantidad de siniestros: </b><span id="cliente_cant_siniestros"></span>
+						</p>
+						<p>
+							Promedio siniestros por póliza: <span id="cliente_siniestros_por_poliza"></span>
+						</p>
+						<p>
+							<b>Cantidad de quejas y reclamos: </b><span id="cliente_quejas"></span>
+						</p>
+						
+					</div>
+				
+				</div>
 			</div>
 			<div id="tabs-3">
 			  
