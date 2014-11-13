@@ -97,6 +97,10 @@
 	if(isset($_GET['poliza_vigencia_dia']) && $_GET['poliza_vigencia_dia']!=""){	
 		$filter_where .= sprintf(" AND DATE_FORMAT(poliza_validez_desde, '%%e') = %s", GetSQLValueString($_GET['poliza_vigencia_dia'], "int"));
 	}
+	// Filter by: marca_id
+	if(!empty($_GET['marca_id'])) {
+		$filter_where .= sprintf(" AND automotor.automotor_marca_id = %s", GetSQLValueString($_GET['marca_id'], 'int'));
+	}
 	
 	if (!empty($filter_where) or !empty($filter_having) or !empty($_GET['mostrar_todas'])) {
 		$query_Recordset1_where .= $filter_where;

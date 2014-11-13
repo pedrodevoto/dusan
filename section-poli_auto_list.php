@@ -30,6 +30,7 @@
 				populateListSuc('sucursal_id', 'main');
 				populateListSeguro('seguro_id', 'main');
 				populateListProductor('productor_id', 'main');
+				populateListAutoMarca('marca_id', 'main');
 				
 				$.when(populateListClientes('cliente_id', 'main')).then(function() {
 					$('#cliente_id').chosen().change(function() {
@@ -292,6 +293,13 @@
 								<select name="table_sort" id="table_sort">
 									<option value="10" selected>Vigencia</option>
 									<option value="0">Entrada</option> 
+								</select>
+							</td>
+						</tr>
+						<tr class="filter_advanced">
+							<td width="14px">
+								<label for="marca_id">Marca</label>
+								<select name="marca_id" id="marca_id">
 								</select>
 							</td>
 						</tr>
