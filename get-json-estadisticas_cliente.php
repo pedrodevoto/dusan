@@ -21,5 +21,31 @@ if ($row=mysql_fetch_assoc($res)) {
 	$output['cant_siniestros'] = $row['siniestros'];
 }
 
+// Timeline
+$output['timeline'] = array();
+$i = 0;
+// Altas de poliza
+$sql = sprintf('SELECT poliza_validez_desde, poliza_validez_hasta, poliza_numero, poliza_renueva_num from poliza where cliente_id = %s', GetSQLValueString($_GET['cliente_id'], 'int'));
+$res = mysql_query($sql) or die(mysql_error());
+while ($row=mysql_fetch_array($res)) {
+	$i++;
+	$output['timeline'][] = array('id'=>$i, 'content'=>'Alta PZA '.$row[2].(is_null($row[3])?'':' (Renueva PZA '.$row[3].')'), 'start'=>$row[0]);
+	$i++;
+	$output['timeline'][] = array('id'=>$i, 'content'=>'Vence PZA '.$row[2], 'start'=>$row[1]);
+}
+// Endosos
+$sql = sprintf('SELECT endoso_fecha_pedido, poliza_numero, endoso_tipo_nombre, endoso_tipo_grupo_id from endoso join poliza using (poliza_id) join endoso_tipo using (endoso_tipo_id) where cliente_id = %s group by endoso_id', GetSQLValueString($_GET['cliente_id'], 'int'));
+$res = mysql_query($sql) or die(mysql_error());
+while ($row=mysql_fetch_array($res)) {
+	$i++;
+	$output['timeline'][] = array('id'=>$i, 'content'=>sprintf('%s (%s) PZA %s', ($row[3]==1?'Anulacion':'Endoso'), $row[2], $row[1]), 'start'=>$row[0]);
+}
+// Siniestros
+$sql = sprintf('SELECT siniestros.`timestamp`, poliza_numero from siniestros join automotor using (automotor_id) join poliza using (poliza_id) where siniestros.cliente_id = %s', GetSQLValueString($_GET['cliente_id'], 'int'));
+$res = mysql_query($sql) or die(mysql_error());
+while ($row=mysql_fetch_array($res)) {
+	$i++;
+	$output['timeline'][] = array('id'=>$i, 'content'=>sprintf('Siniestro PZA %s', $row[1]), 'start'=>$row[0]);
+}
 echo json_encode($output);
 ?>

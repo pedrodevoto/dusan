@@ -39,7 +39,13 @@
 	var pieChart6;
 	
 	$(document).ready(function() {
-		$('#tabs').tabs();
+		$('#tabs').tabs({
+			activate: function(event, ui) {
+				if (ui.newTab.context.innerText=='Clientes') {
+					$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
+				}
+			}
+		});
 		$.when(
 			populateListSeguro('seguro_id', 'main', 'Todos'),
 			populateListPolizasPeriodos(),
@@ -208,6 +214,7 @@
 			}).change();
 			
 			$('#cliente_id').chosen().change(function() {
+				$('#cliente_timeline').html('');
 				$.get('get-json-estadisticas_cliente.php?cliente_id='+$('#cliente_id').val(), {}, function(data) {
 					$('#cliente_nombre').text(data.nombre);
 					$('#cliente_inicio').text(data.inicio);
@@ -217,10 +224,13 @@
 					$('#cliente_edad').text(data.edad);
 					$('#cliente_cant_siniestros').text(data.cant_siniestros);
 					
+					var container = document.getElementById('cliente_timeline');
+					var items = new vis.DataSet(data.timeline);
+					var timeline = new vis.Timeline(container, items, {});
+					
 				}, 'json');
 			});
 			$('#cliente_id_chosen').css('width', '210px');
-			$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
 		});
 		
 		var barData = {
@@ -258,7 +268,7 @@
 		barChart6 = new Chart(barCtx6).Bar(barData, {});
 		pieCtx6 = $("#pieChart6").get(0).getContext("2d");
 		pieChart6 = new Chart(pieCtx6).Pie(pieData, {});
-		
+
 	});
 	</script>
 	<style>
@@ -421,7 +431,9 @@
 						<p>
 							<b>Cantidad de quejas y reclamos: </b><span id="cliente_quejas"></span>
 						</p>
-						
+						<p>
+							<div id="cliente_timeline"></div>
+						</p>
 					</div>
 				
 				</div>

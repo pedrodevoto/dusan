@@ -70,4 +70,8 @@
 		<script src='jquery-plugins/fullcalendar/gcal.js'></script>
 		<script src='jquery-plugins/fullcalendar/lang/es.js'></script>
 		
-		<script type="text/javascript" language="javascript" src="media/js/chart.js"></script>                        
+		<script type="text/javascript" language="javascript" src="media/js/chart.js"></script>               
+		
+		<!-- Vis -->
+    	<link rel="stylesheet" href="jquery-plugins/vis/vis.css" />
+		<script src="jquery-plugins/vis/vis.js"></script>
