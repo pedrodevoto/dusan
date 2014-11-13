@@ -26,7 +26,7 @@
 					<input type="text" name="box-seguro_cobertura_tipo_antiguedad" id="box-seguro_cobertura_tipo_antiguedad" maxlength="3" style="width:50px" class="ui-widget-content" /> <span id="antiguedad" style="color:grey"></span>
 				</p>
                 <p>
-                    <label for="box-seguro_cobertura_tipo_gruas">Cantidad de grúas *</label>
+                    <label for="box-seguro_cobertura_tipo_gruas">Cantidad de grúas</label>
                     <input type="number" min="0" step="1" name="box-seguro_cobertura_tipo_gruas" id="box-seguro_cobertura_tipo_gruas" maxlength="20" class="ui-widget-content" style="width:50px" /> KM <input type="number" min="0" step="1" name="box-seguro_cobertura_tipo_gruas_km" id="box-seguro_cobertura_tipo_gruas_km" maxlength="4" class="ui-widget-content" style="width:50px" /> Desde <input type="number" min="0" step="1" name="box-seguro_cobertura_tipo_gruas_desde" id="box-seguro_cobertura_tipo_gruas_desde" maxlength="4" class="ui-widget-content" style="width:50px" />
                 </p>
 				<p>

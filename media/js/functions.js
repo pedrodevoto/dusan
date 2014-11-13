@@ -7412,9 +7412,6 @@ $(document).ready(function () {
 							"box-seguro_cobertura_tipo_limite_rc_id": {
 								required: true
 							},
-							"box-seguro_cobertura_tipo_gruas": {
-								required: true
-							},
 							"box-seguro_cobertura_tipo_franquicia": {
 								required: function() {
 									return $('#box-seguro_cobertura_tipo_todo_riesgo').prop('checked');
@@ -7474,9 +7471,6 @@ $(document).ready(function () {
 								required: true
 							},
 							"box-seguro_cobertura_tipo_limite_rc_id": {
-								required: true
-							},
-							"box-seguro_cobertura_tipo_gruas": {
 								required: true
 							},
 							"box-seguro_cobertura_tipo_franquicia": {
