@@ -38,11 +38,27 @@
 	var pieCtx6;
 	var pieChart6;
 	
+	var barCtxGeneral;
+	var barChartGeneral;
+	var pieCtxGeneral;
+	var pieChartGeneral;
+	
 	$(document).ready(function() {
 		$('#tabs').tabs({
 			activate: function(event, ui) {
-				if (ui.newTab.context.innerText=='Clientes') {
+				switch (ui.newTab.context.innerText) {
+				case 'Clientes':
 					$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
+					break;
+				case 'General':
+					if (pieCtxGeneral == undefined) {
+						barCtxGeneral = $("#barChartGeneral").get(0).getContext("2d");
+						barChartGeneral = new Chart(barCtxGeneral).Bar(barData, {});
+						pieCtxGeneral = $("#pieChartGeneral").get(0).getContext("2d");
+						pieChartGeneral = new Chart(pieCtxGeneral).Pie(pieData, {});
+						$("#general_estado").change();
+					}
+					break;
 				}
 			}
 		});
@@ -231,6 +247,37 @@
 				}, 'json');
 			});
 			$('#cliente_id_chosen').css('width', '210px');
+			
+			$("#general_estado").change(function() {
+				$.get('get-json-estadisticas_general.php?general_estado='+$('#general_estado').val(), {}, function(data) {
+					
+					var barData = {
+						labels: data.polizas.bar.labels,
+						datasets: [
+							{
+								label: 'Pólizas',
+								fillColor: "rgba(151,187,205,0.5)",
+								strokeColor: "rgba(151,187,205,0.8)",
+								highlightFill: "rgba(151,187,205,0.75)",
+								highlightStroke: "rgba(151,187,205,1)",
+								data: data.polizas.bar.data
+							}
+						]
+					}
+					barChartGeneral.destroy();
+					barChartGeneral = new Chart(barCtxGeneral).Bar(barData, {});
+					
+					pieChartGeneral.destroy();
+					pieChartGeneral = new Chart(pieCtxGeneral).Pie(data.polizas.pie, {});
+					
+					var labels = '';
+					$.each(data.polizas.pie, function(i,e) {
+						labels += '<p>'+e.label+': <b>'+e.value+'</b></p>';
+					});
+					$('#chartGeneralLabels').html(labels);
+					
+				}, 'json');
+			});
 		});
 		
 		var barData = {
@@ -439,7 +486,33 @@
 				</div>
 			</div>
 			<div id="tabs-3">
-			  
+	  		<div id="divFilter" class="ui-corner-all">
+	              <form id="frmFiltroGeneral" name="frmFiltro">
+	                  <table cellpadding="5" cellspacing="0" border="0" width="100%">
+	  					<tr>
+	  						<td width="10%">
+	  							<select name="general_estado" id="general_estado">
+	  								<option value="vigente">Vigente</option>
+	  								<option value="historico">Histórico</option>
+	  							</select>
+	  						</td>
+	  					</tr>
+	  				</table>
+	  			</form>
+	  		</div>
+	  		<div id="divMain" style="padding-top:5px;text-align:center">
+	  			<div class="frame ui-corner-all" style="float:left;width:48%">
+	  				<div style="float:left;width:40%;margin-top:10px">
+	  					<p><b>Pólizas por compañía</b></p>
+						<div id="chartGeneralLabels" style="text-align:left;padding-left:40px"></div>
+	  				</div>
+	  				<div style="float:left;width:50%;margin:10px">
+	  					<canvas id="barChartGeneral" width="230" height="230"></canvas>
+  						<canvas id="pieChartGeneral" width="200" height="200"></canvas>
+	  				</div>
+	  				<div style="clear:both"></div>
+	  			</div>
+				<div style="clear:both"></div>
 			</div>
 		</div>
 	</div>
