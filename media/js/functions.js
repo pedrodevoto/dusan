@@ -296,10 +296,10 @@ $(document).ready(function () {
 					className: 'vencimientos_registro',
 					color: '#cd0a0a',
 				},
-				{
-					url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
-					className: 'gcal-event'
-				}
+				// {
+				// 	url: 'https://www.google.com/calendar/feeds/info%40dusanasegurador.com.ar/public/basic',
+				// 	className: 'gcal-event'
+				// }
 			],
 			eventClick: function(event, jsEvent, view) {
 				date = event.start;
