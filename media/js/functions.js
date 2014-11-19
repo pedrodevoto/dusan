@@ -3377,7 +3377,7 @@ $(document).ready(function () {
 						result += '<td>';
 						switch (object.cuota_estado_nombre) {
 						case 'Pagado':
-							result += '<span onClick="javascript:window.open(\'print-cuota.php?id=' + object.cuota_id + '&print\', \'cuota\', \'height=1400,width=780,modal=yes,alwaysRaised=yes\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
+							result += '<span onClick="javascript:window.open(\'print-cuota.php?id=' + object.cuota_id + '&print\');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-print" title="Imprimir"></span>';
 							result += '<span onClick="setCuotaToPrint(' + object.cuota_recibo + ', ' + object.cuota_id + ');" style="cursor: pointer;display:inline-block" class="ui-icon ui-icon-mail-closed" title="Enviar por email"></span>';
 							if (object.master) {
 								result += '<sapn onclick="updateCuotaAnular(' + object.cuota_id + ', ' + id + ')" style="cursor:pointer;display:inline-block" class="ui-icon ui-icon-close" title="Anular"></span>';
