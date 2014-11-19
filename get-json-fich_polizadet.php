@@ -54,8 +54,6 @@
 			$output["empty"] = true;
 		}	
 		$output['subtipo_poliza'] = $row_Recordset1['subtipo_poliza_tabla'];
-		// Close Recordset: Detail
-		mysql_free_result($Recordset2);	
 		
 	} else {
 		$output["empty"] = true;		
