@@ -98,7 +98,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(11, 187, $row2['observaciones']);
 	
 	$pdf->wwrite(11, 202, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
-	$pdf->wwrite(11, 207, sprintf('Detalle de pago: %s', $row['poliza_pago_detalle']));
+	$pdf->wwrite(11, 207, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
 	
 	$pdf->wwrite(80, 202, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
 	
