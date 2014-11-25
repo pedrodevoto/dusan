@@ -6925,10 +6925,10 @@ $(document).ready(function () {
 
 				// Button action
 				$("#btnCCp").button().click(function () {
-					window.open('print-poliza.php?type=cc&id=' + id + '&print');
+					window.open('print-poliza2.php?type=cc&id=' + id + '&print');
 				});
 				$("#btnCCd").button().click(function () {
-					window.open('print-poliza.php?type=cc&id=' + id);
+					window.open('print-poliza2.php?type=cc&id=' + id);
 				});
 				$("#btnPE").button().click(function () {
 					window.open('print-poliza.php?type=pe&mc=0&id=' + id);
