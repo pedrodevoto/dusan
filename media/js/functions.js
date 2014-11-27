@@ -6931,7 +6931,7 @@ $(document).ready(function () {
 					window.open('print-poliza2.php?type=cc&id=' + id);
 				});
 				$("#btnPE").button().click(function () {
-					window.open('print-poliza.php?type=pe&mc=0&id=' + id);
+					window.open('print-poliza2.php?type=pe&mc=0&id=' + id);
 				});
 				$("#btnPEMC").button().click(function () {
 					window.open('print-poliza.php?type=pe&mc=1&id=' + id);

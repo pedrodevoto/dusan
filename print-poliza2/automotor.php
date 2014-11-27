@@ -65,6 +65,8 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(100, 116, sprintf('Zona riesgo: %s', $row2['seguro_zona_riesgo_nombre']));
 	$pdf->wwrite(100, 121, sprintf('Acreedor: %s', ($row2['prendado'] == 1 ? "Prendario (".$row2['acreedor_rs']." / CUIT: ".$row2['acreedor_cuit'].")" : "No")));
 	
+	// GNC
+	
 	$pdf->wwrite(11, 135, sprintf('Nro. oblea: %s', $row2['nro_oblea']));
 	$pdf->wwrite(11, 139, sprintf('Nro. regulador: %s', $row2['nro_regulador']));
 	
@@ -73,6 +75,8 @@ switch(substr($_GET['type'], 0, 2)) {
 	
 	$pdf->wwrite(146, 135, sprintf('Venc. oblea: %s', (is_null($row2['venc_oblea']) ? "" : strftime("%d/%m/%Y", strtotime($row2['venc_oblea'])))));
 	$pdf->wwrite(146, 139, sprintf('Nro. tubo: %s', $row2['nro_tubo']));
+	
+	// Sumas aseguradas
 	
 	$pdf->wwrite(11, 153, sprintf('Suma asegurada del vehículo:'));
 	$pdf->wwrite(11, 157, 'Equipo GNC');
@@ -97,17 +101,150 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(35, 175, $txt_cobertura);
 	$pdf->wwrite(11, 187, $row2['observaciones']);
 	
-	$pdf->wwrite(11, 202, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
-	$pdf->wwrite(11, 207, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
-	
-	$pdf->wwrite(80, 202, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
-	
 	$pdf->wwrite(11, 215, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
 	$pdf->wwrite(11, 219, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
 	
 	$pdf->wwrite(100, 215, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
 	$pdf->wwrite(100, 219, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
+
+	break;
+	case 'pe':
 	
+	// -------------------------- //
+	// Pedido de emisión          //
+	// -------------------------- //
+	
+	$pdf = new FPDIW('P');
+	$pdf->AddPage();
+	$pdf->setSourceFile('pdf/nuevos/pe_automotor.pdf');
+	$tplIdx = $pdf->importPage(1);
+	$pdf->useTemplate($tplIdx);
+	
+	$pdf->wwrite(11, 50, sprintf('Nombre/Razón social: %s', $row['cliente_nombre']));
+
+	$pdf->wwrite(11, 54, sprintf('Domicilio: %s', $row['contacto_domicilio']));
+	$pdf->wwrite(100, 54, sprintf('CP: %s', $row['localidad_cp']));
+	$pdf->wwrite(11, 58, sprintf('Localidad: %s', $row['localidad_nombre']));
+	$pdf->wwrite(11, 62, sprintf('Teléfonos: %s / %s', $row['contacto_telefono1'], $row['contacto_telefono2']));
+	$pdf->wwrite(11, 66, sprintf('Categoría de IVA: %s', $row['cliente_cf']));
+	$pdf->wwrite(100, 66, sprintf('CUIT: %s%s%s', $row['cliente_cuit_0'], $row['cliente_cuit_1'], $row['cliente_cuit_2']));
+	$pdf->wwrite(11, 70, sprintf('Fecha de nacimiento: %s', (!empty($row['cliente_nacimiento'])?strftime("%d/%m/%Y", strtotime($row['cliente_nacimiento'])):'')));
+	$pdf->wwrite(100, 70, sprintf('DNI: %s', $row['cliente_nro_doc']));
+	
+	$pdf->wwrite(146, 50, sprintf('Tipo de seguro: AUTOMOTOR'));
+	$pdf->wwrite(146, 54, sprintf('Póliza Nº: %s', $row['poliza_numero']));
+	$pdf->wwrite(146, 58, sprintf('Fecha de solicitud: %s', strftime("%d/%m/%Y", strtotime($row['poliza_fecha_solicitud']))));
+	$pdf->wwrite(146, 62, sprintf('VIGENCIA DESDE: %s', strftime("%d/%m/%Y", strtotime($row['poliza_validez_desde']))));
+	$pdf->wwrite(146, 66, sprintf('VIGENCIA HASTA: %s', strftime("%d/%m/%Y", strtotime($row['poliza_validez_hasta']))));
+	
+	$pdf->wwrite(26, 75.6, $row['cliente_email'], 12, 'B');
+	
+	$pdf->wwrite(30, 84, $auto_modelo, 8);
+	$pdf->wwrite(166, 82, ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'], 12, 'B');
+
+	$pdf->wwrite(11, 91, sprintf('Tipo de vehículo: %s', $row2['automotor_tipo_nombre']));
+	$pdf->wwrite(11, 96, sprintf('0KM: %s', formatCB($row2['0km'],'W')));
+	$pdf->wwrite(11, 101, sprintf('Año: %s', $row2['ano']));
+	$pdf->wwrite(11, 106, sprintf('Motor: %s', $row2['nro_motor']));
+	$pdf->wwrite(11, 111, sprintf('Chásis: %s', $row2['nro_chasis']));
+	
+	$pdf->wwrite(100, 91, sprintf('Uso: %s', $row2['uso']));
+	$pdf->wwrite(100, 96, sprintf('Importado: %s', formatCB($row2['importado'],'W')));
+	$pdf->wwrite(100, 101, sprintf('Accesorios: %s', formatCB($row2['accesorios'], 'W')));
+	$pdf->wwrite(100, 106, sprintf('Zona riesgo: %s', $row2['seguro_zona_riesgo_nombre']));
+	$pdf->wwrite(100, 111, sprintf('Acreedor: %s', ($row2['prendado'] == 1 ? "Prendario (".$row2['acreedor_rs']." / CUIT: ".$row2['acreedor_cuit'].")" : "No")));
+	
+	// Inspecciones del seguro
+	
+	$pdf->wwrite(11, 125, sprintf('Chapa: %s', $row2['chapa']));
+	$pdf->wwrite(11, 129, sprintf('Pintura: %s', $row2['pintura']));
+	$pdf->wwrite(11, 133, sprintf('Tipo pintura: %s', $row2['tipo_pintura']));
+	$pdf->wwrite(11, 137, sprintf('Tapizado: %s', $row2['tapizado']));
+	$pdf->wwrite(11, 141, sprintf('Combustible: %s', $row2['combustible']));
+	$pdf->wwrite(11, 145, sprintf('Color: %s', $row2['color']));
+	
+	$pdf->wwrite(60, 132, sprintf('Alarma: %s', FormatCB($row2['alarma'],'X')));
+	$pdf->wwrite(60, 136, sprintf("Corta Corriente: %s", FormatCB($row2['corta_corriente'],'X')));
+	$pdf->wwrite(60, 140, sprintf("Corta Nafta: %s", FormatCB($row2['corta_nafta'],'X')));
+	$pdf->wwrite(60, 144, sprintf("Traba Volante: %s", FormatCB($row2['traba_volante'],'X')));
+	$pdf->wwrite(60, 148, sprintf("Matafuego: %s", FormatCB($row2['corta_corriente'],'X')));
+	$pdf->wwrite(60, 152, sprintf("Tuercas: %s", FormatCB($row2['tuercas'],'X')));
+	$pdf->wwrite(60, 156, sprintf("Antena: %s", FormatCB($row2['antena'],'X')));
+	$pdf->wwrite(60, 160, sprintf("Estéreo: %s", FormatCB($row2['estereo'],'X')));
+	
+	$pdf->wwrite(90, 132, sprintf('Parlantes: %s', FormatCB($row2['parlantes'],'X')));
+	$pdf->wwrite(90, 136, sprintf("Aire: %s", FormatCB($row2['aire'],'X')));
+	$pdf->wwrite(90, 140, sprintf("C. Eléctricos: %s", FormatCB($row2['cristales_electricos'],'X')));
+	$pdf->wwrite(90, 144, sprintf("Faros Adic: %s", FormatCB($row2['faros_adicionales'],'X')));
+	$pdf->wwrite(90, 148, sprintf("Cierre Sincro: %s", FormatCB($row2['cierre_sincro'],'X')));
+	$pdf->wwrite(90, 152, sprintf("Techo Corredizo: %s", FormatCB($row2['techo_corredizo'],'X')));
+	$pdf->wwrite(90, 156, sprintf("Dir. Hidráulica: %s", FormatCB($row2['direccion_hidraulica'],'X')));
+	$pdf->wwrite(90, 160, sprintf("Frenos ABS: %s", FormatCB($row2['frenos_abs'],'X')));
+	
+	$pdf->wwrite(120, 132, sprintf('Airbag: %s', FormatCB($row2['airbag'],'X')));
+	$pdf->wwrite(120, 136, sprintf("C. Tonalizados: %s", FormatCB($row2['cristales_tonalizados'],'X')));
+	$pdf->wwrite(120, 140, sprintf("Equipo Rastreo: %s", FormatCB($row2['equipo_rastreo_id'],'X')));
+	$pdf->wwrite(120, 144, sprintf("Micro Grabado: %s", FormatCB($row2['micro_grabado'],'X')));
+	$pdf->wwrite(120, 148, sprintf("GPS: %s", FormatCB($row2['gps'],'X')));
+
+	$pdf->wwrite(152, 125, 'CUBIERTAS');
+	$pdf->wwrite(152, 128, sprintf('Medida: %s', $row2['cubiertas_medida']));
+	$pdf->wwrite(152, 131, sprintf('Marca: %s', $row2['cubiertas_marca']));
+	$pdf->wwrite(152, 134, sprintf('Desgaste:'));
+	$pdf->wwrite(152, 137, sprintf('Del. Izq: %s%%', FormatNumber($row2['cubiertas_desgaste_di'],0)));
+	$pdf->wwrite(152, 140, sprintf('Del. Der: %s%%', FormatNumber($row2['cubiertas_desgaste_dd'],0)));
+	$pdf->wwrite(152, 143, sprintf('Tra. Izq: %s%%', FormatNumber($row2['cubiertas_desgaste_ti'],0)));
+	$pdf->wwrite(152, 146, sprintf('Del. Der: %s%%', FormatNumber($row2['cubiertas_desgaste_td'],0)));
+	$pdf->wwrite(152, 149, sprintf('1E Izq: %s', (!is_null($row2['cubiertas_desgaste_1ei']) ? FormatNumber($row2['cubiertas_desgaste_1ei'],0)." %" : "-")));
+	$pdf->wwrite(152, 152, sprintf('1E Der: %s', (!is_null($row2['cubiertas_desgaste_1ed']) ? FormatNumber($row2['cubiertas_desgaste_1ed'],0)." %" : "-")));
+	$pdf->wwrite(152, 155, sprintf('Auxilio: %s%%', FormatNumber($row2['cubiertas_desgaste_auxilio'],0)));
+	
+	// GNC
+	
+	$pdf->wwrite(11, 178, sprintf('Nro. oblea: %s', $row2['nro_oblea']));
+	$pdf->wwrite(11, 182, sprintf('Nro. regulador: %s', $row2['nro_regulador']));
+	
+	$pdf->wwrite(80, 178, sprintf('Marca regulador: %s', $row2['marca_regulador']));
+	$pdf->wwrite(80, 182, sprintf('Nro. cilindro: %s', $row2['marca_cilindro']));
+	
+	$pdf->wwrite(146, 178, sprintf('Venc. oblea: %s', (is_null($row2['venc_oblea']) ? "" : strftime("%d/%m/%Y", strtotime($row2['venc_oblea'])))));
+	$pdf->wwrite(146, 182, sprintf('Nro. tubo: %s', $row2['nro_tubo']));
+	
+	// Sumas aseguradas
+	
+	$pdf->wwrite(11, 196, sprintf('Suma asegurada del vehículo:'));
+	$pdf->wwrite(11, 200, 'Equipo GNC');
+	$pdf->wwrite(11, 204, 'Accesorios');
+	$pdf->wwrite(11, 208, sprintf('Ajuste %s%%', intval($row2['ajuste'])));
+	$pdf->wwrite(11, 212, 'TOTAL');
+	
+	$txt_sumas_c2 = array(
+		array('maxwidth' => 95, 'text' => formatNumber($row2['valor_vehiculo'])." "),
+		array('maxwidth' => 95, 'text' => formatNumber($row2['valor_gnc'])." "),
+		array('maxwidth' => 95, 'text' => formatNumber($row2['valor_accesorios'])." "),
+		array('maxwidth' => 95, 'text' => ''),
+		array('maxwidth' => 95, 'text' => formatNumber($row2['valor_total'])." ")
+	);
+	$pdf->SetXY(11, 199);
+	foreach ($txt_sumas_c2 as $array) {
+		printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+	}
+	
+	$txt_cobertura = ($row2['producto_id']>0?"Producto: ".$row2['producto_nombre']." | ":'')."Cobertura: ".$row2['seguro_cobertura_tipo_nombre']." | Límite RC: ".$row2['seguro_cobertura_tipo_limite_rc_valor']." | Franquicia: ".(!is_null($row2['franquicia']) ? "$ ".formatNumber($row2['franquicia'],0) : "-");
+	
+	$pdf->wwrite(35, 218, $txt_cobertura);
+	$pdf->wwrite(11, 230, $row2['observaciones']);
+	
+	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
+	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
+	
+	$pdf->wwrite(80, 245, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
+	
+	$pdf->wwrite(11, 258, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
+	$pdf->wwrite(11, 262, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
+	
+	$pdf->wwrite(100, 258, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+	$pdf->wwrite(100, 262, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
 	
 	break;
 }
