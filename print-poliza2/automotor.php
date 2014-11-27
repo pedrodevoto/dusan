@@ -120,6 +120,26 @@ switch(substr($_GET['type'], 0, 2)) {
 	$tplIdx = $pdf->importPage(1);
 	$pdf->useTemplate($tplIdx);
 	
+	$size_emitir = 44;
+	if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
+		$txt_emitir = "MC".($row['poliza_flota']==1?' FLOTA':'');
+	} 
+	elseif ((isset($_GET['re']) && $_GET['re'] === "1") or $_GET['type']=='pere') {
+		$txt_emitir = "RENOVACIÓN".($row['poliza_flota']==1?' FLOTA':'');
+	}
+	elseif (isset($_GET['en']) && $_GET['en']==1) {
+		$txt_emitir = "ENDOSO".($row['poliza_flota']==1?' FLOTA':'');
+		if($endoso['anulacion']) {
+			$size_emitir = 30;
+			$txt_emitir = "ENDOSO - ANULACION".($row['poliza_flota']==1?' FLOTA':'');
+		}
+	} 
+	else {
+		$txt_emitir = "EMITIR".($row['poliza_flota']==1?' FLOTA':'');						
+	}
+	
+	$pdf->wwrite(45, 1, $txt_emitir, $size_emitir);
+	
 	$pdf->wwrite(11, 50, sprintf('Nombre/Razón social: %s', $row['cliente_nombre']));
 
 	$pdf->wwrite(11, 54, sprintf('Domicilio: %s', $row['contacto_domicilio']));
