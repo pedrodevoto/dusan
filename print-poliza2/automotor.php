@@ -140,6 +140,8 @@ switch(substr($_GET['type'], 0, 2)) {
 	
 	$pdf->wwrite(45, 1, $txt_emitir, $size_emitir);
 	
+	$pdf->wwrite(45, 30, sprintf('Código %s', $row['productor_seguro_codigo']), 12);
+	
 	$pdf->wwrite(11, 50, sprintf('Nombre/Razón social: %s', $row['cliente_nombre']));
 
 	$pdf->wwrite(11, 54, sprintf('Domicilio: %s', $row['contacto_domicilio']));
@@ -259,6 +261,19 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
 	
 	$pdf->wwrite(80, 245, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
+	
+	$pdf->wwrite(148, 247, 'Prima');
+	$pdf->wwrite(148, 251.5, 'Premio');
+	
+	$txt_imp_c2 = array(
+		array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_prima'])." "),
+		array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_premio'])." ")
+	);
+
+	$pdf->SetXY(149, 250);
+	foreach ($txt_imp_c2 as $array) {
+		printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+	}
 	
 	$pdf->wwrite(11, 258, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
 	$pdf->wwrite(11, 262, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
