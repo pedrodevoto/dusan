@@ -113,6 +113,9 @@ $(document).ready(function () {
 	}
 	$.colorbox.settings.overlayClose = false;
 	$.colorbox.settings.fixed = true;
+	$.colorbox.settings.onClosed = function() {
+		$('#cliente_id_chosen .chosen-drop .chosen-search input').focus();
+	}
 
 	$.fn.hasAnyClass = function() {
 	    var classes = arguments[0].split(" ");
