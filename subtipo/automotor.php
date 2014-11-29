@@ -294,6 +294,8 @@
 					<option value="VIOLETA">VIOLETA</option>
 					<option value="CELESTE">CELESTE</option>
 					<option value="BORDEAUX">BORDEAUX</option>
+					<option value="CHAMPAGNE">CHAMPAGNE</option>
+					<option value="BICOLOR">BICOLOR</option>
 				</select>
 		    </p>
 		    <p>
