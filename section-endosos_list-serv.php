@@ -35,6 +35,10 @@
 	else {
 		$query_Recordset1_where .= " AND endoso_completo = 0";
 	}
+	// Filter by: seguro_nombre
+	if(isset($_GET['seguro_id']) && $_GET['seguro_id']!=""){	
+		$query_Recordset1_where .= sprintf(" AND productor_seguro.seguro_id = %s",GetSQLValueString($_GET['seguro_id'], "int"));
+	}
 	
 ?>
 <?php

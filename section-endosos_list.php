@@ -24,6 +24,7 @@
 		<!-- Filter initialization -->
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {	            
+				populateListSeguro('seguro_id', 'main');
 							
 				// Filter: Assign listening functions to input-text for Submit
 				listenToTxtForSubmit();				
@@ -145,7 +146,9 @@
 								</select>
                             </td>      
 							<td width="20%">
-								
+								<label for="seguro_id">Compañía</label>                                
+								<select name="seguro_id" id="seguro_id">
+								</select>
 							</td>  
 							<td width="20%">
 								
