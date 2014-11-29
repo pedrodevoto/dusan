@@ -93,7 +93,7 @@ foreach ($medios_pago as $medio_pago) {
 	$ws->getStyle("A$i:K$i")->applyFromArray($borders);
 	$i++;
 
-	$sql = sprintf("SELECT poliza_numero, CONCAT_WS(' ', cliente_nombre, cliente_apellido, cliente_razon_social), DATE_FORMAT(MAX(cuota_vencimiento), '%%d/%%m/%%Y'), max(cuota_nro), CONCAT_WS('', patente_0, patente_1), CONCAT_WS(' ', automotor_marca_nombre, modelo), GROUP_CONCAT(DISTINCT CONCAT(month(cuota_periodo), ': ', IF(cuota_estado_id=1, 'DEBE',cuota_monto)) SEPARATOR ', '), GROUP_CONCAT(DISTINCT CONCAT_WS(', ', contacto_telefono1, contacto_telefono2, contacto_telefono_laboral, contacto_telefono_alt) SEPARATOR ', '), CONCAT_WS(' ', contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, localidad_nombre, localidad_cp)
+	$sql = sprintf("SELECT poliza_numero, CONCAT_WS(' ', cliente_apellido, cliente_nombre, cliente_razon_social), DATE_FORMAT(MAX(cuota_vencimiento), '%%d/%%m/%%Y'), max(cuota_nro), CONCAT_WS('', patente_0, patente_1), CONCAT_WS(' ', automotor_marca_nombre, modelo), GROUP_CONCAT(DISTINCT CONCAT(month(cuota_periodo), ': ', IF(cuota_estado_id=1, 'DEBE',cuota_monto)) SEPARATOR ', '), GROUP_CONCAT(DISTINCT CONCAT_WS(', ', contacto_telefono1, contacto_telefono2, contacto_telefono_laboral, contacto_telefono_alt) SEPARATOR ', '), CONCAT_WS(' ', contacto_domicilio, contacto_nro, contacto_piso, contacto_dpto, localidad_nombre, localidad_cp)
 		from poliza
 		join cuota using (poliza_id)
 		join cliente using (cliente_id)
