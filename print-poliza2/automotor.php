@@ -50,8 +50,10 @@ switch(substr($_GET['type'], 0, 2)) {
 	
 	$pdf->wwrite(26, 85.6, $row['cliente_email'], 12, 'B');
 	
+	$pdf->SetTextColor(255,255,255);
 	$pdf->wwrite(30, 94, $auto_modelo, 8);
 	$pdf->wwrite(166, 92, ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'], 12, 'B');
+	$pdf->SetTextColor(0,0,0);
 
 	$pdf->wwrite(11, 101, sprintf('Tipo de vehículo: %s', $row2['automotor_tipo_nombre']));
 	$pdf->wwrite(11, 106, sprintf('0KM: %s', formatCB($row2['0km'],'W')));
@@ -161,8 +163,10 @@ switch(substr($_GET['type'], 0, 2)) {
 	
 	$pdf->wwrite(26, 75.6, $row['cliente_email'], 12, 'B');
 	
+	$pdf->SetTextColor(255,255,255);
 	$pdf->wwrite(30, 84, $auto_modelo, 8);
 	$pdf->wwrite(166, 82, ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'], 12, 'B');
+	$pdf->SetTextColor(0,0,0);
 
 	$pdf->wwrite(11, 91, sprintf('Tipo de vehículo: %s', $row2['automotor_tipo_nombre']));
 	$pdf->wwrite(11, 96, sprintf('0KM: %s', formatCB($row2['0km'],'W')));
