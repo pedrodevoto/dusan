@@ -7249,7 +7249,7 @@ $(document).ready(function () {
 						arr.push({name: 'type', value: 'peen'});
 						arr.push({name: 'en', value: 1});
 						$.ajax({
-							url: 'print-poliza.php',
+							url: 'print-poliza2.php',
 							data: arr,
 							success: function(data) {
 								alert(data);
