@@ -1008,7 +1008,7 @@ $(document).ready(function () {
 					$.each(j, function (key0, value0) {
 						options += '<optgroup label="' + key0 + '">';
 						$.each(value0, function (key, value) {
-							options += '<option value="' + key + '">' + value + '</option>';
+							options += '<option value="' + value[0] + '">' + value[1] + '</option>';
 						})
 						options += '</optgroup>';
 					});

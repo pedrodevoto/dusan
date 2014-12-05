@@ -20,7 +20,7 @@
 	
 	$output = array();
 	while ($row_Recordset1=mysql_fetch_array($Recordset1)) {
-		$output[$row_Recordset1[2]][$row_Recordset1[0]] = strip_tags($row_Recordset1[1]);
+		$output[$row_Recordset1[2]][] = array($row_Recordset1[0], strip_tags($row_Recordset1[1]));
 	}
 	echo json_encode($output);
 	
