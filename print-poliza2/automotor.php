@@ -128,7 +128,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$tplIdx = $pdf->importPage(1);
 	$pdf->useTemplate($tplIdx);
 	
-	$size_emitir = 44;
+	$size_emitir = 38;
 	if ((isset($_GET['mc']) && $_GET['mc'] === "1") or $_GET['type']=='pemc') {
 		$txt_emitir = "MC".($row['poliza_flota']==1?' FLOTA':'');
 	} 
@@ -145,6 +145,8 @@ switch(substr($_GET['type'], 0, 2)) {
 	else {
 		$txt_emitir = "EMITIR".($row['poliza_flota']==1?' FLOTA':'');						
 	}
+	
+	$txt_emitir .= ' '. $row['seguro_nombre'];
 	
 	$pdf->wwrite(45, 1, $txt_emitir, $size_emitir);
 	
