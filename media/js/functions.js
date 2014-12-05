@@ -7628,6 +7628,7 @@ $(document).ready(function () {
 			height: '100%',
 			onComplete: function() {
 				populateDiv_Fotos('automotor', id, 'Automotor');
+				populateDiv_Archivos('automotor', id, 'ArchivosGenerales');
 				populateDiv_Fotos('automotor_micrograbado', id, 'Micrograbado');
 				populateDiv_Fotos('automotor_gnc', id, 'GNC');
 				populateDiv_Archivos('automotor_cert_rodamiento', id, 'CertRodamiento');
@@ -7652,6 +7653,9 @@ $(document).ready(function () {
 							switch ($(e).prop('id')) {
 							case 'cert_rodamiento':
 								populateDiv_Archivos('automotor_'+$(e).prop('id'), id, $(e).attr('suffix'));
+								break;
+							case 'archivos_generales':
+								populateDiv_Archivos('automotor', id, 'ArchivosGenerales');
 								break;
 							default:
 								populateDiv_Fotos(($(e).prop('id')!='automotor'?'automotor_':'')+$(e).prop('id'), id, $(e).attr('suffix'));
