@@ -145,10 +145,10 @@ switch(substr($_GET['type'], 0, 2)) {
 	else {
 		$txt_emitir = "EMITIR".($row['poliza_flota']==1?' FLOTA':'');						
 	}
-	
-	$txt_emitir .= ' '. $row['seguro_nombre'];
-	
+
 	$pdf->wwrite(45, 1, $txt_emitir, $size_emitir);
+	
+	$pdf->wwrite(44.5, 15, $row['seguro_nombre'], 30);
 	
 	$pdf->wwrite(45, 30, sprintf('Código %s', $row['productor_seguro_codigo']), 12);
 	
