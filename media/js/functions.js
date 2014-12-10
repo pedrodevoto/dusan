@@ -6959,7 +6959,7 @@ $(document).ready(function () {
 							url = 'send-inspeccion.php';
 							break;
 						default:
-							url = 'print-poliza2.php';
+							url = 'print-poliza.php';
 							break;
 					}
 					$.ajax({
