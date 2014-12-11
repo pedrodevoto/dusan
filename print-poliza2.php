@@ -149,6 +149,8 @@ require_once('inc/mail_functions.php');
 ?>
 <?php
 if (!empty($_GET['id'])) {
+	$poliza_id = mysql_real_escape_string($_GET['id']);
+	
 	$sql = sprintf("SELECT *, TRIM(CONCAT_WS(' ', cliente_apellido, cliente_nombre, cliente_razon_social)) as cliente_nombre, COUNT(DISTINCT IF(cuota_pfc=1, cuota_id, null)) as cuota_pfc FROM poliza JOIN (subtipo_poliza, tipo_poliza, cliente, productor_seguro, productor, seguro, cuota) ON (poliza.subtipo_poliza_id=subtipo_poliza.subtipo_poliza_id AND subtipo_poliza.tipo_poliza_id=tipo_poliza.tipo_poliza_id AND poliza.cliente_id=cliente.cliente_id AND poliza.productor_seguro_id=productor_seguro.productor_seguro_id AND productor_seguro.productor_id=productor.productor_id AND productor_seguro.seguro_id=seguro.seguro_id AND cuota.poliza_id = poliza.poliza_id) LEFT JOIN contacto ON poliza.cliente_id=contacto.cliente_id AND contacto_default=1 LEFT JOIN localidad ON localidad.localidad_id = contacto.localidad_id JOIN sucursal ON poliza.sucursal_id = sucursal.sucursal_id LEFT JOIN (poliza_plan, poliza_pack) ON poliza.poliza_plan_id = poliza_plan.poliza_plan_id AND poliza.poliza_pack_id = poliza_pack.poliza_pack_id
 									WHERE poliza.poliza_id=%s GROUP BY poliza.poliza_id", GetSQLValueString($_GET['id'], 'int'));
 	$res = mysql_query($sql) or die(mysql_error());
