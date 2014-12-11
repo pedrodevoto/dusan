@@ -309,41 +309,54 @@ switch(substr($_GET['type'], 0, 2)) {
 // OUTPUT
 if (isset($_GET['email'])) {
 	$cc = explode(',', urldecode($_GET['email']));
-	$to = $row['seguro_email_emision'];
 	$subject = $_GET['mail-subject'];
 	$type = 0;
-	switch(substr($_GET['type'], 2)) {
-		case '':
-			$file_name = ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
-			$type = 2;
+	switch(substr($_GET['type'], 0, 2)) {
+		case 'cc':
+		$to = $row['cliente_email'];
+		$file_name = 'Constancia de cobertura.pdf';
+		$body = TRUE;
+		$type = 1;
 		break;
-		case 'mc':
-			$file_name = ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
-			$type = 3;
+		case 'pe':
+		$to = $row['seguro_email_emision'];
+		switch(substr($_GET['type'], 2)) {
+			case '':
+				$file_name = ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
+				$type = 2;
+			break;
+			case 'mc':
+				$file_name = ($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
+				$type = 3;
+			break;
+			case 're':
+				$file_name = 'Renovacion '.($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
+				$type = 4;
+			break;
+			case 'en':
+				switch($_GET['enviar_a']) {
+					case 'comp':
+					default:
+					$to = $row['seguro_email_endosos'];
+					break;
+					case 'clie':
+					$to = $row['cliente_email'];
+					break;
+				}
+				$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row['poliza_numero'].".pdf";
+				$type = 5;
+			break;
+		}
 		break;
-		case 're':
-			$file_name = 'Renovacion '.($row2['automotor_carroceria_id']==17?'101':'').$row2['patente_0'].$row2['patente_1'].'.pdf';
-			$type = 4;
-		break;
-		case 'en':
-			switch($_GET['enviar_a']) {
-				case 'comp':
-				default:
-				$to = $row['seguro_email_endosos'];
-				break;
-				case 'clie':
-				$to = $row['cliente_email'];
-				break;
-			}
-			$file_name = ($endoso['anulacion']?'Anulacion':'Endoso')." PZA.".$row['poliza_numero'].".pdf";
-			$type = 5;
+		default:
+		$to = '';
 		break;
 	}
 	$filename = 'temp/'.md5(microtime()).'.pdf';
 	$pdf->Output($filename, 'F');
 	$attachments = array();
 	$attachments[] = array('file'=>$filename, 'name'=>$file_name, 'type'=>'application/pdf');
-	echo send_mail($type, $poliza_id, $to, $subject, FALSE, $attachments, $cc);
+	echo send_mail($type, $poliza_id, $to, $subject, $body, $attachments, $cc);
 }
 else {
 	$pdf->Output();
