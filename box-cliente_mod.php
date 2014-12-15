@@ -157,8 +157,8 @@ $('#box-cliente_tipo_persona').change(function() {
 					<input type="text" name="box-contacto_telefono1" id="box-contacto_telefono1" maxlength="25" class="ui-widget-content" style="width:200px" />
 				</p>
 				<p>
-					<label for="box-contacto_telefono2">Tel. Celular</label>
-					<input type="text" name="box-contacto_telefono2" id="box-contacto_telefono2" maxlength="25" class="ui-widget-content" style="width:200px" />
+					<label for="box-contacto_telefono2" style="width:68px">Tel. Celular</label> (011) 15
+					<input type="text" name="box-contacto_telefono2" id="box-contacto_telefono2" maxlength="8" class="ui-widget-content" style="width:200px" pattern="[0-9]{8}" />
 				</p>                                                                     
 					<p>
 						<label for="box-contacto_telefono2_compania">Compañía</label>

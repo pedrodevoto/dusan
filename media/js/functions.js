@@ -6006,6 +6006,12 @@ $(document).ready(function () {
 							},
 							"box-contacto_nro": {
 								required: true
+							},
+							"box-contacto_telefono2": {
+								digits: true,
+								minlength: 8,
+								maxlength: 8,
+								required: false
 							}
 						}
 					});
