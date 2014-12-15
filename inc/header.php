@@ -1,4 +1,4 @@
-	<a href="main.php"><div id="divHeaderImage" style="background: url('media/images/banner_cabezal.jpg');background-repeat:no-repeat;height:51px">
+	<a href="main.php"><div id="divHeaderImage" style="background: url('media/images/banner_cabezal.jpg');background-repeat:no-repeat;background-size:1050px 51px;width:1050;height:51px">
 		
 	</div></a>
 	<div id="divHeader">
