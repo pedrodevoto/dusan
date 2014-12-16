@@ -5819,6 +5819,23 @@ $(document).ready(function () {
 						}
 					});
 					
+					$('#box-cliente_tipo_persona').change(function() {
+						switch($(this).val()) {
+						case '1':
+							$('.persona_fisica').show();
+							$('.persona_juridica').hide();
+							$('#titulo_tipo_persona').text('Persona Física');
+							$('#box-cliente_apellido').focus();
+							break;
+						case '2':
+							$('.persona_juridica').show();
+							$('.persona_fisica').hide();
+							$('#titulo_tipo_persona').text('Persona Jurídica');
+							$('#box-cliente_razon_social').focus();
+							break;
+						}
+					});
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
@@ -5918,7 +5935,24 @@ $(document).ready(function () {
 				).then(function () {
 
 					$('.box-date').datepicker('option', 'dateFormat', 'dd/mm/yy');
-
+					
+					$('#box-cliente_tipo_persona').change(function() {
+						switch($(this).val()) {
+						case '1':
+							$('.persona_fisica').show();
+							$('.persona_juridica').hide();
+							$('#titulo_tipo_persona').text('Persona Física');
+							$('#box-cliente_apellido').focus();
+							break;
+						case '2':
+							$('.persona_juridica').show();
+							$('.persona_fisica').hide();
+							$('#titulo_tipo_persona').text('Persona Jurídica');
+							$('#box-cliente_razon_social').focus();
+							break;
+						}
+					});
+					
 					// Validate form
 					var validateForm = $("#frmBox").validate({
 						rules: {
