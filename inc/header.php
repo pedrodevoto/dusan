@@ -61,6 +61,7 @@
 		                <li><a href="section-caja.php">Caja</a></li>
 		                <li><a href="section-calendario.php">Calendario</a></li>
 		                <li><a href="section-estadisticas.php">Estadísticas</a></li>
+						<li><a href="section-newsletter.php">Newsletter</a></li>
 					</ul>
 				</li>
                 <li><a href="#">Configuración</a>

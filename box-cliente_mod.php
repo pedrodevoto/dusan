@@ -195,6 +195,25 @@
 		    </div>
 			<div style="clear:both"></div>
 		</fieldset>
+		<fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
+            <legend class="ui-widget ui-widget-header ui-corner-all">Envío de SMS</legend>
+			<p>
+				<label for="box-cliente_sms_deuda">Vencimiento de cuotas</label>
+				<input type="checkbox" id="box-cliente_sms_deuda" name="box-cliente_sms_deuda" />
+			</p>
+			<p>
+				<label for="box-cliente_sms_registro">Vencimiento de registro</label>
+				<input type="checkbox" id="box-cliente_sms_registro" name="box-cliente_sms_registro" />
+			</p>
+			<p>
+				<label for="box-cliente_sms_cumpleanos">Cumpleaños</label>
+				<input type="checkbox" id="box-cliente_sms_cumpleanos" name="box-cliente_sms_cumpleanos" />
+			</p>
+			<p>
+				<label for="box-cliente_sms_newsletter">Newsletter</label>
+				<input type="checkbox" id="box-cliente_sms_newsletter" name="box-cliente_sms_newsletter" />
+			</p>
+		</fieldset>
 	</form>
 
     <fieldset class="ui-widget ui-widget-content ui-corner-all" style="margin-top:20px">
