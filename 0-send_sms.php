@@ -1,7 +1,7 @@
 <?php
 	// CHECK INTERFACE (avoid being run by browser, either locally or on the live server)
 	if (strtolower(php_sapi_name())!="cli") {
-		// die("Error: Invalid interface.");
+		die("Error: Invalid interface.");
 	}
 ?>
 <?php
