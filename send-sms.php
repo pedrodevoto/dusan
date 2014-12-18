@@ -14,7 +14,7 @@ if (!empty($_POST['mensaje'])) {
 	$sql = 'SELECT contacto_telefono2 from contacto join cliente using (cliente_id) where contacto_default = 1 and cliente_sms_newsletter=1 and contacto_telefono2 is not null';
 	$res = mysql_query($sql) or die(mysql_error());
 	$mensajes = array();
-	while ($row=mysql_fetch_array($sql)) {
+	while ($row=mysql_fetch_array($res)) {
 		$mensajes[] = sprintf("11%s\t11%s\t%s", $row[0], $row[0], $_POST['mensaje']);
 	}
 	
