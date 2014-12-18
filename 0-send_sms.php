@@ -43,12 +43,16 @@
 		$mensajes[] = sprintf("11%s\t11%s\t%s", $row['numero'], $row['numero'], $text);
 	}
 
-	$sql = "SELECT contacto_telefono2 numero, date_format(cliente_reg_vencimiento, '%d/%m/%y') vencimiento, TRIM(concat_ws(' ', cliente_nombre, cliente_apellido, cliente_razon_social)) nombre from cliente join contacto on contacto.cliente_id = cliente.cliente_id and contacto_default = 1 
+	$sql = "SELECT contacto_telefono2 numero, date_format(cliente_reg_vencimiento, '%d/%m/%y') vencimiento, TRIM(concat_ws(' ', cliente_nombre, cliente_apellido, cliente_razon_social)) nombre from cliente join poliza using (cliente_id) join contacto on contacto.cliente_id = cliente.cliente_id and contacto_default = 1 
+		left join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1)
 		where 
+		poliza_estado_id in (3,4,7) and
+		endoso_id is null and
 		cliente_reg_vencimiento is not null and 
 		contacto_telefono2 is not null and contacto_telefono2 <> '' and
 		cliente_sms_registro = 1 and
-		(cliente_reg_vencimiento = date(now()) + interval 30 day or cliente_reg_vencimiento = date(now()) + interval 10 day)";
+		(cliente_reg_vencimiento = date(now()) + interval 1 month or cliente_reg_vencimiento = date(now()) + interval 10 day)
+		group by cliente.cliente_id";
 	$res = mysql_query($sql) or die(mysql_error());
 	
 	while ($row=mysql_fetch_assoc($res)) {
@@ -64,12 +68,16 @@
 		$mensajes[] = sprintf("11%s\t11%s\t%s", $row['numero'], $row['numero'], $text);
 	}
 	
-	$sql = "SELECT contacto_telefono2 numero, TRIM(concat_ws(' ', cliente_nombre, cliente_apellido, cliente_razon_social)) nombre from cliente join contacto on contacto.cliente_id = cliente.cliente_id and contacto_default = 1 
+	$sql = "SELECT contacto_telefono2 numero, TRIM(concat_ws(' ', cliente_nombre, cliente_apellido, cliente_razon_social)) nombre from poliza join cliente using (cliente_id) join contacto on contacto.cliente_id = cliente.cliente_id and contacto_default = 1 
+		left join (endoso, endoso_tipo) on (poliza.poliza_id = endoso.poliza_id and endoso.endoso_tipo_id = endoso_tipo.endoso_tipo_id and endoso_tipo_grupo_id = 1)
 		where 
+		poliza_estado_id in (3,4,7) and
+		endoso_id is null and
 		cliente_nacimiento is not null and 
 		contacto_telefono2 is not null and contacto_telefono2 <> '' and
 		cliente_sms_cumpleanos = 1 and
-		date_format(cliente_nacimiento, '%d-%m') = date_format(now(), '%d-%m')";
+		date_format(cliente_nacimiento, '%d-%m') = date_format(now(), '%d-%m')
+		group by cliente.cliente_id";
 	$res = mysql_query($sql) or die(mysql_error());
 	
 	while ($row=mysql_fetch_assoc($res)) {
