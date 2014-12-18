@@ -23,7 +23,6 @@ if (!empty($_POST['mensaje'])) {
 		'CLAVE'				=> 'DUSANASEGURADOR979',
 		'SEPARADORCAMPOS'	=> 'tab',
 		'BLOQUE'			=> urlencode(implode("\n", $mensajes)),
-		'TEST'				=> 1,
 	);
 	foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
 	rtrim($fields_string, '&');
