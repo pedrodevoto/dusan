@@ -3007,7 +3007,7 @@ $(document).ready(function () {
 					result += '<th>Lote</th>';
 					result += '<th>CP</th>';
 					result += '<th>Teléfono 1</th>';
-					result += '<th>Teléfono 2</th>';
+					result += '<th>Celular</th>';
 					result += '<th>Acción</th>';
 					result += '</tr>';
 					// Data
