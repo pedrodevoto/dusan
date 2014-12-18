@@ -34,7 +34,7 @@
 		$i = 0;
 		while (true) {
 			$nombre = substr($row['nombre'], 0, strlen($row['nombre'])-$i);
-			$text = sprintf('Sr/a %s le recordamos que la fecha de vencimiento de su seguro %s el dia %s Cuo.%s x $%s PZA.%s%s. Dusan Aseg', $nombre, $row['vencida']?'fue':'es', $row['vencimiento'], $row['cuota_nro'], $row['cuota_monto'], $row['poliza_numero'], ($row['subtipo_poliza_id']==6?' '.$row['marca']:''));
+			$text = sprintf('Sr/a %s le recordamos que la fecha de vencimiento de su seguro %s el dia %s Cuo.%s x $%s PZA.%s%s. DUSAN SEGUROS', $nombre, $row['vencida']?'fue':'es', $row['vencimiento'], $row['cuota_nro'], $row['cuota_monto'], $row['poliza_numero'], ($row['subtipo_poliza_id']==6?' '.$row['marca']:''));
 			if (strlen($text)<=160 or $i==strlen($row['nombre'])) {
 				break;
 			}
