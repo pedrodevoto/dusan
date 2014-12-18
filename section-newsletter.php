@@ -23,7 +23,6 @@
 					$.post("send-sms.php", $("#frmSMS").serialize(), function (data) {
 						alert(data);
 						$('#btnSMS').button("option", "disabled", false);
-						$('#mensaje').val('');
 						$('#mensaje').focus();
 					});
 					event.preventDefault();
