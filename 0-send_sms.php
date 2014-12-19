@@ -59,7 +59,7 @@
 		$i = 0;
 		while (true) {
 			$nombre = substr($row['nombre'], 0, strlen($row['nombre'])-$i);
-			$text = sprintf('Sr/a %s, de acuerdo a lo que figura en nuestra base de datos, su registro de conducir vence el dia %s. Dusan Aseg', $nombre, $row['vencimiento']);
+			$text = sprintf('Sr/a %s, de acuerdo a lo que figura en nuestra base de datos, su registro de conducir vence el dia %s. DUSAN SEGUROS', $nombre, $row['vencimiento']);
 			if (strlen($text)<=160 or $i==strlen($row['nombre'])) {
 				break;
 			}
@@ -84,7 +84,7 @@
 		$i = 0;
 		while (true) {
 			$nombre = substr($row['nombre'], 0, strlen($row['nombre'])-$i);
-			$text = sprintf('Estimado %s, en este dia tan especial Dusan Aseg. le desea Feliz Cumpleaños!!!', $nombre);
+			$text = sprintf('Estimado %s, en este dia tan especial DUSAN SEGUROS le desea Feliz Cumpleaños!!!', $nombre);
 			if (strlen($text)<=160 or $i==strlen($row['nombre'])) {
 				break;
 			}
