@@ -108,11 +108,11 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(35, 175, $txt_cobertura);
 	$pdf->wwrite(11, 187, $row2['observaciones']);
 	
-	$pdf->wwrite(11, 215, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
-	$pdf->wwrite(11, 219, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
+	$pdf->wwrite(11, 202, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
+	$pdf->wwrite(11, 207, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
 	
-	$pdf->wwrite(100, 215, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-	$pdf->wwrite(100, 219, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
+	$pdf->wwrite(100, 202, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+	$pdf->wwrite(100, 207, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
 
 	break;
 	case 'pe':
