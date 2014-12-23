@@ -112,7 +112,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(11, 207, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
 	
 	$pdf->wwrite(100, 202, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-	$pdf->wwrite(100, 207, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
+	$pdf->wwrite(100, 207, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
 
 	break;
 	case 'pe':
@@ -301,7 +301,7 @@ switch(substr($_GET['type'], 0, 2)) {
 		$pdf->wwrite(11, 262, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
 	
 		$pdf->wwrite(100, 258, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-		$pdf->wwrite(100, 262, sprintf('DESCUENTO: %s', $row['productor_seguro_codigo']));
+		$pdf->wwrite(100, 262, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
 	}
 	break;
 }
