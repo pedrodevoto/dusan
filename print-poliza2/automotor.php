@@ -112,12 +112,6 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(11, 207, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
 
 	$pdf->wwrite(80, 202, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
-	
-	$pdf->wwrite(11, 215, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
-	$pdf->wwrite(11, 219, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
-	
-	$pdf->wwrite(100, 215, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-	$pdf->wwrite(100, 219, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
 
 	break;
 	case 'pe':
