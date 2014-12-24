@@ -7,10 +7,10 @@ $sql = sprintf("SELECT accidentes_asegurado_nombre, accidentes_asegurado_documen
 $res3 = mysql_query($sql, $connection) or die(mysql_die());
 $asegurados = array();
 while($row3 = mysql_fetch_assoc($res3)) {
-	for($i=0;$i<80;$i++) {
+	// for($i=0;$i<80;$i++) {
 		$asegurados[] = $row3;
 		$asegurados[] = array('beneficiario'=>true);
-	}
+	// }
 	// break;
 }
 
