@@ -42,7 +42,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(100, 64, sprintf('CP: %s', $row['localidad_cp']));
 	$pdf->wwrite(11, 68, sprintf('Localidad: %s', $row['localidad_nombre']));
 	$pdf->wwrite(11, 72, sprintf('Teléfonos: %s / %s', $row['contacto_telefono1'], $row['contacto_telefono2']));
-	$pdf->wwrite(11, 76, sprintf('Categoría de IVA: %s', $row['cliente_cf']));
+	$pdf->wwrite(11, 76, sprintf('Categoría de IVA: %s', $row['cliente_cf_nombre']));
 	$pdf->wwrite(100, 76, sprintf('CUIT: %s%s%s', $row['cliente_cuit_0'], $row['cliente_cuit_1'], $row['cliente_cuit_2']));
 	$pdf->wwrite(11, 80, sprintf('Fecha de nacimiento: %s', (!empty($row['cliente_nacimiento'])?strftime("%d/%m/%Y", strtotime($row['cliente_nacimiento'])):'')));
 	$pdf->wwrite(100, 80, sprintf('DNI: %s', $row['cliente_nro_doc']));
@@ -157,7 +157,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(100, 54, sprintf('CP: %s', $row['localidad_cp']));
 	$pdf->wwrite(11, 58, sprintf('Localidad: %s', $row['localidad_nombre']));
 	$pdf->wwrite(11, 62, sprintf('Teléfonos: %s / %s', $row['contacto_telefono1'], $row['contacto_telefono2']));
-	$pdf->wwrite(11, 66, sprintf('Categoría de IVA: %s', $row['cliente_cf']));
+	$pdf->wwrite(11, 66, sprintf('Categoría de IVA: %s', $row['cliente_cf_nombre']));
 	$pdf->wwrite(100, 66, sprintf('CUIT: %s%s%s', $row['cliente_cuit_0'], $row['cliente_cuit_1'], $row['cliente_cuit_2']));
 	$pdf->wwrite(11, 70, sprintf('Fecha de nacimiento: %s', (!empty($row['cliente_nacimiento'])?strftime("%d/%m/%Y", strtotime($row['cliente_nacimiento'])):'')));
 	$pdf->wwrite(100, 70, sprintf('DNI: %s', $row['cliente_nro_doc']));
