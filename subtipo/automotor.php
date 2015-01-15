@@ -559,7 +559,7 @@
 		    </p>
 		    <p>
 		        <label for="box-franquicia">Franquicia</label>
-		        <input type="text" name="box-franquicia" id="box-franquicia" maxlength="5" class="ui-widget-content" style="width:120px" digits="true" min="0" max="99999" readonly="readonly" />
+		        <input type="text" name="box-franquicia" id="box-franquicia" maxlength="50" class="ui-widget-content" style="width:120px" digits="true" min="0" max="99999" readonly="readonly" />
 		    </p>    
 		    <p>
 		        <label for="box-seguro_cobertura_tipo_limite_rc_id">Límite Resp. Civil *</label>
