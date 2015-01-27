@@ -194,10 +194,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	function newPage($pdf, $first, $endoso_anulacion = NULL) {
 		$pdf->SetAutoPageBreak(false);
 		$pdf->AddPage();
-		if ($first)
-			$pdf->setSourceFile(sprintf('pdf/nuevos/%s_otros.pdf', (!empty($_GET['en'])?'en':'pe')));
-		else
-			$pdf->setSourceFile(sprintf('pdf/nuevos/pe_blank.pdf'));
+		$pdf->setSourceFile(sprintf('pdf/nuevos/pe_%s.pdf', $first?'otros':'blank'));
 		$tplIdx = $pdf->importPage(1);
 		$pdf->useTemplate($tplIdx);
 		// Emitir
@@ -249,14 +246,14 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(26, 75.6, $row['cliente_email'], 12, 'B');
 	
 	if (isset($_GET['en']) && $_GET['en']==1) {
-		$pdf->wwrite(13, 175, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-		$pdf->wwrite(13+60, 175, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
+		$pdf->wwrite(13, 95, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(13+60, 95, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
 		
-		$pdf->wwrite(13, 180, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
-		$pdf->wwrite(13, 185, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
+		$pdf->wwrite(13, 100, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
+		$pdf->wwrite(13, 105, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
 		
 		$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
-		$pdf->SetXY(13, 192);
+		$pdf->SetXY(13, 112);
 		$pdf->MultiCell(90, 5, sprintf('Detalle: %s', $endoso_cuerpo), 0, 'L', 0, 10);
 		
 	}
