@@ -145,18 +145,34 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(13, 97, sprintf('Barrio cerrado/country: %s', $row2['integral_consorcio_country']));
 	$pdf->wwrite(100, 97, sprintf('Lote: %s', $row2['integral_consorcio_lote']));
 	
-	$pdf->wwrite(13, 102, sprintf('Incendio edificio prorrata: $%s %s', $row2['integral_consorcio_inc_edif'], ($row2['integral_consorcio_inc_edif_rep']?' (con cláusula de reposición a nuevo)':'')));
+	if (isset($_GET['en']) && $_GET['en']==1) {
+		$pdf->wwrite(13, 105, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(13+60, 105, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
+		
+		$pdf->wwrite(13, 110, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
+		$pdf->wwrite(13, 115, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
+		
+		$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
+		$pdf->SetXY(13, 122);
+		$pdf->MultiCell(90, 5, sprintf('Detalle: %s', $endoso_cuerpo), 0, 'L', 0, 10);
+		
+	}
 	
-	$pdf->wwrite(13, 107, sprintf('Incendio Contenido General - Partes Comunes: $%s', $row2['integral_consorcio_inc_contenido']));
-	$pdf->wwrite(13, 112, sprintf('Robo Contenido General Mobiliario / Objetos Específicos – Partes Comunes: $%s', $row2['integral_consorcio_robo_gral']));
-	$pdf->wwrite(13, 117, sprintf('Robo Matafuegos: $%s', $row2['integral_consorcio_robo_matafuegos']));
-	$pdf->wwrite(13, 122, sprintf('Robo de Luces de Emergencia, Cámaras de Seguridad y Mangueras de Incendio: $%s', $row2['integral_consorcio_robo_lcm']));
-	$pdf->wwrite(13, 127, sprintf('RC Comprensiva: $%s', $row2['integral_consorcio_rc_comprensiva']));
-	$pdf->wwrite(13, 132, sprintf('Cristales y/o Vidrios y/o Espejos: $%s', $row2['integral_consorcio_cristales']));
-	$pdf->wwrite(13, 137, sprintf('Daños por Agua al Contenido de propiedad común: $%s', $row2['integral_consorcio_danios_agua']));
-	$pdf->wwrite(13, 142, sprintf('Responsabilidad Civil Garaje – Cubierto o Descubierto - por la guarda y/o depósito de vehículos: $%s', $row2['integral_consorcio_rc_garage']));
-	$pdf->wwrite(13, 147, sprintf('Acc. Person. para el Personal que preste serv. al Consorcio sin rel. de depend. laboral en los térm. de la Ley de Contrato de Trabajo: $%s', $row2['integral_consorcio_acc_personales']), 8);
-	$pdf->wwrite(13, 152, sprintf('Robo de Dinero de las Expensas en poder del Encargado: $%s', $row2['integral_consorcio_robo_exp']));
+	else {
+	
+		$pdf->wwrite(13, 102, sprintf('Incendio edificio prorrata: $%s %s', $row2['integral_consorcio_inc_edif'], ($row2['integral_consorcio_inc_edif_rep']?' (con cláusula de reposición a nuevo)':'')));
+	
+		$pdf->wwrite(13, 107, sprintf('Incendio Contenido General - Partes Comunes: $%s', $row2['integral_consorcio_inc_contenido']));
+		$pdf->wwrite(13, 112, sprintf('Robo Contenido General Mobiliario / Objetos Específicos – Partes Comunes: $%s', $row2['integral_consorcio_robo_gral']));
+		$pdf->wwrite(13, 117, sprintf('Robo Matafuegos: $%s', $row2['integral_consorcio_robo_matafuegos']));
+		$pdf->wwrite(13, 122, sprintf('Robo de Luces de Emergencia, Cámaras de Seguridad y Mangueras de Incendio: $%s', $row2['integral_consorcio_robo_lcm']));
+		$pdf->wwrite(13, 127, sprintf('RC Comprensiva: $%s', $row2['integral_consorcio_rc_comprensiva']));
+		$pdf->wwrite(13, 132, sprintf('Cristales y/o Vidrios y/o Espejos: $%s', $row2['integral_consorcio_cristales']));
+		$pdf->wwrite(13, 137, sprintf('Daños por Agua al Contenido de propiedad común: $%s', $row2['integral_consorcio_danios_agua']));
+		$pdf->wwrite(13, 142, sprintf('Responsabilidad Civil Garaje – Cubierto o Descubierto - por la guarda y/o depósito de vehículos: $%s', $row2['integral_consorcio_rc_garage']));
+		$pdf->wwrite(13, 147, sprintf('Acc. Person. para el Personal que preste serv. al Consorcio sin rel. de depend. laboral en los térm. de la Ley de Contrato de Trabajo: $%s', $row2['integral_consorcio_acc_personales']), 8);
+		$pdf->wwrite(13, 152, sprintf('Robo de Dinero de las Expensas en poder del Encargado: $%s', $row2['integral_consorcio_robo_exp']));
+	}
 	
 	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
 	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));

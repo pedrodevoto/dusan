@@ -113,9 +113,22 @@ switch(substr($_GET['type'], 0, 2)) {
 
 	$pdf->wwrite(26, 75.6, $row['cliente_email'], 12, 'B');
 	
-	$pdf->wwrite(13, 92, sprintf('Riesgo asegurado: %s', $row2['otros_riesgos_riesgo']));
-	$pdf->wwrite(13, 97, sprintf('Datos del riesgo: %s', $row2['otros_riesgos_datos_riesgo']));
-	$pdf->wwrite(13, 102, sprintf('Detalle del riesgo: %s', $row2['otros_riesgos_detalle_riesgo']));
+	if (isset($_GET['en']) && $_GET['en']==1) {
+		$pdf->wwrite(13, 92, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(13+60, 92, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
+		
+		$pdf->wwrite(13, 97, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
+		$pdf->wwrite(13, 102, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
+		
+		$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
+		$pdf->SetXY(13, 109);
+		$pdf->MultiCell(90, 5, sprintf('Detalle: %s', $endoso_cuerpo), 0, 'L', 0, 10);		
+	}
+	else {
+		$pdf->wwrite(13, 92, sprintf('Riesgo asegurado: %s', $row2['otros_riesgos_riesgo']));
+		$pdf->wwrite(13, 97, sprintf('Datos del riesgo: %s', $row2['otros_riesgos_datos_riesgo']));
+		$pdf->wwrite(13, 102, sprintf('Detalle del riesgo: %s', $row2['otros_riesgos_detalle_riesgo']));
+	}
 	
 	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
 	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));

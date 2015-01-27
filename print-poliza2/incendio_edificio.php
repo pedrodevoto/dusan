@@ -136,10 +136,25 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(13, 97, sprintf('Barrio cerrado/country: %s', $row2['incendio_edificio_country']));
 	$pdf->wwrite(100, 97, sprintf('Lote: %s', $row2['incendio_edificio_lote']));
 	
-	$pdf->wwrite(13, 102, sprintf('Incendio Edificio:                      $%s', formatNumber($row2['incendio_edificio_inc_edif'], 2)));
-	$pdf->wwrite(13, 107, sprintf('Incendio Mobiliario:                  $%s', formatNumber($row2['incendio_edificio_inc_mob'], 2)));
-	$pdf->wwrite(13, 112, sprintf('RC por Incendio:                      $%s', formatNumber($row2['incendio_edificio_rc_inc'], 2)));
-	$pdf->wwrite(13, 117, sprintf('Valor tasado de la propiedad:  $%s', formatNumber($row2['incendio_edificio_valor_tasado'], 2)));
+	if (isset($_GET['en']) && $_GET['en']==1) {
+		$pdf->wwrite(13, 105, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(13+60, 105, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
+		
+		$pdf->wwrite(13, 110, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
+		$pdf->wwrite(13, 115, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
+		
+		$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
+		$pdf->SetXY(13, 122);
+		$pdf->MultiCell(90, 5, sprintf('Detalle: %s', $endoso_cuerpo), 0, 'L', 0, 10);
+		
+	}
+	else {
+	
+		$pdf->wwrite(13, 102, sprintf('Incendio Edificio:                      $%s', formatNumber($row2['incendio_edificio_inc_edif'], 2)));
+		$pdf->wwrite(13, 107, sprintf('Incendio Mobiliario:                  $%s', formatNumber($row2['incendio_edificio_inc_mob'], 2)));
+		$pdf->wwrite(13, 112, sprintf('RC por Incendio:                      $%s', formatNumber($row2['incendio_edificio_rc_inc'], 2)));
+		$pdf->wwrite(13, 117, sprintf('Valor tasado de la propiedad:  $%s', formatNumber($row2['incendio_edificio_valor_tasado'], 2)));
+	}
 	
 	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
 	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));

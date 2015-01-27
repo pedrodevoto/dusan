@@ -230,14 +230,87 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(13, 97, sprintf('Barrio cerrado/country: %s', $row2['combinado_familiar_country']));
 	$pdf->wwrite(100, 97, sprintf('Lote: %s', $row2['combinado_familiar_lote']));
 		
-
-	if ($row['poliza_plan_flag']) {
-		$pdf->wwrite(13, 102, sprintf('Incendio Edificio: $%s', formatNumber($row2['combinado_familiar_inc_edif'], 2)));
-		$pdf->wwrite(79, 102, sprintf('Incendio Mobiliario: $%s', formatNumber($row2['combinado_familiar_inc_mob'], 2)));
-		$pdf->wwrite(149, 102, sprintf('Efectos Personales: $%s', formatNumber($row2['combinado_familiar_ef_personales'], 2)));
+	if (isset($_GET['en']) && $_GET['en']==1) {
+		$pdf->wwrite(13, 105, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(13+60, 105, sprintf('CODIGO: %s', $row['productor_seguro_codigo']));
+		
+		$pdf->wwrite(13, 110, sprintf('Motivo de endoso: %s', $endoso['endoso_tipo_nombre']));
+		$pdf->wwrite(13, 115, sprintf('Vigencia del endoso: de %s a %s', date('d/m/Y'), date('d/m/Y', strtotime($row['poliza_validez_hasta']))));
+		
+		$endoso_cuerpo = iconv('UTF-8', 'windows-1252', $endoso['endoso_cuerpo']);
+		$pdf->SetXY(13, 122);
+		$pdf->MultiCell(90, 5, sprintf('Detalle: %s', $endoso_cuerpo), 0, 'L', 0, 10);
+		
 	}
+	else {
+		if ($row['poliza_plan_flag']) {
+			$pdf->wwrite(13, 102, sprintf('Incendio Edificio: $%s', formatNumber($row2['combinado_familiar_inc_edif'], 2)));
+			$pdf->wwrite(79, 102, sprintf('Incendio Mobiliario: $%s', formatNumber($row2['combinado_familiar_inc_mob'], 2)));
+			$pdf->wwrite(149, 102, sprintf('Efectos Personales: $%s', formatNumber($row2['combinado_familiar_ef_personales'], 2)));
+		}
 	
-	$pdf->wwrite(13, 107, sprintf('Valor tasado de la propiedad: $%s', formatNumber($row2['combinado_familiar_valor_tasado'], 2)));
+		$pdf->wwrite(13, 107, sprintf('Valor tasado de la propiedad: $%s', formatNumber($row2['combinado_familiar_valor_tasado'], 2)));
+		
+		$y = 117;
+		$max_y = 232;
+	
+		if ($row['poliza_plan_flag']) {
+			$pdf->wwrite(13, $y, sprintf('Plan: %s - Pack: %s - Detalle', $row['poliza_plan_nombre'], $row['poliza_pack_nombre']), 10, 'B');
+		
+			$y += 9.5;
+			foreach ($detalle_plan as $cobertura) {
+				if ($y>$max_y) {
+					newPage($pdf, false);
+					$pdf->wwrite(13, 40, 'CONTINUACIÓN');
+					$y = 50;
+					$max_y = 265;
+					$pdf->wwrite(13, $y, sprintf('Plan: %s - Pack: %s - Detalle', $row['poliza_plan_nombre'], $row['poliza_pack_nombre']), 10, 'B');
+					$y += 9.5;
+				}
+				$pdf->wwrite(13, $y, sprintf('%s: %s', $cobertura['cobertura'], $cobertura['valor']));
+				$y += 5;
+			}
+			$y += 4;
+		}
+		else {
+			$pdf->wwrite(13, $y, 'Cantidad', 10, 'B');
+			$pdf->wwrite(30, $y, 'Producto', 10, 'B');
+			$pdf->wwrite(102, $y, 'Marca', 10, 'B');
+			$pdf->wwrite(180, $y, 'Valor', 10, 'B');
+			$y += 5;
+			foreach ($objects as $object) {
+				$items = $object['items'];
+				$description = $object['desc'];
+		 
+				if (count($items)==0) {
+					continue;
+				}
+
+				if ($y>$max_y) {
+					newPage($pdf, false);
+					$pdf->wwrite(13, 40, 'CONTINUACIÓN');
+					$y = 50;
+					$max_y = 265;
+				}
+				$pdf->wwrite(13, $y, $description, 9, 'B');
+				$y += 5;
+
+				foreach ($items as $item) {
+					if ($y>$max_y) {
+						$max_y = 265;
+						newPage($pdf, false);
+						$pdf->wwrite(13, 40, 'CONTINUACIÓN');
+						$y = 50;
+					}
+					$pdf->wwrite(13, $y, $item['cantidad']);
+					$pdf->wwrite(30, $y, $item['producto']);
+					$pdf->wwrite(102, $y, $item['marca']);
+					$pdf->wwrite(180, $y, sprintf('$%s', $item['valor']));
+					$y += 5;
+				}
+			}
+		}
+	}
 	
 	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
 	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
@@ -262,66 +335,6 @@ switch(substr($_GET['type'], 0, 2)) {
 
 	$pdf->wwrite(100, 258, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
 	$pdf->wwrite(100, 262, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
-	
-	$y = 117;
-	$max_y = 232;
-	
-	if ($row['poliza_plan_flag']) {
-		$pdf->wwrite(13, $y, sprintf('Plan: %s - Pack: %s - Detalle', $row['poliza_plan_nombre'], $row['poliza_pack_nombre']), 10, 'B');
-		
-		$y += 9.5;
-		foreach ($detalle_plan as $cobertura) {
-			if ($y>$max_y) {
-				newPage($pdf, false);
-				$pdf->wwrite(13, 40, 'CONTINUACIÓN');
-				$y = 50;
-				$max_y = 265;
-				$pdf->wwrite(13, $y, sprintf('Plan: %s - Pack: %s - Detalle', $row['poliza_plan_nombre'], $row['poliza_pack_nombre']), 10, 'B');
-				$y += 9.5;
-			}
-			$pdf->wwrite(13, $y, sprintf('%s: %s', $cobertura['cobertura'], $cobertura['valor']));
-			$y += 5;
-		}
-		$y += 4;
-	}
-	else {
-		$pdf->wwrite(13, $y, 'Cantidad', 10, 'B');
-		$pdf->wwrite(30, $y, 'Producto', 10, 'B');
-		$pdf->wwrite(102, $y, 'Marca', 10, 'B');
-		$pdf->wwrite(180, $y, 'Valor', 10, 'B');
-		$y += 5;
-		foreach ($objects as $object) {
-			$items = $object['items'];
-			$description = $object['desc'];
-		 
-			if (count($items)==0) {
-				continue;
-			}
-
-			if ($y>$max_y) {
-				newPage($pdf, false);
-				$pdf->wwrite(13, 40, 'CONTINUACIÓN');
-				$y = 50;
-				$max_y = 265;
-			}
-			$pdf->wwrite(13, $y, $description, 9, 'B');
-			$y += 5;
-
-			foreach ($items as $item) {
-				if ($y>$max_y) {
-					$max_y = 265;
-					newPage($pdf, false);
-					$pdf->wwrite(13, 40, 'CONTINUACIÓN');
-					$y = 50;
-				}
-				$pdf->wwrite(13, $y, $item['cantidad']);
-				$pdf->wwrite(30, $y, $item['producto']);
-				$pdf->wwrite(102, $y, $item['marca']);
-				$pdf->wwrite(180, $y, sprintf('$%s', $item['valor']));
-				$y += 5;
-			}
-		}
-	}
 	
 	break;
 }
