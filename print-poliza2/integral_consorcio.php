@@ -115,9 +115,7 @@ switch(substr($_GET['type'], 0, 2)) {
 
 	$pdf->wwrite(45, 1, $txt_emitir, $size_emitir);
 	$pdf->wwrite(44.5, 15, $row['seguro_nombre'], 30);
-	
-	$pdf->wwrite(45, 30, sprintf('Código %s', $row['productor_seguro_codigo']), 12);
-	
+		
 	$pdf->wwrite(11, 50, sprintf('Nombre/Razón social: %s', $row['cliente_nombre']));
 
 	$pdf->wwrite(11, 54, sprintf('Domicilio: %s %s %s %s', $row['contacto_domicilio'], $row['contacto_nro'], $row['contacto_piso'], $row['contacto_dpto']));
