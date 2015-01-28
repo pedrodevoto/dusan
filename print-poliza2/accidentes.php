@@ -64,7 +64,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(146, 72, sprintf('VIGENCIA DESDE: %s', strftime("%d/%m/%Y", strtotime($row['poliza_validez_desde']))));
 	$pdf->wwrite(146, 76, sprintf('VIGENCIA HASTA: %s', strftime("%d/%m/%Y", strtotime($row['poliza_validez_hasta']))));
 	
-	$pdf->wwrite(26, 85.6, $row['cliente_email'], 12, 'B');
+	$pdf->wwrite(12, 85.6, sprintf('EMAIL: %s', $row['cliente_email']), 12, 'B');
 	
 	$y = 96;
 	$x = 13;
