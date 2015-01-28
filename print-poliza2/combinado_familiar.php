@@ -170,7 +170,10 @@ switch(substr($_GET['type'], 0, 2)) {
 	function newPage($pdf, $first) {
 		$pdf->SetAutoPageBreak(false);
 		$pdf->AddPage();
-		$pdf->setSourceFile(sprintf('pdf/nuevos/pe_%s.pdf', $first?'otros':'blank'));
+		if ($first)
+			$pdf->setSourceFile(sprintf('pdf/nuevos/%s_otros.pdf', (!empty($_GET['en'])?'en':'pe')));
+		else
+			$pdf->setSourceFile(sprintf('pdf/nuevos/pe_blank.pdf'));
 		$tplIdx = $pdf->importPage(1);
 		$pdf->useTemplate($tplIdx);
 	}
@@ -310,32 +313,32 @@ switch(substr($_GET['type'], 0, 2)) {
 				}
 			}
 		}
+		
+		
+		$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
+		$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
+
+		$pdf->wwrite(80, 245, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
+
+		$pdf->wwrite(148, 247, 'Prima');
+		$pdf->wwrite(148, 251.5, 'Premio');
+
+		$txt_imp_c2 = array(
+			array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_prima'])." "),
+			array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_premio'])." ")
+		);
+
+		$pdf->SetXY(149, 250);
+		foreach ($txt_imp_c2 as $array) {
+			printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
+		}
+
+		$pdf->wwrite(11, 258, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
+		$pdf->wwrite(11, 262, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
+
+		$pdf->wwrite(100, 258, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
+		$pdf->wwrite(100, 262, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
 	}
-	
-	$pdf->wwrite(11, 245, sprintf('Forma de pago: %s', $row['poliza_medio_pago']));
-	$pdf->wwrite(11, 250, sprintf('Detalle de pago: %s', preg_replace('/\n/', ' ', $row['poliza_pago_detalle'])));
-
-	$pdf->wwrite(80, 245, sprintf('Plan de pago: %s cuotas', ($row['poliza_cant_cuotas']+$row['cuota_pfc'])));
-
-	$pdf->wwrite(148, 247, 'Prima');
-	$pdf->wwrite(148, 251.5, 'Premio');
-
-	$txt_imp_c2 = array(
-		array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_prima'])." "),
-		array('maxwidth' => 95, 'text' => "$ ".formatNumber($row['poliza_premio'])." ")
-	);
-
-	$pdf->SetXY(149, 250);
-	foreach ($txt_imp_c2 as $array) {
-		printText($array['text'], $pdf, $array['maxwidth'], 3.8, 'R');
-	}
-
-	$pdf->wwrite(11, 258, sprintf('RECARGO: %s%%', formatNumber($row['poliza_recargo'])));
-	$pdf->wwrite(11, 262, sprintf('DESCUENTO: %s%%', formatNumber($row['poliza_descuento'])));
-
-	$pdf->wwrite(100, 258, sprintf('PRODUCTOR: %s', strtoupper($row['productor_nombre'])));
-	$pdf->wwrite(100, 262, sprintf('CÓDIGO: %s', $row['productor_seguro_codigo']));
-	
 	break;
 }
 if (isset($_GET['email'])) {
