@@ -22,7 +22,7 @@ if($zip->open($zipname, ZIPARCHIVE::CREATE) !== true) {
 
 // Operaciones (ROS)
 
-$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_ros lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_ros_fecha_registro) BETWEEN "%s" AND "%s" GROUP BY lr.productor_id', $de, $a);
+$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_ros lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_ros_fecha_registro) BETWEEN "%s" AND "%s" %s GROUP BY lr.productor_id', $de, $a, (!empty($_GET['productor'])?sprintf(' AND p.productor_id = "%s"', mysql_real_escape_string($_GET['productor'])):''));
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
 while ($row = mysql_fetch_array($res)) {
@@ -71,7 +71,7 @@ while ($row = mysql_fetch_array($res)) {
 
 // Cobranzas (RCR)
 
-$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_rcr lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_rcr_fecha_registro) BETWEEN "%s" AND "%s" GROUP BY lr.productor_id', $de, $a);
+$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_rcr lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_rcr_fecha_registro) BETWEEN "%s" AND "%s" %s GROUP BY lr.productor_id', $de, $a, (!empty($_GET['productor'])?sprintf(' AND p.productor_id = "%s"', mysql_real_escape_string($_GET['productor'])):''));
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
 while ($row = mysql_fetch_array($res)) {
