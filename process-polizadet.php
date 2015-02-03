@@ -36,6 +36,8 @@
 			$row_Recordset2 = mysql_fetch_assoc($Recordset2);		
 			$totalRows_Recordset2 = mysql_num_rows($Recordset2);
 			
+			$valor_total = intval($_POST['box-valor_vehiculo']) + intval($_POST['box-valor_gnc']) + intval($_POST['box-valor_accesorios']);
+			
 			// If record exists
 			if ($totalRows_Recordset2 === 0 || $flota == 'new') {				
 				// Insert
@@ -120,7 +122,7 @@
 										GetSQLValueString(isset($_POST['box-gnc_flag']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-valor_gnc'], 'int'),
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
-										GetSQLValueString($_POST['box-valor_total'], 'int'),
+										GetSQLValueString($valor_total, 'int'),
 										GetSQLValueString(isset($_POST['box-pedido_instalacion']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-pedido_instalacion_direccion'], 'text'),
 										GetSQLValueString($_POST['box-pedido_instalacion_horario'], 'text'),
@@ -213,7 +215,7 @@
 										GetSQLValueString(isset($_POST['box-gnc_flag']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-valor_gnc'], 'int'),
 										GetSQLValueString($_POST['box-valor_accesorios'], 'int'),
-										GetSQLValueString($_POST['box-valor_total'], 'int'),
+										GetSQLValueString($valor_total, 'int'),
 										GetSQLValueString(isset($_POST['box-pedido_instalacion']) ? 'true' : '', 'defined','1','0'),
 										GetSQLValueString($_POST['box-pedido_instalacion_direccion'], 'text'),
 										GetSQLValueString($_POST['box-pedido_instalacion_horario'], 'text'),
