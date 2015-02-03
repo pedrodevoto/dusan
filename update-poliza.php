@@ -57,7 +57,7 @@
 				mysql_query($sql, $connection) or die(mysql_error());
 			}
 			$sql = sprintf('UPDATE cuota SET cuota_pfc = %s WHERE poliza_id = %s AND cuota_nro = 1', 
-				GetSQLValueString(isset($_POST['box-cuota_pfc']) ? 'true' : '', 'defined','1','0'),
+				GetSQLValueString((isset($_POST['box-cuota_pfc']) && $_POST['box-poliza_medio_pago']=='Directo') ? 'true' : '', 'defined','1','0'),
 				GetSQLValueString($_POST['box-poliza_id'], "int")
 			);
 			mysql_query($sql) or die(mysql_error());

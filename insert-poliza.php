@@ -89,7 +89,11 @@
 					$monto = $poliza_premio / $poliza_cant_cuotas;
 				}
 				
-				$pfc = (isset($_POST['box-sucursal_pfc'])?1:0);
+				$pfc = 0;
+				if (isset($_POST['box-sucursal_pfc']) && $_POST['box-poliza_medio_pago']=='Directo') {
+					$pfc = 1;
+				}
+				
 				$poliza_cant_cuotas += $pfc;
 				
 				for ($i=0; $i<$poliza_cant_cuotas; $i++) {
