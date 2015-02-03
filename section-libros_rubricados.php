@@ -7,7 +7,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<title>JARVIS - Pólizas - Listado</title>
+		<title>JARVIS - Libros Rubricados</title>
 
 		<?php require_once('inc/library.php'); ?>               
 		
@@ -28,11 +28,30 @@
 				}
 			});
 			$('#exportar-libros-rubricados').click(function() {
-				if ($('#exportar-libros-rubricados-periodo').val()=='') {
+				if ($('#from').val()=='' || $('#to').val()=='') {
 					alert('Seleccione un período');
 				}
 				else {
-					window.open('export-libros_rubricados.php?fecha='+$('#exportar-libros-rubricados-periodo').val());
+					window.open('export-libros_rubricados.php?de='+$('#from').val()+'&a='+$('#to').val());
+				}
+			});
+			
+			$( "#from" ).datepicker({
+				dateFormat: 'yy-mm-dd',
+				defaultDate: "-15d",
+				changeMonth: true,
+				numberOfMonths: 3,
+				onClose: function( selectedDate ) {
+					$( "#to" ).datepicker( "option", "minDate", selectedDate );
+				}
+			});
+			$( "#to" ).datepicker({
+				dateFormat: 'yy-mm-dd',
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 3,
+				onClose: function( selectedDate ) {
+					$( "#from" ).datepicker( "option", "maxDate", selectedDate );
 				}
 			});
 		});
@@ -48,10 +67,11 @@
 					Último proceso: <span id="ultimo-libros-rubricados">cargando...</span>
 				</p>
 				<p>
-					<label for="exportar-libros-rubricados-periodo">Período</label>
-					<select name="exportar-libros-rubricados-periodo" id="exportar-libros-rubricados-periodo">
-						<option>Cargando</option>
-					</select>
+					Período: 
+					<label for="from">de</label>
+					<input type="text" id="from" name="from">
+					<label for="to">a</label>
+					<input type="text" id="to" name="to">
 				</p>
 				<p>
 					<button id="exportar-libros-rubricados">Exportar</button>

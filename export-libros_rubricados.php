@@ -9,8 +9,9 @@
 	require_once('inc/db_functions.php');
 ?>
 <?php
-if (!empty($_GET['fecha'])) {
-	$fecha = mysql_real_escape_string($_GET['fecha']);
+if (!empty($_GET['de']) and !empty($_GET['a'])) {
+	$de = mysql_real_escape_string($_GET['de']);
+	$a = mysql_real_escape_string($_GET['a']);
 }
 $files = array();
 $zipname = 'temp/'.uniqid().'.zip';
@@ -21,11 +22,11 @@ if($zip->open($zipname, ZIPARCHIVE::CREATE) !== true) {
 
 // Operaciones (ROS)
 
-$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_ros lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(timestamp) = "%s" GROUP BY lr.productor_id', $fecha);
+$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_ros lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_ros_fecha_registro) BETWEEN "%s" AND "%s" GROUP BY lr.productor_id', $de, $a);
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
 while ($row = mysql_fetch_array($res)) {
-	$sql = sprintf('SELECT * FROM libros_rubricados_ros WHERE DATE(timestamp) = "%s" AND productor_id=%s', $fecha, $row[0]);
+	$sql = sprintf('SELECT * FROM libros_rubricados_ros WHERE DATE(libros_rubricados_ros_fecha_registro) BETWEEN "%s" AND "%s" AND productor_id=%s', $de, $a, $row[0]);
 	$res2 = mysql_query($sql, $connection);
 	$registros = mysql_num_rows($res2);
 	$output = '<?xml version="1.0" encoding="utf-8"?>
@@ -64,17 +65,17 @@ while ($row = mysql_fetch_array($res)) {
 	$output .= '
 	</Detalle>
 </SSN>';
-	$filename = 'ROS-'.str_replace(' ', '_', $row[3]).'-'.str_replace('-', '_', $fecha).'.xml';
+	$filename = 'ROS-'.str_replace(' ', '_', $row[3]).'-de-'.str_replace('-', '_', $de).'-a-'.str_replace('-', '_', $a).'.xml';
 	$zip->addFromString($filename, $output);
 }
 
 // Cobranzas (RCR)
 
-$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_rcr lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(timestamp) = "%s" GROUP BY lr.productor_id', $fecha);
+$sql = sprintf('SELECT p.productor_id, productor_matricula, productor_cuit, productor_nombre FROM libros_rubricados_rcr lr JOIN productor p ON lr.productor_id = p.productor_id WHERE DATE(libros_rubricados_rcr_fecha_registro) BETWEEN "%s" AND "%s" GROUP BY lr.productor_id', $de, $a);
 $res = mysql_query($sql, $connection) or die(mysql_error());
 
 while ($row = mysql_fetch_array($res)) {
-	$sql = sprintf('SELECT * FROM libros_rubricados_rcr WHERE DATE(timestamp) = "%s" AND productor_id=%s ORDER BY libros_rubricados_rcr_fecha_registro ASC', $fecha, $row[0]);
+	$sql = sprintf('SELECT * FROM libros_rubricados_rcr WHERE DATE(libros_rubricados_rcr_fecha_registro) BETWEEN "%s" AND "%s" AND productor_id=%s ORDER BY libros_rubricados_rcr_fecha_registro ASC', $de, $a, $row[0]);
 	$res2 = mysql_query($sql, $connection);
 	$registros = mysql_num_rows($res2);
 
@@ -113,13 +114,13 @@ while ($row = mysql_fetch_array($res)) {
 	$output .= '
 	</Detalle>
 </SSN>';
-	$filename = 'RCR-'.str_replace(' ', '_', $row[3]).'-'.str_replace('-', '_', $fecha).'.xml';
+	$filename = 'RCR-'.str_replace(' ', '_', $row[3]).'-de-'.str_replace('-', '_', $de).'-a-'.str_replace('-', '_', $a).'.xml';
 	$zip->addFromString($filename, $output);
 }
 
 $zip->close();
 
 header('Content-type: application/zip, application/octet-stream');
-header('Content-Disposition: attachment; filename="Libros_Rubricados-'.str_replace('-', '_', $fecha).'.zip"');
+header('Content-Disposition: attachment; filename="Libros_Rubricados-de-'.str_replace('-', '_', $de).'-a-'.str_replace('-', '_', $a).'.zip"');
 readfile($zipname);
 ?>
