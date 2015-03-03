@@ -158,6 +158,27 @@ switch(substr($_GET['type'], 0, 2)) {
 				$y += 5;
 			}
 		}
+		if ($y > ($max_y - 28)) {
+			newPage($pdf, false);
+			$y = 50;
+		}
+		$pdf->wwrite(102, $y, 'Otros', 10, 'B');
+
+		$y += 9.5;
+
+		$pdf->wwrite(13, $y, sprintf('Cristales a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_cristales'], 2)));
+
+		$y += 5;
+		$pdf->wwrite(13, $y, sprintf('RC Hechos Privados a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_responsabilidad_civil'], 2)));
+
+		$y += 5;
+		$pdf->wwrite(13, $y, sprintf('RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_rc_inc'], 2)));
+
+		$y += 5;
+		$pdf->wwrite(13, $y, sprintf('Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_danios_agua'], 2)));
+
+		$y += 5;
+		$pdf->wwrite(13, $y, sprintf('Jugadores de Golf a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_jugadores_golf'], 2)));
 	}
 	
 	break;
@@ -310,6 +331,28 @@ switch(substr($_GET['type'], 0, 2)) {
 					$y += 5;
 				}
 			}
+			
+			if ($y > ($max_y - 28)) {
+				newPage($pdf, false);
+				$y = 50;
+			}
+			$pdf->wwrite(102, $y, 'Otros', 10, 'B');
+
+			$y += 9.5;
+
+			$pdf->wwrite(13, $y, sprintf('Cristales a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_cristales'], 2)));
+
+			$y += 5;
+			$pdf->wwrite(13, $y, sprintf('RC Hechos Privados a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_responsabilidad_civil'], 2)));
+
+			$y += 5;
+			$pdf->wwrite(13, $y, sprintf('RC por Incendio - (Excluye cosas de Linderos) - a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_rc_inc'], 2)));
+
+			$y += 5;
+			$pdf->wwrite(13, $y, sprintf('Daños por Agua al Mobil. y/o Ef. Pers. (Exc. Edificio) a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_danios_agua'], 2)));
+
+			$y += 5;
+			$pdf->wwrite(13, $y, sprintf('Jugadores de Golf a Primer Riesgo Absoluto: $%s', formatNumber($row2['combinado_familiar_jugadores_golf'], 2)));
 		}
 		
 		
