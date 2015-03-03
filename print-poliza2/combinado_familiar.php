@@ -87,7 +87,7 @@ switch(substr($_GET['type'], 0, 2)) {
 	$pdf->wwrite(13, 102, sprintf('Barrio cerrado/country: %s', $row2['combinado_familiar_country']));
 	$pdf->wwrite(100, 102, sprintf('Lote: %s', $row2['combinado_familiar_lote']));
 		
-	if ($row['poliza_plan_flag']) {
+	if (!$row['poliza_plan_flag']) {
 		$pdf->wwrite(13, 107, sprintf('Incendio Edificio: $%s', formatNumber($row2['combinado_familiar_inc_edif'], 2)));
 		$pdf->wwrite(79, 107, sprintf('Incendio Mobiliario: $%s', formatNumber($row2['combinado_familiar_inc_mob'], 2)));
 		$pdf->wwrite(149, 107, sprintf('Efectos Personales: $%s', formatNumber($row2['combinado_familiar_ef_personales'], 2)));
@@ -265,7 +265,7 @@ switch(substr($_GET['type'], 0, 2)) {
 		
 	}
 	else {
-		if ($row['poliza_plan_flag']) {
+		if (!$row['poliza_plan_flag']) {
 			$pdf->wwrite(13, 102, sprintf('Incendio Edificio: $%s', formatNumber($row2['combinado_familiar_inc_edif'], 2)));
 			$pdf->wwrite(79, 102, sprintf('Incendio Mobiliario: $%s', formatNumber($row2['combinado_familiar_inc_mob'], 2)));
 			$pdf->wwrite(149, 102, sprintf('Efectos Personales: $%s', formatNumber($row2['combinado_familiar_ef_personales'], 2)));
