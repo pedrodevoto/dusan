@@ -296,6 +296,7 @@
 					<option value="BORDEAUX">BORDEAUX</option>
 					<option value="CHAMPAGNE">CHAMPAGNE</option>
 					<option value="BICOLOR">BICOLOR</option>
+					<option value="BEIGE">BEIGE</option>
 				</select>
 		    </p>
 		    <p>
